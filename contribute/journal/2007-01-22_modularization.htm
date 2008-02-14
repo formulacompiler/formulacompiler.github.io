@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Modularization - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Modularization</h1>
+
+	<p><span class="caps">SEJ</span> is quite nicely modularized in theory. In practice, though, there are a number of problems in the current project setup.</p>
+
+
+
+	<h2><a name="pagetoc__1">Problems</a></h2>
+
+	<p>The <code>sej.SEJ</code> class has dependencies to all the subsystems, while at the same time most of those subsystems depend on <code>sej.SEJ</code> in turn. This is because <code>sej.SEJ</code> serves as a static factory for all the interface implementations provided by the subsystems.</p>
+
+
+	<p>One consequence is that the full build is needlessly complicated because</p>
+
+<ul>
+	<li>the rewrite rules compiler depends on the Excel expression parser,</li>
+	<li>the Excel parser depends on <code>sej.SEJ</code>,</li>
+	<li><code>sej.SEJ</code> depends on the model transforms and the byte-code compiler,</li>
+	<li>the model transforms depend on the code the rewrite rule compiler would generate.</li>
+</ul>
+
+	<p>In the same vein, the byte-code compiler depends on the code the pattern compiler generates.</p>
+
+
+	<p>This makes dummy implementations of the would-be generated code necessary to allow initial compilation of the build tools.</p>
+
+
+	<p>Module boundaries are not enforced in the <span class="caps">IDE</span>. They are only enforced by Macker rules, which have become fairly complex.</p>
+
+
+	<p>There is no graphical view of either the actual dependencies, or of the rules that are enforced during builds. There is only the desired state as shown in the design document.</p>
+
+
+	<p>Because there are circular module dependencies, it is not possible to package, for example, only the core of <span class="caps">SEJ</span> which compiles an internal model to an engine.</p>
+
+
+	<p>The Excel .xls loader is always registered, even though the required <span class="caps">JXL</span> package is rather large. This is not satisfactory.</p>
+
+
+	<p>So, in essence:</p>
+
+<ul>
+	<li>Circular dependencies caused by <code>sej.SEJ</code>.</li>
+	<li>Dummies needed for generated code during clean build.</li>
+	<li>Dependency definitions too complex, using Macker instead of build paths.</li>
+	<li>Supported spreadsheet formats are hard-wired.</li>
+</ul>
+
+	<h2><a name="pagetoc__2">Reasons</a></h2>
+
+	<p>Why did I design the <span class="caps">SEJ</span> this way? Basically, I did not know or care about <code>java.util.ServiceLoader</code> yet. <span class="caps">SEJ</span> really has a two-tiered core <span class="caps">API</span>. The first tier defines all the interfaces implemented by the various subsystems. The second tier, which is <code>sej.SEJ</code>, holds them all together and plays the role of the central factory. This factory is mostly hardwired because I did not see a way to make configuration of registered subsystems transparent enough. This is all the more important as many of <span class="caps">SEJ</span>&#8217;s subsystems are not really replaceable. A fundamental problem, then, is that the subsystems sometimes themselves depend on the factory aspect of <span class="caps">SEJ</span> for when they need access to interface implementations of other subsystems.</p>
+
+
+	<p>Also, it just seemed to much of a hassle to split <span class="caps">SEJ</span> up into a multitude of Eclipse projects, what with the overhead of having to manage multiple project definitions etc.</p>
+
+
+	<h2><a name="pagetoc__3">Solutions</a></h2>
+
+	<h5>Factory</h5>
+
+	<p>I have tried solutions in a branch. To solve the cyclic dependency and transparent configuration problem, I have adopted a technique similar to Java 6&#8217;s service provider <span class="caps">API</span>, meaning to scan the classpath for implementation factories. This works very well.</p>
+
+
+	<h5>Dependencies</h5>
+
+	<p>To simplify dependency management, I could either really do the split into different Eclipse projects, or else use more separate physical source folders, one for each module. Then, the build could compile each source folder separately, with just the dependencies enabled to which it should have access. I might also do both, so the eclipse project structure does not predetermine the source layout. The eclipse projects would then reference the different source folders from the central source location.</p>
+
+
+	<p>I have experimented with both approaches. They both do not satisfy me yet. <span class="caps">SEJ</span> is internally segmented into a heck of a lot of modules. Parts of their boundaries can be handled by package visibility, but many cannot, so far. This is because internal modules are granted more access to other internal modules than is the public <span class="caps">API</span>. This means that there is a ton of Eclipse projects and/or source paths in the <span class="caps">IDE</span>. And the modules often contain just one class. Looks weird. And I had to invent a Ruby-based configuration system so I can generate all the repetitive Eclipse project and Ant build script definitions given module visibility rules. So maybe Eclipse&#8217;s rule of fairplay (no privileged access to other modules) is really also about keeping access rules manageable.</p>
+
+
+	<h2><a name="pagetoc__4">Tools</a></h2>
+
+	<h5>Pico, Plexus</h5>
+
+	<p>I have experimented with <a href="http://www.picocontainer.org/">Pico Container</a>, but its lack of support for requesting instances with instance-dynamic constructor parameters makes it nearly worthless in the context of <span class="caps">SEJ</span>. Too, it is rather big (100K) for the value it would generate. The Plexus container (codehaus.org) looks good too, but is still under very active development and even bigger than Pico.</p>
+
+
+	<h5>Maven2</h5>
+
+	<p>I also checked out the way <a href="http://maven.apache.org/">Maven2</a> works. It would be a close fit, but I am not quite ready to jump onto the repository bandwagon yet, although it really seems very appealing. Worse, for me, is that I don&#8217;t find it very intuitive how to add custom build steps, and <span class="caps">SEJ</span>&#8217;s build is fairly intricate.</p>
+
+
+	<h5>Checkstyle</h5>
+
+	<p>Checkstyle contains an import check which, like Macker, can test for illegal imports. If I continue to rely on such a tool instead of physically separated source paths, then using Checkstyle instead of macker might reduce the need for external tools by one (Checkstyle is used already). Also, the rules are less flexible, but more concise.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Modularization</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Problems</a></li><li><a href="#pagetoc__2">Reasons</a></li><li><a href="#pagetoc__3">Solutions</a></li><li><a href="#pagetoc__4">Tools</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

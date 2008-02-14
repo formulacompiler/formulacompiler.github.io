@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Design Overview - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../download/index.htm">
+					<img src="../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../index.htm">Home</a> | 
+						
+					<a href="../quick.htm">Quick Start</a> | <span class="selected"><a href="../doc/index.htm">Documentation</a></span> | <a href="../download/index.htm">Download</a> | <a href="../support.htm">Support</a> | <a href="../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../index.htm">Home</a> &gt; <a href="index.htm">Documentation</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Design Overview</h1>
+
+	<p>The Abacus Formula Compiler (AFC) makes it possible to use computations defined in spreadsheet files within normal Java applications. The original spreadsheet files can be created, for example, in <a href="http://office.microsoft.com/">Microsoft Excel</a> or <a href="http://www.openoffice.org/">OpenOffice Calc</a>. <span class="caps">AFC</span> reads the spreadsheet files and builds corresponding Java-based formula evaluation engines. Such an engine computes output values given a set of input values.</p>
+
+
+
+	<h2><a name="pagetoc__1">Overview</a></h2>
+
+	<p>Here&#8217;s an overview of how <span class="caps">AFC</span> does this. Blue is your code, red is <span class="caps">AFC</span>&#8217;s, green are external dependencies, and yellow are generated things:</p>
+
+
+	<p><img title="Overview" src="embedded.png" alt="Overview" /></p>
+
+
+	<h3><a name="pagetoc__1_1">Example</a></h3>
+
+	<p>For example, compute the value of the cell <em>B3</em> given the values of the cells <em>B1</em> and <em>B2</em> as inputs in:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><b><span style="text-decoration: underline;">Demo computation for SEJ</span></b></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td>A</td>
+			<td class="xl-num">10</td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td>B</td>
+			<td class="xl-num">$100.00</td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td><span style="text-decoration: underline;">Outputs</span></td>
+			<td><span style="text-decoration: underline;"></span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td>Result</td>
+			<td class="xl-num">$1,000.00<br/><span class="xl-exp">=B4*B5</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>The following code does this:</p>
+
+	<pre class="java"><span class="j-cmt">// Get an engine builder (represents AFC's simplified API).
+</span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Load and parse the spreadsheet file into memory.
+</span>builder.loadSpreadsheet<span class="j-sym">( </span>DATA_PATH + <span class="j-str">&#34;test.xls&#34; </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// Set the factory interface to implement. This interface defines the method
+// Outputs newInstance( Inputs _inputs ), from which AFC derives the input
+// and output interfaces.
+</span>builder.setFactoryClass<span class="j-sym">( </span>OutputFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// Define which cells will be variable inputs to the engine, and which will be
+// computable outputs, by cell name. All cells whose name correspond to a method
+// on the output interface will be outputs, and similarly for inputs.
+// Inputs are bound to your input methods that will be called to obtain their value.
+// Outputs are bound to your output methods that are implemented by the engine.
+</span>builder.bindAllByName<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Build an engine for the given spreadsheet, inputs, and outputs.
+</span>Engine engine = builder.compile<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Get the factory instance from the compiled engine.
+</span>OutputFactory factory = <span class="j-sym">(</span>OutputFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+
+<span class="j-cmt">// ---- Computation
+// Compute an actual output value for a given set of actual input values.
+// This code is not dependent on AFC. It is a simple instance of the strategy
+// pattern.
+</span>Inputs inputs = <span class="j-key">new </span>Inputs<span class="j-sym">( </span><span class="j-num">4</span>, <span class="j-num">40 </span><span class="j-sym">)</span>;
+Outputs outputs = factory.newInstance<span class="j-sym">( </span>inputs <span class="j-sym">)</span>;
+<span class="j-typ">double </span>result = outputs.getResult<span class="j-sym">()</span>;
+<span class="j-cmt">// ---- Computation
+
+</span><span class="j-key">return </span>result;</pre>
+
+
+	<h3><a name="pagetoc__1_2">Generated Code</a></h3>
+
+	<p>The call to <code>builder.compile()</code> internally generates <span class="caps">JVM</span> byte code. When decompiled, the code looks as follows. It consists of the computation engine:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.examples.Inputs;
+<span class="j-key">import </span>org.formulacompiler.examples.Outputs;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, Outputs
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>Inputs $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>Inputs inputs, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = inputs;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">() </span>* get$2<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>getResult<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getA<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getB<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<p>and its factory:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.examples.Inputs;
+<span class="j-key">import </span>org.formulacompiler.examples.OutputFactory;
+<span class="j-key">import </span>org.formulacompiler.examples.Outputs;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.ComputationFactory;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+
+<span class="j-key">public final class </span>$Factory <span class="j-key">implements </span>ComputationFactory, OutputFactory
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>Environment $environment;
+    
+    <span class="j-key">public </span>$Factory<span class="j-sym">(</span>Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>Computation newComputation<span class="j-sym">(</span>Object object<span class="j-sym">) {
+        </span><span class="j-key">return new </span>$Root<span class="j-sym">((</span>Inputs<span class="j-sym">) </span>object, $environment<span class="j-sym">)</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>Outputs newInstance<span class="j-sym">(</span>Inputs inputs<span class="j-sym">) {
+        </span><span class="j-key">return new </span>$Root<span class="j-sym">(</span>inputs, $environment<span class="j-sym">)</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="pagetoc__2">Design Goals</a></h2>
+
+	<h3><a name="pagetoc__2_1">Multiple Data Formats</a></h3>
+
+	<p><span class="caps">AFC</span> should be usable with at least Microsoft Excel <span class="caps">XLS</span> and <span class="caps">XML</span> files, and OpenOffice Calc files.</p>
+
+
+	<h3><a name="pagetoc__2_2">High Performance Computation</a></h3>
+
+	<p>The generated engines should be suitable for use on application servers:</p>
+
+<ul>
+	<li>Low memory consumption</li>
+	<li>High performance</li>
+	<li>Thread safe</li>
+</ul>
+
+	<h3><a name="pagetoc__2_3">High Performance Engine Construction</a></h3>
+
+	<p>The generation of an engine from a spreadsheet file, however, is considered a rarer task. So, while the above goals are still desirable for it, the focus is clearly on making the engines perform exceptionally well, not engine generation. Nevertheless, engine generation must be suitable for being performed occasionally by an application server.</p>
+
+
+	<h3><a name="pagetoc__2_4">Cheap Instantiation</a></h3>
+
+	<p>Because generation of an engine may be an expensive task, it must be possible to store generated engines and then later efficiently instantiate them from the storage. The original spreadsheet file should not be required for this instantiation.</p>
+
+
+	<h3><a name="pagetoc__2_5">Usability</a></h3>
+
+	<p>Errors in the spreadsheet file or errors during engine generation due to limitations of <span class="caps">AFC</span> must be pinpointed and described in a way that allows typical spreadsheet users to correct or work around the problem.</p>
+
+
+	<h3><a name="pagetoc__2_6">Documentation</a></h3>
+
+	<p>The range of supported formula elements must be clearly documented using automated tests.</p>
+
+
+	<h3><a name="trust">Trustworthiness</a></h3>
+
+	<p><span class="caps">AFC</span> in its standard operation generates byte code for the Java VM. This is not something most programmers read and understand with ease. <span class="caps">AFC</span> must therefore be able to generate Java source code. All automated tests should ascertain that the bytecode compiled from the source by the Java compiler is the same as the one compiled by directly by <span class="caps">AFC</span>. This way, users who mistrust bytecode generation, or who need to see what an engine generated by <span class="caps">AFC</span> does internally, can rely on the generated source code.</p>
+
+
+	<h2><a name="pagetoc__3">Design</a></h2>
+
+	<p>Derived from the design goals above is a clear separation of phases and concerns into individual components:</p>
+
+
+	<p><img title="Compiler Overview" src="compiler.png" alt="Compiler Overview" /></p>
+
+
+<dl>
+<dt><span class="caps">API</span> Facade</dt><dd>(Not shown in diagram.) Defines the public <span class="caps">API</span> to all of <span class="caps">AFC</span>. For example, the interfaces <code>Engine</code> and <code>Computation</code>.</dd>
+
+<dt>Spreadsheet Model</dt><dd>An in-memory representation of a spreadsheet which is constructed by loaders and consumed by engine builders. It thus decouples the engine compilers from the various spreadsheet formats supported by <span class="caps">AFC</span>. Cell formulas are represented by expression trees with special nodes denoting cell references. Parsing of cell formulas into expression trees can be done lazily so that only the formulas actually used by an engine builder are parsed.</dd>
+
+<dt>Computation Model</dt><dd>An in-memory representation of the relevant computation extracted from a spreadsheet model. This model is hierarchical to represent dynamic sections and has no longer any notion of rows and columns, only of expressions referencing inputs or other expressions.</dd>
+
+<dt>Expression Trees</dt><dd>A syntax tree representation of the formulas found in a spreadsheet or an internal computation model.</dd>
+
+<dt>Spreadsheet Compiler</dt><dd>Compiles a spreadsheet model into an internal computation model. Uses the engine definition (inputs and outputs) to extract only the relevant parts.</dd>
+
+<dt>Optimizer</dt><dd>Performs constant folding and expression inlining on the internal computation model.</dd>
+
+<dt>Spreadsheet Loader</dt><dd>Subsystem containing the different spreadsheet file loaders (Excel .xls and .xml, and OpenOffice). Implements lazy parsing of formulas into <span class="caps">AFC</span>&#8217;s expression trees. The expression parser is generated using the open-source <a href="https://javacc.dev.java.net/">JavaCC</a> library.</dd>
+
+<dt>Excel .xls Loader</dt><dd>Loads spreadsheet files in Microsoft Excel&#8217;s native .xls format into an <span class="caps">AFC</span> spreadsheet model. Uses the open-source <a href="http://jexcelapi.sourceforge.net/">JExcelAPI</a> library to parse the .xls format.</dd>
+
+<dt>Excel .xml Loader</dt><dd>Loads spreadsheet files in Microsoft Excel&#8217;s .xml format into an <span class="caps">AFC</span> spreadsheet model.</dd>
+
+<dt>OpenOffice .ods Loader</dt><dd>Envisioned loader(s) for the OpenOffice spreadsheet file format(s).</dd>
+
+<dt>Bytecode Compiler</dt><dd>Builds an <span class="caps">AFC</span> engine given an internal computation model. Uses the open-source <a href="http://asm.objectweb.org/">ASM</a> library to generate the new engine class and the methods which compute the spreadsheet formulas. The generated class can be used directly to instantiate an engine, or else stored somewhere for later instantiation. It is thus possible to build the engine in a separate configuration program and then install only the generated class file with its minimal dependencies in a server application.</dd>
+
+<dt>Engine Instance</dt><dd>Expression evaluation engine that computes formulas using native Java byte code methods. Some computations of core spreadsheet functions are delegated to a <span class="caps">AFC</span> runtime library (not shown). This implementation of an engine is very fast and space efficient. It also has no other dependencies on external components. It is, therefore, an ideal choice for heavily used server-side computations.</dd>
+
+<dt>Bytecode Decompiler</dt><dd>Generates the Java source code for a compiled <span class="caps">AFC</span> engine using the open-source <a href="http://jode.sourceforge.net/">JODE</a> library. This is mainly for debugging and for inspecting generated engines.</dd>
+</dl>
+
+	<h2><a name="pagetoc__4">Realization of Design Goals</a></h2>
+
+	<p>How are the design goals addressed by this design?</p>
+
+
+	<h3><a name="pagetoc__4_1">Multiple Data Formats</a></h3>
+
+	<p>The design decouples the engines and engine builders completely from the physical representation of spreadsheets in files. This makes it fairly straightforward and inexpensive to add new formats. Use of JavaCC to generate the formula expression parsers makes supporting new expression syntaxes fairly easy.</p>
+
+
+	<p><span class="caps">AFC</span> has a simple workbook loader registry. Once appropriate loaders are registered, a spreadsheet file can be opened with a generic call. The loaders look at the file&#8217;s extension to determine the appropriate one to use.</p>
+
+
+	<h3><a name="pagetoc__4_2">High Performance Computation</a></h3>
+
+	<p>The separation of the Engine and Computation interfaces allows the concurrent use of an engine across multiple threads. Each thread simply creates its own computations on the central engine. Engines are thus fully thread-safe and non-blocking.</p>
+
+	<pre class="java"><span class="j-cmt">// Compute an actual output value for a given set of actual input values.
+// This code is not dependent on AFC. It is a simple instance of the strategy
+// pattern.
+</span>Inputs inputs = <span class="j-key">new </span>Inputs<span class="j-sym">( </span><span class="j-num">4</span>, <span class="j-num">40 </span><span class="j-sym">)</span>;
+Outputs outputs = factory.newInstance<span class="j-sym">( </span>inputs <span class="j-sym">)</span>;
+<span class="j-typ">double </span>result = outputs.getResult<span class="j-sym">()</span>;</pre>
+
+
+	<p>The byte code engine is extremely fast as all necessary expressions from the spreadsheet model &#8211; after constant folding &#8211; have been compiled to native Java byte code. A byte code engine depends neither on the spreadsheet model nor on anything else except for <span class="caps">AFC</span>&#8217;s runtime classes.</p>
+
+
+	<h3><a name="pagetoc__4_3">High Performance Engine Construction</a></h3>
+
+	<p>As stated above, in most scenarios performance of the construction of engines is not as critical as performance of the constructed engines themselves. Nevertheless, the design should allow for optimization of engine construction should it become necessary.</p>
+
+
+	<p>Engine construction can be separated into two distinct steps:</p>
+
+<ol>
+	<li>Parse the spreadsheet file into an <span class="caps">AFC</span> spreadsheet model.</li>
+	<li>Construct an engine (or multiple different engines) from the model for a given set of inputs from which the engine is to be able to compute a given set of outputs.</li>
+</ol>
+
+	<pre class="java"><span class="j-cmt">// Get an engine builder (represents AFC's simplified API).
+</span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Load and parse the spreadsheet file into memory.
+</span>builder.loadSpreadsheet<span class="j-sym">( </span>DATA_PATH + <span class="j-str">&#34;test.xls&#34; </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// Set the factory interface to implement. This interface defines the method
+// Outputs newInstance( Inputs _inputs ), from which AFC derives the input
+// and output interfaces.
+</span>builder.setFactoryClass<span class="j-sym">( </span>OutputFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// Define which cells will be variable inputs to the engine, and which will be
+// computable outputs, by cell name. All cells whose name correspond to a method
+// on the output interface will be outputs, and similarly for inputs.
+// Inputs are bound to your input methods that will be called to obtain their value.
+// Outputs are bound to your output methods that are implemented by the engine.
+</span>builder.bindAllByName<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Build an engine for the given spreadsheet, inputs, and outputs.
+</span>Engine engine = builder.compile<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Get the factory instance from the compiled engine.
+</span>OutputFactory factory = <span class="j-sym">(</span>OutputFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;</pre>
+
+
+	<p><span class="caps">AFC</span>&#8217;s spreadsheet model should be designed so as to allow loaders to instantiate parts of the model lazily. This will in principle allow engines to be constructed efficiently which access only a small part of an otherwise large spreadsheet. The true need for this is not totally clear at the moment, however, because I expect users to write dedicated spreadsheets that supply computations to business applications. Currently, lazy parsing of expressions is already implemented and thus verified. Lazy instantiation of individual sheets, rows, and cells is not yet implemented and may still require some interface changes affecting both loaders and engine builders.</p>
+
+
+	<p>Use of JavaCC should ensure efficient expression parsers.</p>
+
+
+	<p>Construction of an engine from an <span class="caps">AFC</span> model is fairly straightforward and thus fairly cheap.</p>
+
+
+	<h3><a name="pagetoc__4_4">Cheap Instantiation</a></h3>
+
+	<p>First of all, an engine, once compiled, does not depend on the original spreadsheet file, its internal model, or the compiler used to compile the engine. It also does not have any dependencies on third party libraries. So if an engine can be serialized to persistent storage, it can be deserialized again with little cost and no external dependencies. It is therefore a possible and, indeed, recommended scenario that applications should take spreadsheet files as input during configuration and compile the necessary computation engines from them. They should then store the engines somewhere for use later on at run-time. In addition to improving the production server&#8217;s memory footprint and performance, this will also minimize the security risk introduced by the access to arbitrary, user-supplied spreadsheet files. This access can be delegated to an offline configuration editor, instead of being part of the production server.</p>
+
+
+	<p>Here&#8217;s the general outline of such an approach:</p>
+
+
+	<p><img title="Separate Compilation" src="compile_and_use.png" alt="Separate Compilation" /></p>
+
+
+	<p>First, the configuration, which compiles an engine and stores it somewhere (a file in this example):</p>
+
+	<pre class="java"><span class="j-cmt">// Build an engine for the given spreadsheet, inputs, and outputs.
+</span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>DATA_PATH + <span class="j-str">&#34;test.xls&#34; </span><span class="j-sym">)</span>;
+builder.setFactoryClass<span class="j-sym">( </span>OutputFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+builder.bindAllByName<span class="j-sym">()</span>;
+SaveableEngine compiledEngine = builder.compile<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Write the engine out to its serialized form, then drop the reference to it.
+</span>File engineSerializationFile = <span class="j-key">new </span>File<span class="j-sym">( </span>TEMP_ENGINE_JAR <span class="j-sym">)</span>;
+OutputStream outStream = <span class="j-key">new </span>BufferedOutputStream<span class="j-sym">( </span><span class="j-key">new </span>FileOutputStream<span class="j-sym">( </span>engineSerializationFile <span class="j-sym">) )</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>compiledEngine.saveTo<span class="j-sym">( </span>outStream <span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">finally </span><span class="j-sym">{
+  </span>outStream.close<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Second, the code that would run in a production server:</p>
+
+	<pre class="java"><span class="j-cmt">// Instantiate an engine from the serialized form.
+</span>File engineSerializationFile = <span class="j-key">new </span>File<span class="j-sym">( </span>TEMP_ENGINE_JAR <span class="j-sym">)</span>;
+InputStream inStream = <span class="j-key">new </span>BufferedInputStream<span class="j-sym">( </span><span class="j-key">new </span>FileInputStream<span class="j-sym">( </span>engineSerializationFile <span class="j-sym">) )</span>;
+Engine loadedEngine = FormulaRuntime.loadEngine<span class="j-sym">( </span>inStream <span class="j-sym">)</span>;
+OutputFactory factory = <span class="j-sym">(</span>OutputFactory<span class="j-sym">) </span>loadedEngine.getComputationFactory<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Compute an actual output value for a given set of actual input values.
+</span>Inputs inputs = <span class="j-key">new </span>Inputs<span class="j-sym">( </span><span class="j-num">4</span>, <span class="j-num">40 </span><span class="j-sym">)</span>;
+Outputs outputs = factory.newInstance<span class="j-sym">( </span>inputs <span class="j-sym">)</span>;
+<span class="j-typ">double </span>result = outputs.getResult<span class="j-sym">()</span>;
+
+<span class="j-key">return </span>result;</pre>
+
+
+	<p>Note that the production server must have called StandardEngine.register() somewhere so the EngineFactory knows what type of engine to instantiate.</p>
+
+
+	<p>The byte code engine is really a Java class generated at run-time. Its serialization is, therefore, simply the byte array that would be stored in the .class file. Note, however, that this byte array can be stored anywhere, it need not be an actual .class file somewhere on your classpath. Instantiation of a byte code engine from external storage is, therefore, exactly what a class loader does.</p>
+
+
+	<p>It should be noted that this design emphasizes using a few engines often as opposed to use of a huge number of different engines, each only once or twice. This is due to class loading and <span class="caps">JIT</span> overhead.</p>
+
+
+	<h3><a name="pagetoc__4_5">Usability</a></h3>
+
+	<p>This goal has not been specifically addressed in the current design. However, the use of JavaCC to generate the expression parsers should lead to fairly good error messages when unsupported or erroneous expressions are encountered.</p>
+
+
+	<h3><a name="pagetoc__4_6">Documentation</a></h3>
+
+	<p>Use of JavaCC to generate the expression parsers leads to a fairly readable documentation of the supported (or, at least, parsed) expression syntax.</p>
+
+
+	<p>Test-driven development should ensure that all supported features are clearly documented and verified by tests. The infrastructure to add tests in a consistent way is not documented yet.</p>
+
+
+	<h3><a name="pagetoc__4_7">Trustworthiness</a></h3>
+
+	<p><span class="caps">AFC</span> uses <a href="http://jode.sourceforge.net/">JODE</a> to decomile generated engines. This lets you have a look at the generated code in an understandable format. <span class="caps">AFC</span> takes great care to produce byte-code that is the equivalent of code produced by <code>javac</code> from Java sources.</p>
+
+
+	<p>The tests, however, do not yet verify that the decompiled code, when run through <code>javac</code> again, corresponds exactly to the bytecode produced by <span class="caps">AFC</span>.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected">Design Overview</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Overview</a><ul class="toc toc2"><li><a href="#pagetoc__1_1">Example</a></li><li><a href="#pagetoc__1_2">Generated Code</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">Design Goals</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Multiple Data Formats</a></li><li><a href="#pagetoc__2_2">High Performance Computation</a></li><li><a href="#pagetoc__2_3">High Performance Engine Construction</a></li><li><a href="#pagetoc__2_4">Cheap Instantiation</a></li><li><a href="#pagetoc__2_5">Usability</a></li><li><a href="#pagetoc__2_6">Documentation</a></li><li><a href="#trust">Trustworthiness</a></li></ul></li><li><a href="#pagetoc__3">Design</a></li><li class="withitems"><a href="#pagetoc__4">Realization of Design Goals</a><ul class="toc toc2"><li><a href="#pagetoc__4_1">Multiple Data Formats</a></li><li><a href="#pagetoc__4_2">High Performance Computation</a></li><li><a href="#pagetoc__4_3">High Performance Engine Construction</a></li><li><a href="#pagetoc__4_4">Cheap Instantiation</a></li><li><a href="#pagetoc__4_5">Usability</a></li><li><a href="#pagetoc__4_6">Documentation</a></li><li><a href="#pagetoc__4_7">Trustworthiness</a></li></ul></li></ul></div></div>
+<div class="area"><a href="../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><a href="../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

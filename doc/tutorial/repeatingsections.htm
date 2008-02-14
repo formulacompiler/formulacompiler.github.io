@@ -1,0 +1,647 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Repeating Sections - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Repeating Sections</h1>
+
+	<p><span class="caps">AFC</span> allows you to define <em>repeating sections</em> in a spreadsheet. Such sections are different from ordinary ranges in Excel in that the width or height of the section varies with each use of the computation.</p>
+
+
+
+	<h2><a name="pagetoc__1">Sample Spreadsheet</a></h2>
+
+	<p>For example, consider a hypothetical customer rating computation. We want users to be able to define a spreadsheet that computes the rating that we run for each customer in turn. For each customer, we feed the totals of all his orders of the last three months to the computation. One particular customer may have placed 5 orders in the last three months, another one 200.</p>
+
+
+	<p>Let me show you a very simple spreadsheet that computes such a customer rating. Note that in the depicted spreadsheet</p>
+
+<ul>
+	<li>the colored area is a named range whose name is given just below the sheet, and</li>
+	<li>the blue names in parentheses are cell names.</li>
+</ul>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><b><span style="text-decoration: underline;">Sections</span></b></td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>OrdersForLastNDays(30)</td>
+			<td>OrderTotal</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td></td>
+			<td class="xl-num xl-r1">$450.00<br/><span class="xl-name">(OrderTotal)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td class="xl-num xl-r1">$1,320.00</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td></td>
+			<td class="xl-num xl-r1">$1,540.00</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td></td>
+			<td class="xl-num xl-r1">$60.00</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td></td>
+			<td class="xl-num xl-r1">$5,870.00</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td><b><span style="text-decoration: underline;">Intermediates</span></b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td>total</td>
+			<td class="xl-num">$9,240.00<br/><span class="xl-exp">=SUM(B3:B7)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td><b><span style="text-decoration: underline;">Outputs</span></b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td>Rating</td>
+			<td>Good<br/><span class="xl-exp">=HLOOKUP(B10,C13:G14,2.0)</span><br/><span class="xl-name">(Rating)</span></td>
+			<td class="xl-num">$0.00</td>
+			<td class="xl-num">$2,000.00</td>
+			<td class="xl-num">$5,000.00</td>
+			<td class="xl-num">$7,500.00</td>
+			<td class="xl-num">$10,000.00</td>
+		</tr>
+		<tr>
+			<td class="xl-row">14</td>
+			<td></td>
+			<td></td>
+			<td>Abysmal</td>
+			<td>Poor</td>
+			<td>Average</td>
+			<td>Good</td>
+			<td>Excellent</td>
+		</tr>
+	</tbody>
+</table>
+<br/><span class="xl-r1">B3:B7</span> <span class="xl-name">(OrdersForLastThreeMonths)</span>
+
+
+	<p>The row range <code>3:7</code> will be our repeating section with variable height. Cell <code>B10</code>, the <em>Total</em>, sums the five rows 3..7. For every actual computation, <span class="caps">AFC</span> will shrink or extend the range within the sum in <code>B10</code> to match the number of order totals we actually passed in.</p>
+
+
+	<h2><a name="pagetoc__2">Spreadsheet Rules</a></h2>
+
+	<p>The fact that my original spreadsheet has exactly five order total rows is irrelevant to <span class="caps">AFC</span>. What matters is that</p>
+
+<ul>
+	<li>when we define the repeating section over the rows 3..7,</li>
+	<li>the sum in <code>B10</code> covers the entire height of the variable section, and</li>
+	<li>the formula in <code>B10</code> uses the range function <code>SUM</code>, rather than <code>B3+...+B7</code>.</li>
+</ul>
+
+	<p>Generally speaking, if you reference cells of a repeating section from outside the section, you&#8217;ll have to use a spreadsheet function that takes a <em>range</em> as an argument. This range must cover the entire variable extent of the section (height or width).</p>
+
+
+	<p>So we could just as well have used ten, or only two example rows. (In fact, we can get away with just one example row. I don&#8217;t recommend this, though, because you might then forget to use <code>SUM</code> over the rows.)</p>
+
+
+	<p>In any case, <span class="caps">AFC</span> uses <strong>only the first row</strong> as a template for making the <em>n</em> rows later on, at runtime. This will be important later when I show you a more complex spreadsheet.</p>
+
+
+	<h2><a name="pagetoc__3">Hooking It Up</a></h2>
+
+	<p>Let&#8217;s hook up the above spreadsheet with the customer rating application. First of all, we need an interface to the customer data. This interface must let <span class="caps">AFC</span> query the order totals. A simple approach would be to just return an array of order totals. <span class="caps">AFC</span> needs a little more structure than this, though.</p>
+
+
+	<p>When you define a repeating section with <span class="caps">AFC</span>, the section is treated like an embedded sub-sheet within the main sheet. Like a master/detail form really. This sub-sheet works just like the main sheet, so it must have an input interface to get values from. (As you&#8217;ll see later, one advantage of having a proper interface for section elements is it becomes very straightforward to add new input values like the order date.)</p>
+
+
+	<p>Here&#8217;s the interface for the orders sub-sheet we are going to use:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>OrderData
+<span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-typ">double </span>total<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The main customer interface must therefore let <span class="caps">AFC</span> query the set of orders it should process for this customer. The simplest way is to use an array:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>CustomerData
+<span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-hl">OrderData<span class="j-sym">[]</span></span> ordersForLastNDays<span class="j-sym">( </span><span class="j-typ">int </span>_days <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>You can also use an <code>Iterable</code> or an <code>Iterator</code>, or one of their descendants. Like so:</p>
+
+	<pre class="java"><span class="j-key">public </span><span class="j-hl">Iterable&lt;OrderData&gt;</span> ordersForLastNDaysIterable<span class="j-sym">( </span><span class="j-typ">int </span>_days <span class="j-sym">)</span>;
+<span class="j-key">public </span><span class="j-hl">Iterator&lt;OrderData&gt;</span> ordersForLastNDaysIterator<span class="j-sym">( </span><span class="j-typ">int </span>_days <span class="j-sym">)</span>;</pre>
+
+
+	<p>We now need to tell <span class="caps">AFC</span> that the order totals range of cells in the spreadsheet should be considered a vertically repeating section, which gets its data from the call shown above. In addition, we must tell <span class="caps">AFC</span> the precise input interface to use for the orders, namely <code>OrderData</code>. Here&#8217;s how to do this (given that the name <em>OrdersForLastThreeMonths</em> is defined in the spreadsheet as <code>B3:B7</code>):</p>
+
+	<pre class="java">Section binder = _builder.getRootBinder<span class="j-sym">()</span>;
+Range range = sheet.getRange<span class="j-sym">( </span><span class="j-str">&#34;OrdersForLastThreeMonths&#34; </span><span class="j-sym">)</span>;
+Method mtd = <span class="j-hl">CustomerData</span>.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;ordersForLastNDays&#34;</span></span>, Integer.TYPE <span class="j-sym">)</span>;
+CallFrame call = _builder.newCallFrame<span class="j-sym">( </span>mtd, <span class="j-num">90 </span><span class="j-sym">)</span>; <span class="j-cmt">// last 3 months is 90 days back
+</span>Orientation orient = Orientation.VERTICAL;
+Class input = <span class="j-hl">OrderData</span>.<span class="j-key">class</span>;
+
+Section <span class="j-hl">orders</span> = binder.<span class="j-hl">defineRepeatingSection</span><span class="j-sym">( </span>range, orient, call, input, null, <span class="j-key">null </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>As I said above, a repeating section is like a sub-sheet within the main-sheet. Thus, the return value of this method is again a <code>Section</code>, just like the original <code>binder</code> for the main sheet. We use it to bind the cells in the first template row of the section to input methods on the order interface. Like so (given that the name <em>OrderTotal</em> is defined in the spreadsheet as <code>B3</code>):</p>
+
+	<pre class="java">Cell totalCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;OrderTotal&#34; </span><span class="j-sym">)</span>;
+Method totalMethod = <span class="j-hl">OrderData</span>.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;total&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">orders</span>.defineInputCell<span class="j-sym">( </span>totalCell, totalMethod <span class="j-sym">)</span>;</pre>
+
+
+	<p>Binding the outputs is straightforward, as we are only binding global values, not values within the repeating section:</p>
+
+	<pre class="java">Cell ratingCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;Rating&#34; </span><span class="j-sym">)</span>;
+Method ratingMethod = CustomerRating.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;rating&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">binder</span>.defineOutputCell<span class="j-sym">( </span>ratingCell, ratingMethod <span class="j-sym">)</span>;</pre>
+
+
+	<h5>Internal Caching</h5>
+
+	<p>Using repeating sections introduces a certain amount of internal caching to the computation. Including <code>Resettable</code> in your output interface allows you to <a href="caching.htm#reuse">control this cache</a>.</p>
+
+
+	<h5>Note</h5>
+
+	<p>Given the return type <code>OrderData[]</code>, <span class="caps">AFC</span> could infer the input interface for the section by itself. Unfortunately, this is not possible when the return type is a <code>Collection</code> or an <code>Iterator</code>. Even <code>Collection&lt;OrderData&gt;</code> does not help because the generics annotations are erased at runtime. <span class="caps">AFC</span> therefore generally mandates that you pass it the interface type to use.</p>
+
+
+	<h2><a name="pagetoc__4">Generated Code</a></h2>
+
+	<p><span class="caps">AFC</span> generates a separate engine class for each repeating section:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.tutorials.CustomerRatingWithOrders;
+
+<span class="j-key">final class </span>$Sect0 <span class="j-key">implements </span>Computation
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>CustomerRatingWithOrders.OrderData $inputs;
+    <span class="j-key">final </span>$Root $parent;
+    <span class="j-key">final </span>$Root $root;
+    
+    $Sect0<span class="j-sym">(</span>CustomerRatingWithOrders.OrderData orderdata, $Root root<span class="j-sym">) {
+        </span>$parent = root;
+        $root = root;
+        $inputs = orderdata;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.total<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<p>Its instances are built in the main engine when the repeating section is first accessed. You can see this in the method <code>get$Sect0()</code> below:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.FormulaException;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeDouble_v2;
+<span class="j-key">import </span>org.formulacompiler.tutorials.CustomerRatingWithOrders;
+
+<span class="j-key">final class </span>$Root
+    <span class="j-key">implements </span>Computation, CustomerRatingWithOrders.CustomerRating
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>CustomerRatingWithOrders.CustomerData $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    <span class="j-key">private </span><span class="j-typ">double</span><span class="j-sym">[] </span>$constarr$0;
+    <span class="j-key">private </span>$Sect0<span class="j-sym">[] </span>get$Sect0;
+    
+    $Root<span class="j-sym">(</span>CustomerRatingWithOrders.CustomerData customerdata,
+          Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = customerdata;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>String get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                           $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>String rating<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double</span><span class="j-sym">[] </span>$constarr$0<span class="j-sym">() {
+        </span><span class="j-key">if </span><span class="j-sym">(</span>$constarr$0 == <span class="j-key">null</span><span class="j-sym">)
+            </span>$constarr$0
+                = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">0.0</span>, <span class="j-num">2000.0</span>, <span class="j-num">5000.0</span>, <span class="j-num">7500.0</span>, <span class="j-num">10000.0 </span><span class="j-sym">}</span>;
+        <span class="j-key">return </span>$constarr$0;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-typ">double </span>d = <span class="j-num">0.0</span>;
+        $Sect0<span class="j-sym">[] </span>sect0s = get$Sect0<span class="j-sym">()</span>;
+        <span class="j-typ">int </span>i = sect0s.length;
+        <span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i_0_ = <span class="j-num">0</span>; i_0_ &lt; i; i_0_++<span class="j-sym">) {
+            </span>$Sect0 sect0 = sect0s<span class="j-sym">[</span>i_0_<span class="j-sym">]</span>;
+            d += sect0.get$0<span class="j-sym">()</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span>d;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>String $idx$0<span class="j-sym">(</span><span class="j-typ">int </span>i<span class="j-sym">) {
+        </span><span class="j-key">switch </span><span class="j-sym">(</span>i<span class="j-sym">) {
+        </span><span class="j-key">case </span><span class="j-num">0</span>:
+            <span class="j-key">return </span><span class="j-str">&#34;Abysmal&#34;</span>;
+        <span class="j-key">case </span><span class="j-num">1</span>:
+            <span class="j-key">return </span><span class="j-str">&#34;Poor&#34;</span>;
+        <span class="j-key">case </span><span class="j-num">2</span>:
+            <span class="j-key">return </span><span class="j-str">&#34;Average&#34;</span>;
+        <span class="j-key">case </span><span class="j-num">3</span>:
+            <span class="j-key">return </span><span class="j-str">&#34;Good&#34;</span>;
+        <span class="j-key">case </span><span class="j-num">4</span>:
+            <span class="j-key">return </span><span class="j-str">&#34;Excellent&#34;</span>;
+        <span class="j-key">default</span>:
+            <span class="j-key">throw new </span>FormulaException
+                      <span class="j-sym">(</span><span class="j-str">&#34;#VALUE/REF! because index is out of range in INDEX&#34;</span><span class="j-sym">)</span>;
+        <span class="j-sym">}
+    }
+    
+    </span><span class="j-key">final </span>$Sect0<span class="j-sym">[] </span>get$Sect0<span class="j-sym">() {
+        </span><span class="j-key">if </span><span class="j-sym">(</span>get$Sect0 == <span class="j-key">null</span><span class="j-sym">) {
+            </span>CustomerRatingWithOrders.OrderData<span class="j-sym">[] </span>orderdatas
+                = $inputs.ordersForLastNDays<span class="j-sym">(</span><span class="j-num">90</span><span class="j-sym">)</span>;
+            <span class="j-key">if </span><span class="j-sym">(</span>orderdatas != <span class="j-key">null</span><span class="j-sym">) {
+                </span><span class="j-typ">int </span>i = orderdatas.length;
+                $Sect0<span class="j-sym">[] </span>sect0s = <span class="j-key">new </span>$Sect0<span class="j-sym">[</span>i<span class="j-sym">]</span>;
+                <span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i_1_ = <span class="j-num">0</span>; i_1_ &lt; i; i_1_++<span class="j-sym">)
+                    </span>sect0s<span class="j-sym">[</span>i_1_<span class="j-sym">] </span>= <span class="j-key">new </span>$Sect0<span class="j-sym">(</span>orderdatas<span class="j-sym">[</span>i_1_<span class="j-sym">]</span>, <span class="j-key">this</span><span class="j-sym">)</span>;
+                get$Sect0 = sect0s;
+            <span class="j-sym">} </span><span class="j-key">else
+                </span>get$Sect0 = <span class="j-key">new </span>$Sect0<span class="j-sym">[</span><span class="j-num">0</span><span class="j-sym">]</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span>get$Sect0;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="pagetoc__5">Intermediate Values In A Repeating Section</a></h2>
+
+	<p>Let&#8217;s extend the order totals example a bit. In the sum of the order totals, we want to give less weight to older values. To do this, we add the order date to the order interface:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>OrderData
+<span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-typ">double </span>total<span class="j-sym">()</span>;
+  <span class="j-hl">public Date date<span class="j-sym">()</span>;</span>
+<span class="j-sym">}</span></pre>
+
+
+	<p>We now want our spreadsheet to compute the age of an order in days, and from that to compute the weight to give to the order&#8217;s total. To do this, we compute the difference between the current date and the order date, and then linearly reduce the weight of olders orders towards 0 at the age of 90 days. The prototype row 3 shows this:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><b><span style="text-decoration: underline;">Sections</span></b></td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td><span style="text-decoration: underline;">Intermediates</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>OrdersForLastNDays(90)</td>
+			<td>OrderTotal</td>
+			<td>OrderDate</td>
+			<td>days back</td>
+			<td>weight</td>
+			<td>value</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td></td>
+			<td class="xl-num xl-r1">$450.00<br/><span class="xl-name">(OrderTotal)</span></td>
+			<td class="xl-date xl-r1">4/13/06<br/><span class="xl-exp">=B$11-89.0</span><br/><span class="xl-name">(OrderDate)</span></td>
+			<td class="xl-num xl-r1">89<br/><span class="xl-exp">=B$11-C3</span></td>
+			<td class="xl-num xl-r1">1%<br/><span class="xl-exp">=(90.0-D3)/90.0</span></td>
+			<td class="xl-num xl-r1">$5.00<br/><span class="xl-exp">=B3*E3</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td class="xl-num xl-r1">$1,320.00</td>
+			<td class="xl-date xl-r1">5/2/06<br/><span class="xl-exp">=B$11-70.0</span></td>
+			<td class="xl-num xl-r1">70<br/><span class="xl-exp">=B$11-C4</span></td>
+			<td class="xl-num xl-r1">22%<br/><span class="xl-exp">=(90.0-D4)/90.0</span></td>
+			<td class="xl-num xl-r1">$293.33<br/><span class="xl-exp">=B4*E4</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td></td>
+			<td class="xl-num xl-r1">$1,540.00</td>
+			<td class="xl-date xl-r1">5/27/06<br/><span class="xl-exp">=B$11-45.0</span></td>
+			<td class="xl-num xl-r1">45<br/><span class="xl-exp">=B$11-C5</span></td>
+			<td class="xl-num xl-r1">50%<br/><span class="xl-exp">=(90.0-D5)/90.0</span></td>
+			<td class="xl-num xl-r1">$770.00<br/><span class="xl-exp">=B5*E5</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td></td>
+			<td class="xl-num xl-r1">$60.00</td>
+			<td class="xl-date xl-r1">6/11/06<br/><span class="xl-exp">=B$11-30.0</span></td>
+			<td class="xl-num xl-r1">30<br/><span class="xl-exp">=B$11-C6</span></td>
+			<td class="xl-num xl-r1">67%<br/><span class="xl-exp">=(90.0-D6)/90.0</span></td>
+			<td class="xl-num xl-r1">$40.00<br/><span class="xl-exp">=B6*E6</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td></td>
+			<td class="xl-num xl-r1">$5,870.00</td>
+			<td class="xl-date xl-r1">7/8/06<br/><span class="xl-exp">=B$11-3.0</span></td>
+			<td class="xl-num xl-r1">3<br/><span class="xl-exp">=B$11-C7</span></td>
+			<td class="xl-num xl-r1">97%<br/><span class="xl-exp">=(90.0-D7)/90.0</span></td>
+			<td class="xl-num xl-r1">$5,674.33<br/><span class="xl-exp">=B7*E7</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td><b><span style="text-decoration: underline;">Intermediates</span></b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td>total value</td>
+			<td class="xl-num">$6,782.67<br/><span class="xl-exp">=SUM(F3:F7)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td>current date</td>
+			<td class="xl-date">7/11/06<br/><span class="xl-exp">=TODAY()</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td><b><span style="text-decoration: underline;">Outputs</span></b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">14</td>
+			<td>Rating</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=MATCH(B10,C14:G14)</span><br/><span class="xl-name">(Rating)</span></td>
+			<td class="xl-num">$0.00</td>
+			<td class="xl-num">$2,000.00</td>
+			<td class="xl-num">$5,000.00</td>
+			<td class="xl-num">$7,500.00</td>
+			<td class="xl-num">$10,000.00</td>
+		</tr>
+	</tbody>
+</table>
+<br/><span class="xl-r1">B3:F7</span> <span class="xl-name">(OrdersForLastThreeMonths)</span>
+
+
+	<p>To consider:</p>
+
+<ul>
+	<li>The order date is an input value. But to provide meaningful sample values for it, I have used a formula that computes them relative to the current date.</li>
+	<li>We now have intermediate values within the repeating section. Columns B and C are inputs, but columns D, E, F are computed within the spreadsheet.</li>
+	<li>The final aggregation in <code>B10</code> now sums the computed section values in <code>F3:F7</code>.</li>
+	<li>The computed row value in column D references a cell outside of the repeating section, namely the current date in <code>B11</code>.</li>
+</ul>
+
+	<p><span class="caps">AFC</span> handles all of this correctly. You do, however, have to follow a few rules:</p>
+
+<ul>
+	<li>When referencing within the section, only reference within the same row. You cannot reference a value from a sibling row. In particular, you cannot do running totals.</li>
+	<li>As stated above, <span class="caps">AFC</span> only looks at the <strong>first row</strong> of the section (row 3 here), which it then uses as a template for all others. You must yourself take care that your other example rows (rows 4 through 7 here) have formulas of a similiar structure as the template row.</li>
+</ul>
+
+	<p>The only remaining thing is to bind the order date in a fashion similar to the order total (assuming the name <em>OrderDate</em> is defined in the spreadsheet as <code>C3</code>):</p>
+
+	<pre class="java">Cell totalCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;OrderTotal&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">orders</span>.defineInputCell<span class="j-sym">( </span>totalCell, <span class="j-hl">OrderData</span>.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;total&#34; </span><span class="j-sym">) )</span>;
+
+Cell dateCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;OrderDate&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">orders</span>.defineInputCell<span class="j-sym">( </span>dateCell, <span class="j-str">&#34;date&#34; </span><span class="j-sym">)</span>; <span class="j-cmt">// shorter form</span></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Repeating Sections</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Sample Spreadsheet</a></li><li><a href="#pagetoc__2">Spreadsheet Rules</a></li><li><a href="#pagetoc__3">Hooking It Up</a></li><li><a href="#pagetoc__4">Generated Code</a></li><li><a href="#pagetoc__5">Intermediate Values In A Repeating Section</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

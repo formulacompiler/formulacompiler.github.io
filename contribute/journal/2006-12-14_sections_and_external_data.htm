@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Dynamic Sections and External Data - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Dynamic Sections and External Data</h1>
+
+	<p>I recently discovered a little feature in Excel that might point the way to an explicit representation of dynamic sections. When importing external data, you can set the flags &#8220;Fill down formulas in columns adjacent to data&#8221; and &#8220;Insert entire rows for new data&#8221;. Imported <span class="caps">XML</span> data is even better.</p>
+
+
+	<h2>External Data</h2>
+
+	<p>When set, the two flags make a data update behave very much like a dynamic section in <span class="caps">SEJ</span>. Excel replicates the formulas in the first row to all imported data rows, and it shifts down anything below the range if necessary.</p>
+
+
+	<p>What&#8217;s less convincing is that you would have to have some sort of external data source for your sample data. While this can be an external Excel file, it still requires you to manage this secondary file. And you&#8217;d have to mess about with the data import wizard and the imported data properties dialog.</p>
+
+
+	<h2>XML Data</h2>
+
+	<p>Importing <span class="caps">XML</span> data is much better. Imported <span class="caps">XML</span> data is an Excel list. Excel automatically handles computed columns in such lists properly. It is also very easy to enter sample data directly into the list, which is later overwritten with the contents of <span class="caps">XML</span> data files.</p>
+
+
+	<p>However, you need at least a sample <span class="caps">XML</span> data file, or an <span class="caps">XML</span> schema, to be able to define <span class="caps">XML</span> imports. This may often be rather cumbersome.</p>
+
+
+	<h2>Conclusion</h2>
+
+	<p>In both scenarios, there is no support for nested repeated data, which <span class="caps">SEJ</span> supports. So while they looked promising, I don&#8217;t think it either of them will really be a viable substitute.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Dynamic Sections and External Data</span></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

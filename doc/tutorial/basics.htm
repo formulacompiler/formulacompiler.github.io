@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>The Basics - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>The Basics</h1>
+
+	<p><acronym title="Abacus Formula Compiler">AFC</acronym> makes it possible to use computations defined in spreadsheet files within Java applications. <span class="caps">AFC</span> reads the spreadsheet files and compiles Java-based formula evaluation engines from them. Such an engine computes output values given a set of input values. For example, compute the value of the cell <em>B3</em> given the values of the cells <em>B1</em> and <em>B2</em> as inputs. The original spreadsheet files can be created, for example, in <a href="http://office.microsoft.com/">Microsoft Excel</a> or <a href="http://www.openoffice.org/">OpenOffice Calc</a>.</p>
+
+
+
+	<h2><a name="pagetoc__1">Line Item Rebate Revisited</a></h2>
+
+	<p><span class="caps">AFC</span> lets us solve the <a href="reason.htm">problem of the customizable line item rebate</a> very elegantly. We can enable the distributors &#8211; and also the more savvy customers &#8211; to customize the rebate computation in Microsoft Excel, or OpenOffice Calc.</p>
+
+
+	<p>Here&#8217;s the default rebate computation from the example, but now expressed as a spreadsheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td>Customer Rebate</td>
+			<td class="xl-num">3%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Article Rebate</td>
+			<td class="xl-num">6%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td>Rebate</td>
+			<td class="xl-num">6%<br/><span class="xl-exp">=MAX(B1:B2)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>And here&#8217;s one variant some specific customer might want to use (the best category gets combined rebates):</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td>Customer Rebate</td>
+			<td class="xl-num">3%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Article Rebate</td>
+			<td class="xl-num">6%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>Customer Category</td>
+			<td class="xl-num">5</td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td>Rebate</td>
+			<td class="xl-num">6%<br/><span class="xl-exp">=IF(B3=1.0,SUM(B1:B2),MAX(B1:B2))</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p><span class="caps">AFC</span>&#8217;s job is to turn these sheets into valid rebate computation strategy classes for our application.</p>
+
+
+	<h2><a name="pagetoc__2">What <span class="caps">AFC</span> Needs To Know</a></h2>
+
+	<p><span class="caps">AFC</span> builds a compiled Java class for each computation by analyzing the corresponding spreadsheet, just like the Java compiler does for our hand-written Java source code. So, in a way, a spreadsheet is source code to <span class="caps">AFC</span>.</p>
+
+
+	<p>And, just like the Java compiler, <span class="caps">AFC</span> needs to know about</p>
+
+<ul>
+	<li><code>RebateInputs</code>, the input interface, in order to resolve references to input values,</li>
+	<li><code>RebateComputation</code>, the output interface (or, in this case, abstract class), in order to know what the <span class="caps">API</span> of the generated computation should be, and</li>
+	<li><code>RebateComputationFactory</code>, the computation factory interface, so it can generate a compatible factory for us.</li>
+</ul>
+
+	<p>In addition, <span class="caps">AFC</span> must be able to determine</p>
+
+<ul>
+	<li>where the spreadsheet formulas reference input values, and</li>
+	<li>which formulas should serve as which output method implementations.</li>
+</ul>
+
+	<h2><a name="Convention">Convention Over Configuration</a></h2>
+
+	<p>While all these elements can be specified to <span class="caps">AFC</span> in great detail, it is far simpler to follow a few natural conventions. If we do, <span class="caps">AFC</span> can figure out almost all of the details by itself.</p>
+
+
+	<h5>Factory for input/output</h5>
+
+	<p>If our strategy interface has only a single method with exactly one parameter, then <span class="caps">AFC</span> infers the input and output interfaces from the method signature automatically. In our line item rebate example, the factory interface satisfies these rules:</p>
+
+	<pre class="java"><span class="j-key">public static abstract class </span>RebateComputationFactory
+<span class="j-sym">{
+  </span><span class="j-key">public abstract </span>RebateComputation newInstance<span class="j-sym">( </span>RebateInputs _inputs <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h5>Cell names for references</h5>
+
+	<p>If our spreadsheet contains user-defined cell names (the names you can enter in the box in the upper right of the formula toolbar in Excel), then <span class="caps">AFC</span> automatically uses them to resolve input and output references, as follows:</p>
+
+<ul>
+	<li>For every abstract method on the output interface, <span class="caps">AFC</span> looks for a cell named like the method, which is used to implement the method. That is, the cell&#8217;s value or formula is compiled as the body of the output method. If there is no such cell, an error is raised.</li>
+	<li>For every non-abstract output method, <span class="caps">AFC</span> does the same as above, only it is no error of there is no matching cell.</li>
+	<li>For all remaining cell names, <span class="caps">AFC</span> looks for a matching method on the input interface. If found, it binds the cell to it. So when the computation accesses the cell, it calls the input method instead of using the value or formula specified in the spreadsheet.</li>
+	<li>When matching a cell name <em>XY</em> to a method, <span class="caps">AFC</span> always considers both <code>xy()</code> and <code>getXY()</code> as method names. The match is <em>not</em> case-sensitive.</li>
+	<li>If you wish, you can tell <span class="caps">AFC</span> to raise an error if any unbound named cells remain after this. Alternatively, you can query the list of unbound cell names to do with as you please (perhaps just alerting users to the unbound cells).</li>
+</ul>
+
+	<p>There is also a variant where only cell names with a given prefix are considered, for example only cell names starting with &#8220;I_&#8221; for inputs and &#8220;O_&#8221; for outputs.</p>
+
+
+	<p>More precisely, given the methods</p>
+
+	<pre class="java"><span class="j-key">public abstract </span><span class="j-typ">double </span>getGetter<span class="j-sym">()</span>;
+<span class="j-key">public abstract </span><span class="j-typ">double </span>plain<span class="j-sym">()</span>;
+<span class="j-key">public abstract </span><span class="j-typ">double </span>both<span class="j-sym">()</span>;
+<span class="j-key">public abstract </span><span class="j-typ">double </span>getBoth<span class="j-sym">()</span>;
+<span class="j-key">public abstract </span><span class="j-typ">double </span>isAbstract<span class="j-sym">()</span>;
+<span class="j-key">public </span><span class="j-typ">double </span>isImplemented<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-num">0.0</span>; <span class="j-sym">}
+</span><span class="j-key">public final </span><span class="j-typ">double </span>isFinal<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-num">0.0</span>; <span class="j-sym">}
+</span><span class="j-key">public static </span><span class="j-typ">double </span>isStatic<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-num">0.0</span>; <span class="j-sym">}
+</span><span class="j-key">public abstract </span><span class="j-typ">double </span>hasParameters<span class="j-sym">( </span><span class="j-typ">int </span>_p <span class="j-sym">)</span>;</pre>
+
+
+	<p>the following holds for binding input values:</p>
+
+	<pre class="java">bindsTo<span class="j-sym">( </span><span class="j-str">&#34;getter&#34;</span>, Inputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">) )</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;plain&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;getPlain&#34; </span><span class="j-sym">)</span>; <span class="j-cmt">// there is no method &#34;getPlain()&#34; or &#34;getGetPlain()&#34;
+</span>binds<span class="j-sym">( </span><span class="j-str">&#34;both&#34; </span><span class="j-sym">)</span>; <span class="j-cmt">// precise name is used if found
+</span>binds<span class="j-sym">( </span><span class="j-str">&#34;getBoth&#34; </span><span class="j-sym">)</span>; <span class="j-cmt">// ditto
+</span>doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;unbound&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;isAbstract&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;isImplemented&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;isFinal&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;isStatic&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;hasParameters&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>When using the prefix <code>P_</code>, we have:</p>
+
+	<pre class="java">doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;getter&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;plain&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;getPlain&#34; </span><span class="j-sym">)</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getter&#34;</span>, Inputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">) )</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getGetter&#34;</span>, Inputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">) )</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_plain&#34;</span>, Inputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;plain&#34; </span><span class="j-sym">) )</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;P_getPlain&#34; </span><span class="j-sym">)</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_both&#34;</span>, Inputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;both&#34; </span><span class="j-sym">) )</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getBoth&#34;</span>, Inputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getBoth&#34; </span><span class="j-sym">) )</span>;</pre>
+
+
+	<p>The same holds for binding output values, except that <code>final</code> and <code>static</code> methods do not bind:</p>
+
+	<pre class="java">bindsTo<span class="j-sym">( </span><span class="j-str">&#34;getter&#34;</span>, Outputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">) )</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;plain&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;getPlain&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;both&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;getBoth&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;unbound&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;isAbstract&#34; </span><span class="j-sym">)</span>;
+binds<span class="j-sym">( </span><span class="j-str">&#34;isImplemented&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;isFinal&#34; </span><span class="j-sym">)</span>;</span>
+<span class="j-hl">doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;isStatic&#34; </span><span class="j-sym">)</span>;</span>
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;hasParameters&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>When using the prefix <code>P_</code>, we again have:</p>
+
+	<pre class="java">doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;getter&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;plain&#34; </span><span class="j-sym">)</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;getPlain&#34; </span><span class="j-sym">)</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getter&#34;</span>, Outputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">) )</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getGetter&#34;</span>, Outputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getGetter&#34; </span><span class="j-sym">) )</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_plain&#34;</span>, Outputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;plain&#34; </span><span class="j-sym">) )</span>;
+doesNotBind<span class="j-sym">( </span><span class="j-str">&#34;P_getPlain&#34; </span><span class="j-sym">)</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_both&#34;</span>, Outputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;both&#34; </span><span class="j-sym">) )</span>;
+bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getBoth&#34;</span>, Outputs.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getBoth&#34; </span><span class="j-sym">) )</span>;</pre>
+
+
+	<h5>Row titles for cell names</h5>
+
+	<p>For many users, entering an managing cell names is not straightforward, at least in Microsoft Excel. Neither are the names easily visible when looking at a spreadsheet.</p>
+
+
+	<p><span class="caps">AFC</span> therefore can use row titles instead of cell names to resolve references. Row titles are simply string values in column <em>A</em> of a spreadsheet, with the cell they name right next to it in column <em>B</em>. Spaces and other characters not legal in cell names are filtered out. If a spreadsheet contains no named cells, <span class="caps">AFC</span> automatically assumes row titles.</p>
+
+
+	<h5>Example</h5>
+
+	<p>Our example from above satisfies all of these criteria:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td>Customer Rebate</td>
+			<td class="xl-num">3%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Article Rebate</td>
+			<td class="xl-num">6%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td>Rebate</td>
+			<td class="xl-num">6%<br/><span class="xl-exp">=MAX(B1:B2)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p><span class="caps">AFC</span> will automatically infer the following bindings:</p>
+
+<ul>
+	<li><em>CustomerRebate</em> identifies cell <em>B1</em>, which is mapped to the input method <code>double getCustomerRebate()</code>,</li>
+	<li><em>ArticleRebate</em> identifies cell <em>B2</em>, which is mapped to the input method <code>double getArticleRebate()</code>, and</li>
+	<li><em>Rebate</em> identifies cell <em>B3</em>, which implements the output method <code>double getRebate()</code>.</li>
+</ul>
+
+	<h2><a name="pagetoc__4">Compiling The Factory</a></h2>
+
+	<p>Since we follow <span class="caps">AFC</span>&#8217;s conventions, the final setup of <span class="caps">AFC</span>&#8217;s spreadsheet compiler becomes very simple:</p>
+
+	<pre class="java"><span class="j-key">private </span>RebateComputationFactory compileFactoryFromSpreadsheet<span class="j-sym">( </span>String _sheetName <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span>EngineBuilder builder = <span class="j-hl">SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span></span>;
+  builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span>_sheetName <span class="j-sym">)</span>;
+  builder.<span class="j-hl">setFactoryClass</span><span class="j-sym">( </span>RebateComputationFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+  builder.<span class="j-hl">bindAllByName</span><span class="j-sym">()</span>;
+  builder.<span class="j-hl">failIfByNameBindingLeftNamedCellsUnbound</span><span class="j-sym">()</span>;
+  
+  Engine engine = builder.<span class="j-hl">compile</span><span class="j-sym">()</span>;
+  <span class="j-key">return </span><span class="j-sym">(</span>RebateComputationFactory<span class="j-sym">) </span>engine.<span class="j-hl">getComputationFactory</span><span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p><span class="caps">AFC</span> compiles a complete factory and strategy implementation to our specs, so using it is child&#8217;s play now:</p>
+
+	<pre class="java"><span class="j-key">public </span><span class="j-typ">void </span>testAFC<span class="j-sym">() </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span>LineItem item = <span class="j-key">new </span>StrategyLineItem<span class="j-sym">()</span>;
+  <span class="j-hl">RebateComputation.factory = compileFactoryFromSpreadsheet<span class="j-sym">( </span>CUSTOMSHEETNAME <span class="j-sym">)</span>;</span>
+  <span class="j-typ">double </span>rebate = item.computeRebate<span class="j-sym">()</span>;
+  assertEquals<span class="j-sym">( </span><span class="j-num">0.15</span>, rebate, <span class="j-num">0.00001 </span><span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h2><a name="pagetoc__5">Generated Engine</a></h2>
+
+	<p>The compiled engine, when <a href="decompile.htm">decompiled</a> to Java source code, looks like this:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeDouble_v2;
+<span class="j-key">import </span>org.formulacompiler.tutorials.Basics;
+
+<span class="j-key">final class </span>$Root <span class="j-key">extends </span>Basics.RebateComputation <span class="j-key">implements </span>Computation
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>Basics.RebateInputs $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>Basics.RebateInputs rebateinputs, Environment environment<span class="j-sym">) {
+        </span><span class="j-key">super</span><span class="j-sym">(</span>rebateinputs<span class="j-sym">)</span>;
+        $environment = environment;
+        $inputs = rebateinputs;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-sym">(</span>get$1<span class="j-sym">() </span>== <span class="j-num">1.0 </span>? get$2<span class="j-sym">() </span>+ get$3<span class="j-sym">()
+                </span>: RuntimeDouble_v2.max<span class="j-sym">(</span>get$2<span class="j-sym">()</span>, get$3<span class="j-sym">()))</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>getRebate<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>$inputs.getCustomerCategory<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getCustomerRebate<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getArticleRebate<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="pagetoc__6">Outlook</a></h2>
+
+	<p>This example showed a simple but complete case study of how <span class="caps">AFC</span> can be incorporated into a typical line-of-business application. <span class="caps">AFC</span> is quite a bit more powerful than just this, though. Read on.</p>
+
+
+	<p><a href="index.htm">Back: Tutorial Index</a></p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">The Basics</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Line Item Rebate Revisited</a></li><li><a href="#pagetoc__2">What <span class="caps">AFC</span> Needs To Know</a></li><li><a href="#Convention">Convention Over Configuration</a></li><li><a href="#pagetoc__4">Compiling The Factory</a></li><li><a href="#pagetoc__5">Generated Engine</a></li><li><a href="#pagetoc__6">Outlook</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

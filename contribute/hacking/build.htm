@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>AFC&#8217;s Build Process - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>AFC&#8217;s Build Process</h1>
+
+	<p><span class="caps">AFC</span> comes with an <a href="http://ant.apache.org/">Ant</a> build script in <code>build.xml</code>. This document lists the most important build targets. To run a build, you need to <a href="tools.htm">setup the required tools</a> first.</p>
+
+
+	<p>To get a quick overview of all available build targets, run <code>ant -p</code> in <span class="caps">AFC</span>&#8217;s root folder. If you want to know more, I encourage you to look at <code>build.xml</code>. Skimming over the <a href="files.htm">file and folder list</a> first will help.</p>
+
+
+	<p>The individual components also each have their own <code>components/xy/build.xml</code>. Again, run <code>ant -p</code> in a component&#8217;s folder to see the available targets.</p>
+
+
+	<p>For consise output, run the targets with <code>ant -q ...</code>. Otherwise you will get swamped by intermediate target logs.</p>
+
+
+
+	<h2><a name="pagetoc__1">Main Targets</a></h2>
+
+<dl>
+<dt>build</dt><dd>is the default build target. It the .jars in <code>build/</code> from the source code and updates the required external .jars in <code>build/lib/</code> from their locations in the individual components.</dd>
+
+<dt>test</dt><dd>builds the jars and runs all automated tests. This can take quite a while.</dd>
+
+<dt>doc</dt><dd>rebuilds the documentation from scratch. You must have run <code>test</code> first because some of the test results are cited directly into the documentation (in the <a href="../../doc/reference/index.htm">function reference</a>, for instance). This will take a while, too. See <code>doc-api</code> and <code>doc-main</code> below for faster options.</dd>
+
+<dt>dist</dt><dd>rebuilds final distribution packages from scratch. It first erases all temporary and build files and then runs a full build, including tests, checks, and documentation, but <em>not</em> code coverage analysis.</dd>
+
+<dt>clean</dt><dd>removes all temporary build files, but not final output like <code>doc/</code>, <code>build/</code>, and <code>dist/</code>.</dd>
+
+<dt>clobber</dt><dd>removes all build files, including final output.</dd>
+</dl>
+
+	<h2><a name="pagetoc__2">Targets of Note</a></h2>
+
+<dl>
+<dt>test-main</dt><dd>Like <code>test</code>, but skips the very time-consuming reference tests. Mainly useful as a quick smoke-test and as a prerequisite for code citing in <code>doc-main</code>.</dd>
+
+<dt>doc-main</dt><dd>regenerates the <span class="caps">HTML</span> files in <code>doc/</code> from <code>src/doc/</code>, except for the function reference. If cited elements have changed, they will be listed (so-called <a href="http://arrenbrecht.ch/jcite/tripwire.htm">tripwires</a>). If you have set <code>jcite.differ</code> in <code>build.properties</code> (to <code>/usr/bin/diff</code> for example), then you will see what has changed.</dd>
+
+<dt>doc-main-accept</dt><dd>Like <code>doc-main</code>, but accepts changed citations and updates the tripwire database. Do this only after you have <em>verified documentation around changed citations</em>.</dd>
+
+<dt>doc-img</dt><dd>updates the .png images from their <a href="http://www.graphviz.org/">dot</a> sources.</dd>
+
+<dt>check-deps</dt><dd>Checks package dependency rules. These are generated from <code>src/scripts/components.yaml</code>. Builds first.</dd>
+
+<dt>check-style</dt><dd>Checks source code style rules. They are specified in <code>src/checkstyle-*.xml</code>. Includes checks for missing header or javadoc comments.</dd>
+
+<dt>cover-corbertura</dt><dd>runs code coverage analysis using <a href="http://cobertura.sourceforge.net/">Cobertura</a>. Slowish, but produces nice looking output. Like <code>test</code>, but instruments the product code for coverage analysis. Output is in <code>temp/coverage/</code>.</dd>
+
+<dt>cover-emma</dt><dd>like <code>cover-cobertura</code>, but using <a href="http://emma.sourceforge.net/">Emma</a>. Faster.</dd>
+</dl>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">AFC&#8217;s Build Process</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Main Targets</a></li><li><a href="#pagetoc__2">Targets of Note</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

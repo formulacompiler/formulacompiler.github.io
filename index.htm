@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="download/index.htm">
+					<img src="site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<span class="selected">Home</span> | 
+						
+					<a href="quick.htm">Quick Start</a> | <a href="doc/index.htm">Documentation</a> | <a href="download/index.htm">Download</a> | <a href="support.htm">Support</a> | <a href="contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<div class="blurb">
+<div class="rounded_box">
+<div class="rounded_top"><div></div></div>
+<div class="rounded_content">
+	<p>Your <strong>users</strong> want to <strong>customize formulas</strong>. They know <strong>Excel</strong> (or OpenOffice).
+<br />So <strong>use spreadsheets directly</strong>. At <strong>native speed</strong>, and it&#8217;s <strong>thread safe</strong>.
+<br />Using <strong>double</strong> or <strong>BigDecimal</strong>; it&#8217;s your choice.</p>
+
+	<pre class="java"><span class="j-cmt">// Compile price finding factory and strategy implementation from spreadsheet:
+</span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>PATH, <span class="j-hl"><span class="j-str">&#34;CustomPriceFormula.xls&#34;</span></span> <span class="j-sym">) )</span>;
+builder.setFactoryClass<span class="j-sym">( </span>PriceFinderFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+builder.bindAllByName<span class="j-sym">()</span>;
+Engine engine = builder.<span class="j-hl">compile</span><span class="j-sym">()</span>;
+PriceFinderFactory factory = <span class="j-sym">(</span>PriceFinderFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Use it to compute a line item price:
+</span>LineItem item = getCurrentLineItem<span class="j-sym">()</span>;
+PriceFinder priceFinder = factory.<span class="j-hl">newInstance</span><span class="j-sym">( </span>item <span class="j-sym">)</span>;
+BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-sym">()</span>;</pre>
+
+
+	<p>Available under the <strong>GPL</strong> and <strong>commercially</strong> (<a href="download/license.htm">details</a>).</p>
+
+
+</div>
+<div class="rounded_bot"><div></div></div>
+</div>
+</div>
+	<h1>Abacus Formula Compiler for Java</h1>
+
+	<p><a href="download/index.htm">Download</a> it now!</p>
+
+
+	<p><a href="quick.htm">Quick start</a> your first compiled spreadsheet. Has you up and running in just a few minutes.</p>
+
+
+	<p><a href="doc/index.htm">Learn more</a> about the goals, the design, the <span class="caps">API</span>, and the supported functions.</p>
+
+
+<div class="news">
+	<h2>News</h2>
+
+	<h3><a href="download/releasenotes.htm">Release 1.0</a></h3>
+
+	<p>is the first public <span class="caps">GPL</span> release and adds a host of changes.
+<br /><span class="when">August 24, 2007</span></p>
+
+
+	<h3><a href="download/releasenotes.htm">Release 0.10.1</a></h3>
+
+	<p>adds improved by-name binding and some more functions.
+<br /><span class="when">(milestone only)</span></p>
+
+
+</div>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

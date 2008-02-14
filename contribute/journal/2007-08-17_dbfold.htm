@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>SUM and DSUM, etc. - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1><code>SUM</code> and <code>DSUM</code>, etc.</h1>
+
+	<p>The definition of the plain and the database aggregators should really be the same. What I need is a fold/reduce operation that applies equally to plain and database aggregations.</p>
+
+
+	<p>Here&#8217;s what I would like to specify:</p>
+
+	<pre><code>COUNT ::= fold with C = 0 each X as C = C + 1 into C
+SUM ::= fold/reduce with S = 0 each X as S = S + X into S
+PRODUCT ::= fold/reduce with P = 1 each X as P = P * X into P when empty 0
+MIN ::= fold/reduce with M = $global_max each X as M = M $min$ X into M when empty 0
+MAX ::= fold/reduce with M = $global_min each X as M = M $max$ X into M when empty 0
+AVERAGE ::= fold with S = 0 each X as S = S + X with count C into S / C when empty 0
+VARP ::= fold
+    with S = 0, SS = 0 
+    each X as S = S + X, SS = SS + X * X
+    with count C
+    into (SS - S<strong&gt;S / C) / C
+    when empty 0
+COVAR ::= fold
+    with SX = 0, SY = 0, SXY = 0 
+    each X, Y as SX = SX + X, SY = SY + Y, SXY = SXY + X * Y
+    with count C
+    into (SXY - SXSY / C) / C
+    when empty 0
+NPV rate ::=
+    wrap
+        let rate1 = rate + 1
+        in fold
+            with r = 0
+            index i
+            each vi as r + vi / rate1 ^ i
+    at 2
+STDDEVP ::= wrap SQRT( VARP ) at 1</code></pre>
+
+
+	<p>Written deliberately in curried notation to emphasize that the definitions should apply equally to plain and database aggregations.</p>
+
+
+	<p>This would make <code>AVERAGE</code> and <code>VARP</code> single pass, like the others, which would help with both the database aggregators and the general aggregators when used over large, non-cached repeating sections.</p>
+
+
+	<p>This could be extended to handle multi-array folds:</p>
+
+	<pre><code>SUMPRODUCT ::= fold/reduce with S = 0 each X, Y as S = S + X<strong&gt;Y into S</code></pre>
+
+
+	<p>which, however, we would at most support for arrays Xs and Ys that are composed identically with respect to repeation sections, meaning the span exactly the same repeating sections in exactly the same way.</p>
+
+
+	<h4>Applying Folds</h4>
+
+	<p>To use the folds above, I would specify, for instance</p>
+
+	<pre><code>SUM( xs ) ::= apply SUM to list xs    // SUM as defined above
+DSUM( tbl, idx, filt ) ::= apply SUM to database tbl, idx, filt
+...
+COVAR( xs#, ys# ) ::= apply COVAR to vectors xs, ys
+NPV( rate, vs* ) ::= apply NPV( rate ) to list vs</code></pre>
+
+
+	<p>The latter shows two things. Firstly, I need to pass outer arguments into the fold as such. This should be straightforward with the rewriter&#8217;s parameter support.</p>
+
+
+	<p>Secondly, I need to push the application down right next to the fold, essentially lifting the constructs surrounding the fold out of the apply. So</p>
+
+	<pre><code>apply (let rate1 = rate + 1 in fold ...) to list vs</code></pre>
+
+
+	<p>becomes</p>
+
+	<pre><code>let rate1 = rate + 1 in (apply (fold ...) to list vs)</code></pre>
+
+
+	<p>Clearly <code>rate1</code> must have been sanitized before being lifted. Otherwise it could collide with letvars within the <code>vs</code>. A simple approach would be to have the generator for apply call a recursive rewrite of the fold immediately, thus ensuring (a) proper sanitization of the letvars within, and (b) that the fold node is there so lifting can be done.</p>
+
+
+	<p>In order to be able to lift efficiently, the apply rewriter must know where the fold is, its parent, and its index in the parent&#8217;s arguments. So I wrap the curried folds in a special wrapper node that holds this information.</p>
+
+
+	<h4>Sorting</h4>
+
+	<p>Finally, we need sorting and trimming for functions like <code>TRIMMEAN</code> and <code>MEDIAN</code>. If these are few, then we might simply implement them directly in Java. Otherwise, a <code>SORT</code> and a <code>TRIM</code> function might help, though to make <code>TRIM</code> efficient it might be more intelligent to pass around arrays as triples of array, low bound, high bound.</p>
+
+
+	<h3>Semantics of <code>fold</code> etc.</h3>
+	<pre><code>fold with V1 = ?, V2 = ?, ... each X as V1 = ?, V2 = ?, ... into ?</code></pre>
+
+
+	<p>maps to a straightforward loop (optionally unfolded). When more than one aggregator <code>V</code> is used, or if a database or repeating section is involved, the compiler emits a helper function, otherwise it emits the unrolled fold directly.</p>
+
+	<pre><code>fold/reduce with V = ? each X as V = ? into ?</code></pre>
+
+
+	<p>Like <code>fold</code> above, but only accepts a single aggregator. May omit the initial value and use the first argument instead if this leads to more efficient code. The latter is only used for plain unfolded loops.</p>
+
+	<pre><code>fold[/reduce] with V = ? each X as V = ? into ? when empty ?</code></pre>
+
+
+	<p>Like <code>fold[/reduce]</code> above, but returns a given default value when there is no argument. Exists because <code>PRODUCT( [] )</code> must return 0, not 1, and counting inside <code>PRODUCT</code> to use an <code>IF</code> in the final expression seems excessive.</p>
+
+
+	<p>The formerly existing plain reduce can be dropped. For <code>MIN</code> and <code>MAX</code> with <code>BigDecimal</code> I shall use <code>null</code>, such that <code>null $min$ x = x</code> and <code>null $max$ x = x</code>. If <code>null</code> should turn out to be unacceptable, I shall define custom <code>BigDecimal</code> instances to take the global min/max roles.</p>
+
+
+	<h3>Implementation Details</h3>
+
+	<p><code>COUNT</code> for plain aggregations would be replaced by the existing more efficient implementation.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">SUM and DSUM, etc.</span></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

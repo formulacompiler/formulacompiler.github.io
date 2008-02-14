@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Special Rewrite Functions - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Special Rewrite Functions</h1>
+
+	<p><span class="caps">AFC</span> contains a number of special, internal functions that you can use to rewrite spreadsheet functions using simpler base functions.</p>
+
+
+
+	<h2><a name="pagetoc__1">Let</a></h2>
+
+	<p>The function</p>
+
+	<pre><code>let name = expr in body</code></pre>
+
+
+	<p>defines a local constant <code>name</code> as the result of <code>expr</code> during the evaluation of <code>body</code>. Within <code>body</code>, the constant can be referenced as <code>name</code>. It may be referenced more than once (which is the reason <code>let</code> exists). Example:</p>
+
+	<pre><code>let n = COUNT(xs) in n * n</code></pre>
+
+
+	<p>In the generated Java code, <span class="caps">AFC</span> allocates a local variable for the result and initializes it inline at its first occurrence. Like so:</p>
+
+	<pre><code>double n;
+return (n = count(xs)) * n;</code></pre>
+
+
+	<p>Sequences of <code>let</code>s can be written as:</p>
+
+	<pre><code>let a = 1
+let b = 2
+let c = 3
+in a + b + c</code></pre>
+
+
+	<p>A <code>let</code> nested within a non-top level expression must be parenthesized:</p>
+
+	<pre><code>1 + (let c = 2 in c*c)</code></pre>
+
+
+	<h2><a name="pagetoc__2">Fold / Iterate / Apply</a></h2>
+
+	<p><em>Folding</em> here means to aggregate a list of values <code>value-list</code> into a single result value. It is also possible to fold values from multiple parallel lists (vectors). The definition of a fold is separated from its application to a list of values. This is so we can apply a fold like a summation to both a range (<code>SUM</code>) and a database selection (<code>DSUM</code>). Here&#8217;s a quick example:</p>
+
+	<pre class="j-text"><code>def sum = fold/reduce with s = 0 each xi as s = s + xi end
+rewrite sum( xs* ) = apply sum to list xs</code></pre>
+
+
+	<h3><a name="pagetoc__2_1">Fold / Iterate</a></h3>
+
+	<p>A fold is written as follows:</p>
+
+	<pre><code>fold[/reduce]
+[with
+    acc-name-1 = init-expr-1, 
+    ..., 
+    acc-name-n = init-expr-n]
+[index index-name]
+each value-name-1, ..., value-name-m
+[as
+    acc-name-1 = folding-expr-1,
+    ...,
+    acc-name-n = folding-expr-n]
+[[with count count-name]
+into merge-expr]
+[when empty empty-expr]</code></pre>
+
+
+	<p>Iterate is very similar, but allows the use of the current index within the <code>folding-expr</code>:</p>
+
+	<pre><code>iterate
+with
+    acc-name-1 = init-expr-1, 
+    ..., 
+    acc-name-n = init-expr-n
+[index index-name]
+each value-name-1, ..., value-name-m
+as
+    acc-name-1 = folding-expr-1,
+    ...,
+    acc-name-n = folding-expr-n
+[[with count count-name]
+into merge-expr]
+[when empty empty-expr]</code></pre>
+
+
+	<p>Both of these functions correspond roughly to the following loop in pseudo-code:</p>
+
+	<pre><code>double acc-name-1 = init-expr-1;
+...
+double acc-name-n = init-expr-n;
+int index-name = 0;
+while (more-values) {
+    index-name++;
+    double value-name-1 = values-1[ index-name ];
+    ...
+    double value-name-m = values-m[ index-name ];
+    acc-name-1 = folding-expr-1;
+    ...
+    acc-name-n = folding-expr-n;
+}
+if (index-name &gt; 0) {
+    int count-name = index-name;
+    return merge-expr;
+}
+return empty-expr;</code></pre>
+
+
+	<p>Things of note:</p>
+
+<ul>
+	<li>The <code>value-i</code> arrays are placeholders for the value lists fed to the fold by <code>apply</code> (see below).</li>
+	<li>Within a <code>folding-expr-i</code>, you can reference the prior value of <code>acc-name-i</code>, all of the <code>value-name-j</code>, and <code>index-name</code>. You should not refer to any other accumulator value.</li>
+	<li>Within the <code>merge-expr</code> you can reference all the final <code>acc-name-i</code>, and <code>count-name</code>.</li>
+	<li>When you don&#8217;t need <code>index-name</code>, then don&#8217;t specify it. Likewise for <code>count-name</code>. This allows more efficient code to be generated.</li>
+	<li>When <code>n = 1</code> (single accumulator), you can omit the <code>into merge-expr</code> part. The result is then simply the last value of the accumulator.</li>
+	<li>When <code>n = 1</code>, you can omit the <code>when empty empty-expr</code> part. The result if the list is empty is then the initial value of the accumulator (<code>init-expr-1</code>).</li>
+	<li>When <code>n = m = 1</code>, you may specify <code>fold/reduce</code>. Then the fold can be optimized by initializing the accumulator with the first list value and skipping the <code>folding-expr-1</code> for the first list value. So <code>SUM(1, 2)</code> is reduced to <code>1 + 2</code> and not <code>0 + 1 + 2</code>. The compiler will still use a plain fold if there is no easily recognized list value to be used as the initial accumulator value (for example, when the fold is applied to a repeating section).</li>
+	<li>Using <code>fold</code> instead of <code>iterate</code> allows the compiler to rearrange the values in the list prior to folding it. This allows it to do better constant folding and generate more efficient code.</li>
+</ul>
+
+	<p>A single list, single accumulator fold is often compiled to an inlined, unrolled version when applied to a static cell range. So <code>SUM(A1:A3)</code> becomes <code>A1 + A2 + A3</code>. This is not the case if the cell range has repeating sections in it. For other folds, the compiler emits a helper function.</p>
+
+
+	<h3><a name="pagetoc__2_2">Apply</a></h3>
+
+	<p>There are two versions of <code>apply</code>, which applies a fold to one or more lists of values:</p>
+
+	<pre><code>apply fold-def to list list-param
+apply fold-def to vectors {vec-param-1, ..., vec-param-m}</code></pre>
+
+
+	<p>The former is used with the standard aggregators where all the arguments are considered the input list:</p>
+
+	<pre class="j-text"><code>def sum = fold/reduce with s = 0 each xi as s = s + xi end
+rewrite sum( xs* ) = apply sum to list xs</code></pre>
+
+
+	<p>This also shows how the definition of the fold can be moved out of the rewrite rule and refered to by name. You normally only do this when the fold can be reused elsewhere (for instance in the definition of database folds).</p>
+
+
+	<p>The latter is used for folds over vectors (arrays), which consist of a single contiguous cell range. Here&#8217;s an example with a single array:</p>
+
+	<pre class="j-text"><code>rewrite npv( rate, vs# ) =
+	let rate1 = rate + 1
+	in
+		apply
+			iterate with
+				r = 0
+			index i
+			each vi as
+				r = r + vi / rate1 ^ i
+			end
+		to vectors {vs}</code></pre>
+
+
+	<p>and with multiple arrays:</p>
+
+	<pre class="j-text"><code>rewrite covar( xs#, ys# ) =
+	if COUNT( xs ) &lt;&gt; COUNT( ys ) then NA() else
+	apply
+		fold with
+			sx = 0,
+			sy = 0,
+			sxy = 0
+		each xi, yi as
+			sx = sx + xi,
+			sy = sy + yi,
+			sxy = sxy + xi * yi
+		with count n into
+			(sxy - sx*sy/n) / n
+		when empty err( "#DIV/0! because list doesn't contain numbers in COVAR" )                                 
+		end
+	to vectors {xs, ys}</code></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Special Rewrite Functions</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Let</a></li><li class="withitems"><a href="#pagetoc__2">Fold / Iterate / Apply</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Fold / Iterate</a></li><li><a href="#pagetoc__2_2">Apply</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

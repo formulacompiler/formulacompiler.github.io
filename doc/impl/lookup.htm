@@ -1,0 +1,612 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>LOOKUP, MATCH, and INDEX - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Implementation</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1><code>LOOKUP</code>, <code>MATCH</code>, and <code>INDEX</code></h1>
+
+	<p>The <code>LOOKUP</code> function, and its foundations <code>MATCH</code> and <code>INDEX</code>, are likely to be heavily used in Abacus&#8217; financial applications. So they must be implemented efficiently both space- and runtime-wise.</p>
+
+
+
+	<h2><a name="pagetoc__1">Fixed-size Tables</a></h2>
+
+	<p>Most lookup tables are going to be constant, I predict. Often they will be largish tables of data imported from official sources, like tax rates of different sorts.</p>
+
+
+	<h3><a name="pagetoc__1_1"><code>MATCH</code></a></h3>
+
+	<p>An efficient implementation of <code>MATCH</code> for such constant tables uses an array. The array allows for memory-efficient representation of the table data, and for time-efficient search. Consider:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=MATCH(C1,D1:H1)</span><br/><span class="xl-name">(MC_Out)</span></td>
+			<td class="xl-num">15<br/><span class="xl-name">(MC_In)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">15</td>
+			<td class="xl-num">20</td>
+			<td class="xl-num">25</td>
+			<td class="xl-num">30</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>which is implemented as:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                         $constarr$0<span class="j-sym">())</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double</span><span class="j-sym">[] </span>$constarr$0<span class="j-sym">() {
+    </span><span class="j-key">if </span><span class="j-sym">(</span>$constarr$0 == <span class="j-key">null</span><span class="j-sym">)
+        </span>$constarr$0 = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">10.0</span>, <span class="j-num">15.0</span>, <span class="j-num">20.0</span>, <span class="j-num">25.0</span>, <span class="j-num">30.0 </span><span class="j-sym">}</span>;
+    <span class="j-key">return </span>$constarr$0;
+<span class="j-sym">}</span></pre>
+
+
+	<p>where <code>fun_MATCH_Ascending</code> performs a binary search, as Excel does. If the array contains values computed at runtime as in:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=MATCH(C2,D2:H2)</span><br/><span class="xl-name">(MI_Out)</span></td>
+			<td class="xl-num">15<br/><span class="xl-name">(MI_In)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">15<br/><span class="xl-name">(MI_In_1)</span></td>
+			<td class="xl-num">20<br/><span class="xl-name">(MI_In_2)</span></td>
+			<td class="xl-num">25</td>
+			<td class="xl-num">30</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>we augment this to:</p>
+
+	<pre class="java"><span class="j-key">public final </span><span class="j-typ">void </span>reset<span class="j-sym">() {
+    </span>$arr$0$init = <span class="j-key">false</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                         $arr$0<span class="j-sym">())</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double</span><span class="j-sym">[] </span>$arr$0<span class="j-sym">() {
+    </span><span class="j-key">if </span><span class="j-sym">(</span>!$arr$0$init<span class="j-sym">) {
+        </span>$arr$0$init = <span class="j-key">true</span>;
+        <span class="j-typ">double</span><span class="j-sym">[] </span>ds = $constarr$0<span class="j-sym">()</span>;
+        ds<span class="j-sym">[</span><span class="j-num">1</span><span class="j-sym">] </span>= get$2<span class="j-sym">()</span>;
+        ds<span class="j-sym">[</span><span class="j-num">2</span><span class="j-sym">] </span>= get$3<span class="j-sym">()</span>;
+        <span class="j-key">return </span>ds;
+    <span class="j-sym">}
+    </span><span class="j-key">return </span>$constarr$0<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double</span><span class="j-sym">[] </span>$constarr$0<span class="j-sym">() {
+    </span><span class="j-key">if </span><span class="j-sym">(</span>$constarr$0 == <span class="j-key">null</span><span class="j-sym">)
+        </span>$constarr$0 = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">10.0</span>, <span class="j-num">0.0</span>, <span class="j-num">0.0</span>, <span class="j-num">25.0</span>, <span class="j-num">30.0 </span><span class="j-sym">}</span>;
+    <span class="j-key">return </span>$constarr$0;
+<span class="j-sym">}</span></pre>
+
+
+	<p>I did not merge <code>$arr$0()</code> into <code>$constarr$0()</code> because this allows me to reuse the constant part of the array when the computation is <code>reset()</code>.</p>
+
+
+	<h5>Unrolling</h5>
+
+	<p>I also considered unrolling the array and search, but for large tables this would lead to significant code bloat, which hurts memory-efficiency and <span class="caps">JIT</span> performance. Whereas the predefined search functions on the runtime used above can be JITted efficiently.</p>
+
+
+	<p>When most or all array values are computed, and maybe even expensive to compute, then unrolling is probably the better approach as it avoids computing cells not touched by the search. But this sounds like a highly improbable scenario, so I won&#8217;t address it.</p>
+
+
+	<p>Lookups into very small tables might also perform better if unrolled. Array setup might just turn out to be too expensive for them. But, while nifty, this adds too much complexity for too little gain, I believe. And people needing the speed can rewrite their small lookups to nested <code>IF</code>s anyway.</p>
+
+
+	<h3><a name="pagetoc__1_2"><code>INDEX</code></a></h3>
+
+	<p>For <code>INDEX</code> I see two approaches: using arrays as above, or using a big <code>switch</code>. I did a quick check and it turns out the using <code>switch</code> is actually more space-efficient in the .class file, as well as more memory and time-efficient. The main reason is the way constant arrays are built in Java. They are internally built as if you had assigned each element in turn. In addition to this, <code>switch</code> also has the advantage that only the table values actually used have to be computed. So for:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">4</td>
+			<td class="xl-num">20<br/><span class="xl-exp">=INDEX(D4:H4,1.0,C4)</span><br/><span class="xl-name">(IC_Out)</span></td>
+			<td class="xl-num">3<br/><span class="xl-name">(IC_In)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">15</td>
+			<td class="xl-num">20</td>
+			<td class="xl-num">25</td>
+			<td class="xl-num">30</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>we get:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>get$1<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>$idx$0<span class="j-sym">(</span><span class="j-typ">int </span>i<span class="j-sym">) {
+    </span><span class="j-key">switch </span><span class="j-sym">(</span>i<span class="j-sym">) {
+    </span><span class="j-key">case </span><span class="j-num">0</span>:
+        <span class="j-key">return </span><span class="j-num">10.0</span>;
+    <span class="j-key">case </span><span class="j-num">1</span>:
+        <span class="j-key">return </span><span class="j-num">15.0</span>;
+    <span class="j-key">case </span><span class="j-num">2</span>:
+        <span class="j-key">return </span><span class="j-num">20.0</span>;
+    <span class="j-key">case </span><span class="j-num">3</span>:
+        <span class="j-key">return </span><span class="j-num">25.0</span>;
+    <span class="j-key">case </span><span class="j-num">4</span>:
+        <span class="j-key">return </span><span class="j-num">30.0</span>;
+    <span class="j-key">default</span>:
+        <span class="j-key">throw new </span>FormulaException
+                  <span class="j-sym">(</span><span class="j-str">&#34;#VALUE/REF! because index is out of range in INDEX&#34;</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<p>which extends very naturally to computed values:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>get$3<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>$idx$0<span class="j-sym">(</span><span class="j-typ">int </span>i<span class="j-sym">) {
+    </span><span class="j-key">switch </span><span class="j-sym">(</span>i<span class="j-sym">) {
+    </span><span class="j-key">case </span><span class="j-num">0</span>:
+        <span class="j-key">return </span><span class="j-num">10.0</span>;
+    <span class="j-key">case </span><span class="j-num">1</span>:
+        <span class="j-key">return </span>get$1<span class="j-sym">()</span>;
+    <span class="j-key">case </span><span class="j-num">2</span>:
+        <span class="j-key">return </span>get$2<span class="j-sym">()</span>;
+    <span class="j-key">case </span><span class="j-num">3</span>:
+        <span class="j-key">return </span><span class="j-num">25.0</span>;
+    <span class="j-key">case </span><span class="j-num">4</span>:
+        <span class="j-key">return </span><span class="j-num">30.0</span>;
+    <span class="j-key">default</span>:
+        <span class="j-key">throw new </span>FormulaException
+                  <span class="j-sym">(</span><span class="j-str">&#34;#VALUE/REF! because index is out of range in INDEX&#34;</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h3><a name="pagetoc__1_3"><code>LOOKUP</code> etc.</a></h3>
+
+	<p>Since all the variants of <code>LOOKUP</code> are mapped to <code>INDEX</code> and <code>MATCH</code>, this covers the lot. There is one minor peephole optimization at work, though. Whenever there is a call to <code>MATCH</code> directly within <code>INDEX</code>, then this gets rewritten to <code>MATCH_INT</code> returning an integer instead of double or bigdec to avoid the unnecessary conversions from and back to integer. So:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">7</td>
+			<td class="xl-num">12<br/><span class="xl-exp">=LOOKUP(C7,D7:F7,G7:I7)</span><br/><span class="xl-name">(LC_Out)</span></td>
+			<td class="xl-num">2<br/><span class="xl-name">(LC_In)</span></td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">11</td>
+			<td class="xl-num">12</td>
+			<td class="xl-num">13</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>is:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                       $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The equivalent, but explicitly written:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">10</td>
+			<td class="xl-num">12<br/><span class="xl-exp">=INDEX(G10:I10,1.0,MATCH(C10,D10:F10))</span><br/><span class="xl-name">(IMC_Out)</span></td>
+			<td class="xl-num">2<br/><span class="xl-name">(IMC_In)</span></td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">11</td>
+			<td class="xl-num">12</td>
+			<td class="xl-num">13</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>is also:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                       $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h3><a name="pagetoc__1_4">Multiple Lookups</a></h3>
+
+	<p>What if multiple, different values are looked up? Consider:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">12</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=MATCH(C12,D12:H12)</span><br/><span class="xl-name">(MMC_Out_1)</span></td>
+			<td class="xl-num">15<br/><span class="xl-name">(MMC_In_1)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">15</td>
+			<td class="xl-num">20</td>
+			<td class="xl-num">25</td>
+			<td class="xl-num">30</td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td class="xl-num">4<br/><span class="xl-exp">=MATCH(C13,D12:H12)</span><br/><span class="xl-name">(MMC_Out_2)</span></td>
+			<td class="xl-num">27<br/><span class="xl-name">(MMC_In_2)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>We clearly need to factor the common construction of the array for <code>D12:H12</code> out of the generated code for the cells <code>B12</code> and <code>B13</code>. To do this, we first need to recognise the commonality. This is hard to do efficiently for the computation model compiler as it has no notion of cell adjacency and, thus, no notion of contiguous arrays. So the spreadsheet compiler passes on the both the range origin and extent for instances of <code>ExpressionNodeForArrayReference</code> it generates to help the computation model compiler recognize repeated occurrences. Resulting in the single instance <code>$constarr$0()</code>:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                         $constarr$0<span class="j-sym">())</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+    </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$3<span class="j-sym">()</span>,
+                                                         $constarr$0<span class="j-sym">())</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The same goes for <code>INDEX</code>, but the common code is the generated <code>switch</code>:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>get$1<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>get$3<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Putting it together, we get this for <code>LOOKUP</code>:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                       $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$3<span class="j-sym">()</span>,
+                                                       $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Finally, since we pass the range origin to the compiler, the rewriter can properly identify common sub-arrays such as are generated by rewriting <code>H/VLOOKUP</code>. Consider:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">19</td>
+			<td class="xl-num">12<br/><span class="xl-exp">=HLOOKUP(C19,D19:G21,2.0)</span><br/><span class="xl-name">(SAC_Out_1)</span></td>
+			<td class="xl-num">19<br/><span class="xl-name">(SAC_In_1)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">15</td>
+			<td class="xl-num">20</td>
+			<td class="xl-num">25</td>
+		</tr>
+		<tr>
+			<td class="xl-row">20</td>
+			<td class="xl-num">22<br/><span class="xl-exp">=HLOOKUP(C19,D19:G21,3.0)</span><br/><span class="xl-name">(SAC_Out_2)</span></td>
+			<td></td>
+			<td class="xl-num">11</td>
+			<td class="xl-num">12</td>
+			<td class="xl-num">13</td>
+			<td class="xl-num">14</td>
+		</tr>
+		<tr>
+			<td class="xl-row">21</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=MATCH(C19,D19:G19)</span><br/><span class="xl-name">(SAC_Out_3)</span></td>
+			<td></td>
+			<td class="xl-num">21</td>
+			<td class="xl-num">22</td>
+			<td class="xl-num">23</td>
+			<td class="xl-num">24</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Both of the lookups are rewritten to <code>MATCH</code> and <code>INDEX</code>. The arrays referenced by all three instances of <code>MATCH</code> are then identical, but two are generated by the expression rewriter, not the spreadsheet loader. All are identified properly:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                       $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+    </span><span class="j-key">return </span>$idx$1<span class="j-sym">(</span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                       $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>get$3<span class="j-sym">() {
+    </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
+                                                         $constarr$0<span class="j-sym">())</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Note that only the array accessors are factored out. <span class="caps">AFC</span> does not do full common subexpression elimination (CSE). But if you <a href="../tutorial/caching.htm">turn on caching</a> and rewrite the two <code>HLOOKUP</code>s to applications of <code>INDEX</code> and the central third <code>MATCH</code>, then you get proper reuse of the <code>MATCH</code> value.</p>
+
+
+	<p>Passing the origin might, though, be a problem for users (still hypothetical) of the model compiler itself. What origins should they use? They might not have a cube model at all. So for the future I could say that if you set the origin, then it&#8217;s used. If not, then subarrays use the array&#8217;s name with a special suffix.</p>
+
+
+	<h3><a name="pagetoc__1_5"><code>H/VLOOKUP</code> with computed sub-array index</a></h3>
+
+	<p>Above we saw <code>HLOOKUP</code> with a constant lookup row index in action. A computed row index simply results in another <code>switch</code> to select the appropriate sub-array. So:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">23</td>
+			<td class="xl-num">12<br/><span class="xl-exp">=HLOOKUP(C23,D23:G25,H23)</span><br/><span class="xl-name">(HLI_Out_1)</span></td>
+			<td class="xl-num">19<br/><span class="xl-name">(HLI_In)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">15</td>
+			<td class="xl-num">20</td>
+			<td class="xl-num">25</td>
+			<td class="xl-num">2<br/><span class="xl-name">(HLI_In_1)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">24</td>
+			<td class="xl-num">22<br/><span class="xl-exp">=HLOOKUP(C23,D23:G25,H24)</span><br/><span class="xl-name">(HLI_Out_2)</span></td>
+			<td></td>
+			<td class="xl-num">11</td>
+			<td class="xl-num">12</td>
+			<td class="xl-num">13</td>
+			<td class="xl-num">14</td>
+			<td class="xl-num">3<br/><span class="xl-name">(HLI_In_2)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">25</td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">21</td>
+			<td class="xl-num">22</td>
+			<td class="xl-num">23</td>
+			<td class="xl-num">24</td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>results in:</p>
+
+	<pre class="java"><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+    </span><span class="j-key">return </span>get$5<span class="j-sym">((</span><span class="j-typ">double</span><span class="j-sym">) </span>RuntimeDouble_v2.fun_MATCH_Ascending
+                          <span class="j-sym">(</span>get$1<span class="j-sym">()</span>, $constarr$0<span class="j-sym">()))</span>;
+<span class="j-sym">}
+</span><span class="j-key">final </span><span class="j-typ">double </span>get$5<span class="j-sym">(</span><span class="j-typ">double </span>d<span class="j-sym">) {
+    </span><span class="j-key">switch </span><span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>get$2<span class="j-sym">())) {
+    </span><span class="j-key">case </span><span class="j-num">1</span>:
+        <span class="j-key">return </span>$idx$0<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>d<span class="j-sym">) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+    <span class="j-key">case </span><span class="j-num">2</span>:
+        <span class="j-key">return </span>$idx$1<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>d<span class="j-sym">) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+    <span class="j-key">case </span><span class="j-num">3</span>:
+        <span class="j-key">return </span>$idx$2<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>d<span class="j-sym">) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+    <span class="j-key">default</span>:
+        Runtime_v2.fun_ERROR
+            <span class="j-sym">(</span><span class="j-str">&#34;#VALUE/REF! because index is out of range in H/VLOOKUP&#34;</span><span class="j-sym">)</span>;
+        <span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>-<span class="j-num">1</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<p>This still leaves quite a bit to be desired, like</p>
+
+<ul>
+	<li>Unnecessary casts to <code>double</code> and then back to <code>int</code>.</li>
+	<li>Non-factored subtraction <code>(int) d - 1</code>.</li>
+</ul>
+
+	<p>But, most importantly, this is just the code for cell <code>B23</code>. It is duplicated entirely for cell <code>B24</code>, except for the <code>$idx$</code> methods. Eliminating this would again require full blown common subexpression elimination.</p>
+
+
+	<h2><a name="pagetoc__2">Input Tables of Varying Size</a></h2>
+
+	<p>What if the lookup table is a repeating section? For the moment, I will not support this. Still, here are my current ideas on it.</p>
+
+
+	<p>In the current implementation of repeating sections where every element is represented by its own sub-computation instance, I see two options:</p>
+
+<ul>
+	<li>Build the arrays used above from the repeating data, then proceed as before. Adds additional arrays, but also caches lookup tables. This sounds like a good choice for <code>MATCH</code>.</li>
+	<li>Generate code that directly works on the internal sub-instance arrays for <code>MATCH</code> and <code>INDEX</code>. Avoids the additional arrays, but repeatedly evaluates the values touched during lookup. This sounds like a good choice for <code>INDEX</code>.</li>
+</ul>
+
+	<p>If <span class="caps">AFC</span> ever supports memory-efficient forward-only iteration of largish repeating sections, then this would have to change. <code>MATCH</code> and <code>INDEX</code> would have to sequentially scan the section until the result is found. <code>LOOKUP</code> would have to be implemented directly as scanning twice for <code>MATCH</code> and then <code>INDEX</code> would be silly.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><span class="selected"><a href="../../doc/impl/index.htm">Implementation Details</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">LOOKUP, MATCH, and INDEX</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Fixed-size Tables</a><ul class="toc toc2"><li><a href="#pagetoc__1_1"><code>MATCH</code></a></li><li><a href="#pagetoc__1_2"><code>INDEX</code></a></li><li><a href="#pagetoc__1_3"><code>LOOKUP</code> etc.</a></li><li><a href="#pagetoc__1_4">Multiple Lookups</a></li><li><a href="#pagetoc__1_5"><code>H/VLOOKUP</code> with computed sub-array index</a></li></ul></li><li><a href="#pagetoc__2">Input Tables of Varying Size</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

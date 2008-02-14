@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Binding Cells - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Binding Cells</h1>
+
+	<p>Input and output cells of a computation defined through a spreadsheet are bound to methods of plain Java interfaces or classes.</p>
+
+
+
+	<h2><a name="pagetoc__1">Inputs</a></h2>
+
+	<p>To bind spreadsheet cells to variable input values, you must have an interface or a class defining getters for your input values. This is typically a public static inner type, defined explicitly for this purpose:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Input
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getSomeValue<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getAnotherValue<span class="j-sym">()</span>;
+  <span class="j-typ">int </span>getDecade<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getValueForYear<span class="j-sym">( </span><span class="j-typ">int </span>year <span class="j-sym">)</span>;
+  String getName<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>In order for the interface to be accessible to the generated engine, it must be <code>public</code>. This is because the engine is not loaded by the same class loader as your own classes (read <a href="http://www.artima.com/insidejvm/ed2/security2.html">why this matters</a>).</p>
+
+
+	<p>You have to provide this type to the engine builder:</p>
+
+	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+<span class="j-hl">builder.setInputClass<span class="j-sym">( </span>Input.<span class="j-key">class </span><span class="j-sym">)</span>;</span>
+builder.setOutputClass<span class="j-sym">( </span>Output.<span class="j-key">class </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>In the <a href="basics.htm">simple usage scenario</a>, you just passed a factory, and <span class="caps">AFC</span> inferred the input and output types by itself. Furthermore, <span class="caps">AFC</span> did all the cell binding automatically for you. Now you want to get full control over binding. To do this, you access the loaded spreadsheet, and the so called <em>root section binder</em>. This interface controls the binding of cells for the entire spreadsheet (as opposed to contained <a href="repeatingsections.htm">sections of variable extent</a>).</p>
+
+	<pre class="java">Spreadsheet spreadsheet = builder.<span class="j-hl">getSpreadsheet<span class="j-sym">()</span></span>;
+SpreadsheetBinder.Section binder = builder.<span class="j-hl">getRootBinder</span><span class="j-sym">()</span>;</pre>
+
+
+	<p>You then tell the binder which cells are input cells, and to which getter methods they should be bound:</p>
+
+	<pre class="java">cell = spreadsheet.<span class="j-hl">getCell</span><span class="j-sym">( </span><span class="j-str">&#34;SOME_VALUE&#34; </span><span class="j-sym">)</span>;
+method = Input.<span class="j-key">class</span>.<span class="j-hl">getMethod</span><span class="j-sym">( </span><span class="j-str">&#34;getSomeValue&#34; </span><span class="j-sym">)</span>;
+binder.<span class="j-hl">defineInputCell</span><span class="j-sym">( </span>cell, method <span class="j-sym">)</span>;</pre>
+
+
+	<p>Since we already told the binder about <code>Input.class</code>, there is a shorter version for this:</p>
+
+	<pre class="java">cell = spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;OTHER_VALUE&#34; </span><span class="j-sym">)</span>;
+binder.defineInputCell<span class="j-sym">( </span>cell, <span class="j-str">&#34;getAnotherValue&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<h3><a name="pagetoc__1_1">Parameters</a></h3>
+
+	<p>You can also bind to parametrized methods. The arguments to the method are either constant values determined at compile-time of the engine, or else cell values computed by the engine. First, an example with only constant parameters:</p>
+
+	<pre class="java">cell = spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;YEAR_1994&#34; </span><span class="j-sym">)</span>;
+method = Input.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getValueForYear&#34;</span>, <span class="j-hl">Integer.TYPE</span> <span class="j-sym">)</span>;
+binder.defineInputCell<span class="j-sym">( </span>cell, method, <span class="j-hl">1994</span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>Binding to cell values computed at run-time is equally easy (you can use any of the spreadsheet methods returning a cell reference):</p>
+
+	<pre class="java">cell = spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;YEAR_x&#34; </span><span class="j-sym">)</span>;
+method = Input.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getValueForYear&#34;</span>, <span class="j-hl">Integer.TYPE</span> <span class="j-sym">)</span>;
+binder.defineInputCell<span class="j-sym">( </span>cell, method, <span class="j-hl">spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;x&#34; </span><span class="j-sym">)</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>By supplying a <code>CallFrame</code> instead of just a method, you can even chain calls. In this example, we do the equivalent of <code>getName().length()</code>, where <code>getName()</code> returns a <code>String</code>:</p>
+
+	<pre class="java">cell = spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;NAME_LENGTH&#34; </span><span class="j-sym">)</span>;
+method = Input.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getName&#34; </span><span class="j-sym">)</span>;
+chainedMethod = String.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;length&#34; </span><span class="j-sym">)</span>;
+binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<span class="j-sym">( </span>method <span class="j-sym">)</span><span class="j-hl">.chain</span><span class="j-sym">( </span>chainedMethod <span class="j-sym">) )</span>;</pre>
+
+
+	<p>The range of supported parameter data types is documented in the topic on <a href="bindbyname.htm">binding by name</a>.</p>
+
+
+	<h3><a name="pagetoc__1_2">Exceptions</a></h3>
+
+	<p>You cannot, as of the current version, bind to input methods throwing checked exceptions. We are thinking about extending <span class="caps">AFC</span> to support this in the future, provided that <em>all</em> bound output methods declare <em>all</em> the checked exceptions declared by the bound input methods.</p>
+
+
+	<h2><a name="pagetoc__2">Outputs</a></h2>
+
+	<p>Outputs that the spreadsheet computes are bound to methods of an interface or a dedicated abstract class you define. This type is implemented or subclassed by the generated computation engine, which overrides all methods bound to output cells so they perform the computation specified in the spreadsheet.</p>
+
+
+	<p>Your output type is typically a static inner type. In order for it to be accessible to the generated computation, it must be <code>public</code>.</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Output
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getResult<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getCoefficient<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Like the input type, you also provide to the engine builder prior to using it:</p>
+
+	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+builder.setInputClass<span class="j-sym">( </span>Input.<span class="j-key">class </span><span class="j-sym">)</span>;
+<span class="j-hl">builder.setOutputClass<span class="j-sym">( </span>Output.<span class="j-key">class </span><span class="j-sym">)</span>;</span></pre>
+
+
+	<p>Now that the type is in place, we can bind output cells to it (again, there is a longer and a shorter version):</p>
+
+	<pre class="java">cell = spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;RESULT&#34; </span><span class="j-sym">)</span>;
+method = Output.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getResult&#34; </span><span class="j-sym">)</span>;
+binder.defineOutputCell<span class="j-sym">( </span>cell, method <span class="j-sym">)</span>;
+
+cell = spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;COEFF&#34; </span><span class="j-sym">)</span>;
+binder.defineOutputCell<span class="j-sym">( </span>cell, <span class="j-str">&#34;getCoefficient&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<h3><a name="pagetoc__2_1">Parameters</a></h3>
+
+	<p>Like inputs, you can also bind outputs to parametrized methods. This is explained in detail in the topic on <a href="bindbyname.htm">binding by name</a>.</p>
+
+
+	<h2><a name="Defaults">Defaults</a></h2>
+
+	<p>If you supply implementations for your output methods, they serve as defaults in case they are not bound to an output cell of the spreadsheet. This is mainly useful when outputs are bound generically (by cell name, for instance).</p>
+
+
+	<p>To access input values when computing default output values, you can define a constructor that takes the input type as its sole parameter. <span class="caps">AFC</span> then automatically calls that constructor with the current inputs. You can also access other output values by calling their corresponding methods, of course.</p>
+
+	<pre class="java"><span class="j-key">public static abstract class </span>OutputWithDefault <span class="j-hl">implements Output</span>
+<span class="j-sym">{
+  </span><span class="j-key">private final </span>Input input;
+
+  <span class="j-key">public </span>OutputWithDefault<span class="j-sym">( </span><span class="j-hl">Input _input</span> <span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">()</span>;
+    <span class="j-key">this</span>.input = _input;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public abstract </span><span class="j-typ">double </span>getResult<span class="j-sym">()</span>;
+
+  <span class="j-key">public </span><span class="j-typ">double </span>getCoefficient<span class="j-sym">()
+  {
+    </span><span class="j-key">return </span><span class="j-hl">this.input.getSomeValue<span class="j-sym">()</span></span> * <span class="j-num">0.02</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>When used together with a factory class, you often want the factory method to use the base output interface (<code>Output</code>) as its return type, not the type of the implementation that provides the defaults (<code>OutputWithDefaults</code>). Like so:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Factory
+<span class="j-sym">{
+  </span><span class="j-hl">Output</span> newInstance<span class="j-sym">( </span>Input _input <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p><span class="caps">AFC</span> supports this. Simply override the output class in the <code>EngineBuilder</code> so it does not get inferred from the factory method. Like this:</p>
+
+	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+<span class="j-hl">builder.setFactoryClass<span class="j-sym">( </span>Factory.<span class="j-key">class </span><span class="j-sym">)</span>;</span>
+<span class="j-hl">builder.setOutputClass<span class="j-sym">( </span>OutputWithDefault.<span class="j-key">class </span><span class="j-sym">)</span>;</span></pre>
+
+
+	<h2><a name="pagetoc__4">Generated Code</a></h2>
+
+	<p>The above bindings, together with this spreadsheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><b><span style="text-decoration: underline;">Inputs</span></b></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Some_Value</td>
+			<td class="xl-num">3.4</td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>Other_Value</td>
+			<td class="xl-num">4.5</td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td>Decade_x</td>
+			<td class="xl-num">5</td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td>Year_1994</td>
+			<td class="xl-num">20</td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td>Year_x</td>
+			<td class="xl-num">30</td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td>Name_Length</td>
+			<td class="xl-num">20</td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td><b><span style="text-decoration: underline;">Intermediates</span></b></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td>x</td>
+			<td class="xl-num">1950<br/><span class="xl-exp">=B4*10.0+1900.0</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td><b><span style="text-decoration: underline;">Outputs</span></b></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td>Result</td>
+			<td class="xl-num">70<br/><span class="xl-exp">=SUM(B5:B7)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">14</td>
+			<td>Coeff</td>
+			<td class="xl-num">7.9<br/><span class="xl-exp">=SUM(B2:B3)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>result in the following compiled code (when not using defaults for the outputs):</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Runtime_v2;
+<span class="j-key">import </span>org.formulacompiler.tutorials.BindingCells;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, BindingCells.Output
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>BindingCells.Input $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>BindingCells.Input input, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = input;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">() </span>+ get$2<span class="j-sym">() </span>+ get$3<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>getResult<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getValueForYear<span class="j-sym">(</span><span class="j-num">1994</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getValueForYear<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span>get$7<span class="j-sym">()))</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>$inputs.getName<span class="j-sym">()</span>.length<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$4<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$5<span class="j-sym">() </span>+ get$6<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>getCoefficient<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$4<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$5<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getSomeValue<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$6<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getAnotherValue<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$7<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$8<span class="j-sym">() </span>* <span class="j-num">10.0 </span>+ <span class="j-num">1900.0</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$8<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>$inputs.getDecade<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Binding Cells</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Inputs</a><ul class="toc toc2"><li><a href="#pagetoc__1_1">Parameters</a></li><li><a href="#pagetoc__1_2">Exceptions</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">Outputs</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Parameters</a></li></ul></li><li><a href="#Defaults">Defaults</a></li><li><a href="#pagetoc__4">Generated Code</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

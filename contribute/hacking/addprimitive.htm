@@ -1,0 +1,557 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Adding A New Primitive Spreadsheet Function To AFC - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Adding A New Primitive Spreadsheet Function To <span class="caps">AFC</span></h1>
+
+	<p>As a simple, but probably typical example, we will look at how I added <code>ABS()</code> to the list of supported spreadsheet functions. So for the rest of this page, we will assume <code>ABS()</code> has not been implemented yet.</p>
+
+
+
+	<h2><a name="pagetoc__1"><em>Rule 1</em>: <br />Document first</a></h2>
+
+	<p>Documentation, well, documents, but it also <a href="http://peomeint.blogspot.com/2006/08/beyond-tdd-documentation-driven.html">focuses our thinking</a>. This is why we start with it &#8211; and, of course, so we don&#8217;t forget it. For larger, novel features, it can be <a href="../../doc/tutorial/generatesheet.htm">quite elaborate</a>. In our case, we may safely assume that people know why we would want <code>ABS()</code> to be supported, and that they will consult the Excel help file for information on it.</p>
+
+
+	<h4><a name="pagetoc__1_1">Release Notes</a></h4>
+
+	<p>Nevertheless, we still need to document that <code>ABS()</code> is, in fact, supported. First, we announce the improvement in the release notes in <code>src/doc/releasenotes.rextile</code>. Just look at the file and you&#8217;ll see how (as per the house rule <em>mimick existing code</em>).</p>
+
+
+	<h4><a name="pagetoc__1_2">Rextile</a></h4>
+
+	<p><span class="caps">AFC</span>&#8217;s documentation is written in <a href="http://en.wikipedia.org/wiki/Textile_%28markup_language%29">Textile</a>, a very concise and text editor-friendly format for writing <span class="caps">XHTML</span>. To convert the Textile sources to <span class="caps">XHTML</span>, we use <a href="http://arrenbrecht.ch/rextile/">Rextile</a>&#8212;a <a href="http://ruby-lang.org/">Ruby</a> based tool. You will need to <a href="tools.htm">install it</a>. Once it&#8217;s installed, you can simply run <a href="build.htm">ant doc</a> to regenerate the documentation in <code>doc/</code> from the sources in <code>src/doc/</code>. (It is quicker to run <code>ant -q doc-main-update</code> if you just want see the updated release notes, and can live with some warnings and missing citations.)</p>
+
+
+	<h2><a name="pagetoc__2"><em>Rule 2</em>: <br />Cite tests</a></h2>
+
+	<p>So far, we simply said: <em><code>ABS()</code> is supported</em>. How do we know it is? How does the reader know? This is where test-driven development gets into the picture &#8211; with a twist. We prove what we say directly to our reader. The proof becomes an integral part of the documentation (which is, after all, <em>what we are saying</em>). So, to integrate the proof, we always give examples which are <a href="http://arrenbrecht.ch/articles/SourceCiting.htm"><em>cited</em> from automated tests</a>.</p>
+
+
+	<h2><a name="pagetoc__3">Automated Formula Tests</a></h2>
+
+	<p><span class="caps">AFC</span>&#8217;s existing testing and citing infrastructure makes this easy, especially for adding a new spreadsheet function. The spreadsheet files in</p>
+
+	<pre class="j-path">components<span class="j-pathsep">/</span>system<span class="j-pathsep">/</span>src<span class="j-pathsep">/</span>test-reference<span class="j-pathsep">/</span>java<span class="j-pathsep">/</span>org<span class="j-pathsep">/</span>formulacompiler<span class="j-pathsep">/</span>tests<span class="j-pathsep">/</span>reference</pre>
+
+
+	<p>contain formula tests. So, to prove we implemented <code>ABS()</code>, all we still need to do is add test cases to one of the test sheets.</p>
+
+
+	<p>For <code>ABS()</code>, we extend the sheet called <code>NumericFunctions.xls</code>. By <em>citing</em> it, I can show it right here (only the relevant subset is shown):</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+			<td>J</td>
+			<td>K</td>
+			<td>L</td>
+			<td>M</td>
+			<td>N</td>
+			<td>O</td>
+			<td>P</td>
+			<td>Q</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Expected</span><br/><span class="xl-exp">=IF(Q1,"Expected","FAILED!")</span></td>
+			<td><span style="text-decoration: underline;">Actual</span></td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><span style="text-decoration: underline;"># of Inputs</span></td>
+			<td><span style="text-decoration: underline;">Name</span></td>
+			<td><span style="text-decoration: underline;">Highlight</span></td>
+			<td><span style="text-decoration: underline;">Excel says</span></td>
+			<td><span style="text-decoration: underline;">Skip for</span></td>
+			<td><span style="text-decoration: underline;">Custom check</span></td>
+			<td></td>
+			<td><span style="text-decoration: underline;">true</span><br/><span class="xl-exp">=AND(Q2:Q10000)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=ABS(C2)</span></td>
+			<td class="xl-num">-1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td>ABS</td>
+			<td>ABS</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td class="xl-num">0</td>
+			<td class="xl-num">0<br/><span class="xl-exp">=ABS(C3)</span></td>
+			<td class="xl-num">0</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=ABS(C4)</span></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=ABS(C5)</span></td>
+			<td class="xl-num">-2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=ABS(C6)</span></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td class="xl-num">0</td>
+			<td class="xl-num">0<br/><span class="xl-exp">=ABS(C7)</span></td>
+			<td>false</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=ABS(C8)</span></td>
+			<td>true</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=ABS(C9)</span></td>
+			<td class="xl-num">-3</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td class="xl-num">4</td>
+			<td class="xl-num">4<br/><span class="xl-exp">=ABS(C10)</span></td>
+			<td class="xl-num">-4</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td>...</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>And here is <a href="../../doc/reference/numfuncs.htm">the documentation produced from it</a>. Note also how the list of supported functions in the <a href="../../doc/reference/index.htm">reference index</a> automatically includes <code>ABS</code>.</p>
+
+
+	<p>See here for <a href="referencetests.htm">details on exactly what the columns of this sheet mean</a>.</p>
+
+
+	<h2><a name="pagetoc__4"><em>Rule 3</em>: <br />Mimick existing code</a></h2>
+
+	<p>This rule is the <em>monkey see, monkey do</em> rule from the book on <a href="http://udig.refractions.net/confluence/display/UDIG/Eclipse+House+Rules">contributing to Eclipse</a>. It means we look for an already implemented function closely matching <code>ABS()</code>, and then mimick its implementation and <a href="style.htm">code style</a> (aka copy/paste). We will mimick <code>ROUND()</code> for <code>ABS()</code>. In fact, we already did. When documenting <code>ABS()</code> in the list of supported functions, remember? This rule basically states something we would do anyway.</p>
+
+
+	<p>So, to add the test cases for <code>ABS()</code>, I already copied lines from <code>ROUND()</code> and adjusted them. You can see them in the sheet above. (Copying the lines made sure that the conditional formatting for input values was copied too.)</p>
+
+
+	<p>As explained in the topic on the <a href="referencetests.htm">reference test sheets</a>, you also have to update the corresponding .ods and .yaml files. If you forget, running the tests will tell you.</p>
+
+
+	<h2><a name="pagetoc__5"><em>Rule 4</em>: <br />Implement only what the tests require</a></h2>
+
+	<p>This is test-driven development. We implement <code>ABS()</code> by just adding missing code until the tests run. The first step is, then, to run the tests just added (which will fail, of course). Every formula test sheet corresponds to a test class in</p>
+
+	<pre class="j-path">components<span class="j-pathsep">/</span>system<span class="j-pathsep">/</span>src<span class="j-pathsep">/</span>test-reference<span class="j-pathsep">/</span>java<span class="j-pathsep">/</span>org<span class="j-pathsep">/</span>formulacompiler<span class="j-pathsep">/</span>tests<span class="j-pathsep">/</span>reference</pre>
+
+
+	<p>For the sheet <code>NumericFunctions.xls</code>, we need to run the test class <code>NumericFunctionsTest</code>. Doing this now (<code>ant -q test-ref</code>) returns something like:</p>
+
+	<pre><code>org.formulacompiler.spreadsheet.SpreadsheetException$UnsupportedExpression:
+Unsupported function ABS encountered in expression ABS( &lt;&lt;? C2); error location indicated by &lt;&lt;?.
+Cell containing expression is B2.
+    at org.formulacompiler.spreadsheet.internal.CellWithLazilyParsedExpression.getExpression(CellWithLazilyParsedExpression.java:71)
+...</code></pre>
+
+
+	<p>Running these tests can take quite a while. See here for <a href="referencetests.htm#debug">how to speed this up</a>.</p>
+
+
+	<h2><a name="pagetoc__6">Extending The Parser</a></h2>
+
+	<p><em>Unsupported function encountered</em> means <span class="caps">AFC</span>&#8217;s Excel formula parser cannot parse something. So we must make it support <code>ABS()</code> as our first implementation step. The parser is generated from a special parser description language using <a href="https://javacc.dev.java.net/">JavaCC</a>. Its input file is</p>
+
+	<pre class="j-path">components<span class="j-pathsep">/</span>compiler<span class="j-pathsep">/</span>src<span class="j-pathsep">/</span>build<span class="j-pathsep">/</span>javacc<span class="j-pathsep">/</span>ExpressionParser.jj</pre>
+
+
+	<p><code>ROUND</code> looks like this there:</p>
+
+	<pre class="j-text"><code>|	"ROUND" fun2( Function.ROUND )</code></pre>
+
+
+	<p>So we simply add the following line (we keep the list sorted alphabetically and <code>ABS</code> comes first, so it starts with <code>{</code> instead of <code>|</code>):</p>
+
+	<pre class="j-text"><code>{	"ABS"	fun1( Function.ABS )</code></pre>
+
+
+	<p>Look through the list there to see the different standard options for defining the argument syntax. In particular, <code>fun1()</code> is a unary function, <code>fun2()</code> a binary function, etc. For details on how JavaCC works, please refer to its <a href="https://javacc.dev.java.net/doc/javaccgrm.html">grammar documentation</a>.</p>
+
+
+	<p>We run <code>ant -q build</code> to regenerate the parser. Now, the Java symbol <code>org.formulacompiler.compiler.Function.ABS</code> is undefined. Extending this enumeration is straightforward. We do it, and the code compiles again.</p>
+
+
+	<h2><a name="pagetoc__7">Implementing The Function</a></h2>
+
+	<p>Running the test again, we get:</p>
+
+	<pre><code>org.formulacompiler.compiler.CompilerException$UnsupportedExpression:
+Function ABS is not supported for double engines.
+In expression  &gt;&gt; ABS( C2 ) &lt;&lt; ; error location indicated by &gt;&gt;..&lt;&lt;.
+Cell containing expression is B2.
+Referenced by cell B2.
+    at ...</code></pre>
+
+
+	<p>This is from the heart of <span class="caps">AFC</span>, the byte code compiler. To implement <code>ABS()</code>, let&#8217;s look at how <code>ROUND()</code> is implemented. This is where I have to introduce you to one of the niftier parts of <span class="caps">AFC</span>: the <acronym title="Java Virtual Machine">JVM</acronym> byte-code decompiler.</p>
+
+
+	<h4><a name="pagetoc__7_1">Template Methods</a></h4>
+
+	<p><span class="caps">AFC</span> is, like <code>javac</code>, a byte-code compiler for the <acronym title="Java Virtual Machine">JVM</acronym>. But, luckily, you don&#8217;t have to know the <a href="http://www.cat.nyu.edu/~meyer/jvmref/ref-Java.html">JVM byte code instruction set</a> to add primitive functions like <code>ABS()</code> to <span class="caps">AFC</span>. Instead, you write simple <em>template methods</em> in plain Java, like this:</p>
+
+	<pre class="java"><span class="j-key">public </span><span class="j-typ">double </span>fun_ROUND<span class="j-sym">( </span><span class="j-typ">double </span>a, <span class="j-typ">double </span>b <span class="j-sym">)
+{
+  </span><span class="j-key">return </span>RuntimeDouble_v2.round<span class="j-sym">( </span>a, <span class="j-sym">(</span><span class="j-typ">int</span><span class="j-sym">) </span>b <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Any method you put into the class</p>
+
+	<pre class="j-path">components<span class="j-pathsep">/</span>compiler<span class="j-pathsep">/</span>src<span class="j-pathsep">/</span>impl<span class="j-pathsep">/</span>java<span class="j-pathsep">/</span>org<span class="j-pathsep">/</span>formulacompiler<span class="j-pathsep">/</span>compiler<span class="j-pathsep">/</span>internal<span class="j-pathsep">/</span>templates<span class="j-pathsep">/</span>ExpressionTemplatesForDoubles.java</pre>
+
+
+	<p>that is called <code>fun_XY</code> is automatically decompiled by <span class="caps">AFC</span>&#8217;s build process to generate a byte-code compiler for expression nodes of the kind <code>new ExpressionNodeForFunction( Function.XY )</code>.</p>
+
+
+	<h4><a name="pagetoc__7_2">Expression Rewriting</a></h4>
+
+	<p>There is another approach for functions that can be rewritten to expressions involving only other, more primitive expression functions. This is shown in the topic on <a href="addprimitive.htm">adding high-level functions</a>.</p>
+
+
+	<h4><a name="pagetoc__7_3">Runtime Support</a></h4>
+
+	<p>As you can see, <code>ROUND()</code> is not implemented directly, but mapped to a runtime support function. The runtime is subclassed for each supported <a href="../../doc/tutorial/numeric_type.htm">numeric type</a>. It is also versioned so <span class="caps">AFC</span> can easily provide backwards compatibility with older compiled engines. Here is the implementation from <code>org.formulacompiler.runtime.internal.RuntimeDouble_v2</code>:</p>
+
+	<pre class="java"><span class="j-key">public static </span><span class="j-typ">double </span>round<span class="j-sym">( </span><span class="j-key">final </span><span class="j-typ">double </span>_val, <span class="j-key">final </span><span class="j-typ">int </span>_maxFrac <span class="j-sym">)
+{
+  </span><span class="j-key">final </span><span class="j-typ">double </span>shift = pow10<span class="j-sym">( </span>_maxFrac <span class="j-sym">)</span>;
+  <span class="j-key">if </span><span class="j-sym">(</span><span class="j-num">0 </span>&gt; _val<span class="j-sym">) {
+    </span><span class="j-key">return </span>Math.ceil<span class="j-sym">( </span>_val * shift - <span class="j-num">0.5 </span><span class="j-sym">) </span>/ shift;
+  <span class="j-sym">}
+  </span><span class="j-key">else </span><span class="j-sym">{
+    </span><span class="j-key">return </span>Math.floor<span class="j-sym">( </span>_val * shift + <span class="j-num">0.5 </span><span class="j-sym">) </span>/ shift;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<h4><a name="pagetoc__7_4">Numeric Types</a></h4>
+
+	<p>This would be very easy to do for <code>ABS()</code> too. But <code>ABS()</code> is really so basic, we will implement it directly instead:</p>
+
+	<pre class="java"><span class="j-key">public </span><span class="j-typ">double </span>fun_ABS<span class="j-sym">( </span><span class="j-typ">double </span>a <span class="j-sym">)
+{
+  </span><span class="j-key">return </span>Math.abs<span class="j-sym">( </span>a <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>This covers <code>double</code>. We also need to handle <code>BigDecimal</code> and scaled <code>long</code>. This is done in the template class <code>...templates.ExpressionTemplatesForScaledLongs</code>:</p>
+
+	<pre class="java"><span class="j-key">public </span><span class="j-typ">long </span>fun_ABS<span class="j-sym">( </span><span class="j-typ">long </span>a <span class="j-sym">)
+{
+  </span><span class="j-key">return </span><span class="j-sym">(</span>a &lt; <span class="j-num">0</span><span class="j-sym">) </span>? -a : a;
+<span class="j-sym">}</span></pre>
+
+
+	<p>and in <code>...templates.AbstractExpressionTemplatesForBigDecimals</code>:</p>
+
+	<pre class="java">@ReturnsAdjustedValue
+<span class="j-key">public </span>BigDecimal fun_ABS<span class="j-sym">( </span>BigDecimal a <span class="j-sym">)
+{
+  </span><span class="j-key">return </span>a.abs<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The latter is OK if you don&#8217;t need to take the <code>MathContext</code> or scaling into account. If you do, as does the <code>+</code> operator, then you have to use <code>...templates.ExpressionTemplatesForPrecisionBigDecimals</code>:</p>
+
+	<pre class="java">@ReturnsAdjustedValue
+<span class="j-key">public </span>BigDecimal op_PLUS<span class="j-sym">( </span>BigDecimal a, BigDecimal b <span class="j-sym">)
+{
+  </span><span class="j-key">return </span>a.add<span class="j-sym">( </span>b, <span class="j-key">this</span>.mathContext <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>and <code>...templates.ExpressionTemplatesForScaledBigDecimals</code>:</p>
+
+	<pre class="java">@ReturnsAdjustedValue
+<span class="j-key">public </span>BigDecimal op_PLUS<span class="j-sym">( </span>BigDecimal a, BigDecimal b <span class="j-sym">)
+{
+  </span><span class="j-key">return </span>a.add<span class="j-sym">( </span>b <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The annotation <code>ReturnsAdjustedValue</code> means that the method result already has the proper scale. If you omit it, <span class="caps">AFC</span> will generate rescaling code after your method body.</p>
+
+
+	<p>Once all this is done, run <a href="build.htm"><code>ant -q build</code></a> to rebuild the compiler code from the template methods.</p>
+
+
+<dl>
+<dt>Note</dt><dd>With <a href="http://eclipse.org/">Eclipse</a>, it is crucial to use <code>ant -q build</code> to update the compiler code rather than running <code>org.formulacompiler.compiler.internal.build.bytecode.PatternCompiler</code> directly from within the <span class="caps">IDE</span>. This is because Eclipse&#8217;s compiler produces different byte-code sequences for the pattern methods than <code>javac</code> as invoked by <span class="caps">AFC</span>&#8217;s <a href="build.htm">build script</a>. While Eclipse&#8217;s version is also correct, it breaks the binary comparisons of generated engines with reference versions in some of the unit tests for <span class="caps">AFC</span> (see <code>org.formulacompiler.tests.utils.AbstractTestBase.checkEngine()</code>.</dd>
+</dl>
+
+	<h2><a name="pagetoc__8">Strings</a></h2>
+
+	<p>To implement functions working on strings, we need to differentiate two cases.</p>
+
+
+	<h4><a name="pagetoc__8_1">Arguments</a></h4>
+
+	<p>String arguments are straightforward: </p>
+
+	<pre class="java"><span class="j-key">public </span><span class="j-typ">double </span>fun_VALUE<span class="j-sym">( </span>String _text <span class="j-sym">)
+{
+  </span><span class="j-key">return </span>RuntimeDouble_v2.fun_VALUE<span class="j-sym">( </span>_text, <span class="j-key">this</span>.environment <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h4><a name="pagetoc__8_2">Returns</a></h4>
+
+	<p>String return values are different. Firstly, you need to implement them in <code>org.formulacompiler.compiler.internal.templates.ExpressionTemplatesForStrings</code> (rather than the numeric templates). Note how you can access numeric arguments as <code>int</code>. <span class="caps">AFC</span> will handle the conversion for you automatically:</p>
+
+	<pre class="java"><span class="j-key">public </span>String fun_MID<span class="j-sym">( </span>String s, <span class="j-typ">int </span>start, <span class="j-typ">int </span>len <span class="j-sym">)
+{
+  </span><span class="j-key">return </span>Runtime_v2.fun_MID<span class="j-sym">( </span>s, start, len <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Secondly, you have to teach <span class="caps">AFC</span>&#8217;s type annotator that the function is String-valued. You do this in <code>org.formulacompiler.compiler.internal.model.analysis.TypeAnnotator</code>: </p>
+
+	<pre class="java"><span class="j-key">private </span>DataType typeOf<span class="j-sym">( </span>ExpressionNodeForFunction _expr <span class="j-sym">) </span><span class="j-key">throws </span>CompilerException
+<span class="j-sym">{
+  </span>annotateArgs<span class="j-sym">( </span>_expr <span class="j-sym">)</span>;
+  <span class="j-key">switch </span><span class="j-sym">(</span>_expr.getFunction<span class="j-sym">()) {
+    </span><span class="j-cmt">// ...
+    </span><span class="j-key">case </span>CONCATENATE:
+    <span class="j-key">case </span>MID:
+      <span class="j-cmt">// ...
+      </span><span class="j-key">return </span>DataType.STRING;
+
+    <span class="j-key">default</span>:
+      <span class="j-key">return </span>DataType.NUMERIC;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="pagetoc__9">Conclusion</a></h2>
+
+	<p>That&#8217;s it. All the tests run green. Running <a href="build.htm"><code>ant -q doc</code></a> updates the documentation and&#8212;lo and behold&#8212;<code>ABS()</code> is now included and fully documented.</p>
+
+
+	<p>Now read on to see that other approach using expression rewriting: <a href="addrewrite.xhtml">adding high-level functions</a>.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Adding A New Primitive Spreadsheet Function To AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1"><em>Rule 1</em>: Document first</a><ul class="toc toc3"><li><a href="#pagetoc__1_1">Release Notes</a></li><li><a href="#pagetoc__1_2">Rextile</a></li></ul></li><li><a href="#pagetoc__2"><em>Rule 2</em>: Cite tests</a></li><li><a href="#pagetoc__3">Automated Formula Tests</a></li><li><a href="#pagetoc__4"><em>Rule 3</em>: Mimick existing code</a></li><li><a href="#pagetoc__5"><em>Rule 4</em>: Implement only what the tests require</a></li><li><a href="#pagetoc__6">Extending The Parser</a></li><li class="withitems"><a href="#pagetoc__7">Implementing The Function</a><ul class="toc toc3"><li><a href="#pagetoc__7_1">Template Methods</a></li><li><a href="#pagetoc__7_2">Expression Rewriting</a></li><li><a href="#pagetoc__7_3">Runtime Support</a></li><li><a href="#pagetoc__7_4">Numeric Types</a></li></ul></li><li class="withitems"><a href="#pagetoc__8">Strings</a><ul class="toc toc3"><li><a href="#pagetoc__8_1">Arguments</a></li><li><a href="#pagetoc__8_2">Returns</a></li></ul></li><li><a href="#pagetoc__9">Conclusion</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Using AFC Without A Spreadsheet File - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Using <span class="caps">AFC</span> Without A Spreadsheet File</h1>
+
+	<p>Some applications may wish to use <span class="caps">AFC</span> to compile computation engines, but want users to be able to specify simple computations without having to setup a spreadsheet. These can use a builder to dynamically construct a spreadsheet as input to <span class="caps">AFC</span>.</p>
+
+
+
+	<h2><a name="pagetoc__1">Motivation</a></h2>
+
+	<p>Consider again the main example for <span class="caps">AFC</span>, the <a href="reason.htm">order line item rebate computation</a>. We solved the problem of allowing distributors and customers to customize the computation by letting them specify their own computations <a href="basics.htm">as spreadsheets</a>, such as this one:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td>Customer Rebate</td>
+			<td class="xl-num">3%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Article Rebate</td>
+			<td class="xl-num">6%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td>Rebate</td>
+			<td class="xl-num">6%<br/><span class="xl-exp">=MAX(B1:B2)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Maybe many of your users must define their own, typically very simple, custom computations. Maybe there are a great many points in your application, where they want to do this (not just the line item rebate). In such a case you may want to offer your users a simple UI for defining straightforward custom computations (like, for instance, one liners), but still allow them to switch to a spreadsheet for more complex cases. Users thus might be able to define, right in your UI, the following formula:</p>
+
+	<pre><code>Rebate = CustomerRebate + ArticleRebate</code></pre>
+
+
+	<p>How can you implement this? Remember that we already factored out the actual computation as a <em>strategy</em>. So a straightforward approach is to implement a new strategy, which is effectively an interpreter for the simple one-line formulas (or whatever your UI allows users to specify).</p>
+
+
+	<p>If you expect these computations to be used heavily in your application, however, it may be worthwhile to harness <span class="caps">AFC</span> to generate true byte-code computations for these formulas, instead of interpreting them. A side benefit of this approach will be that you can give users switching from a simple formula to a full blown spreadsheet a head start by letting <span class="caps">AFC</span> <a href="generatesheet.htm">generate an initial spreadsheet</a> implementing the currently defined formula.</p>
+
+
+	<h2><a name="building">Building Your Own Spreadsheet Model</a></h2>
+
+	<p><span class="caps">AFC</span>&#8217;s compiler takes an internal representation of a spreadsheet as input. Normally, you load this from an actual spreadsheet file. With the <a href="../javadoc/sej/SpreadsheetBuilder.html"><code>SpreadsheetBuilder</code></a>, however, you can build one in memory from scratch. I&#8217;ll first show you how to define the spreadsheet with only the two input cells:</p>
+
+	<pre class="java"><span class="j-key">private </span>Spreadsheet buildSpreadsheet<span class="j-sym">()
+{
+  </span>SpreadsheetBuilder b = SpreadsheetCompiler.<span class="j-hl">newSpreadsheetBuilder</span><span class="j-sym">()</span>;
+
+  b.<span class="j-hl">newCell</span><span class="j-sym">( </span>b.<span class="j-hl">cst<span class="j-sym">( </span><span class="j-str">&#34;CustomerRebate&#34; </span><span class="j-sym">)</span></span> <span class="j-sym">)</span>;
+  b.newCell<span class="j-sym">( </span>b.<span class="j-hl">cst<span class="j-sym">( </span><span class="j-num">0.1 </span><span class="j-sym">)</span></span> <span class="j-sym">)</span>;
+
+  b.<span class="j-hl">newRow</span><span class="j-sym">()</span>;
+  b.newCell<span class="j-sym">( </span>b.cst<span class="j-sym">( </span><span class="j-str">&#34;ArticleRebate&#34; </span><span class="j-sym">) )</span>;
+  b.newCell<span class="j-sym">( </span>b.cst<span class="j-sym">( </span><span class="j-num">0.05 </span><span class="j-sym">) )</span>;
+
+  <span class="j-key">return </span>b.<span class="j-hl">getSpreadsheet</span><span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The method <code>b.cst()</code> is a factory method for constant values. It accepts all the types of constant value that <span class="caps">AFC</span> supports, for example <code>String</code> and <code>Number</code>.</p>
+
+
+	<p>Of particular interest is how to build calculated cells, <code>B1+B2</code> in this example. Here&#8217;s the same method again, showing how the calculated cell is defined:</p>
+
+	<pre class="java"><span class="j-key">private </span>Spreadsheet buildSpreadsheet<span class="j-sym">()
+{
+  </span>SpreadsheetBuilder b = SpreadsheetCompiler.newSpreadsheetBuilder<span class="j-sym">()</span>;
+
+  b.newCell<span class="j-sym">( </span>b.cst<span class="j-sym">( </span><span class="j-str">&#34;CustomerRebate&#34; </span><span class="j-sym">) )</span>;
+  b.newCell<span class="j-sym">( </span>b.cst<span class="j-sym">( </span><span class="j-num">0.1 </span><span class="j-sym">) )</span>;
+  <span class="j-cmt">// -- defCalc
+  </span><span class="j-hl">SpreadsheetBuilder.CellRef cr = b.currentCell<span class="j-sym">()</span>;</span>
+  <span class="j-cmt">// -- defCalc
+
+  </span>b.newRow<span class="j-sym">()</span>;
+  b.newCell<span class="j-sym">( </span>b.cst<span class="j-sym">( </span><span class="j-str">&#34;ArticleRebate&#34; </span><span class="j-sym">) )</span>;
+  b.newCell<span class="j-sym">( </span>b.cst<span class="j-sym">( </span><span class="j-num">0.05 </span><span class="j-sym">) )</span>;
+  <span class="j-cmt">// -- defCalc
+  </span><span class="j-hl">SpreadsheetBuilder.CellRef ar = b.currentCell<span class="j-sym">()</span>;</span>
+
+  b.newRow<span class="j-sym">()</span>;
+  b.newRow<span class="j-sym">()</span>;
+  b.newCell<span class="j-sym">( </span>b.cst<span class="j-sym">( </span><span class="j-str">&#34;Rebate&#34; </span><span class="j-sym">) )</span>;
+  b.newCell<span class="j-sym">( </span><span class="j-hl">b.op<span class="j-sym">( </span>Operator.PLUS, b.ref<span class="j-sym">( </span>cr <span class="j-sym">)</span>, b.ref<span class="j-sym">( </span>ar <span class="j-sym">) )</span></span> <span class="j-sym">)</span>;
+  <span class="j-cmt">// -- defCalc
+
+  </span><span class="j-key">return </span>b.getSpreadsheet<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The <code>currentCell()</code> method returns a reference to the cell defined just before it. These references can be used later on in formulas to reference other cells.</p>
+
+
+	<p>The part <code>b.op( Operator.PLUS, ... )</code> defines the last cell as one performing an addition, which is one of the supported <a href="../javadoc/sej/Operator.html">operators</a>. Its arguments are references to the two cells defined above. There is also <code>fun()</code> for <a href="../javadoc/sej/Function.html">functions and aggregators</a>.</p>
+
+
+	<h2><a name="pagetoc__3">Switching To A Spreadsheet File</a></h2>
+
+	<p>When users find the simple formula UI too limited, they will want to switch to using a full-blown spreadsheet. As noted above, you can give them a head start by having <span class="caps">AFC</span> <a href="generatesheet.htm#generate">generate the initial spreadsheet</a> for them. This spreadsheet then implements the current simple formula as a starting point for further customization.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Using AFC Without A Spreadsheet File</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Motivation</a></li><li><a href="#building">Building Your Own Spreadsheet Model</a></li><li><a href="#pagetoc__3">Switching To A Spreadsheet File</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

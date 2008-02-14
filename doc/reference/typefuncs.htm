@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Type Functions In AFC - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Reference</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Type Functions In <span class="caps">AFC</span></h1>
+
+
+	<h3><a name="pagetoc__1">Type Functions</a></h3>
+
+	<p>The supported type functions are shown by example below:</p>
+
+
+
+<h5 class="ref"><a name="pagetoc__1_1">ISTEXT (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td>true</td><td class="xl-exp"><a href="TypeFunctions_2.htm">=<em>ISTEXT</em>(C2)</a></td><td>Abc</td><td></td></tr>
+<tr><td class="xl-row">3</td><td>true</td><td class="xl-exp">...</td><td>Абвгд</td><td></td></tr>
+<tr><td class="xl-row">4</td><td>true</td><td class="xl-exp">...</td><td>12345</td><td></td></tr>
+<tr><td class="xl-row">5</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">12345.0</td><td></td></tr>
+<tr><td class="xl-row">6</td><td>false</td><td class="xl-exp">...</td><td>true</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_2">ISNONTEXT (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
+<tr><td class="xl-row">8</td><td>false</td><td class="xl-exp"><a href="TypeFunctions_8.htm">=<em>ISNONTEXT</em>(C8)</a></td><td>Abc</td><td></td></tr>
+<tr><td class="xl-row">9</td><td>false</td><td class="xl-exp">...</td><td>Абвгд</td><td></td></tr>
+<tr><td class="xl-row">10</td><td>false</td><td class="xl-exp">...</td><td>12345</td><td></td></tr>
+<tr><td class="xl-row">11</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">12345.0</td><td></td></tr>
+<tr><td class="xl-row">12</td><td>true</td><td class="xl-exp">...</td><td>true</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_3">ISNUMBER (does not support blanks and logical values!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
+<tr><td class="xl-row">14</td><td>false</td><td class="xl-exp"><a href="TypeFunctions_14.htm">=<em>ISNUMBER</em>(C14)</a></td><td>Abc</td><td></td></tr>
+<tr><td class="xl-row">15</td><td>false</td><td class="xl-exp">...</td><td>Абвгд</td><td></td></tr>
+<tr><td class="xl-row">16</td><td>false</td><td class="xl-exp">...</td><td>12345</td><td></td></tr>
+<tr><td class="xl-row">17</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">12345.0</td><td></td></tr>
+<tr><td class="xl-row">18</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">39117.0</td><td></td></tr>
+<tr><td class="xl-row">19</td><td>true</td><td class="xl-exp">...</td><td>true</td><td></td><td class="ref-bad">Excel says: false</td></tr>
+<tr><td class="xl-row">20</td><td>true</td><td class="xl-exp">...</td><td>false</td><td></td><td class="ref-bad">Excel says: false</td></tr>
+</tbody></table><p></p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Type Functions In AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Type Functions</a><ul class="toc toc4"><li><a href="#pagetoc__1_1">ISTEXT (does not support blanks!)</a></li><li><a href="#pagetoc__1_2">ISNONTEXT (does not support blanks!)</a></li><li><a href="#pagetoc__1_3">ISNUMBER (does not support blanks and logical values!)</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Binding To Parametrized Methods - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Binding To Parametrized Methods</h1>
+
+	<p>If you have a generic system where the set of possible input and/or output values cannot be determined at compile-time, you have to resort to some sort of binding to parametrized methods. The parameter value is anything that helps you to identify a value, be it a <code>String</code>, <code>int</code>, or <code>long</code> value, or even a combination thereof.</p>
+
+
+	<p>Typically, you analyze the names defined in the spreadsheet and decompose them into the name of the method to call/implement, and the parameter values to that method. For example, <code>USERFIELD_XY</code> might mean to call the input method <code>userField("XY")</code>. Users will likely be more comfortable with an approach where they can set up mappings from cell names to input/output mappings in a dedicated <span class="caps">GUI</span>, rather than having to encode parameters in cell names. Whether to offer your users this comfort is up to you.</p>
+
+
+
+	<h2><a name="pagetoc__1">Inputs</a></h2>
+
+	<p>You need to bind inputs to parametrized calls, possible to a single dispatch method, or multiple ones &#8211; it&#8217;s your choice. Here&#8217;s an example of such a method:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Input
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-hl">String _valueName</span> <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>With this interface, you could, for instance, bind cell names as follows:</p>
+
+	<pre class="java"><span class="j-key">final </span>Method inputMethod = Input.<span class="j-key">class</span>.<span class="j-hl">getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, String.<span class="j-key">class </span><span class="j-sym">)</span></span>;
+<span class="j-key">for </span><span class="j-sym">(</span>Map.Entry&lt;String, Spreadsheet.Range&gt; def : <span class="j-hl">spreadsheet.getRangeNames<span class="j-sym">()</span>.entrySet<span class="j-sym">()</span></span><span class="j-sym">) {
+  </span><span class="j-key">final </span>Spreadsheet.Range range = def.getValue<span class="j-sym">()</span>;
+  <span class="j-key">if </span><span class="j-sym">(</span>range <span class="j-key">instanceof </span>Spreadsheet.Cell<span class="j-sym">) {
+    </span><span class="j-key">final </span>String <span class="j-hl">cellName</span> = def.getKey<span class="j-sym">()</span>;
+    <span class="j-key">if </span><span class="j-sym">(</span><span class="j-str">&#34;I_&#34;</span>.equals<span class="j-sym">( </span>cellName.substring<span class="j-sym">( </span><span class="j-num">0</span>, <span class="j-num">2 </span><span class="j-sym">) )) {
+      </span><span class="j-key">final </span>Spreadsheet.Cell cell = <span class="j-sym">(</span>Spreadsheet.Cell<span class="j-sym">) </span>range;
+      <span class="j-key">final </span>String <span class="j-hl">valueName</span> = cellName.substring<span class="j-sym">( </span><span class="j-num">2 </span><span class="j-sym">)</span>.toUpperCase<span class="j-sym">()</span>;
+      binder.defineInputCell<span class="j-sym">( </span>cell, <span class="j-hl">inputMethod, valueName</span> <span class="j-sym">)</span>;
+    <span class="j-sym">}
+  }
+}</span></pre>
+
+
+	<p>In the implementation of <code>getInput(String)</code> you are free to look up the actual value of the named input in any way that seems fit. Like this, for example:</p>
+
+	<pre class="java"><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>String _valueName <span class="j-sym">)
+{
+  </span><span class="j-key">if </span><span class="j-sym">(</span>_valueName.equals<span class="j-sym">( </span><span class="j-str">&#34;ONE&#34; </span><span class="j-sym">)) </span><span class="j-key">return </span><span class="j-num">1.0</span>;
+  <span class="j-key">if </span><span class="j-sym">(</span>_valueName.equals<span class="j-sym">( </span><span class="j-str">&#34;TWO&#34; </span><span class="j-sym">)) </span><span class="j-key">return </span><span class="j-num">2.0</span>;
+  <span class="j-key">if </span><span class="j-sym">(</span>_valueName.equals<span class="j-sym">( </span><span class="j-str">&#34;THREE&#34; </span><span class="j-sym">)) </span><span class="j-key">return </span><span class="j-num">3.0</span>;
+  <span class="j-key">return </span><span class="j-num">0.0</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h3><a name="pagetoc__1_1">Supported Types</a></h3>
+
+	<p><span class="caps">AFC</span> currently supports the following parameter types:</p>
+
+	<pre class="java"><span class="j-cmt">// Native types
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">byte </span>_param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">short </span>_param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">int </span>_param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">long </span>_param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">double </span>_param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">float </span>_param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">char </span>_param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">boolean </span>_param <span class="j-sym">) 
+
+</span><span class="j-cmt">// Boxed types
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>Byte _param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>Short _param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>Integer _param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>Long _param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>Double _param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>Float _param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>Character _param <span class="j-sym">) 
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>Boolean _param <span class="j-sym">) 
+
+</span><span class="j-cmt">// Other types
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>String _param <span class="j-sym">) 
+
+</span><span class="j-cmt">// Application-defined enumerations
+</span><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span>MyEnum _param <span class="j-sym">) </span></pre>
+
+
+	<p>Note in particular that custom, application defined enumeration constants are supported. Here&#8217;s the definition for the <code>MyEnum</code> type bound above:</p>
+
+	<pre class="java"><span class="j-key">public static enum </span>MyEnum <span class="j-sym">{
+  </span>ZERO, ONE, TWO;
+<span class="j-sym">}</span></pre>
+
+
+	<p>When binding, you have to take care that you are passing in values of the proper type (<code>Integer</code> for <code>int</code> and <code>Integer</code>, <code>Byte</code> for <code>byte</code> and <code>Byte</code>, etc.). This example uses autoboxing, but it still needs to take care to pass the proper native type to the boxing magic:</p>
+
+	<pre class="java"><span class="j-cmt">// Native types
+</span>bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;byte&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Byte.TYPE <span class="j-sym">)</span>, <span class="j-sym">(</span><span class="j-typ">byte</span><span class="j-sym">) </span><span class="j-num">123 </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;short&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Short.TYPE <span class="j-sym">)</span>, <span class="j-sym">(</span><span class="j-typ">short</span><span class="j-sym">) </span><span class="j-num">1234 </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;int&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Integer.TYPE <span class="j-sym">)</span>, <span class="j-num">12345 </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;long&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Long.TYPE <span class="j-sym">)</span>, <span class="j-num">123456L </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;double&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Double.TYPE <span class="j-sym">)</span>, <span class="j-num">123.45 </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;float&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Float.TYPE <span class="j-sym">)</span>, <span class="j-num">123.456F </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;char&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Character.TYPE <span class="j-sym">)</span>, <span class="j-chr">'a' </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;bool&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Boolean.TYPE <span class="j-sym">)</span>, <span class="j-key">true </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// Boxed types
+</span>bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;bbyte&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Byte.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-sym">(</span><span class="j-typ">byte</span><span class="j-sym">) </span><span class="j-num">123 </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;bshort&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Short.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-sym">(</span><span class="j-typ">short</span><span class="j-sym">) </span><span class="j-num">1234 </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;bint&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Integer.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-num">12345 </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;blong&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Long.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-num">123456L </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;bdouble&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Double.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-num">123.45 </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;bfloat&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Float.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-num">123.456F </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;bchar&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Character.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-chr">'a' </span><span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;bbool&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, Boolean.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-key">true </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// Other types
+</span>bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;string&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, String.<span class="j-key">class </span><span class="j-sym">)</span>, <span class="j-str">&#34;123.4567&#34; </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// Application-defined enumerations
+</span>bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;enum&#34; </span><span class="j-sym">)</span>, ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, MyEnum.<span class="j-key">class </span><span class="j-sym">)</span>, MyEnum.TWO <span class="j-sym">)</span>;</pre>
+
+
+	<h3><a name="pagetoc__1_2">Multiple Parameters</a></h3>
+
+	<p>You can also bind to parametrized methods with multiple parameters as long as all the parameter types are supported. Here&#8217;s such a method:</p>
+
+	<pre class="java"><span class="j-key">public </span><span class="j-typ">double </span>getInput<span class="j-sym">( </span><span class="j-typ">int </span>_a, <span class="j-typ">boolean </span>_b, String _c <span class="j-sym">) </span></pre>
+
+
+	<p>and how to bind to it:</p>
+
+	<pre class="java">Method mtd = ic.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getInput&#34;</span>, <span class="j-hl">Integer.TYPE, Boolean.TYPE, String.class</span> <span class="j-sym">)</span>;
+bnd.defineInputCell<span class="j-sym">( </span>ss.getCell<span class="j-sym">( </span><span class="j-str">&#34;comb&#34; </span><span class="j-sym">)</span>, mtd, <span class="j-hl">12, true, <span class="j-str">&#34;24&#34;</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<h2><a name="pagetoc__2">Outputs</a></h2>
+
+	<p>To bind output values to parametrized methods, you use an analogous construct:</p>
+
+	<pre class="java"><span class="j-key">public static abstract class </span>Output
+<span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-typ">double </span>getOutput<span class="j-sym">( </span><span class="j-hl">String _valueName</span> <span class="j-sym">)
+  {
+    </span><span class="j-key">return </span>-<span class="j-num">1</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>and:</p>
+
+	<pre class="java"><span class="j-key">final </span>Method outputMethod = Output.<span class="j-key">class</span>.<span class="j-hl">getMethod<span class="j-sym">( </span><span class="j-str">&#34;getOutput&#34;</span>, String.<span class="j-key">class </span><span class="j-sym">)</span></span>;
+<span class="j-key">for </span><span class="j-sym">(</span>Map.Entry&lt;String, Spreadsheet.Range&gt; def : <span class="j-hl">spreadsheet.getRangeNames<span class="j-sym">()</span>.entrySet<span class="j-sym">()</span></span><span class="j-sym">) {
+  </span><span class="j-key">final </span>Spreadsheet.Range range = def.getValue<span class="j-sym">()</span>;
+  <span class="j-key">if </span><span class="j-sym">(</span>range <span class="j-key">instanceof </span>Spreadsheet.Cell<span class="j-sym">) {
+    </span><span class="j-key">final </span>String <span class="j-hl">cellName</span> = def.getKey<span class="j-sym">()</span>;
+    <span class="j-key">if </span><span class="j-sym">(</span><span class="j-str">&#34;O_&#34;</span>.equals<span class="j-sym">( </span>cellName.substring<span class="j-sym">( </span><span class="j-num">0</span>, <span class="j-num">2 </span><span class="j-sym">) )) {
+      </span><span class="j-key">final </span>Spreadsheet.Cell cell = <span class="j-sym">(</span>Spreadsheet.Cell<span class="j-sym">) </span>range;
+      <span class="j-key">final </span>String <span class="j-hl">valueName</span> = cellName.substring<span class="j-sym">( </span><span class="j-num">2 </span><span class="j-sym">)</span>.toUpperCase<span class="j-sym">()</span>;
+      binder.defineOutputCell<span class="j-sym">( </span>cell, <span class="j-hl">outputMethod, valueName</span> <span class="j-sym">)</span>;
+    <span class="j-sym">}
+  }
+}</span></pre>
+
+
+	<p>Here&#8217;s how you would use the generated engine:</p>
+
+	<pre class="java">assertEquals<span class="j-sym">( </span><span class="j-num">6.0</span>, output.getOutput<span class="j-sym">( </span><span class="j-str">&#34;ONETWOTHREE&#34; </span><span class="j-sym">)</span>, <span class="j-num">0.001 </span><span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span><span class="j-num">8.0</span>, output.getOutput<span class="j-sym">( </span><span class="j-str">&#34;SUMINTER&#34; </span><span class="j-sym">)</span>, <span class="j-num">0.001 </span><span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span>-<span class="j-num">1.0</span>, output.getOutput<span class="j-sym">( </span><span class="j-str">&#34;UNDEF&#34; </span><span class="j-sym">)</span>, <span class="j-num">0.001 </span><span class="j-sym">)</span>;</pre>
+
+
+	<p><span class="caps">AFC</span> must generate code that implements this by-parameter lookup for you to make this work. Here&#8217;s how <span class="caps">AFC</span> goes about it, assuming the spreadsheet contained two cells named <em>O_ONETWOTHREE</em> and <em>O_SUMINTER</em>:</p>
+
+	<pre class="java">@Override
+<span class="j-key">public </span><span class="j-typ">double </span>getOutput<span class="j-sym">( </span>String _valueName <span class="j-sym">)
+{
+  </span><span class="j-key">if </span><span class="j-sym">(</span>_valueName.equals<span class="j-sym">( </span><span class="j-str">&#34;ONETWOTHREE&#34; </span><span class="j-sym">)) </span><span class="j-key">return </span>getOutput__1<span class="j-sym">()</span>;
+  <span class="j-key">if </span><span class="j-sym">(</span>_valueName.equals<span class="j-sym">( </span><span class="j-str">&#34;SUMINTER&#34; </span><span class="j-sym">)) </span><span class="j-key">return </span>getOutput__2<span class="j-sym">()</span>;
+  <span class="j-cmt">// ... other bound outputs
+  </span><span class="j-key">return super</span>.getOutput<span class="j-sym">( </span>_valueName <span class="j-sym">)</span>;
+<span class="j-sym">}
+
+</span><span class="j-key">private </span><span class="j-typ">double </span>getOutput__1<span class="j-sym">()
+{
+  </span><span class="j-cmt">// Generated computation for cell ONETWOTHREE (corresponds to test spreadsheet):
+  </span><span class="j-key">return </span>getInput__1<span class="j-sym">() </span>+ getInput__2<span class="j-sym">() </span>+ getInput__3<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span><span class="j-key">private </span><span class="j-typ">double </span>getOutput__2<span class="j-sym">()
+{
+  </span><span class="j-cmt">// Generated computation for cell SUMINTER (corresponds to test spreadsheet):
+  </span><span class="j-key">return </span>getInter__1<span class="j-sym">() </span>+ getInter__2<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The example shows why we must supply a default implementation for <code>getResult(String)</code>.</p>
+
+
+	<h3><a name="pagetoc__2_1">Supported Types</a></h3>
+
+	<p>Parametrized outputs are supported for the following parameter types:</p>
+
+<ul>
+	<li><code>Object</code> and subtypes that properly implement <code>equals()</code></li>
+	<li><code>int</code>, compared using <code>==</code></li>
+	<li><code>long</code>, compared using <code>==</code></li>
+</ul>
+
+	<h3><a name="pagetoc__2_2">Multiple Parameters</a></h3>
+
+	<p>When there are multiple parameters, <span class="caps">AFC</span> generates comparisons for all of the supplied values, joined by a logical and.</p>
+
+
+	<p>Thus, the complex output method:</p>
+
+	<pre class="java"><span class="j-key">public static abstract class </span>ComplexOutput
+<span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-typ">double </span>getComplex<span class="j-sym">( </span><span class="j-typ">int </span>_int, <span class="j-typ">long </span>_long, String _string <span class="j-sym">)
+  {
+    </span><span class="j-key">return </span>-<span class="j-num">1</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>is bound as:</p>
+
+	<pre class="java">Method outputMethod = ComplexOutput.<span class="j-key">class</span>.<span class="j-hl">getMethod<span class="j-sym">( </span><span class="j-str">&#34;getComplex&#34;</span>, Integer.TYPE, Long.TYPE, String.<span class="j-key">class </span><span class="j-sym">)</span></span>;
+binder.defineOutputCell<span class="j-sym">( </span>spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;Complex&#34; </span><span class="j-sym">)</span>, <span class="j-hl">outputMethod, <span class="j-num">1</span>, <span class="j-num">2</span>, <span class="j-str">&#34;THREE&#34;</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>and called as:</p>
+
+	<pre class="java">assertEquals<span class="j-sym">( </span><span class="j-num">5.0</span>, output.getComplex<span class="j-sym">( </span><span class="j-num">1</span>, <span class="j-num">2</span>, <span class="j-str">&#34;THREE&#34; </span><span class="j-sym">)</span>, <span class="j-num">0.001 </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// Check undefined results by incrementing each argument in turn:
+</span>assertEquals<span class="j-sym">( </span>-<span class="j-num">1.0</span>, output.getComplex<span class="j-sym">( </span><span class="j-num">2</span>, <span class="j-num">2</span>, <span class="j-str">&#34;THREE&#34; </span><span class="j-sym">)</span>, <span class="j-num">0.001 </span><span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span>-<span class="j-num">1.0</span>, output.getComplex<span class="j-sym">( </span><span class="j-num">1</span>, <span class="j-num">3</span>, <span class="j-str">&#34;THREE&#34; </span><span class="j-sym">)</span>, <span class="j-num">0.001 </span><span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span>-<span class="j-num">1.0</span>, output.getComplex<span class="j-sym">( </span><span class="j-num">1</span>, <span class="j-num">2</span>, <span class="j-str">&#34;FOUR&#34; </span><span class="j-sym">)</span>, <span class="j-num">0.001 </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>Here&#8217;s an idea of what <span class="caps">AFC</span> generates in this situation:</p>
+
+	<pre class="java">@Override
+<span class="j-key">public </span><span class="j-typ">double </span>getComplex<span class="j-sym">( </span><span class="j-typ">int </span>_int, <span class="j-typ">long </span>_long, String _string <span class="j-sym">)
+{
+  </span><span class="j-key">if </span><span class="j-sym">(</span>_int == <span class="j-num">1 </span>&amp;&amp; _long == <span class="j-num">2 </span>&amp;&amp; _string.equals<span class="j-sym">( </span><span class="j-str">&#34;THREE&#34; </span><span class="j-sym">)) </span><span class="j-key">return </span>getComplex__1<span class="j-sym">()</span>;
+  <span class="j-cmt">// ... other bound outputs
+  </span><span class="j-key">return super</span>.getComplex<span class="j-sym">( </span>_int, _long, _string <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h2><a name="pagetoc__3">Why This Magic?</a></h2>
+
+	<p>Why does <span class="caps">AFC</span> provide such black-box magic here when, for the inputs, it was stated as an explicit design goal to avoid such things? Well, providing the outputs is what <span class="caps">AFC</span> <em>does</em>. So the implementation of the output interface must be <span class="caps">AFC</span>&#8217;s responsibility. We could have chosen an implementation where you could register multiple output interfaces, each with a distinct string name. You might then bind output cells to such a named interface. However, to access the named interface on a computation, there would again have to be a by-name lookup:</p>
+
+	<pre><code>Computation c = engine.newComputation();
+Output o = (Output) c.getNamedOutput( "SomeOutput" );
+double v = o.getValue();</code></pre>
+
+
+	<p>So we gain nothing but lose the close duality of how the input and output definitions work.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Binding To Parametrized Methods</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Inputs</a><ul class="toc toc2"><li><a href="#pagetoc__1_1">Supported Types</a></li><li><a href="#pagetoc__1_2">Multiple Parameters</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">Outputs</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Supported Types</a></li><li><a href="#pagetoc__2_2">Multiple Parameters</a></li></ul></li><li><a href="#pagetoc__3">Why This Magic?</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

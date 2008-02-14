@@ -1,0 +1,789 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>SEJ Developer&#8217;s Journal &#8211; Old Entries - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../download/index.htm">
+					<img src="../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../index.htm">Home</a> | 
+						
+					<a href="../quick.htm">Quick Start</a> | <a href="../doc/index.htm">Documentation</a> | <a href="../download/index.htm">Download</a> | <a href="../support.htm">Support</a> | <span class="selected"><a href="../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../index.htm">Home</a> &gt; <a href="index.htm">Contribute</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>SEJ Developer&#8217;s Journal &#8211; Old Entries</h1>
+
+	<p>These are the oldest entries of my journal regarding the development of <span class="caps">AFC</span>. The <a href="dev/index.htm">newer entries</a> are on the main journal page. Note that the former name of <span class="caps">AFC</span> was <span class="caps">SEJ</span> (Spreadsheet Engine for Java).</p>
+
+
+
+	<h2><a name="pagetoc__1">May 26, 2006</a></h2>
+
+	<p>I am working on an introductory example for <span class="caps">SEJ</span> for the tutorial (because I need this to streamline the docs and tests for binding and support for multiple data types in the interface). This prompted me to resume work on the simple cell binder. What this thing really needs to do is the following:</p>
+
+<ul>
+	<li>Scan the output interface. For every method returning a type <span class="caps">SEJ</span> can handle, try to find a correspondingly named cell (<em>GetXY</em> or just <em>XY</em>). If found, bind it. If not, check if the method is abstract. If so, raise an error.</li>
+</ul>
+
+<ul>
+	<li>Scan the remaining unbound cell names. For every name, check the input interface for a corresponding method. If found, bind the cell to it. If not, raise an error. This can be restricted to scan only a subset of names following a given name pattern, for example, all starting with <em>I_</em>.</li>
+</ul>
+
+	<p>For both inputs and outputs, I could extend this so parametrized methods can be bound. For example: <em>I_TURNOVER_2</em> would be bound to <code>getTurnover( int yearsBack )</code>.</p>
+
+
+	<h2><a name="pagetoc__2">May 24, 2006</a></h2>
+
+	<h3><a name="pagetoc__2_1">Automatic Conversion of Numeric Types</a></h3>
+
+	<p>I discussed with Marcel and Igor that <span class="caps">SEJ</span> should allow different numeric input and output types and automatically convert them to the internal numeric type used in computations. This would make input and output interfaces reusable for computations with different internal numeric types, as well as being more convenient. For example:</p>
+
+
+<pre><code>public interface Input {
+  double getRate();
+  int getNumberOfItems();
+  long getPrice();
+}
+</code></pre>
+	<p>should be usable with both <code>double</code>, <code>BigDecimal</code> and scaled <code>long</code> engines. This is not so easy:</p>
+
+<ul>
+	<li>You must be aware that for scaled <code>long</code> and <code>BigDecimal</code>, the <code>double</code> returned by <code>getRate()</code> might be truncated.</li>
+</ul>
+
+<ul>
+	<li>The <code>long</code> returned by <code>getPrice()</code> is hard to interpret. In a scaled <code>long</code> engine, it should be treated as an <em>already scaled</em> long. Otherwise, there is no way an application can pass properly scaled longs into such an engine. For other engines, however, the <code>long</code> would more naturally be interpreted as a true integer type, especially since there is currently no way to tell them the implicit scaling to assume.</li>
+</ul>
+
+	<p>With Java 5, we might try to circumvent the latter problem using annotations. But a goal of <span class="caps">SEJ</span> is <span class="caps">JRE 1</span>.4 compatibility. With annotations, we might have something like:</p>
+
+
+<pre><code>public interface Input {
+  double getRate();
+  int getNumberOfItems();
+  @ScaledLong(4) long getPrice();
+}
+</code></pre>
+	<p>For the moment, I shall therefore support only the following automatic input conversions:</p>
+
+<ul>
+	<li><code>byte</code>, treated as a true integer value</li>
+	<li><code>int</code>, treated as a true integer value</li>
+	<li><code>double</code>, truncated to fit the internal type</li>
+	<li><code>BigDecimal</code>, truncated to fit the internal type</li>
+</ul>
+
+	<p>Overflows are raised as errors.</p>
+
+
+	<p>On the output side, I shall support:</p>
+
+<ul>
+	<li><code>byte</code>, truncates the internal value</li>
+	<li><code>int</code>, truncates the internal value</li>
+	<li><code>double</code>, possibly loses precision vis-a-vis the internal value</li>
+	<li><code>BigDecimal</code>, always exact</li>
+</ul>
+
+	<p>Again, overflows are raised as errors.</p>
+
+
+	<h2><a name="pagetoc__3">May 23, 2006</a></h2>
+
+	<p>Had a meeting with Marcel, Igor, Markus and Dani of Abacus today. Lots of new todos. Nevertheless, <span class="caps">SEJ</span> is now ready for integration into Abacus Lohn. A conversation with Markus revealed that the currently supported range of Excel functionality will go a very long way.</p>
+
+
+	<p>The .ser file format should really be a .jar. Add an option for whether you want it compressed or not. It contains the generated .class files, and a .xml file representing the internal format of <span class="caps">SEJ</span> engines. This makes analyzing .ser files possible using standard tools.</p>
+
+
+	<p>Checked out goal seeking in Excel (as prompted to by Markus). This is purely a menu option, so adding this to <span class="caps">SEJ</span> is not really realistic. Maybe as a layer around <span class="caps">SEJ</span>. But then, applications can currently do that themselves.</p>
+
+
+	<h2><a name="pagetoc__4">May 18, 2006</a></h2>
+
+	<h3><a name="pagetoc__4_1">Test First</a></h3>
+
+	<p>I have implemented <a href="tutorial/caching.htm">caching of values</a>. This has been an elevating experience of test-first and documentation-first development.</p>
+
+<ul>
+	<li>I first wrote some notes here in the developer&#8217;s journal.</li>
+</ul>
+
+<ul>
+	<li>Then I started the new topic in the tutorial and began documenting the feature, drawing on the notes I had first developed here.</li>
+</ul>
+
+<ul>
+	<li>Interleaved with the documentation I also wrote the new test cases which I immediately cited again into the documentation.</li>
+</ul>
+
+	<p>This took about 3 hours. In the end, I had finished documentation and use-case tests before having written a single line of production code.</p>
+
+<ul>
+	<li>I then implemented the feature in about 1:45 h. When the use-case tests ran green, I extended my large spreadsheet-driven test suite to test both caching and non-caching versions. It ran green immediately.</li>
+</ul>
+
+	<p>So cool!</p>
+
+
+	<h3><a name="pagetoc__4_2">Constant Sharing</a></h3>
+
+	<p>I started looking at sharing of constant values for expensive types (<code>BigDecimal</code>, for instance). First, I checked that <span class="caps">ASM</span> properly combines equal values in the constant pool &#8211; it does.</p>
+
+
+	<p>Then I checked the speed of <code>BigDecimal</code> construction using three different approaches:</p>
+
+<ul>
+	<li><code>new BigDecimal( String )</code></li>
+	<li><code>BigDecimal.valueOf( long, scale )</code></li>
+	<li>preconstructed in a <code>private static final BigDecimal</code></li>
+</ul>
+
+	<p>The preconstructed case was, of course, fastest. The interesting part is that &#8211; for constants whose digits fit into a <code>long</code>, which should be most of them &#8211; the difference to <code>BigDecimal.valueOf</code> is not that big. For smaller test runs, it amounts to about 16%. For larger runs it gets closer to 30%. Construction using strings (which <span class="caps">SEJ</span> usess right now) is by far the slowest, being about 4 times slower than <code>valueOf( long )</code>.</p>
+
+
+	<p><em>Aside:</em> Java 6 is already measurably faster than Java 5 on this test.</p>
+
+
+	<p>I have thus changed <span class="caps">SEJ</span> so it generates preallocated <code>BigDecimal</code> constants using <code>valueOf( long )</code> wherever possible. On the <span class="caps">JRE 1</span>.4 I had, unfortunately, had to resort to <code>new BigDecimal( String )</code> for values that already were bigdecimals, because the <span class="caps">JRE 1</span>.4 does not support <code>BigDecimal.precision()</code>.</p>
+
+
+	<h2><a name="pagetoc__5">May 17, 2006</a></h2>
+
+	<p><em>Correction:</em> <code>BigDecimal</code> was ok in 0.4.0, after all. The compiler inserted the rescaling directly into the code instead of handing it off to the runtime.</p>
+
+
+	<p>Scaled long is up and running now, passing all tests. Instead of making the runtime an instance, I had to add support for adding a last argument with runtime context information to the static runtime methods. This is because otherwise I would have had to know that I would need the runtime instance later on <strong>before</strong> compiling an expression&#8217;s arguments (because the <span class="caps">JVM</span> expects the instance for a virtual call on the stack first, not last). That would have greatly complicated the compiler&#8217;s design. The context argument I can conveniently push last, where required.</p>
+
+
+	<p>Release 0.4.1 is out.</p>
+
+
+	<h2><a name="pagetoc__6">May 16, 2006</a></h2>
+
+	<p>Scaled <code>long</code> support is coming along nicely now. The one big change that&#8217;s still missing is to provide the engines with an <em>instance</em> of the runtime. Before, it was sufficient to give them static access. The reason is the runtime must know about things like the scale and rounding mode and it is far simpler to embed this in the runtime once and for all instead of passing it around all the time.</p>
+
+
+	<p>This made me realize that the current <code>BigDecimal</code> operations defined in the runtime do not enforce the fixed scale. I shall fix this for 0.4.1.</p>
+
+
+	<h2><a name="pagetoc__7">May 11, 2006</a></h2>
+
+	<p>Since I continually broke the runtime jar, I have now included dedicated runtime tests in the automated build. This also tests engine serialization and deserialization. Yes!</p>
+
+
+	<h2><a name="pagetoc__8">May 9, 2006</a></h2>
+
+	<p>Scaled <code>BigDecimal</code> support is finally up and running with all tests green, both on <span class="caps">JRE 1</span>.4 and 1.5. Quite a refactoring session that was. I shall soon release it as version 0.4.0.</p>
+
+
+	<p>I had to extend Retrotranslator slightly to support some <span class="caps">JRE 1</span>.5 additions to <code>BigDecimal</code>. Retrotranslator&#8217;s great design made this very simple.</p>
+
+
+	<h2><a name="pagetoc__9">April 29, 2006</a></h2>
+
+	<p>I am working on the BigDecimal constant folder now. It irks me that I have to duplicate a lot of code in the interpreter and the byte code compiler. So I did some tests. Up to Java 5, code such as</p>
+
+
+<pre><code>double result = getA1() + getA2() * getA3();
+</code></pre>
+	<p>is more than twice as fast as</p>
+
+
+<pre><code>double result = Runtime.opPlus( getA1(), Runtime.opTimes( getA2(), getA3() ) );
+</code></pre>
+	<p>Starting with the Java 6 beta, however, both perform identically. This indicates (as another test already did), that the <span class="caps">JVM</span> from Java 6 inlines much more aggressively.</p>
+
+
+	<p>This indicates that in the longer run, I can get away with a scheme where the byte code compiler uses a fairly straightforward scheme of compiling expressions to static support methods in a runtime class, which are also used by the interpreter, in an equally generic fashion. What this adds, of course, is a much increased dependency of the generated engines on the runtime class.</p>
+
+
+	<h2><a name="pagetoc__10">April 13, 2006</a></h2>
+
+	<p>Just realized that if alternative numeric types are to be supported properly, all the constant folding performed by <span class="caps">SEJ</span> will have to be carried out using the alternative types, too. So, for the moment, I shall simply disable constant folding for <code>BigDecimal</code>.</p>
+
+
+	<h2><a name="pagetoc__11">April 12, 2006</a></h2>
+
+	<h3><a name="pagetoc__11_1">Type Inference</a></h3>
+
+	<p>I&#8217;ve started working on the type annotation algorithm. A key problem seems to be when there is a difference between the <em>expected type</em> (what the outside computation wants) and the <em>inner type</em> (what the value is). Consider, for instance:</p>
+
+
+<pre><code>BigDecimal getResult1() { return getA().multiply( BigDecimal.TEN ); }
+int getResult2() { return getA() + 4; }
+</code></pre>
+	<p>What should <code>getA()</code> return? The obvious answer is, of course, the most precise of all the expected types. So it&#8217;s <code>BigDecimal</code> here.</p>
+
+
+	<h5><a name="pagetoc__11_1_1">Speed Test</a></h5>
+
+	<p>Consider, however, the following timings for the repeated execution of the formula <code>x = p + p * f</code> where <code>p = 123.45</code> and <code>f = 0.076</code> (yes, I know this can be made more efficient). I coded this formula using <code>double</code>, <code>BigDecimal</code> and both an <code>int</code> and a <code>long</code> scaled by 10&#8217;000 (the latter is thus equivalent to the <code>Currency</code> type found in <span class="caps">COM</span> and Delphi).</p>
+
+<ul>
+	<li><code>double</code>: 150 ms</li>
+	<li><code>int</code>: 200 ms</li>
+	<li><code>long</code>: 550 ms</li>
+	<li><code>BigDecimal</code>: 5500 ms</li>
+</ul>
+
+	<p>Times vary, but the relations are fairly stable. So <code>double</code> is the fastest on my machine (Intel Centrino Core Duo), closely followed by the scaled <code>int</code>. Both are probably not suitable for financial computations, however. Of the remaining two, the scaled <code>long</code> still beats <code>BigDecimal</code> by a factor of 8 to 10. And it might be enough for many financial applications. Particularly so if you can control the scaling factor.</p>
+
+
+	<p>So choosing a faster type can make a huge difference. Can <span class="caps">SEJ</span> do this?</p>
+
+
+	<h5><a name="pagetoc__11_1_2">Multiple Versions</a></h5>
+
+	<p>If <code>getA()</code> is an input cell, we might simply generate <em>n</em> instances of <code>getA()</code>, one for each desired type, with appropriate conversions:</p>
+
+
+<pre><code>BigDecimal getA_Big() { return BigDecimal.valueOf( this.inputs.getA() ); }
+int getA_Int() { return this.inputs.getA(); }
+</code></pre>
+	<p>where</p>
+
+
+<pre><code>interface Inputs {
+  int getA();
+}
+</code></pre>
+	<p>Let&#8217;s now consider that <code>getA()</code> is not an input. It then is an intermediate result (that is, a non-input cell that is referenced by multiple other cells). Do we generate multiple instances of the subexpression, one for each desired type? This would be:</p>
+
+
+<pre><code>BigDecimal getA_Big() { return getB()_Big.add( BigDecimal.valueOf( 20 )); }
+int getA_Int() { return getB()_Int + 20; }
+</code></pre>
+	<p>assuming <code>getB()</code> is an input like <code>getA()</code> was above. This seems worthwile because we can now compute <code>int getResult2()</code> at full <code>int</code> speed.</p>
+
+
+	<h5><a name="pagetoc__11_1_3">Caching</a></h5>
+
+	<p>What if, however, <code>getA()</code> were an expensive subexpression? Like a sum over a large dynamic section? Would it not be better to compute it once and cache the result? Like:</p>
+
+
+<pre><code>BigDecimal computeA() { return /*compute the sum*/; }
+BigDecimal getA_Big() {
+  if (!isCached_A) {
+    cache_A = computeA();
+    isCached_A = true;
+  }
+  return cache_A;
+}
+int getA_Int() { return getA_Big().intValue(); }
+</code></pre>
+	<h5><a name="pagetoc__11_1_4">Overflows</a></h5>
+
+	<p>What if all the summed cells where <code>int</code> themselves? Should we not sum them as <code>int</code>s then? What if the sum overflows?</p>
+
+
+	<h5><a name="pagetoc__11_1_5">Decision</a></h5>
+
+	<p><span class="caps">SEJ</span> must make decisions. The question is: Can you affect them and, if so, how?</p>
+
+
+	<p>In view of the overflow problem, I have decided that <span class="caps">SEJ</span> will not try to be clever about inferring fast types. Every simple addition of input values already forces escalation to a bigger and slower type, so without hints from outside, <span class="caps">SEJ</span> would have to infer slow types for nearly everything very quickly. Who could give the hints? The programmers cannot, because they do not know the computations performed by the sheet. So it would have to be the sheet designers. I cannot imagine them caring about and being able to specify overflow conditions.</p>
+
+
+	<p>What the programmers can tell <span class="caps">SEJ</span> is the general class of computation they are dealing with. So I will let them specify the type being used for all numeric computations by a particular engine. The choices will probably be:</p>
+
+<ul>
+	<li><code>double</code></li>
+	<li><code>long</code>, with fixed, definable scale</li>
+	<li><code>int</code>, with fixed, definable scale</li>
+	<li><code>BigDecimal</code>, with optional minimum scale</li>
+</ul>
+
+	<p>The responsibility for this choice, and for communicating its consequences to the sheet designers, thus rests fully with the programmers. But it does allow them to generate engines suited for precise financial or very fast pure integer computations.</p>
+
+
+	<h2><a name="pagetoc__12">April 11, 2006</a></h2>
+
+	<p>Release 0.3.2 is out the door. Now I can turn to supporting <code>BigDecimal</code>.</p>
+
+
+	<p>I realized that <span class="caps">SEJ</span> should ensure that all abstract methods on the output type are bound when generating an engine.</p>
+
+
+	<h2><a name="pagetoc__13">April 7, 2006</a></h2>
+
+	<p>Release 0.3.2 is nearing completion. I just got all the tests running again and can do a complete build, including a version of <span class="caps">SEJ</span> for Java 1.4 which also passes all tests. Yay! Here&#8217;s the news:</p>
+
+<ul>
+	<li><code>sej-runtime.jar</code> actually works now</li>
+	<li>More robust formula parsing</li>
+	<li>Better formula error reporting</li>
+	<li><code>IF</code> fully supported, including <code>AND</code> and <code>OR</code></li>
+	<li>Java 1.4 compatibility</li>
+	<li>Dropped <code>Engine.Computation</code></li>
+</ul>
+
+	<p>Before I release, I shall have to test it manually again, and write a dedicated page about current limitations. Missing right now are, in particular:</p>
+
+<ul>
+	<li><code>NOT</code> &#8211; this will be easy, I think: just call the inverse test compiler</li>
+	<li>Range intersection</li>
+	<li>Vectors</li>
+	<li>Excel <span class="caps">XML</span></li>
+	<li>OOCalc</li>
+	<li>Sections</li>
+</ul>
+
+	<p>By the way, the <code>IF</code> logic described below was not fully correct. But I was on the right track. It works like a charm now.</p>
+
+
+	<h2><a name="pagetoc__14">April 6, 2006</a></h2>
+
+	<p>I&#8217;ll have to try the following:</p>
+
+
+<pre><code>public abstract class Output {
+  public abstract Output newComputation( Input input );
+  // ...
+}
+</code></pre>
+	<p>and then</p>
+
+
+<pre><code>Output engine = (Output) compiler.compileNewEngine();
+Output output = engine.newComputation( input );
+</code></pre>
+	<p>But it is hacky! I should introduce a factory object here. Making this factory customizable would allow users to write APIs that completely decouple them from <span class="caps">SEJ</span>&#8217;s internals, once they get an instantiated engine.</p>
+
+
+	<p>On the topic of Excel formula parsing, I have now gotten the grammar right, I think. I split the lexer into two versions, one for A1-style cell references (for Excel&#8217;s .xls format as returned by JExcelAPI), and another for <span class="caps">R1C1</span>-style references (for Excel&#8217;s .xml format). This allows me to much better recognize cell references versus names. And it cleared up the parsing code quite a bit.</p>
+
+
+	<p>Robert told me in more detail about his problems with <span class="caps">SEJ</span>. I have written a very long reply, which I will use as the basis for a better exposition of <span class="caps">SEJ</span>&#8217;s design decisions. In summary, I believe he is right that I should not have dived headlong into Java 5 for not very strong reasons. Apart from that, though, I still believe <span class="caps">SEJ</span>&#8217;s design to be very sound.</p>
+
+
+	<h2><a name="pagetoc__15">April 4, 2006</a></h2>
+
+	<p>Got feedback from Robert Zachajewicz of <a href="http://www.together.at/">together.at</a> on <span class="caps">SEJ</span> yesterday. He said that for his needs, <span class="caps">SEJ</span> was too strongly tied to particular Java versions and could not be isolated enough from the rest of his application for his liking. I have asked him to elaborate, since I do not yet see the full merit of his point.</p>
+
+
+	<p>Nevertheless, it got me thinking about this myself (it&#8217;s always good to get criticism you can take constructively). I realized I can drop the requirement that the ouptut type be a descendant class of <code>Engine.Computation</code>, and, in fact, a class at all. It can be an interface too. I can then drop the <code>Engine.Computation</code> class entirely. This further reduces the noise introduced by <span class="caps">SEJ</span> into your own types.</p>
+
+
+	<p>One aspect where he is right is in the planned design of the system tests. The byte code produced from <span class="caps">SEJ</span>&#8217;s generated Java source by the Java compiler is compared to the byte code <span class="caps">SEJ</span> produces directly (using <span class="caps">ASM</span>). This is, admittedly, highly version specific. It is, however, only an issue for running <span class="caps">SEJ</span>&#8217;s own system tests, not for using it. I intend to do it do ensure that the two generators (source code and byte code) in <span class="caps">SEJ</span> actually produce the same output. This should raise the confidence that the source output can be used to gain insight by users of <span class="caps">SEJ</span> when something in a byte code computation does not seem to work.</p>
+
+
+	<p>While I knew I had tested <span class="caps">SEJ</span> against the <span class="caps">JRE 1</span>.4 before, I started reading about <code>-target jsr14</code> some more. And indeed this option is not officially supported by Sun. So I now use <a href="http://retrotranslator.sourceforge.net/">Retrotranslator</a> to generate 1.4 compatible .jars.</p>
+
+
+	<h2><a name="pagetoc__16">March 30, 2006</a></h2>
+
+	<h3><a name="pagetoc__16_1">Cells, Ranges and Names</a></h3>
+
+	<p>Excel ranges and names are tricky. Here are some examples:</p>
+
+
+<dl>
+<dt><code>=SUM(2:5)</code></dt><dd>sums the entire rows 2 through 5.</dd>
+<dt><code>=SUM(B:D)</code></dt><dd>sums the entire columns B through D.</dd>
+<dt><code>=SUM(namedrange)</code></dt><dd>sums the named range.</dd>
+<dt><code>=namedrange</code></dt><dd>is an error, unless the range is unidimensional and the referencing cell is in a parallel range to the named one. However, in such a cell, <code>=SUM(namedrange)</code> still sums the entire range, not just the unidimensional cut through a possibly multidimensional range.</dd>
+</dl>
+	<p>The last rule deserves an example:</p>
+
+
+<pre><code>Income  Expense  Profit
+  $100      $80  =Income-Expense =&gt; $180
+  $200     $160  =Income-Expense =&gt; $360
+</code></pre>
+	<p>will work if column A is named <em>Income</em> and column B is named <em>Expense</em>. However</p>
+
+
+<pre><code>IncomeA  IncomeB  Wrong!                  Expected
+   $100     $200  =SUM(Incomes) =&gt; $600!      $300
+   $120     $180  =SUM(Incomes) =&gt; $600!      $300
+</code></pre>
+	<p>will not work as expected if <em>Incomes</em> is defined as A2:B3. If you simply define column A2:A3 as <em>IncomeA</em> and column B2:B3 as <em>IncomeB</em> and write:</p>
+
+
+<pre><code>IncomeA  IncomeB  Wrong!                          Expected
+   $100     $200  =SUM(IncomeA;IncomeB) =&gt; $600!      $300
+   $120     $180  =SUM(IncomeA;IncomeB) =&gt; $600!      $300
+</code></pre>
+	<p>it is still wrong. This, however, works:</p>
+
+
+<pre><code>IncomeA  IncomeB  Correct                   Expected
+   $100     $200  =IncomeA+IncomeB =&gt; $300      $300
+   $120     $180  =IncomeA+IncomeB =&gt; $300      $300
+</code></pre>
+	<p>This can become rather pathological because the seemingly scalar functions <code>AND</code> and <code>OR</code> are actually aggregators, whereas <code>NOT</code> is scalar:</p>
+
+
+<pre><code>One    Two   Surprise!                 Expected
+TRUE   TRUE  =AND(One;Two) =&gt; FALSE!!  TRUE
+FALSE  TRUE  =AND(One;Two) =&gt; FALSE    FALSE
+</code></pre>
+	<p>What&#8217;s worse, there is, as far as I know, no scalar equivalent for <code>AND</code> and <code>OR</code>, as <code>+</code> is for <code>SUM</code>.</p>
+
+
+	<p>All this leads to some complicated rules for cell and range parsing in Excel expressions. While researching this, I came up with the following web links:</p>
+
+<ul>
+	<li><a href="http://ewbi.blogs.com/develops/2004/12/excel_formula_p.html">A JavaScript online parser</a></li>
+	<li><a href="http://www.codecomments.com/archive285-2005-7-538549.html">Attempt at a <span class="caps">BNF</span> grammar</a></li>
+	<li><a href="http://www.mcs.vuw.ac.nz/~db/FishBrainWiki?Excel">Another one</a></li>
+	<li><a href="http://chacocanyon.com/smm/readings/referenceoperators.shtml">Overview of Excel operators</a></li>
+</ul>
+
+	<p>Here&#8217;s a few points worth noting:</p>
+
+<ul>
+	<li>For some other reason Excel uses a space (or multiple spaces) as the range intersection operator. While not as ambiguous as the comma, it does require some consideration.</li>
+</ul>
+
+<ul>
+	<li>Don&#8217;t forget that Excel still allows functions to be preceded with an <em>@</em>.</li>
+</ul>
+
+<ul>
+	<li>Don&#8217;t forget that array constants (surrounded by braces <code>{}</code>) can contain rows, which are delimited with semicolons <code>;</code>.</li>
+</ul>
+
+<ul>
+	<li>The text either side of a colon are not always cell references. Sometimes they are numbers (eg. <code>$25:26</code>).</li>
+</ul>
+
+<ul>
+	<li>A plus is not always a plus, sometimes it�s a unary operator, sometimes a binary operator, sometimes the significant figure in scientific notation. eg. <code>12E+20</code>.</li>
+</ul>
+
+	<p>My current attempt at a <span class="caps">BNF</span> grammar looks like what follows. Note the possible ambiguity where <code>name</code> occurs in multiple places.</p>
+
+
+<pre><code>expr ::=
+    cell
+  | expr + expr
+  ...
+  | SUM( ranges ).
+
+ranges ::=
+    range {"," range}.
+
+range ::=
+    name
+  | coords ":" coords
+  | col ":" col
+  | row ":" row.
+
+cell ::=
+    name
+  | coords.
+
+coords ::=
+  | col row
+  | "R" {index} "C" {index}.
+
+index ::=
+    &lt;integer&gt;
+  | "[" &lt;integer&gt; "]".
+
+col ::= ident.
+row ::= &lt;integer&gt;.
+name ::= ident.
+</code></pre>
+	<h3><a name="pagetoc__16_2">Compiling <code>IF</code></a></h3>
+
+	<p>It took me a while to figure out how to compile <code>IF</code> statements the way the Java compiler does. While I haven&#8217;t gotten around to implementing it yet, I believe the trick is to have two modes for compilation. I call them <em>branch-false</em> and <em>branch-true</em>. In <em>branch-false</em>, the test branches to a supplied label if the condition is false, otherwise falls through. <em>branch-true</em> reverses this. The reversal is used when compiling <code>OR</code> in <em>branch-false</em> (and, conversely, <code>AND</code> in <em>branch-true</em>).</p>
+
+
+	<p><em>branch-false</em> does:</p>
+
+
+<pre><code>void compileOr( Node a, Node b, Label branch ) {
+  Label otherTest = newLabel();
+  BRANCH_TRUE.compileTest( a, otherTest );
+  mark( otherTest );
+  compileTest( b, branch );
+}
+void compileAnd( Node a, Node b, Label branch ) {
+  compileTest( a, branch );
+  compileTest( b, branch );
+}
+</code></pre>
+	<p><em>branch-true</em> does:</p>
+
+
+<pre><code>void compileOr( Node a, Node b, Label branch ) {
+  compileTest( a, branch );
+  compileTest( b, branch );
+}
+void compileAnd( Node a, Node b, Label branch ) {
+  Label notMet = newLabel();
+  BRANCH_FALSE.compileTest( a, notMet );
+  compileTest( b, branch );
+  mark( notMet );
+}
+</code></pre>
+	<p>The initial call is:</p>
+
+
+<pre><code>void compileIf( Node test, Node iftrue, Node iffalse ) {
+  Label notMet = newLabel();
+  Label done = newLabel();
+  BRANCH_FALSE.compileTest( test, notMet );
+  compileExpr( iftrue );
+  compileGoto( done );
+  mark( notMet );
+  compileExpr( iffalse );
+  mark( done );
+}
+</code></pre>
+	<h2><a name="pagetoc__17">March 29, 2006</a></h2>
+
+	<p>When you use an input method that may throw a checked exception, you really have to declare that exception on each and every output method. This is because you cannot know all the places where the author of the spreadsheet is going to use that input. Therefore, <span class="caps">SEJ</span> should really check that all output methods declare the union of all the declared exceptions of all the input methods. Since this affects the <span class="caps">API</span>, I should implement this check early on.</p>
+
+
+	<p>To support internal caching of multiply referenced values, a computation should support a <code>reset()</code> method, which you have to call prior to reusing a computation with modified inputs.</p>
+
+
+	<p>To minimize the dependencies of compiled engines, I should move the <code>saveTo()</code> functionality from the <code>EngineFactory</code> to the <code>Compiler</code>. That way, compiled engines don&#8217;t even need interface to the compiler.</p>
+
+
+	<p>I just manually tested release 0.3.1. Had to tweak it a bit so all of the documentation gets properly included. The runtime-only .jar also did not work at all. Shall release this in 0.3.2. Lesson learned: always install and test a release.</p>
+
+
+	<h3><a name="pagetoc__17_1">Next Steps</a></h3>
+<ul>
+	<li>Implement full boolean expression support for <code>IF</code>, including <code>AND</code> and <code>OR</code>.</li>
+</ul>
+
+<ul>
+	<li>Implement support for <code>BigDecimal</code>. This might be possible without full type inference by simply substituting <code>BigDecimal</code> for <code>double</code> everywhere.</li>
+</ul>
+
+<ul>
+	<li>Write an outline of the type inference strategy so implications on the <span class="caps">API</span> can be caught.</li>
+</ul>
+
+<ul>
+	<li>Decide on how serialized engines will be stored for both maximum load performance and maximum robustness when <span class="caps">SEJ</span> evolves.</li>
+</ul>
+
+	<h3><a name="pagetoc__17_2">Suggestions</a></h3>
+<ul>
+	<li>Do a simple writer that generates an Excel worksheet based on an <span class="caps">SEJ</span> model. This is for applications that create the <span class="caps">SEJ</span> models themselves given legacy data or formulas defined in a custom UI. They can then write out a template spreadsheet for when users want to switch to spreadsheet mode.</li>
+</ul>
+
+	<h2><a name="pagetoc__18">March 21, 2006</a></h2>
+
+	<p>Everything is up and running again except for:</p>
+
+<ul>
+	<li>empty cells</li>
+	<li>strings</li>
+	<li><span class="caps">INDEX</span> and <span class="caps">MATCH</span></li>
+	<li>subsections (bands)</li>
+	<li>binding outputs with parameters (needed for interactive demo)</li>
+</ul>
+
+	<h2><a name="pagetoc__19">March 18, 2006</a></h2>
+
+	<p>Just finished reading <em>Better, faster, lighter Java</em>. It made me realize I have to think a bit more about the exceptions I expose. Here are my rules:</p>
+
+<ul>
+	<li>Anything that is a violation of the <span class="caps">API</span> contract should not be a declared exception. This is not a situation you want to catch, it is one you want to avoid.</li>
+</ul>
+
+<ul>
+	<li>All internal exceptions should be converted to <span class="caps">SEJ</span>-specific exceptions (with <code>cause</code> set appropriately) so client code is not affected when loader, compiler, or engine implementations are swapped.</li>
+</ul>
+
+<ul>
+	<li>Separate phases. Model errors, compiler errors, and computation errors should not be mixed up.</li>
+</ul>
+
+	<h5><a name="pagetoc__19_1">throws</a></h5>
+
+	<p>I also did some experiments about what happens when input methods throw declared exceptions. It is as I suspected: the processing of <code>throws</code> is purely a compiler thing. The VM does not enforce adherence. So if you have an input method like this:</p>
+
+
+<pre><code>  public String readFile( String _name ) throws IOException  ...
+</code></pre>
+	<p>and use it in a computation that you bind to an output method like this:</p>
+
+
+<pre><code>  public abstract String getData();
+</code></pre>
+	<p>the output method generated by <span class="caps">SEJ</span> will be able to actually throw the undeclared <code>IOException</code>!</p>
+
+
+	<p>Since the list of declared thrown exceptions is available through reflection, I think <span class="caps">SEJ</span> should, in the future, propagate them through computations and check that bound output methods conform to them. This will be mandatory for the source generator anyway, as it needs to properly place <code>throws</code> clauses on the generated methods.</p>
+
+
+	<h5><a name="pagetoc__19_2">Usability</a></h5>
+
+	<p>I shall have to put a fa�ade on the current compiler interface to simplify engine definition. In particular, this fa�ade will handle section scopes and the lookup of both cell names and the methods on the supplied input/output types.</p>
+
+
+	<p>I shall probably also add convenience classes that fully automate engine definition through reflection and cell names in Excel.</p>
+
+
+	<h2><a name="pagetoc__20">March 16, 2006</a></h2>
+
+	<p>It&#8217;s done. I&#8217;ve rewritten the <span class="caps">API</span> and ported to old byte-code compiler over to the new design.</p>
+
+
+	<p>I think I shall use version numbers in the class name for the runtime support for the engine. That way, I can easily support multiple versions of stored engines. As long as the implemented interfaces on the engines don&#8217;t change, that is.</p>
+
+
+<dl>
+<dt>Bill Venners <a href="http://www.artima.com/insidejvm/ed2/security2.html">writes</a></dt><dd><em>Although you can grant special access privileges between types belonging to the same package by giving members protected or package access, this special access is granted to members of the same package at runtime only if they were loaded by the same class loader.</em></dd>
+</dl>
+	<p>This means one has to declare all interfaces to the engine (inputs and outputs) public, even though they very clearly should often be at most package visible.</p>
+
+
+	<h5><a name="pagetoc__20_1">Typing</a></h5>
+
+	<p>Right now, the engine supports only <code>double</code>-valued computations. It already extends this to <code>Date</code>s by simply converting between doubles and dates in the input interface. The output interface does not handle this yet. For the near future, booleans will be handled as doubles too. Excel internally uses 0 for false, 1 for true (and, yes, you can add them).</p>
+
+
+	<p>Which leaves me with the need for data type analysis only for strings and integers. Strings are essential in the long run. Integers (and longs) would allow much faster pure integer computations.</p>
+
+
+	<h2><a name="pagetoc__21">March 10, 2006</a></h2>
+
+	<p>I have decided to drop support for the interpreted engine. Still need to verify this with Claudio, though. It will make the <span class="caps">API</span> much simpler, in particular the provision of default implementations for output methods not bound to the sheet. And it will let me concentrate my efforts on the one implementation that will deliver the best performance anyway.</p>
+
+
+	<p>The reason is that the interpreted engine cannot support the construction of a computation that descends from a user-supplied base class. If this is possible, however, the specification of the output interface, including default behaviour, becomes very simple. The user simply writes a base class that <span class="caps">SEJ</span> should descend the generated computation from. This class can either be abstract, partially abstract, or fully implemented with default behaviour for all getters.</p>
+
+
+	<p>What&#8217;s more, since a generated byte-code class will be very much self-contained and rely only on a few interfaces to support classes, the long-term compatibility of the generated engines will be much improved.</p>
+
+
+	<h2><a name="pagetoc__22">March 8, 2006</a></h2>
+
+	<p>Started <a href="tutorial.htm">tutorial</a>. Realized that the old <span class="caps">API</span> can be replaced by the new, interface-based one (which is the more common case anyway).</p>
+
+
+	<h2><a name="pagetoc__23">March 7, 2006</a></h2>
+
+	<p>When you have an input interface that throws an exception, Java&#8217;s reflection mechanism converts that to an <code>InvocationTargetException</code>. In order to be able to catch this exception when accessing an output cell, however, you have to declare <code>InvocationTargetException</code> on the output interface. If you don&#8217;t, Java will throw an <code>UndeclaredThrowableException</code>.</p>
+
+
+	<p>I have rethought the interface based <span class="caps">API</span>. There is an incomplete prototype in the scratchpad right now. I still need to flesh out the sample implementation both for a generic and a byte-code implementation.</p>
+
+
+	<h5><a name="pagetoc__23_1">Labels</a></h5>
+
+	<p>I discovered that Excel can accept cell <em>labels</em> in formulas. This means you can actually do something like:</p>
+
+
+<pre><code>   A       B
+1  f(10)   100
+2  x(20)   200
+3  Result  =f(10) + x(20)
+</code></pre>
+	<p>Not bad, eh? I don&#8217;t know, however, whether JExcelAPI handles this properly.</p>
+
+
+	<h2><a name="pagetoc__24">March 1, 2006</a></h2>
+
+	<p>The next steps I take with <span class="caps">SEJ</span> should help to finalize the <span class="caps">API</span>. They are:</p>
+
+<ul>
+	<li>Introduce the <code>interface</code> based binding. Make it so that for native code compilers, this can be as efficient as possible, obviating the need for all by-name lookups. Interface-based binding should support parametrized inputs, for example YA_1000 &rarr; getYA( 1000 ). Support multiple input interfaces.</li>
+</ul>
+
+<ul>
+	<li>Introduce <span class="caps">API</span> for names in model so compiler definition code can react to definitions.</li>
+</ul>
+
+<ul>
+	<li>Clean up handling of bands. Rethink terminology (again).</li>
+</ul>
+
+<ul>
+	<li>Write an outline of the type inference strategy so implications on the <span class="caps">API</span> can be caught.</li>
+</ul>
+
+<ul>
+	<li>Write a tutorial for both by-name an by-interface binding, including bands and values provided by callbacks.</li>
+</ul>
+
+<ul>
+	<li>Decide on how serialized engines will be stored for both maximum load performance and maximum robustness when <span class="caps">SEJ</span> evolves.</li>
+</ul>
+
+	<h4><a name="pagetoc__24_1">Bands</a></h4>
+
+	<p>I think bands should not be automatically extended across the entire width or height of the spreadsheet. This would allow one to build spreadsheets like:</p>
+
+
+<pre><code>  Location     In       Out
+  One          SUM(In)  SUM(Out)    =B-C
+               $100     $50
+               $200     $80
+  Another      SUM(In)  SUM(Out)    =B-C
+               $100     $200
+</code></pre>
+	<p>One would define a top-level range A2:D5 and two sub-ranges B3:B4 and C3:C4. This means that the number of <em>Ins</em> may differ from the number of <em>Outs</em>.</p>
+
+
+	<p>Also, the <span class="caps">API</span> <code>Compiler.defineBand()</code> is not precise. A <em>band</em>, in its accustomed meaning in report definition tools is the template for a single instance. <span class="caps">SEJ</span>&#8217;s <span class="caps">API</span>, however, wants to to pass the range encompassing <em>all</em> of the sample instances in the sheet. This is also unfortunate because it makes <span class="caps">SEJ</span> assume that a single instances is always just one row high or one column wide. This may not always be convenient for the user.</p>
+
+
+	<p><span class="caps">SEJ</span> does not handle sums over nested bands properly. The user must model intermediate sums for every non-leaf band. I shall accept this as a known limitation for the moment and have <a href="doc/bands.html">documented</a> it.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><span class="selected">... Ancient Journal</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">May 26, 2006</a></li><li class="withitems"><a href="#pagetoc__2">May 24, 2006</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Automatic Conversion of Numeric Types</a></li></ul></li><li><a href="#pagetoc__3">May 23, 2006</a></li><li class="withitems"><a href="#pagetoc__4">May 18, 2006</a><ul class="toc toc2"><li><a href="#pagetoc__4_1">Test First</a></li><li><a href="#pagetoc__4_2">Constant Sharing</a></li></ul></li><li><a href="#pagetoc__5">May 17, 2006</a></li><li><a href="#pagetoc__6">May 16, 2006</a></li><li><a href="#pagetoc__7">May 11, 2006</a></li><li><a href="#pagetoc__8">May 9, 2006</a></li><li><a href="#pagetoc__9">April 29, 2006</a></li><li><a href="#pagetoc__10">April 13, 2006</a></li><li class="withitems"><a href="#pagetoc__11">April 12, 2006</a><ul class="toc toc2"><li class="withitems"><a href="#pagetoc__11_1">Type Inference</a><ul class="toc toc4"><li><a href="#pagetoc__11_1_1">Speed Test</a></li><li><a href="#pagetoc__11_1_2">Multiple Versions</a></li><li><a href="#pagetoc__11_1_3">Caching</a></li><li><a href="#pagetoc__11_1_4">Overflows</a></li><li><a href="#pagetoc__11_1_5">Decision</a></li></ul></li></ul></li><li><a href="#pagetoc__12">April 11, 2006</a></li><li><a href="#pagetoc__13">April 7, 2006</a></li><li><a href="#pagetoc__14">April 6, 2006</a></li><li><a href="#pagetoc__15">April 4, 2006</a></li><li class="withitems"><a href="#pagetoc__16">March 30, 2006</a><ul class="toc toc2"><li><a href="#pagetoc__16_1">Cells, Ranges and Names</a></li><li><a href="#pagetoc__16_2">Compiling <code>IF</code></a></li></ul></li><li class="withitems"><a href="#pagetoc__17">March 29, 2006</a><ul class="toc toc2"><li><a href="#pagetoc__17_1">Next Steps</a></li><li><a href="#pagetoc__17_2">Suggestions</a></li></ul></li><li><a href="#pagetoc__18">March 21, 2006</a></li><li class="withitems"><a href="#pagetoc__19">March 18, 2006</a><ul class="toc toc4"><li><a href="#pagetoc__19_1">throws</a></li><li><a href="#pagetoc__19_2">Usability</a></li></ul></li><li class="withitems"><a href="#pagetoc__20">March 16, 2006</a><ul class="toc toc4"><li><a href="#pagetoc__20_1">Typing</a></li></ul></li><li><a href="#pagetoc__21">March 10, 2006</a></li><li><a href="#pagetoc__22">March 8, 2006</a></li><li class="withitems"><a href="#pagetoc__23">March 7, 2006</a><ul class="toc toc4"><li><a href="#pagetoc__23_1">Labels</a></li></ul></li><li class="withitems"><a href="#pagetoc__24">March 1, 2006</a><ul class="toc toc3"><li><a href="#pagetoc__24_1">Bands</a></li></ul></li></ul></div></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

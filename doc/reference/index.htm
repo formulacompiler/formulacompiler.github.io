@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>AFC Function Reference - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>AFC Function Reference</h1>
+
+	<p>This is the function reference for the Abacus Formula Compiler (AFC). You might also want to have a look at the <a href="../tutorial/index.htm">Tutorial</a> and the <a href="../javadoc/index.html">API Reference</a>, and in particular the <a href="../limitations.htm">Limitations</a>.</p>
+
+
+
+	<h2><a name="pagetoc__1">Microsoft Excel Support</a></h2>
+
+	<p>Since <span class="caps">AFC</span> only supports <a href="http://office.microsoft.com/">Microsoft Excel</a> spreadsheet semantics at the moment, this reference uses Excel as a baseline for expected behaviour of the supported functions.</p>
+
+
+<dl>
+<dt><a href="values.htm">Cells, Values, Names</a></dt><dd>Strings, numbers, dates, booleans; blank cells; cell names; ranges; numeric precision</dd>
+<dt><a href="numops.htm">Numeric Operators</a></dt><dd><code>%</code>, <code>*</code>, <code>+</code>, <code>-</code>, <code>/</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&lt;&gt;</code>, <code>=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>^</code></dd>
+<dt><a href="numfuncs.htm">Numeric Functions</a></dt><dd><code>ABS</code>, <code>ACOS</code>, <code>ACOSH</code>, <code>ASIN</code>, <code>ASINH</code>, <code>ATAN</code>, <code>ATAN2</code>, <code>ATANH</code>, <code>CEILING</code>, <code>COMBIN</code>, <code>COS</code>, <code>COSH</code>, <code>DEGREES</code>, <code>EVEN</code>, <code>EXP</code>, <code>FACT</code>, <code>FLOOR</code>, <code>GEOMEAN</code>, <code>HARMEAN</code>, <code>INT</code>, <code>LN</code>, <code>LOG</code>, <code>LOG10</code>, <code>MOD</code>, <code>ODD</code>, <code>PERMUT</code>, <code>PI</code>, <code>POWER</code>, <code>RADIANS</code>, <code>RAND</code>, <code>ROUND</code>, <code>ROUNDDOWN</code>, <code>ROUNDUP</code>, <code>SIGN</code>, <code>SIN</code>, <code>SINH</code>, <code>SQRT</code>, <code>TAN</code>, <code>TANH</code>, <code>TRUNC</code></dd>
+<dt><a href="financialfuncs.htm">Financial Functions</a></dt><dd><code>DB</code>, <code>DDB</code>, <code>FV</code>, <code>IRR</code>, <code>MIRR</code>, <code>NPER</code>, <code>NPV</code>, <code>PMT</code>, <code>PV</code>, <code>RATE</code>, <code>SLN</code>, <code>SYD</code>, <code>VDB</code></dd>
+<dt><a href="statisticalfuncs.htm">Statistical Functions</a></dt><dd><code>AVEDEV</code>, <code>BETADIST</code>, <code>BETAINV</code>, <code>BINOMDIST</code>, <code>CHIDIST</code>, <code>CHIINV</code>, <code>CHITEST</code>, <code>CONFIDENCE</code>, <code>CORREL</code>, <code>CRITBINOM</code>, <code>DEVSQ</code>, <code>EXPONDIST</code>, <code>FDIST</code>, <code>FINV</code>, <code>FISHER</code>, <code>FISHERINV</code>, <code>FORECAST</code>, <code>FTEST</code>, <code>GAMMADIST</code>, <code>GAMMAINV</code>, <code>GAMMALN</code>, <code>HYPGEOMDIST</code>, <code>INTERCEPT</code>, <code>KURT</code>, <code>LARGE</code>, <code>LOGINV</code>, <code>LOGNORMDIST</code>, <code>MEDIAN</code>, <code>MODE</code>, <code>NEGBINOMDIST</code>, <code>NORMDIST</code>, <code>NORMINV</code>, <code>NORMSDIST</code>, <code>NORMSINV</code>, <code>PEARSON</code>, <code>PERCENTILE</code>, <code>PERCENTRANK</code>, <code>POISSON</code>, <code>PROB</code>, <code>QUARTILE</code>, <code>RANK</code>, <code>RSQ</code>, <code>SKEW</code>, <code>SLOPE</code>, <code>SMALL</code>, <code>STANDARDIZE</code>, <code>STDEV</code>, <code>STDEVP</code>, <code>STDEVPA</code>, <code>STEYX</code>, <code>SUMX2MY2</code>, <code>SUMX2PY2</code>, <code>SUMXMY2</code>, <code>TDIST</code>, <code>TINV</code>, <code>TRIMMEAN</code>, <code>TTEST</code>, <code>VAR</code>, <code>VARA</code>, <code>VARP</code>, <code>WEIBULL</code>, <code>ZTEST</code></dd>
+<dt><a href="strings.htm">String Support</a></dt><dd><code>&#38;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&lt;&gt;</code>, <code>=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>CLEAN</code>, <code>CONCATENATE</code>, <code>EXACT</code>, <code>FIND</code>, <code>LEFT</code>, <code>LEN</code>, <code>LOWER</code>, <code>MATCH</code>, <code>MID</code>, <code>PROPER</code>, <code>REPLACE</code>, <code>REPT</code>, <code>RIGHT</code>, <code>SEARCH</code>, <code>SUBSTITUTE</code>, <code>TRIM</code>, <code>UPPER</code></dd>
+<dt><a href="booleans.htm">Boolean Functions And IF</a></dt><dd><code>AND</code>, <code>IF</code>, <code>NOT</code>, <code>OR</code>, <code>true</code></dd>
+<dt><a href="datefuncs.htm">Date Functions</a></dt><dd><code>DATE</code>, <code>DAY</code>, <code>DAYS360</code>, <code>HOUR</code>, <code>MINUTE</code>, <code>MONTH</code>, <code>NOW</code>, <code>SECOND</code>, <code>TIME</code>, <code>TODAY</code>, <code>WEEKDAY</code>, <code>YEAR</code></dd>
+<dt><a href="convfuncs.htm">Conversion Functions</a></dt><dd><code>CHAR</code>, <code>CODE</code>, <code>DATEVALUE</code>, <code>DOLLAR</code>, <code>FIXED</code>, <code>N</code>, <code>ROMAN</code>, <code>T</code>, <code>TEXT</code>, <code>TIMEVALUE</code>, <code>VALUE</code></dd>
+<dt><a href="typefuncs.htm">Type Functions</a></dt><dd><code>ISNONTEXT</code>, <code>ISNUMBER</code>, <code>ISTEXT</code></dd>
+<dt><a href="aggregators.htm">Aggregators</a></dt><dd><code>AVEDEV</code>, <code>AVERAGE</code>, <code>COUNT</code>, <code>COUNTA</code>, <code>COVAR</code>, <code>DEVSQ</code>, <code>KURT</code>, <code>MAX</code>, <code>MIN</code>, <code>PRODUCT</code>, <code>SKEW</code>, <code>STDEV</code>, <code>STDEVP</code>, <code>SUM</code>, <code>SUMIF</code>, <code>SUMSQ</code>, <code>VAR</code>, <code>VARP</code></dd>
+<dt><a href="dbaggregators.htm">Database Table Aggregators</a></dt><dd><code>COUNTIF</code>, <code>DAVERAGE</code>, <code>DCOUNT</code>, <code>DCOUNTA</code>, <code>DGET</code>, <code>DMAX</code>, <code>DMIN</code>, <code>DPRODUCT</code>, <code>DSTDEV</code>, <code>DSTDEVP</code>, <code>DSUM</code>, <code>DVAR</code>, <code>DVARP</code>, <code>SUMIF</code></dd>
+<dt><a href="lookupfuncs.htm">Lookup Functions</a></dt><dd><code>CHOOSE</code>, <code>HLOOKUP</code>, <code>INDEX</code>, <code>LOOKUP</code>, <code>MATCH</code>, <code>VLOOKUP</code></dd>
+<dt><a href="../limitations.htm">Limitations</a></dt><dd>Things that are known to not work quite as expected yet.</dd>
+</dl>
+	<h2><a name="pagetoc__2">Note On The Sample Expressions</a></h2>
+
+	<p>To ensure its correctness, all the example expressions and their results have been <a href="http://arrenbrecht.ch/jcite/">cited from automated tests</a> that are run with every release build.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><span class="selected">Function Reference</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Microsoft Excel Support</a></li><li><a href="#pagetoc__2">Note On The Sample Expressions</a></li></ul></div></div>
+<div class="nested">
+</div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

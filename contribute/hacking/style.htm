@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Java Code Style - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Java Code Style</h1>
+
+	<p>To ensure some sort of consistency in the source code, I would strongly appreciate it if you could follow these style guidelines (and generally the ones you see in the code that already exists):</p>
+
+
+	<h4>Encoding</h4>
+<ul>
+	<li><em>Unix line ending</em> conventions (LF only).</li>
+	<li><em>UTF-8</em> character encoding.</li>
+</ul>
+
+	<h4>Indentation</h4>
+<ul>
+	<li>Use tabs to indent, not spaces.</li>
+</ul>
+
+	<h4>Spaces</h4>
+<ul>
+	<li>Prefix parameters with an underscore, like so: <code>void foo( int _bar )</code>. (You may omit the underscore in parameters in the <a href="addprimitive.htm">template methods for primitive functions</a>.)</li>
+	<li>Add inner spaces within the parens of parameter lists, like so: <code>void foo( int _bar )</code>, rather than <code>void foo(int _bar)</code>.</li>
+	<li>Also do this when calling methods: <code>foo( 12 );</code>, not <code>foo(12);</code>. But: <code>bar();</code>, not <code>bar(  );</code>.</li>
+	<li>Do <em>not</em> add inner spaces for parens used to group operators, as in: <code>1 * (2 + 3)</code>.</li>
+	<li>Add inner spaces within the brackets of array accesses, like so: <code>a[ i + j ]</code>.</li>
+</ul>
+
+	<h4>Lines</h4>
+<ul>
+	<li>Put the starting and final braces for classes and methods onto a separate line.</li>
+	<li>Put the starting brace of flow constructs onto the same line as the construct.</li>
+	<li>Put the start of <code>else</code>, <code>catch</code>, <code>finally</code>, etc. onto a separate line.</li>
+	<li>Separate not very closely related methods by two empty lines, especially if there are also JavaDoc comments present.</li>
+</ul>
+
+	<h4>Misc</h4>
+<ul>
+	<li>Use <code>final</code> wherever possible, except on parameters (as this, alas, makes the parameter lists unwieldy).</li>
+	<li>Use <code>this.field</code> rather than just <code>field</code> to access local fields.</li>
+</ul>
+
+	<p>For everything else, please follow the <a href="http://java.sun.com/docs/codeconv/">standard Java conventions</a>.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Java Code Style</span></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

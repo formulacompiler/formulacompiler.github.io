@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Who Parses Function Names? - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Who Parses Function Names?</h1>
+
+	<p>We have been running against a table size limit in <a href="http://www2.in.tum.de/projects/cup/">CUP</a>. So I replaced <span class="caps">CUP</span> by <a href="https://javacc.dev.java.net/">JavaCC</a>. With great results so far.</p>
+
+
+
+	<h2><a name="pagetoc__1">Why not <span class="caps">CUP</span>?</a></h2>
+
+	<p>The table size issue came up because we parse functions in expressions directly in the grammar, as in (CUP notation):</p>
+
+
+<pre>| NOT LPAREN expr:arg RPAREN
+  {: RESULT = new ExpressionNodeForFunction( Function.NOT, cell( arg )); :}
+</pre>
+	<p>This is handy, as most of the checking of allowed argument combinations can be specified right in the grammar. On the other hand, the <a href="http://www2.in.tum.de/projects/cup/">CUP web site</a> says very prominently:</p>
+
+
+<dl>
+<dt>Method is exceeding the 65536 bytes limit</dt><dd>In almost all computer languages You would choose not to hardcode subcommands or functions as language keywords, but as identifiers, thus eliminating ever growing grammars, as Your language evolves? This is also a way to surpass the Java Bytecode Formats limitation of not allowing methods bigger than 65k.</dd>
+</dl>
+
+	<h2><a name="pagetoc__2">Why JavaCC?</a></h2>
+
+	<p>As alternatives to JFlex/CUP I investigated <a href="http://www.antlr.org/">ANTLR</a> and <a href="https://javacc.dev.java.net/">JavaCC</a>. Both are widely used generators. Not considered were SableCC and Grammatica, because they were not mainstream enough. In the end, I settled on JavaCC because <span class="caps">ANTLR</span> needs a runtime and is currently undergoing a major redesign.</p>
+
+
+	<p>I then ported the lexer rules and grammar from JFlex/CUP over to JavaCC and, just to be sure, added all of the function names from <a href="../hacking/functions_to_implement.htm">this document</a> as dummy functions. With JavaCC, no problem at all.</p>
+
+
+	<h2><a name="pagetoc__3">What&#8217;s so great now?</a></h2>
+
+	<h4>Ease of use</h4>
+
+	<p>Adding new functions is much easier. You don&#8217;t have to touch multiple places to add a new function to the rules. And adding functions with simple syntax is really a snap:</p>
+
+	<pre><code>"FACT" fun1( Function.FACT )</code></pre>
+
+
+	<p>What&#8217;s at work here is that with JavaCC you can have lexer and grammar rules in the same file. You can even use lexer definitions inline in the grammar rules. And your grammar rules can be parametrized, as is <code>fun1</code> above.</p>
+
+
+	<h4>Less code</h4>
+
+	<p>The old parser was generated three times with minor variations to handle differences in the parsing of A1-style and <span class="caps">R1C1</span>-style expressions, and internal rewrite rules. The new parser is just one big base parser which is then overridden for the different variations.</p>
+
+
+	<h4>One less .jar</h4>
+
+	<p>JavaCC does not need a runtime .jar. That&#8217;s one runtime-dependency less for the <span class="caps">SEJ</span> compiler.</p>
+
+
+	<h4>Debugging</h4>
+
+	<p>JavaCC generates top-down recursive-descent parsers. Those are fairly easy to read and debug.</p>
+
+
+	<h4>Extensibility</h4>
+
+	<p>The generated parser can be called with different entry rules. This makes it possible to easily define a high-level format for the rewrite rules compiler which uses the <code>expr()</code> rule internally.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Who Parses Function Names?</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Why not <span class="caps">CUP</span>?</a></li><li><a href="#pagetoc__2">Why JavaCC?</a></li><li><a href="#pagetoc__3">What&#8217;s so great now?</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

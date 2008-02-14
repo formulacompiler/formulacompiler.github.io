@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Robust Engine Storage - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Robust Engine Storage</h1>
+
+	<p>I have decided that <span class="caps">SEJ</span>&#8217;s current engine storage format (a .jar file) is robust enough to let <span class="caps">SEJ</span> evolve while maintaining compatibility with existing engines. Contrary to my earlier thoughts, I also don&#8217;t think <span class="caps">SEJ</span> should store a description of the engine in the .jar for helping with problem diagnosis. Here are my reasons.</p>
+
+
+
+	<h2><a name="pagetoc__1">Robust Storage</a></h2>
+
+	<p>I once considered embedding a machine-readable description of an engine within its .jar file. Then, if a compiled engine became incompatible with the current version of <span class="caps">SEJ</span>, SEJ could transparently recompile it from the embedded description. But that would only have shifted attention to compatibility from the compiled classes to the to-be-defined format. At the cost of a lot of additional complexity. Clearly not worthwhile. Instead, here&#8217;s why <span class="caps">SEJ</span>&#8217;s generated engines already are robust enough.</p>
+
+
+	<p>Most importantly, Sun itself takes great care for Java to be backwards compatible when loading earlier .jar and .class files. So the we stand of firm ground. But we still need be careful with elements of <span class="caps">SEJ</span> that can be referenced by the generated engines. This subset of <span class="caps">SEJ</span> is fairly small. It is clearly demarcated from the rest as being only in packages whose name ends in <code>.runtime</code>. What is this set?</p>
+
+
+<dl>
+<dt><code>sej.runtime.Computation</code></dt><dd>This interface is implemented by the generated engines. While purely a marker interface (for documentation purposes), the current design implies we can never extend it. An abstract class would allow this. On the other hand, it does not force a base class on the generated root computation, which seems desirable. If ever we need something new in <code>Computation</code>, we can simply introduce a new interface that captures the spirit of the new feature, like <code>Resettable</code> already does today. This is feasible because already today instances of <code>Computation</code> have to be cast to the effective output type to be used. So you can declare the new interface on your output type, as you do with <code>Resettable</code>. A new feature will thus not introduce cumbersome new casts.</dd>
+
+<dt><code>sej.runtime.ComputationFactory</code></dt><dd>This interface is, too, implemented by the generated engines and so, again, we cannot extend it. This seems more limiting here as it is not a pure marker interface &#8211; consider adding <code>newComputation(Object _inputs, int _maxThreadPoolSize)</code>. And I don&#8217;t think it would be too limiting if we forced a base class on the generated factory (seeing as the factory is quite simple). However, the same argument as above can be used with respect to casts, because&#8212;while you don&#8217;t have to&#8212;you can and should provide your own factory type. In the example above, we would add <code>interface ThreadedComputationFactory</code>. So I believe it is not worthwhile breaking compatibilty now to change this to an abstract class.</dd>
+
+<dt><code>sej.runtime.Resettable</code></dt><dd>This interface is, too, implemented by the generated engines and so, again, we cannot extend it. However, changing it to an abstract base class is not an option here.</dd>
+
+<dd><code>sej.internal.runtime.Runtime_v1</code></dd>
+</dl>
+<br /> <code>sej.internal.runtime.RuntimeDouble_v1</code>
+<br /> <code>sej.internal.runtime.RuntimeLong_v1</code>
+<br /> <code>sej.internal.runtime.RuntimeBigDecimal_v1</code> : These classes hold all sorts of helper functions for the generated engines (conversions, computations, etc.). They are not visible in the <span class="caps">API</span> of <span class="caps">SEJ</span>. A future release could, if needed, simply leave them as is, and define a new set of runtime support classes for newly generated engines. To emphasize this, the runtimes are already versioned.
+
+	<p>Nothing else is referenced directly. In particular, and contrary to what one might expect, <code>sej.runtime.Engine</code> is not implemented by the generated engine. It is implemented by <code>sej.internal.bytecode.runtime.ByteCodeEngine</code>. So there is no problem evolving it.</p>
+
+
+	<h2><a name="pagetoc__2">Problem Diagnosis</a></h2>
+
+	<p>The embedded self-description of an engine I mentioned above was meant to be both machine-readable and human-readable or, well, developer-readable. What was that about?</p>
+
+<ul>
+	<li>If a user sends you a compiled engine, you can look at what it is supposed to do. How it was bound to your interfaces, etc.</li>
+	<li>One could regenerate a spreadsheet from the description in a comiled engine in case the original got lost.</li>
+</ul>
+
+	<p>OK, the second point should be addressed by the application and the users. Don&#8217;t lose the originals. This is not <span class="caps">SEJ</span>&#8217;s job.</p>
+
+
+	<p>Given that the original spreadsheet is available, the first point is also less valid. The only remaining problems could be how the sheet was wired to the interfaces, and if the compiled engine really does what the sheet says. Now, the wiring is something your application did. So if this is something users can configure, save a description of the configuration that makes sense to you, and have them pass it along with the spreadsheet.</p>
+
+
+	<p>Checking whether the compiled engine does what it should is currently hard. You have to disassemble and understand <a href="http://www.cat.nyu.edu/~meyer/jvmref/ref-Java.html">JVM byte code</a>. This is why the <a href="../design.htm#trust">design</a> clearly mandates that <span class="caps">SEJ</span> should be able to generate both byte code and source code, and that the tests should verify their equivalence for the test cases.</p>
+
+
+	<p>So, no embedded description now. Maybe optionally the generated Java source code later. But it should really go into a separate .jar, I think.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Robust Engine Storage</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Robust Storage</a></li><li><a href="#pagetoc__2">Problem Diagnosis</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

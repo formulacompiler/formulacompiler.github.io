@@ -1,0 +1,657 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Numeric Types - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Numeric Types</h1>
+
+	<p>Besides the default <code>double</code>, <span class="caps">AFC</span> supports a number of alternative numeric types you can choose from for the computations performed by generated engines. This is because <code>double</code> is often not precise enough for financial applications.</p>
+
+
+
+	<h2><a name="pagetoc__1">Choices</a></h2>
+
+<dl>
+<dt><a href="#double"><code>double</code></a></dt><dd>is the default. It is what Excel and other spreadsheet applications use internally. So this choice is consistent with how the original spreadsheet behaves.</dd>
+
+<dt><a href="#BigDecimal"><code>BigDecimal</code></a></dt><dd>can be used with a either a fixed precision (<code>MathContext</code>), unlimited precision, or using a fixed scale. With a fixed precision, this type is a robust general choice for financial applications.</dd>
+
+<dt><a href="#long"><code>long</code></a></dt><dd>can be used either as an integer type, or using a fixed scale. With a fixed scale of 4 decimal places, this type corresponds to the <code>currency</code> type found in Microsoft <span class="caps">COM</span> and Borland Delphi.</dd>
+</dl>
+
+	<p>Note that the choice of numeric type <a href="#GlobalSetting">affects the entire engine</a> compiled by a given compiler, not just individual cells.</p>
+
+
+	<h2><a name="double">Using <code>double</code></a></h2>
+
+	<p>Since <code>double</code> is the default, you can simply use the default engine builder, without specifying the type. If you want to give the type explicitly, use:</p>
+
+	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+builder.setFactoryClass<span class="j-sym">( </span>Factory.<span class="j-key">class </span><span class="j-sym">)</span>;
+<span class="j-hl">builder.setNumericType<span class="j-sym">( </span>SpreadsheetCompiler.DOUBLE <span class="j-sym">)</span>;</span>
+builder.bindAllByName<span class="j-sym">()</span>;
+Engine engine = builder.compile<span class="j-sym">()</span>;
+Factory factory = <span class="j-sym">(</span>Factory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;</pre>
+
+
+	<p>When using <code>double</code>, the natural type for our numeric inputs and outputs is, of course, <code>double</code> as well. Other types are <a href="type_conversion.htm">converted by <span class="caps">AFC</span></a> to a <code>double</code> prior to using them in the computation.</p>
+
+	<pre class="java"><span class="j-key">public static class </span>Input
+<span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-hl">double</span> getA<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-num">1.0</span>; <span class="j-sym">}
+  </span><span class="j-key">public </span><span class="j-hl">double</span> getB<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-num">6.0</span>; <span class="j-sym">}
+}
+
+</span><span class="j-key">public static interface </span>Output
+<span class="j-sym">{
+  </span><span class="j-hl">double</span> getResult<span class="j-sym">()</span>;
+  <span class="j-hl">double</span> getNegated<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span><span class="j-key">public static interface </span>Factory
+<span class="j-sym">{
+  </span>Output newInstance<span class="j-sym">( </span>Input _input <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>In this example, we divide <em>InputA</em> by <em>InputB</em> and add <em>InputA</em>, ie. 1 + 1/6. The result is returned with <code>double</code>&#8217;s precision:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1.1666666666666667&#34;</span></span>, String.valueOf<span class="j-sym">( </span>output.getResult<span class="j-sym">()) )</span>;</pre>
+
+
+	<p>as is witnessed by the generated engine:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.tutorials.UsingDouble;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, UsingDouble.Output
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>UsingDouble.Input $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>UsingDouble.Input input, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = input;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">() </span>/ get$2<span class="j-sym">() </span>+ get$1<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>getResult<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getA<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getB<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>-get$1<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>getNegated<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$3<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="BigDecimal">Using <code>BigDecimal</code></a></h2>
+
+	<p><code>BigDecimal</code> can be used with either an arbitrary, fixed precision, or an arbitrary, fixed scale. In both cases you also specify a rounding mode. The scale variant is, however, a choice that is difficult for users to fully understand and is therefore not really recommended.</p>
+
+
+	<h3><a name="pagetoc__3_1">Predefined <code>BIGDECIMAL128</code></a></h3>
+
+	<p>In this example, we choose <code>BigDecimal</code> with great precision (34 digits), and <span class="caps">IEEE</span> rounding. We only need to change one line compared to the builder setup for the <a href="#double"><code>double</code> example</a>:</p>
+
+	<pre class="java">builder.setNumericType<span class="j-sym">( </span><span class="j-hl">SpreadsheetCompiler.BIGDECIMAL128</span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>The numeric type used is predefined by <span class="caps">AFC</span> and corresponds to <code>MathContext.DECIMAL128</code>. To quote: a precision setting matching the <span class="caps">IEEE 754R</span> Decimal128 format, 34 digits, and a rounding mode of <span class="caps">HALF</span>_EVEN, the <span class="caps">IEEE 754R</span> default.</p>
+
+
+	<p>The natural type for our numeric inputs and outputs is now <code>BigDecimal</code>. Again, other types are <a href="type_conversion.htm">converted by <span class="caps">AFC</span></a> to a <code>BigDecimal</code> prior to using them in the computation.</p>
+
+	<pre class="java"><span class="j-key">public static class </span>Input
+<span class="j-sym">{
+  </span><span class="j-key">public </span>Input<span class="j-sym">( </span><span class="j-typ">double </span>a, <span class="j-typ">double </span>b <span class="j-sym">) { </span><span class="j-key">this</span>.a = BigDecimal.valueOf<span class="j-sym">( </span>a <span class="j-sym">)</span>; <span class="j-key">this</span>.b = BigDecimal.valueOf<span class="j-sym">( </span>b <span class="j-sym">)</span>; <span class="j-sym">}
+  </span><span class="j-key">public </span><span class="j-hl">BigDecimal</span> getA<span class="j-sym">() { </span><span class="j-key">return this</span>.a; <span class="j-sym">}
+  </span><span class="j-key">public </span><span class="j-hl">BigDecimal</span> getB<span class="j-sym">() { </span><span class="j-key">return this</span>.b; <span class="j-sym">}
+  </span><span class="j-key">private final </span>BigDecimal a;
+  <span class="j-key">private final </span>BigDecimal b;
+<span class="j-sym">}
+
+</span><span class="j-key">public static interface </span>Output
+<span class="j-sym">{
+  </span><span class="j-hl">BigDecimal</span> getResult<span class="j-sym">()</span>;
+  <span class="j-hl">BigDecimal</span> getNegated<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>We again compute 1 + 1/6. The result is returned with the increased precision we demanded, rounded up:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-num">1</span>, <span class="j-num">6 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1.166666666666666666666666666666667&#34;</span></span>, output.getResult<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<p>If, instead, we compute 1 + 1/3, we get a result that is rounded down since the last <code>3</code> is less than a half:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-num">1</span>, <span class="j-hl">3</span> <span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1.333333333333333333333333333333333&#34;</span></span>, output.getResult<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<p>All this is again witnessed by the generated engine:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>java.math.BigDecimal;
+<span class="j-key">import </span>java.math.MathContext;
+
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeBigDecimal_v2;
+<span class="j-key">import </span>org.formulacompiler.tutorials.AbstractUsingBigDecimalTest;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, AbstractUsingBigDecimalTest.Output
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>AbstractUsingBigDecimalTest.Input $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    <span class="j-key">static final </span>MathContext mathContext = MathContext.DECIMAL128;
+    
+    $Root<span class="j-sym">(</span>AbstractUsingBigDecimalTest.Input input, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = input;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">()</span>.divide<span class="j-sym">(</span>get$2<span class="j-sym">()</span>, mathContext<span class="j-sym">)</span>.add<span class="j-sym">(</span>get$1<span class="j-sym">()</span>, mathContext<span class="j-sym">)</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>BigDecimal getResult<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>RuntimeBigDecimal_v2.toNum<span class="j-sym">(</span>$inputs.getA<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>RuntimeBigDecimal_v2.toNum<span class="j-sym">(</span>$inputs.getB<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">()</span>.negate<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>BigDecimal getNegated<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$3<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h3><a name="pagetoc__3_2">Explicit <code>MathContext</code></a></h3>
+
+	<p>We can also use a freely defined <code>MathContext</code>:</p>
+
+	<pre class="java">MathContext mathContext = <span class="j-hl">new MathContext<span class="j-sym">( </span><span class="j-num">4</span>, RoundingMode.HALF_UP <span class="j-sym">)</span></span>;
+builder.setNumericType<span class="j-sym">( </span><span class="j-hl">SpreadsheetCompiler.getNumericType<span class="j-sym">( </span>BigDecimal.class, mathContext <span class="j-sym">)</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>We again compute 1 + 1/6. The result is returned with the defined precision of 4 significant digits, rounded up since the last <code>6</code> is higher than a half:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-num">1</span>, <span class="j-num">6 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1.167&#34;</span></span>, output.getResult<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<p>If, instead, we compute 1&#8217;000&#8217;000 + 1&#8217;000&#8217;000 / 3, we can see what <em>4 significant digits</em> means:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-num">1000000</span>, <span class="j-num">6 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1167000&#34;</span></span>, output.getResult<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<h4>Precision Is Minimum</h4>
+
+	<p>Note, however, that the given precision is only a minimum, not a prescription. <span class="caps">AFC</span> will not normally truncate values to the supplied precision unless performing operations that might increase the precision. So a simple negation of a value leaves the precision you provide in the input value intact:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-hl">12345678</span>, <span class="j-num">1 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;-12345678&#34;</span></span>, output.getNegated<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<h3><a name="pagetoc__3_3">Explicit Fixed Scale</a></h3>
+
+	<p>Instead of a fixed precision, we can choose a fixed scale (digits after the decimal point). In this example, we choose 4 digits after the point, and always round up. We only need to change one line compared to the builder setup for the <a href="#double"><code>double</code> example</a>:</p>
+
+	<pre class="java">builder.setNumericType<span class="j-sym">( </span><span class="j-hl">SpreadsheetCompiler.getNumericType<span class="j-sym">( </span>BigDecimal.class, <span class="j-num">4</span>, BigDecimal.ROUND_UP <span class="j-sym">)</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>We again compute 1 + 1/6. The result is returned with the scale we demanded, rounded up:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-num">1</span>, <span class="j-num">6 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1.1667&#34;</span></span>, output.getResult<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<p>When we again compute 1&#8217;000&#8217;000 + 1&#8217;000&#8217;000 / 3, we can clearly see the difference of scale vs. precision above:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-num">1000000</span>, <span class="j-num">6 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1166666.6667&#34;</span></span>, output.getResult<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<p>Unlike the precision, the scale is always enforced:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-hl">12.345678</span>, <span class="j-num">1 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;-12.3457&#34;</span></span>, output.getNegated<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<p>All this is again witnessed by the generated engine:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>java.math.BigDecimal;
+
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeBigDecimal_v2;
+<span class="j-key">import </span>org.formulacompiler.tutorials.AbstractUsingBigDecimalTest;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, AbstractUsingBigDecimalTest.Output
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>AbstractUsingBigDecimalTest.Input $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>AbstractUsingBigDecimalTest.Input input, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = input;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">()</span>.divide<span class="j-sym">(</span>get$2<span class="j-sym">()</span>, <span class="j-num">4</span>, <span class="j-num">0</span><span class="j-sym">)</span>.add<span class="j-sym">(</span>get$1<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>BigDecimal getResult<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>RuntimeBigDecimal_v2.toNum<span class="j-sym">(</span>$inputs.getA<span class="j-sym">())</span>.setScale<span class="j-sym">(</span><span class="j-num">4</span>, <span class="j-num">0</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>RuntimeBigDecimal_v2.toNum<span class="j-sym">(</span>$inputs.getB<span class="j-sym">())</span>.setScale<span class="j-sym">(</span><span class="j-num">4</span>, <span class="j-num">0</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">()</span>.negate<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>BigDecimal getNegated<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$3<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h3><a name="pagetoc__3_4">Unscaled <code>BigDecimal</code></a></h3>
+
+	<p>Let&#8217;s use a <code>BigDecimal</code> without a fixed scale:</p>
+
+	<pre class="java">builder.setNumericType<span class="j-sym">( </span><span class="j-hl">SpreadsheetCompiler.getNumericType<span class="j-sym">( </span>BigDecimal.<span class="j-key">class </span><span class="j-sym">)</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>With this beast, you have to be very careful about the computations your users specify in the spreadsheets. This is because <code>BigDecimal</code> will fail for non-representable fractions. The value of 1 + 1/4 can be computed ok:</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-hl">1, <span class="j-num">4</span></span> <span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1.25&#34;</span></span>, output.getResult<span class="j-sym">()</span>.toPlainString<span class="j-sym">() )</span>;</pre>
+
+
+	<p>But 1 + 1/3 does not have a finite decimal representation, so <code>BigDecimal</code> faults:</p>
+
+	<pre class="java"><span class="j-key">try </span><span class="j-sym">{
+  </span>Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-num">1</span>, <span class="j-hl">3</span> <span class="j-sym">) )</span>;
+  output.getResult<span class="j-sym">()</span>;
+  fail<span class="j-sym">( </span><span class="j-str">&#34;ArithmeticException expected&#34; </span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">ArithmeticException e</span><span class="j-sym">) {
+  </span>assertEquals<span class="j-sym">( </span><span class="j-str">&#34;Non-terminating decimal expansion; no exact representable decimal result.&#34;</span>, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>as is again witnessed by the generated engine:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>java.math.BigDecimal;
+
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeBigDecimal_v2;
+<span class="j-key">import </span>org.formulacompiler.tutorials.AbstractUsingBigDecimalTest;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, AbstractUsingBigDecimalTest.Output
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>AbstractUsingBigDecimalTest.Input $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>AbstractUsingBigDecimalTest.Input input, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = input;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">()</span>.divide<span class="j-sym">(</span>get$2<span class="j-sym">())</span>.add<span class="j-sym">(</span>get$1<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>BigDecimal getResult<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>RuntimeBigDecimal_v2.toNum<span class="j-sym">(</span>$inputs.getA<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>RuntimeBigDecimal_v2.toNum<span class="j-sym">(</span>$inputs.getB<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>BigDecimal get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">()</span>.negate<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>BigDecimal getNegated<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$3<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="long">Using <code>long</code></a></h2>
+
+	<p>The <code>long</code> type can be used either as an integer type, or in scaled mode. In scaled mode, it is still a long, but interpreted as if the <em>n</em> rightmost digits were decimal places.</p>
+
+
+	<h3><a name="pagetoc__4_1">Unscaled <code>long</code></a></h3>
+Let&#8217;s use a plain <code>long</code> without scaling:
+	<pre class="java">builder.setNumericType<span class="j-sym">( </span><span class="j-hl">SpreadsheetCompiler.LONG</span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>If we compute 1 + 1/6 here, we simply get 1:</p>
+
+	<pre class="java">Output0 output = <span class="j-sym">(</span>Output0<span class="j-sym">) </span>factory.newComputation<span class="j-sym">( </span><span class="j-key">new </span>Input0<span class="j-sym">( </span><span class="j-num">6 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl">1L</span>, output.getResult<span class="j-sym">() )</span>;</pre>
+
+
+	<p>as is again witnessed by the generated engine:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.tutorials.UsingScaledLong;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, UsingScaledLong.Output0
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>UsingScaledLong.Input $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>UsingScaledLong.Input input, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = input;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">() </span>/ get$2<span class="j-sym">() </span>+ get$1<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">long </span>getResult<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getA<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getB<span class="j-sym">() </span>/ <span class="j-num">1000L</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>-get$1<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">long </span>getNegated<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$3<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h3><a name="pagetoc__4_2">Scaled <code>long</code></a></h3>
+
+	<p>In this example, we choose 3 digits after the decimal point. Note that as of release 0.4.1, scaled long does not support rounding modes. It always truncates. Again, we only need to change one line compared to the builder setup for the <a href="#double"><code>double</code> example</a>:</p>
+
+	<pre class="java">builder.setNumericType<span class="j-sym">( </span><span class="j-hl">SpreadsheetCompiler.getNumericType<span class="j-sym">( </span>Long.TYPE, <span class="j-num">3 </span><span class="j-sym">)</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>The natural type for our numeric inputs and outputs is now <code>long</code>. But we have a problem here: <code>long</code> is not normally scaled. So <span class="caps">AFC</span> needs a way to differentiate between values that are normal, unscaled <code>long</code> values, and values that are scaled.</p>
+
+
+	<p><span class="caps">AFC</span> does not simply assume all <code>long</code> values to be scaled. This would be unexpected behaviour. And it would prohibit using the same interface for engines of different numeric types. For example, you could have a base interface you use for both scaled and unscaled <code>long</code> computations, which has a <code>long getNumberOfItems()</code> method.</p>
+
+
+	<p>There are two ways you can tell <span class="caps">AFC</span> that a <code>long</code> is already scaled:</p>
+
+<ul>
+	<li>Use the annotation <code>ScaledLong</code> on the input or output method.</li>
+	<li>Use the annotation <code>ScaledLong</code> on the entire input or output type. This sets the default for all <code>long</code> return types of method of the type that don&#8217;t override the scale themselves.</li>
+</ul>
+
+	<p>The annotation controls the scale of the value obtained or returned by <span class="caps">AFC</span>. This scale is independent of the scale <span class="caps">AFC</span> uses for the internal computations. If the scales equal, then no <a href="type_conversion.htm">conversion</a> is needed. Otherwise <span class="caps">AFC</span> rescales the values appropriately.</p>
+
+	<pre class="java"><span class="j-key">public static class </span>Input
+<span class="j-sym">{
+  </span><span class="j-key">public </span>Input<span class="j-sym">(</span><span class="j-typ">int </span>b<span class="j-sym">)  { </span><span class="j-key">this</span>.b = b; <span class="j-sym">}
+  </span><span class="j-key">public </span><span class="j-hl">long</span> getA<span class="j-sym">()  { </span><span class="j-key">return </span><span class="j-num">1</span>; <span class="j-sym">} </span><span class="j-cmt">// will be scaled by AFC 
+  </span><span class="j-key">public </span><span class="j-hl">@ScaledLong<span class="j-sym">(</span><span class="j-num">3</span><span class="j-sym">) </span>long</span> getB<span class="j-sym">()  { </span><span class="j-key">return </span>ScaledLongSupport.scale<span class="j-sym">( </span><span class="j-key">this</span>.b, <span class="j-num">3 </span><span class="j-sym">)</span>; <span class="j-sym">}
+  </span><span class="j-key">private final </span><span class="j-typ">int </span>b;
+<span class="j-sym">}
+
+</span><span class="j-hl">@ScaledLong<span class="j-sym">(</span><span class="j-num">3</span><span class="j-sym">)</span></span>
+<span class="j-key">public static interface </span>Output
+<span class="j-sym">{
+  </span><span class="j-hl">long</span> getResult<span class="j-sym">()</span>;
+  <span class="j-hl">long</span> getNegated<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>We again compute 1 + 1/6. The result is a scaled <code>long</code> (so <code>1166L</code> is the scaled <code>long</code> equivalent of 1.166). We get 1.166 and not 1.167 because the scaled long always truncates results (this is how <code>long</code> itself works in Java):</p>
+
+	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">( </span><span class="j-num">6 </span><span class="j-sym">) )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl">1166L</span>, output.getResult<span class="j-sym">() )</span>;</pre>
+
+
+	<p>as is again witnessed by the generated engine:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.tutorials.UsingScaledLong;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, UsingScaledLong.Output
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>UsingScaledLong.Input $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>UsingScaledLong.Input input, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = input;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$1<span class="j-sym">() </span>* <span class="j-num">1000L </span>/ get$2<span class="j-sym">() </span>+ get$1<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">long </span>getResult<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getA<span class="j-sym">() </span>* <span class="j-num">1000L</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.getB<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>-get$1<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">long </span>getNegated<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$3<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="GlobalSetting">Numeric Type Is A Global Setting</a></h2>
+
+	<p>Why is the numeric type set once per compiler, and not individually, per input or output cell? After all, consider a computation where we have as input the integer lengths of the three sides of a block in millimetres, and the price per millimetre cubed. We want the total price. So, typically:</p>
+
+
+<pre><code>total := (width * height * depth) * price_per_mm3;
+</code></pre>
+	<p>Since all of the dimensions are integer, we might code this as:</p>
+
+
+<pre><code>long width, height, depth;
+BigDecimal total, price_per_mm3;
+</code></pre>
+	<p>This would ensure that the two multiplications computing the volume would run at <code>long</code>-speed. Is this correct? It depends. If you can be sure that the volume will always fit into the <code>long</code> range, then yes. But even if this were so, once you use <span class="caps">AFC</span> to outsource this computation to a spreadsheet, you lose control over the exact way the computation is performed. It could, for instance, be changed by one user to:</p>
+
+
+<pre><code>total := (width / 1000) * (height / 1000) * (depth / 1000) * price_per_m3;
+</code></pre>
+	<p>where <code>price_per_m3</code> is looked up in a table. What should <span class="caps">AFC</span> choose as the data type for the intermediate divisions? Hmm.</p>
+
+
+	<p>An even simpler change, building a slight oversize into the computation, would be:</p>
+
+
+<pre><code>total := ((width + 2) * (height + 2) * (depth + 2)) * price_per_mm3;
+</code></pre>
+	<p>So you &#8211; the programmer &#8211; may have been sure before that the volume would always fit into a <code>long</code>. But how can <span class="caps">AFC</span> be sure that the slightly larger volume computed above will still fit? It cannot.</p>
+
+
+	<p>In view of these overflow and precision problems, <span class="caps">AFC</span> does not try to be clever about inferring fast types. Every simple addition of input values already forces escalation to a bigger and slower type, so without hints from outside, <span class="caps">AFC</span> would have to infer slow types for nearly everything very quickly. Who could give the hints? You, the programmer, cannot, because you do not know the computations performed by the sheets defined by users later on. So it would have to be the sheet designers. I cannot imagine them caring about and being able to specify overflow conditions.</p>
+
+
+	<p>What you can tell <span class="caps">AFC</span> is the general class of computation you are dealing with. You simply specify the type being used for all numeric computations by a particular engine.</p>
+
+
+	<p>The responsibility for this choice, and for communicating its consequences to the sheet designers, rests fully with you, the programmer. But it does allow you to generate engines suited for precise financial or very fast pure integer computations.</p>
+
+
+	<h2><a name="pagetoc__6">Beware!</a></h2>
+h3. Scaled Multiplication
+That the choice of numeric type affects the entire engine is particularly problematic for scaled types because of their limited precision. Consider the case of a <code>ScaledLong(6)</code> engine being used to compute 1.2 * 10&#8217;000&#8217;000. The result, 12&#8217;000&#8217;000 would easily fit into the scaled long, but the problem is the intermediate result, which is at double the scale for every multiplication. If we look at the actual long values used, it becomes clear:
+	<pre class="java"><span class="j-typ">long </span>scale = <span class="j-num">1000000L</span>;
+<span class="j-typ">long </span>a = <span class="j-sym">(</span><span class="j-typ">long</span><span class="j-sym">) (</span><span class="j-num">1.2 </span>* scale<span class="j-sym">)</span>;
+<span class="j-typ">long </span>b = <span class="j-num">10000000L </span>* scale;
+<span class="j-typ">long </span>intermediate = a * b;
+<span class="j-typ">long </span>result = intermediate / scale;
+
+assertEquals<span class="j-sym">( </span><span class="j-num">1200000L</span>, a <span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span><span class="j-num">10000000000000L</span>, b <span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span>-<span class="j-num">6446744073709551616L</span>, intermediate <span class="j-sym">)</span>; <span class="j-cmt">// silent integer overflow!
+</span>assertEquals<span class="j-sym">( </span>-<span class="j-num">6446744073709L</span>, result <span class="j-sym">)</span>;</pre>
+
+
+	<p>whereas multiplying by only 10&#8217;000 works ok:</p>
+
+	<pre class="java"><span class="j-typ">long </span>scale = <span class="j-num">1000000L</span>;
+<span class="j-typ">long </span>a = <span class="j-sym">(</span><span class="j-typ">long</span><span class="j-sym">) (</span><span class="j-num">1.2 </span>* scale<span class="j-sym">)</span>;
+<span class="j-typ">long </span>b = <span class="j-num">100000L </span>* scale;
+<span class="j-typ">long </span>intermediate = a * b;
+<span class="j-typ">long </span>result = intermediate / scale;
+
+assertEquals<span class="j-sym">( </span><span class="j-num">1200000L</span>, a <span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span><span class="j-num">100000000000L</span>, b <span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span><span class="j-num">120000000000000000L</span>, intermediate <span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span><span class="j-num">120000000000L</span>, result <span class="j-sym">)</span>;</pre>
+
+
+	<p>So, in essence, you lose the size of the scale in precision as soon as you start doing multiplication.</p>
+
+
+	<h3><a name="pagetoc__6_1">Seconds</a></h3>
+Another issue is that all time values in Excel are stored as numbers internally. To represent seconds, you need at least a <code>ScaledLong(6)</code>.
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Numeric Types</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Choices</a></li><li><a href="#double">Using <code>double</code></a></li><li class="withitems"><a href="#BigDecimal">Using <code>BigDecimal</code></a><ul class="toc toc2"><li><a href="#pagetoc__3_1">Predefined <code>BIGDECIMAL128</code></a></li><li><a href="#pagetoc__3_2">Explicit <code>MathContext</code></a></li><li><a href="#pagetoc__3_3">Explicit Fixed Scale</a></li><li><a href="#pagetoc__3_4">Unscaled <code>BigDecimal</code></a></li></ul></li><li class="withitems"><a href="#long">Using <code>long</code></a><ul class="toc toc2"><li><a href="#pagetoc__4_1">Unscaled <code>long</code></a></li><li><a href="#pagetoc__4_2">Scaled <code>long</code></a></li></ul></li><li><a href="#GlobalSetting">Numeric Type Is A Global Setting</a></li><li class="withitems"><a href="#pagetoc__6">Beware!</a><ul class="toc toc2"><li><a href="#pagetoc__6_1">Seconds</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

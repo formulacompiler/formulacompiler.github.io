@@ -1,0 +1,1258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Common Sub-Expressions In Large Sheets - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Common Sub-Expressions In Large Sheets</h1>
+
+
+	<h2><a name="pagetoc__1">Typical Sheet</a></h2>
+
+	<p>The following sheet, while grossly oversimplified, seems to be a very typical sheet for the insurance models used by insurance companies (a relative of mine is a mathematician at one of them). The typical things are the large table and its inhomogeneity (in practice, the tables are much larger than the one here). This is not a simple repeating section with a perfectly homogeneous structure.</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Insured amount</td>
+			<td class="xl-num">$15,000.00<br/><span class="xl-name">(InsuredAmount)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>Age</td>
+			<td class="xl-num">21<br/><span class="xl-name">(Age)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td><span style="text-decoration: underline;">Outputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td>Cost per year</td>
+			<td class="xl-num">480<br/><span class="xl-exp">=INDEX(G12:G48,B9)</span><br/><span class="xl-name">(InsuranceCostPerYear)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td><span style="text-decoration: underline;">Helpers</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td>Matching row</td>
+			<td class="xl-num">15<br/><span class="xl-exp">=MATCH(true,C12:C48,0.0)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td>Lookup Table</td>
+			<td>AgeUpTo</td>
+			<td>Match</td>
+			<td>AgeUpTo (Copy)</td>
+			<td>InsuredAmountUpTo</td>
+			<td>Percentage</td>
+			<td>InsuranceCostPerYear</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td></td>
+			<td class="xl-num">20</td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D12,InsuredAmount&lt;=E12)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$5,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$150.00<br/><span class="xl-exp">=E12*F12</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D13,InsuredAmount&lt;=E13)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$6,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$180.00<br/><span class="xl-exp">=E13*F13</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">14</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D14,InsuredAmount&lt;=E14)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$8,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$240.00<br/><span class="xl-exp">=E14*F14</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">15</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D15,InsuredAmount&lt;=E15)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$10,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$400.00<br/><span class="xl-exp">=E15*F15</span></td>
+			<td>Here we switch the percentage.</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">16</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D16,InsuredAmount&lt;=E16)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$13,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$520.00<br/><span class="xl-exp">=E16*F16</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">17</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D17,InsuredAmount&lt;=E17)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$16,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$640.00<br/><span class="xl-exp">=E17*F17</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">18</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D18,InsuredAmount&lt;=E18)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$20,000.00</td>
+			<td class="xl-num">5%</td>
+			<td class="xl-num">$1,000.00<br/><span class="xl-exp">=E18*F18</span></td>
+			<td>Again.</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">19</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D19,InsuredAmount&lt;=E19)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$25,000.00</td>
+			<td class="xl-num">5%</td>
+			<td class="xl-num">$1,250.00<br/><span class="xl-exp">=E19*F19</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">20</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D20,InsuredAmount&lt;=E20)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B12</span></td>
+			<td class="xl-num">$30,000.00</td>
+			<td class="xl-num">5%</td>
+			<td class="xl-num">$1,500.00<br/><span class="xl-exp">=E20*F20</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">21</td>
+			<td></td>
+			<td class="xl-num">22</td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D21,InsuredAmount&lt;=E21)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$5,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$150.00<br/><span class="xl-exp">=E21*F21</span></td>
+			<td>The next age group is similar, but with different percentages.</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">22</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D22,InsuredAmount&lt;=E22)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$6,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$180.00<br/><span class="xl-exp">=E22*F22</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">23</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D23,InsuredAmount&lt;=E23)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$8,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$240.00<br/><span class="xl-exp">=E23*F23</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">24</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D24,InsuredAmount&lt;=E24)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$10,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$300.00<br/><span class="xl-exp">=E24*F24</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">25</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D25,InsuredAmount&lt;=E25)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$13,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$390.00<br/><span class="xl-exp">=E25*F25</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">26</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D26,InsuredAmount&lt;=E26)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$16,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$480.00<br/><span class="xl-exp">=E26*F26</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">27</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D27,InsuredAmount&lt;=E27)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$20,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$800.00<br/><span class="xl-exp">=E27*F27</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">28</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D28,InsuredAmount&lt;=E28)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$25,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$1,000.00<br/><span class="xl-exp">=E28*F28</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">29</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D29,InsuredAmount&lt;=E29)</span></td>
+			<td class="xl-num">22<br/><span class="xl-exp">=B21</span></td>
+			<td class="xl-num">$30,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$1,200.00<br/><span class="xl-exp">=E29*F29</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">30</td>
+			<td></td>
+			<td class="xl-num">25</td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D30,InsuredAmount&lt;=E30)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$5,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$150.00<br/><span class="xl-exp">=E30*F30</span></td>
+			<td>Similar again, different percentages again.</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">31</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D31,InsuredAmount&lt;=E31)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$6,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$180.00<br/><span class="xl-exp">=E31*F31</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">32</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D32,InsuredAmount&lt;=E32)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$8,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$240.00<br/><span class="xl-exp">=E32*F32</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">33</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D33,InsuredAmount&lt;=E33)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$10,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$300.00<br/><span class="xl-exp">=E33*F33</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">34</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D34,InsuredAmount&lt;=E34)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$13,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$390.00<br/><span class="xl-exp">=E34*F34</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">35</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D35,InsuredAmount&lt;=E35)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$16,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$480.00<br/><span class="xl-exp">=E35*F35</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">36</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D36,InsuredAmount&lt;=E36)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$20,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$600.00<br/><span class="xl-exp">=E36*F36</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">37</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D37,InsuredAmount&lt;=E37)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$25,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$750.00<br/><span class="xl-exp">=E37*F37</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">38</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D38,InsuredAmount&lt;=E38)</span></td>
+			<td class="xl-num">25<br/><span class="xl-exp">=B30</span></td>
+			<td class="xl-num">$30,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$900.00<br/><span class="xl-exp">=E38*F38</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">39</td>
+			<td></td>
+			<td class="xl-num">60</td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D39,InsuredAmount&lt;=E39)</span></td>
+			<td class="xl-num">60<br/><span class="xl-exp">=B39</span></td>
+			<td class="xl-num">$30,000.00</td>
+			<td class="xl-num">3.1600%<br/><span class="xl-exp">=2.0%+ABS(Age-50.0)/25.0*1.0%</span></td>
+			<td class="xl-num">$474.00<br/><span class="xl-exp">=InsuredAmount*F39</span></td>
+			<td>Complete switch of structure here.</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">40</td>
+			<td></td>
+			<td class="xl-num">200</td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D40,InsuredAmount&lt;=E40)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$5,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$450.00<br/><span class="xl-exp">=InsuredAmount*F40</span></td>
+			<td>Percentages again, but no fixed amounts.</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">41</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D41,InsuredAmount&lt;=E41)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$6,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$450.00<br/><span class="xl-exp">=InsuredAmount*F41</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">42</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D42,InsuredAmount&lt;=E42)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$8,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">$450.00<br/><span class="xl-exp">=InsuredAmount*F42</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">43</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D43,InsuredAmount&lt;=E43)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$10,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$600.00<br/><span class="xl-exp">=InsuredAmount*F43</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">44</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D44,InsuredAmount&lt;=E44)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$13,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$600.00<br/><span class="xl-exp">=InsuredAmount*F44</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">45</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D45,InsuredAmount&lt;=E45)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$16,000.00</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">$600.00<br/><span class="xl-exp">=InsuredAmount*F45</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">46</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D46,InsuredAmount&lt;=E46)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$20,000.00</td>
+			<td class="xl-num">5%</td>
+			<td class="xl-num">$750.00<br/><span class="xl-exp">=InsuredAmount*F46</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">47</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D47,InsuredAmount&lt;=E47)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$25,000.00</td>
+			<td class="xl-num">5%</td>
+			<td class="xl-num">$750.00<br/><span class="xl-exp">=InsuredAmount*F47</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">48</td>
+			<td></td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=AND(Age&lt;=D48,InsuredAmount&lt;=E48)</span></td>
+			<td class="xl-num">200<br/><span class="xl-exp">=B40</span></td>
+			<td class="xl-num">$30,000.00</td>
+			<td class="xl-num">5%</td>
+			<td class="xl-num">$750.00<br/><span class="xl-exp">=InsuredAmount*F48</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Currently, <span class="caps">SEJ</span> compiles this to something like this:</p>
+
+	<pre class="java"><span class="j-key">public static final class </span>OutputsCurrent <span class="j-key">implements </span>Outputs
+<span class="j-sym">{
+  </span><span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>COST_TABLE = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">150</span>, <span class="j-num">180</span>, <span class="j-num">240 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
+  <span class="j-key">private final </span>Inputs i;
+
+  <span class="j-key">public </span>OutputsCurrent<span class="j-sym">(</span>Inputs _inputs<span class="j-sym">)
+  {
+    </span><span class="j-key">this</span>.i = _inputs;
+  <span class="j-sym">}
+
+  </span><span class="j-key">private </span><span class="j-typ">double </span>getAge<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.i.getAge<span class="j-sym">()</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">private </span><span class="j-typ">double </span>getInsuredAmount<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.i.getInsuredAmount<span class="j-sym">()</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span><span class="j-typ">double </span>getInsuranceCostPerYear<span class="j-sym">()
+  {
+    </span><span class="j-typ">int </span>r;
+    <span class="j-key">switch </span><span class="j-sym">(</span>r = <span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>getMatchingRow<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">) {
+
+      </span><span class="j-key">case </span><span class="j-num">27</span>:
+        <span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* <span class="j-sym">(</span><span class="j-num">0.02 </span>+ Math.abs<span class="j-sym">( </span>getAge<span class="j-sym">() </span>- <span class="j-num">50 </span><span class="j-sym">) </span>/ <span class="j-num">25 </span>* <span class="j-num">0.01</span><span class="j-sym">)</span>;
+
+      <span class="j-key">case </span><span class="j-num">28</span>:
+        <span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* <span class="j-num">0.03</span>;
+      <span class="j-key">case </span><span class="j-num">29</span>:
+        <span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* <span class="j-num">0.03</span>;
+      <span class="j-key">case </span><span class="j-num">30</span>:
+        <span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* <span class="j-num">0.03</span>;
+      <span class="j-key">case </span><span class="j-num">31</span>:
+        <span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* <span class="j-num">0.04</span>;
+      <span class="j-key">case </span><span class="j-num">32</span>:
+        <span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* <span class="j-num">0.04</span>;
+      <span class="j-key">case </span><span class="j-num">33</span>:
+        <span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* <span class="j-num">0.04</span>;
+
+        <span class="j-blk">/* ... for all rows of this form */
+
+      </span><span class="j-key">default</span>:
+        <span class="j-key">if </span><span class="j-sym">(</span>r &gt;= <span class="j-num">0 </span>&amp;&amp; r &lt; COST_TABLE.length<span class="j-sym">) {
+          </span><span class="j-key">return </span>COST_TABLE<span class="j-sym">[ </span>r <span class="j-sym">]</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span><span class="j-num">0</span>;
+    <span class="j-sym">}
+  }
+
+  </span><span class="j-key">private final </span><span class="j-typ">double </span>getMatchingRow<span class="j-sym">()
+  {
+    </span><span class="j-typ">int </span>r = <span class="j-num">1</span>;
+
+    <span class="j-cmt">// This is what really happens:
+    </span><span class="j-key">if </span><span class="j-sym">(((</span>getAge<span class="j-sym">() </span>&gt; <span class="j-num">20.0 </span>|| getInsuredAmount<span class="j-sym">() </span>&gt; <span class="j-num">5000.0</span><span class="j-sym">) </span>? <span class="j-num">1.0 </span>: <span class="j-num">0.0</span><span class="j-sym">) </span>!= <span class="j-num">0.0</span><span class="j-sym">) {
+      </span>r++;
+
+      <span class="j-cmt">// This is what could be made to happen with a bit of peephole optimization:
+      </span><span class="j-key">if </span><span class="j-sym">(</span>getAge<span class="j-sym">() </span>&gt; <span class="j-num">20.0 </span>|| getInsuredAmount<span class="j-sym">() </span>&gt; <span class="j-num">6000.0</span><span class="j-sym">) {
+        </span>r++;
+
+        <span class="j-key">if </span><span class="j-sym">(</span>getAge<span class="j-sym">() </span>&gt; <span class="j-num">20.0 </span>|| getInsuredAmount<span class="j-sym">() </span>&gt; <span class="j-num">8000.0</span><span class="j-sym">) {
+          </span>r++;
+
+          <span class="j-cmt">// ... for all of 37 cases */
+
+        </span><span class="j-sym">}
+        </span><span class="j-key">else </span><span class="j-sym">{
+          </span>r = <span class="j-num">0</span>;
+        <span class="j-sym">}
+      }
+    }
+
+    </span><span class="j-key">return </span>r;
+  <span class="j-sym">}
+
+}</span></pre>
+
+
+	<p>There are two stupid things here (apart from the possible peephole optimization noted in the code):</p>
+
+<ul>
+	<li>The method <code>getMatchingRow()</code> is a nightmare of redundancy and code bloat.</li>
+	<li>So is the repetition of <code>return getInsuredAmount() * x</code> in <code>getInsuranceCostPerYear()</code>.</li>
+</ul>
+
+	<p>Now, code bloat now only means more code, it also means</p>
+
+<ul>
+	<li>less efficient use of high-speed <span class="caps">CPU</span> caches,</li>
+	<li>more <span class="caps">JIT</span> overhead, and</li>
+	<li>no clearly identifiable, small, and often-used hotspots in the code for the JITer to optimize heavily.</li>
+</ul>
+
+	<p>So the question is, how do we get more efficient code?</p>
+
+
+	<h2><a name="pagetoc__2">Homogenized Sheet</a></h2>
+
+	<p>Now, this table could be made homogeneous, of course. It involves a formula type column in the table, and then another <code>INDEX</code> to select the proper computation variant to use (only the start of the sheet is shown):</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+			<td>J</td>
+			<td>K</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Insured amount</td>
+			<td class="xl-num">$15,000.00<br/><span class="xl-name">(InsuredAmount)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>Age</td>
+			<td class="xl-num">62<br/><span class="xl-name">(Age)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td><span style="text-decoration: underline;">Outputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td>Cost per year</td>
+			<td class="xl-num">600<br/><span class="xl-exp">=VLOOKUP(true,C9:K45,9.0,false)</span><br/><span class="xl-name">(InsuranceCostPerYear)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td>Lookup Table</td>
+			<td>AgeUpTo</td>
+			<td>Match</td>
+			<td>AgeUpTo (Copy)</td>
+			<td>InsuredAmountUpTo</td>
+			<td>Percentage</td>
+			<td>Style</td>
+			<td>Style 1</td>
+			<td>Style 2</td>
+			<td>Style 3</td>
+			<td>Insured amount</td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td></td>
+			<td class="xl-num">20</td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D9,InsuredAmount&lt;=E9)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B9</span></td>
+			<td class="xl-num">$5,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">$150.00<br/><span class="xl-exp">=E9*F9</span></td>
+			<td class="xl-num">$372.00<br/><span class="xl-exp">=InsuredAmount*(2.0%+ABS(Age-50.0)/25.0*1.0%)</span></td>
+			<td class="xl-num">$450.00<br/><span class="xl-exp">=InsuredAmount*F9</span></td>
+			<td class="xl-num">$150.00<br/><span class="xl-exp">=INDEX(H9:J9,G9)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D10,InsuredAmount&lt;=E10)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B9</span></td>
+			<td class="xl-num">$6,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">$180.00<br/><span class="xl-exp">=E10*F10</span></td>
+			<td class="xl-num">$372.00<br/><span class="xl-exp">=InsuredAmount*(2.0%+ABS(Age-50.0)/25.0*1.0%)</span></td>
+			<td class="xl-num">$450.00<br/><span class="xl-exp">=InsuredAmount*F10</span></td>
+			<td class="xl-num">$180.00<br/><span class="xl-exp">=INDEX(JD10:JF10,G10)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D11,InsuredAmount&lt;=E11)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B9</span></td>
+			<td class="xl-num">$8,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">$240.00<br/><span class="xl-exp">=E11*F11</span></td>
+			<td class="xl-num">$372.00<br/><span class="xl-exp">=InsuredAmount*(2.0%+ABS(Age-50.0)/25.0*1.0%)</span></td>
+			<td class="xl-num">$450.00<br/><span class="xl-exp">=InsuredAmount*F11</span></td>
+			<td class="xl-num">$240.00<br/><span class="xl-exp">=INDEX(JD11:JF11,G11)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Now we could simply declare a non-dynamic section over the table (a feature <span class="caps">SEJ</span> would have to learn), which would make <code>VLOOKUP()</code> iterate over a statically initialized section (from the constants found in the range) and return the final result for the first match.</p>
+
+
+	<p>This would perform well even if the static section were a sliding cursor across static <code>double[]</code> arrays (for very large tables). Only if we need more than one return value from the table would we run into trouble: the lookup methods only ever return a single value. So we would have to re-iterate the table for every needed value.</p>
+
+
+	<p>If the static section were held in an array of objects (rather than a sliding cursor), we could use an initial <code>MATCH</code> and then multiple calls to <code>INDEX</code> to work around this with decent performance (at the cost of slightly higher memory usage).</p>
+
+
+	<h2><a name="pagetoc__3">Normalized Sheet</a></h2>
+
+	<p>The approach taken above is like relational normalization, really. Done more fully, we get:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Insured amount</td>
+			<td class="xl-num">$15,000.00<br/><span class="xl-name">(InsuredAmount)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>Age</td>
+			<td class="xl-num">62<br/><span class="xl-name">(Age)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td><span style="text-decoration: underline;">Outputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td>Cost per year</td>
+			<td class="xl-num">600<br/><span class="xl-exp">=INDEX(B11:B13,B10)</span><br/><span class="xl-name">(InsuranceCostPerYear)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td><span style="text-decoration: underline;">Helpers</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td>Matching row</td>
+			<td class="xl-num">34<br/><span class="xl-exp">=MATCH(true,C16:C52,0.0)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td>Computation style</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=INDEX(G16:G52,B9)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td>Style 1</td>
+			<td class="xl-num">$640.00<br/><span class="xl-exp">=INDEX(E16:E52,B9)*INDEX(F16:F52,B9)</span></td>
+			<td>Amount rounded up; percentage from table</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td>Style 2</td>
+			<td class="xl-num">$372.00<br/><span class="xl-exp">=InsuredAmount*(2.0%+ABS(Age-50.0)/25.0*1.0%)</span></td>
+			<td>Exact amount; percentage computed from age</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td>Style 3</td>
+			<td class="xl-num">$600.00<br/><span class="xl-exp">=InsuredAmount*INDEX(F16:F52,B9)</span></td>
+			<td>Exact amount; percentage from table</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">14</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">15</td>
+			<td>Lookup Table</td>
+			<td>AgeUpTo</td>
+			<td>Match</td>
+			<td>AgeUpTo (Copy)</td>
+			<td>InsuredAmountUpTo</td>
+			<td>Percentage</td>
+			<td>Style</td>
+		</tr>
+		<tr>
+			<td class="xl-row">16</td>
+			<td></td>
+			<td class="xl-num">20</td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D16,InsuredAmount&lt;=E16)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B16</span></td>
+			<td class="xl-num">$5,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">1</td>
+		</tr>
+		<tr>
+			<td class="xl-row">17</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D17,InsuredAmount&lt;=E17)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B16</span></td>
+			<td class="xl-num">$6,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">1</td>
+		</tr>
+		<tr>
+			<td class="xl-row">18</td>
+			<td></td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(Age&lt;=D18,InsuredAmount&lt;=E18)</span></td>
+			<td class="xl-num">20<br/><span class="xl-exp">=B16</span></td>
+			<td class="xl-num">$8,000.00</td>
+			<td class="xl-num">3%</td>
+			<td class="xl-num">1</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>If the static section is held in an array of objects (rather than a sliding cursor), we would get decent performance from this. The sliding cursor would have to re-iterate for every <code>INDEX()</code> we have here.</p>
+
+
+	<h2><a name="pagetoc__4">Typical Sheet Again</a></h2>
+
+	<p>All this is not how typical Excel users think, however. They will much sooner come up with the first version of the sheet than the others.</p>
+
+
+	<p>So the question is, can we compile the first version to efficient code? Maybe by looking at the sheet in <span class="caps">R1C1</span>-notation. Then we clearly see that there are a lot of identical formulas referencing neighbouring cells.</p>
+
+
+	<p>So we could try to compile all shared formulas (after some threshold) to single methods with <em>sheet, row, column</em> parameters. Such a method could then access neighbours through some sort of dispatch routine which routes a <em>sheet, row, column</em> index to the appropriate cell getter. If we analyze for every shared formula the set of possible neighbours, we might get fairly compact and efficient dispatch methods, too.</p>
+
+
+	<p>Here&#8217;s a sketch of what I mean by this:</p>
+
+	<pre class="java"><span class="j-key">public static final class </span>OutputsDesired <span class="j-key">implements </span>Outputs
+<span class="j-sym">{
+  </span><span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>COST_TABLE = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">150</span>, <span class="j-num">180</span>, <span class="j-num">240 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
+  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>PERCENT_TABLE = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">.03</span>, <span class="j-num">.03</span>, <span class="j-num">.03  </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
+  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>AGE_UPTO = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">20</span>, <span class="j-num">20</span>, <span class="j-num">20 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
+  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>INSURED_AMOUNT_UPTO = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">5000</span>, <span class="j-num">6000</span>, <span class="j-num">8000 </span><span class="j-sym">}</span>;
+
+  <span class="j-key">private final </span>Inputs i;
+
+  <span class="j-key">public </span>OutputsDesired<span class="j-sym">(</span>Inputs _inputs<span class="j-sym">)
+  {
+    </span><span class="j-key">this</span>.i = _inputs;
+  <span class="j-sym">}
+
+  </span><span class="j-key">private </span><span class="j-typ">double </span>getAge<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.i.getAge<span class="j-sym">()</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">private </span><span class="j-typ">double </span>getInsuredAmount<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.i.getInsuredAmount<span class="j-sym">()</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span><span class="j-typ">double </span>getInsuranceCostPerYear<span class="j-sym">()
+  {
+    </span><span class="j-typ">int </span>r;
+    <span class="j-key">switch </span><span class="j-sym">(</span>r = <span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>getMatchingRow<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">) {
+
+      </span><span class="j-key">case </span><span class="j-num">27</span>:
+        <span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* <span class="j-sym">(</span><span class="j-num">0.02 </span>+ Math.abs<span class="j-sym">( </span>getAge<span class="j-sym">() </span>- <span class="j-num">50 </span><span class="j-sym">) </span>/ <span class="j-num">25 </span>* <span class="j-num">0.01</span><span class="j-sym">)</span>;
+
+      <span class="j-key">case </span><span class="j-num">28</span>:
+      <span class="j-key">case </span><span class="j-num">29</span>:
+      <span class="j-key">case </span><span class="j-num">30</span>:
+      <span class="j-key">case </span><span class="j-num">31</span>:
+      <span class="j-key">case </span><span class="j-num">32</span>:
+      <span class="j-key">case </span><span class="j-num">33</span>:
+        <span class="j-key">return </span>getStyle3<span class="j-sym">( </span><span class="j-num">0</span>, r + <span class="j-num">1</span>, <span class="j-num">7 </span><span class="j-sym">)</span>;
+
+      <span class="j-key">default</span>:
+        <span class="j-key">if </span><span class="j-sym">(</span>r &gt;= <span class="j-num">0 </span>&amp;&amp; r &lt; COST_TABLE.length<span class="j-sym">) {
+          </span><span class="j-key">return </span>COST_TABLE<span class="j-sym">[ </span>r <span class="j-sym">]</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span><span class="j-num">0</span>;
+
+    <span class="j-sym">}
+  }
+
+  </span><span class="j-key">private </span><span class="j-typ">double </span>getStyle3<span class="j-sym">( </span><span class="j-typ">int </span>_s, <span class="j-typ">int </span>_r, <span class="j-typ">int </span>_c <span class="j-sym">)
+  {
+    </span><span class="j-key">return </span>getInsuredAmount<span class="j-sym">() </span>* PERCENT_TABLE<span class="j-sym">[ </span>_r - <span class="j-num">13 </span><span class="j-sym">]</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">private final </span><span class="j-typ">double </span>getMatchingRow<span class="j-sym">()
+  {
+    </span><span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>r = <span class="j-num">13</span>; r &lt; <span class="j-num">50</span>; r++<span class="j-sym">) {
+      </span><span class="j-key">if </span><span class="j-sym">(</span>getMatch<span class="j-sym">( </span><span class="j-num">1</span>, r, <span class="j-num">3 </span><span class="j-sym">)) </span><span class="j-key">return </span>r;
+    <span class="j-sym">}
+    </span><span class="j-key">return </span><span class="j-num">0</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-jdoc">/**
+   * The boolean return here is again a peephole optimization.
+   */
+  </span><span class="j-key">private final </span><span class="j-typ">boolean </span>getMatch<span class="j-sym">( </span><span class="j-typ">int </span>_s, <span class="j-typ">int </span>_r, <span class="j-typ">int </span>_c <span class="j-sym">)
+  {
+    </span><span class="j-key">return </span><span class="j-sym">(</span>getAge<span class="j-sym">() </span>&lt;= getAgeUpto<span class="j-sym">( </span>_s, _r, _c + <span class="j-num">1 </span><span class="j-sym">) </span>&amp;&amp; getInsuredAmount<span class="j-sym">() </span>&lt;= getInsuredAmountUpto<span class="j-sym">( </span>_s, _r, _c + <span class="j-num">2 </span><span class="j-sym">))</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-jdoc">/**
+   * If AFC sees that all the cells that can be referenced relatively are constant, then there
+   * is no switch, just a table.
+   */
+  </span><span class="j-key">private </span><span class="j-typ">double </span>getAgeUpto<span class="j-sym">( </span><span class="j-typ">int </span>_s, <span class="j-typ">int </span>_r, <span class="j-typ">int </span>_c <span class="j-sym">)
+  {
+    </span><span class="j-key">return </span>AGE_UPTO<span class="j-sym">[ </span>_r - <span class="j-num">13 </span><span class="j-sym">]</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">private </span><span class="j-typ">double </span>getInsuredAmountUpto<span class="j-sym">( </span><span class="j-typ">int </span>_s, <span class="j-typ">int </span>_r, <span class="j-typ">int </span>_c <span class="j-sym">)
+  {
+    </span><span class="j-key">return </span>INSURED_AMOUNT_UPTO<span class="j-sym">[ </span>_r - <span class="j-num">13 </span><span class="j-sym">]</span>;
+  <span class="j-sym">}
+
+}</span></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Common Sub-Expressions In Large Sheets</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Typical Sheet</a></li><li><a href="#pagetoc__2">Homogenized Sheet</a></li><li><a href="#pagetoc__3">Normalized Sheet</a></li><li><a href="#pagetoc__4">Typical Sheet Again</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

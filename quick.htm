@@ -1,0 +1,543 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Quick Start - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="download/index.htm">
+					<img src="site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="index.htm">Home</a> | 
+						
+					<span class="selected">Quick Start</span> | <a href="doc/index.htm">Documentation</a> | <a href="download/index.htm">Download</a> | <a href="support.htm">Support</a> | <a href="contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="index.htm">Home</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Quick Start</h1>
+
+
+	<p>Have you <a href="download/index.htm">downloaded</a>? Good. Now let&#8217;s get your first compiled spreadsheet up and running. I&#8217;ll show you how to&#8230;</p>
+
+<ul>
+	<li>create a spreadsheet defining a customized line item price computation,</li>
+	<li>make <span class="caps">AFC</span> compile it to Java classes,</li>
+	<li>use those classes in your application,</li>
+	<li>look at the generated code, and</li>
+	<li>save and reload the classes from a .jar file.</li>
+</ul>
+
+	<h2><a name="pagetoc__1">The Problem</a></h2>
+
+	<p>We will flesh out the blurb from the home page:</p>
+
+	<pre class="java"><span class="j-cmt">// Compile price finding factory and strategy implementation from spreadsheet:
+</span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>PATH, <span class="j-hl"><span class="j-str">&#34;CustomPriceFormula.xls&#34;</span></span> <span class="j-sym">) )</span>;
+builder.setFactoryClass<span class="j-sym">( </span>PriceFinderFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+builder.bindAllByName<span class="j-sym">()</span>;
+Engine engine = builder.<span class="j-hl">compile</span><span class="j-sym">()</span>;
+PriceFinderFactory factory = <span class="j-sym">(</span>PriceFinderFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Use it to compute a line item price:
+</span>LineItem item = getCurrentLineItem<span class="j-sym">()</span>;
+PriceFinder priceFinder = factory.<span class="j-hl">newInstance</span><span class="j-sym">( </span>item <span class="j-sym">)</span>;
+BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-sym">()</span>;</pre>
+
+
+	<p>This is a fictional example about finding the total price for a line item with</p>
+
+<ul>
+	<li>a base article price, </li>
+	<li>a count of items, and</li>
+	<li>the customer category (for automatic rebates).</li>
+</ul>
+
+	<h2><a name="pagetoc__2">The Spreadsheet</a></h2>
+
+	<p>Here&#8217;s the spreadsheet-defined formula our user wants the application to use:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><b>Input Values</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Article Price</td>
+			<td class="xl-num">500.00</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>Item Count</td>
+			<td class="xl-num">5</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td>Customer Category</td>
+			<td>C</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td><b>Intermediate Values</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td>Categories</td>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td>Rebates</td>
+			<td class="xl-num">6%</td>
+			<td class="xl-num">4%</td>
+			<td class="xl-num">1%</td>
+			<td class="xl-num">0%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td>Effective Rebate</td>
+			<td class="xl-num"><span class="xl-exp-only">=HLOOKUP(B4,B7:E8,2.0)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td>Base Price</td>
+			<td class="xl-num"><span class="xl-exp-only">=B2*B3</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td><b>Output Values</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td>Price</td>
+			<td class="xl-num"><span class="xl-exp-only">=B10*(1.0-B9)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Please create this spreadsheet now and save it somewhere under the name <code>CustomPriceFormula.xls</code>.</p>
+
+
+	<h2><a name="pagetoc__3">The Project</a></h2>
+
+	<p>Create a new Java project for this demo application now. Add to it references to the following libraries you obtained from the download:</p>
+
+	<pre><code>build/formulacompiler-runtime.jar
+build/formulacompiler-compiler.jar
+build/formulacompiler-spreadsheet.jar
+build/formulacompiler-spreadsheet-excel-xls.jar
+build/formulacompiler-decompiler.jar
+build/lib/asm-x.y.jar
+build/lib/asm-commons-x.y.jar
+build/lib/jxl.jar
+build/lib/jode-decompiler.jar</code></pre>
+
+
+	<p>Then create a main class in it. Unless your <span class="caps">IDE</span> can find and organize imports automatically, you might also want to add these to your main class:</p>
+
+	<pre class="java"><span class="j-key">import </span>java.io.ByteArrayOutputStream;
+<span class="j-key">import </span>java.io.File;
+<span class="j-key">import </span>java.io.FileInputStream;
+<span class="j-key">import </span>java.io.FileNotFoundException;
+<span class="j-key">import </span>java.io.FileOutputStream;
+<span class="j-key">import </span>java.io.IOException;
+<span class="j-key">import </span>java.io.PrintStream;
+<span class="j-key">import </span>java.math.BigDecimal;
+
+<span class="j-key">import </span>org.formulacompiler.compiler.CompilerException;
+<span class="j-key">import </span>org.formulacompiler.compiler.SaveableEngine;
+<span class="j-key">import </span>org.formulacompiler.decompiler.ByteCodeEngineSource;
+<span class="j-key">import </span>org.formulacompiler.decompiler.FormulaDecompiler;
+<span class="j-key">import </span>org.formulacompiler.runtime.Engine;
+<span class="j-key">import </span>org.formulacompiler.runtime.EngineException;
+<span class="j-key">import </span>org.formulacompiler.runtime.FormulaRuntime;
+<span class="j-key">import </span>org.formulacompiler.spreadsheet.EngineBuilder;
+<span class="j-key">import </span>org.formulacompiler.spreadsheet.SpreadsheetCompiler;</pre>
+
+
+	<h2><a name="pagetoc__4">The Interfaces</a></h2>
+
+	<p>In essence, what <span class="caps">AFC</span> compiles from the spreadsheet is a <em>computation strategy implementation</em>. So we need the customary factory and doer interfaces that go with a strategy:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>PriceFinder <span class="j-sym">{
+  </span>BigDecimal getPrice<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span><span class="j-key">public static interface </span>PriceFinderFactory <span class="j-sym">{
+  </span>PriceFinder newInstance<span class="j-sym">( </span>LineItem item <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Paste these directly into your main class (they are nested classes in this example, but <span class="caps">AFC</span> is just as happy with top-level classes).</p>
+
+
+	<p>We&#8217;ll also need the line item, which provides input data to the computation:</p>
+
+	<pre class="java"><span class="j-key">public static class </span>LineItem <span class="j-sym">{
+  </span><span class="j-key">public </span>BigDecimal getArticlePrice<span class="j-sym">() { </span><span class="j-key">return </span>BigDecimal.valueOf<span class="j-sym">( </span><span class="j-num">112.00 </span><span class="j-sym">)</span>; <span class="j-sym">} 
+  </span><span class="j-key">public </span><span class="j-typ">int </span>getItemCount<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-num">10</span>; <span class="j-sym">}
+  </span><span class="j-key">public </span>String getCustomerCategory<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-str">&#34;B&#34;</span>; <span class="j-sym">}
+}</span></pre>
+
+
+	<p>It&#8217;s obviously a dummy. Paste it into the main class as well, together with the following dummy getter:</p>
+
+	<pre class="java"><span class="j-key">private </span>LineItem getCurrentLineItem<span class="j-sym">() {
+  </span><span class="j-key">return new </span>LineItem<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h2><a name="pagetoc__5">The Compilation</a></h2>
+
+	<p>We&#8217;re ready to compile now. Add the following two methods, that I&#8217;ll explain shortly:</p>
+
+	<pre class="java"><span class="j-key">private </span>SaveableEngine compile<span class="j-sym">() </span><span class="j-key">throws </span>FileNotFoundException, IOException, CompilerException, EngineException
+<span class="j-sym">{
+  </span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+  builder.loadSpreadsheet<span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>PATH, <span class="j-str">&#34;CustomPriceFormula.xls&#34; </span><span class="j-sym">) )</span>;
+  builder.setFactoryClass<span class="j-sym">( </span>PriceFinderFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+  builder.bindAllByName<span class="j-sym">()</span>;
+  <span class="j-key">return </span>builder.compile<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span><span class="j-key">private </span>PriceFinderFactory factoryFor<span class="j-sym">( </span>Engine engine <span class="j-sym">)
+{
+  </span><span class="j-key">return </span><span class="j-sym">(</span>PriceFinderFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Also add a constant for the path where you saved the spreadsheet. In my code, it&#8217;s:</p>
+
+	<pre class="java"><span class="j-key">public static final </span>File PATH = <span class="j-key">new </span>File<span class="j-sym">( </span><span class="j-str">&#34;src/test/data/org/formulacompiler/tutorials&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>Let&#8217;s go through this now:</p>
+
+<ul>
+	<li>First, we get a new engine builder. It gives us a simplified <span class="caps">API</span> onto <span class="caps">AFC</span>.</li>
+</ul>
+
+<ul>
+	<li>We tell the builder to load the spreadsheet you created earlier on. <span class="caps">AFC</span> detects the appropriate loader to use by the file&#8217;s extension. It currently supports Microsoft Excel (.xls) and OpenOffice Calc (.ods), and maybe others &#8211; check the <a href="download/releasenotes.htm">release notes</a> for details.</li>
+</ul>
+
+<ul>
+	<li>We inform the builder of our factory class. It can usually infer from this the input interface, <code>LineItem</code>, and the output interface, <code>PriceFinder</code>, by itself (if not, you can given them explicitly; you can then also omit the factory interface altogether).</li>
+</ul>
+
+<ul>
+	<li>We tell the builder to bind spreadsheet cells to our interface methods <em>by name</em>. In short, any cell named after a method on the input interface, <code>LineItem</code>, gets its value from that method in the compiled formula. A cell named after a method on the output interface, <code>PriceFinder</code>, is used to implement that method. (The binder is smart about dropping the <code>get</code> prefix on method names and is not case sensitive.)</li>
+</ul>
+
+<ul>
+	<li>But wait, we don&#8217;t have any cell names in this spreadsheet. What&#8217;s going on? <span class="caps">AFC</span> automatically creates cell names from row titles (string values in column A are applied as names for corresponding cells in column B) when a sheet has no cell names and you use <code>bindAllByName()</code>.</li>
+</ul>
+
+<ul>
+	<li>That&#8217;s it. We tell the builder to compile the thing. It returns a so-called <em>engine</em> (which we&#8217;ll later use to save, reload, and decompile), but the most important method on the engine is the one we use on our second method: <code>getComputationFactory()</code>.</li>
+</ul>
+
+	<h2><a name="pagetoc__6">The Computation</a></h2>
+
+	<p>We now look at how the resulting price finder is used. Since <span class="caps">AFC</span> compiles spreadsheets to regular <span class="caps">JVM</span> classes, there&#8217;s no magic at all when using a precompiled computation:</p>
+
+	<pre class="java"><span class="j-key">private </span>BigDecimal compute<span class="j-sym">( </span>PriceFinderFactory factory <span class="j-sym">)
+{
+  </span>PriceFinder priceFinder = factory.newInstance<span class="j-sym">( </span>getCurrentLineItem<span class="j-sym">() )</span>;
+  <span class="j-key">return </span>priceFinder.getPrice<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>So let&#8217;s make this runnable:</p>
+
+	<pre class="java"><span class="j-key">public static </span><span class="j-typ">void </span>main<span class="j-sym">( </span>String<span class="j-sym">[] </span>args <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span>QuickStart app = <span class="j-key">new </span>QuickStart<span class="j-sym">()</span>;
+  SaveableEngine engine = app.compile<span class="j-sym">()</span>;
+  PriceFinderFactory factory = app.factoryFor<span class="j-sym">( </span>engine <span class="j-sym">)</span>;
+  BigDecimal price = app.compute<span class="j-sym">( </span>factory <span class="j-sym">)</span>;
+  System.out.println<span class="j-sym">( </span><span class="j-str">&#34;The result is &#34; </span>+ price <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Go ahead. Run it.</p>
+
+
+	<h2><a name="pagetoc__7">The Code</a></h2>
+
+	<p>Would you also like to know just what exactly the generated <code>PriceFinder</code> implementation does? You can. <span class="caps">AFC</span> wraps a nifty external library, <a href="http://jode.sourceforge.net/">Jode</a>, to <em>decompile generated code</em> to plain Java source again for just this purpose. Let&#8217;s use this:</p>
+
+	<pre class="java"><span class="j-key">private </span><span class="j-typ">void </span>decompile<span class="j-sym">( </span>SaveableEngine engine <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span>ByteCodeEngineSource source = FormulaDecompiler.decompile<span class="j-sym">( </span>engine <span class="j-sym">)</span>;
+  source.saveTo<span class="j-sym">( </span><span class="j-str">&#34;temp/test/decompiled/quickstart&#34; </span><span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>You can change the output folder, of course. Now add the following at the end of the <code>main</code> method:</p>
+
+	<pre class="java">app.decompile<span class="j-sym">( </span>engine <span class="j-sym">)</span>;</pre>
+
+
+	<p>Run it again. Then look into the output folder. You should find the following there. First, the generated computation:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>java.math.BigDecimal;
+
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.FormulaException;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeDouble_v2;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Runtime_v2;
+<span class="j-key">import </span>org.formulacompiler.tutorials.QuickStart;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, QuickStart.PriceFinder
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>QuickStart.LineItem $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    <span class="j-key">private </span>String<span class="j-sym">[] </span>$constarr$0;
+    
+    $Root<span class="j-sym">(</span>QuickStart.LineItem lineitem, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = lineitem;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-sym">(</span>get$1<span class="j-sym">() </span>* get$2<span class="j-sym">()
+                </span>* <span class="j-sym">(</span><span class="j-num">1.0 </span>- $idx$0<span class="j-sym">(</span>Runtime_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$3<span class="j-sym">()</span>,
+                                                               $constarr$0<span class="j-sym">()</span>,
+                                                               $environment<span class="j-sym">)
+                                </span>- <span class="j-num">1</span><span class="j-sym">)))</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>BigDecimal getPrice<span class="j-sym">() {
+        </span><span class="j-key">return </span>BigDecimal.valueOf<span class="j-sym">(</span>Runtime_v2.checkDouble<span class="j-sym">(</span>get$0<span class="j-sym">()))</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>String<span class="j-sym">[] </span>$constarr$0<span class="j-sym">() {
+        </span><span class="j-key">if </span><span class="j-sym">(</span>$constarr$0 == <span class="j-key">null</span><span class="j-sym">)
+            </span>$constarr$0 = <span class="j-key">new </span>String<span class="j-sym">[] { </span><span class="j-str">&#34;A&#34;</span>, <span class="j-str">&#34;B&#34;</span>, <span class="j-str">&#34;C&#34;</span>, <span class="j-str">&#34;D&#34; </span><span class="j-sym">}</span>;
+        <span class="j-key">return </span>$constarr$0;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>$idx$0<span class="j-sym">(</span><span class="j-typ">int </span>i<span class="j-sym">) {
+        </span><span class="j-key">switch </span><span class="j-sym">(</span>i<span class="j-sym">) {
+        </span><span class="j-key">case </span><span class="j-num">0</span>:
+            <span class="j-key">return </span><span class="j-num">0.06</span>;
+        <span class="j-key">case </span><span class="j-num">1</span>:
+            <span class="j-key">return </span><span class="j-num">0.04</span>;
+        <span class="j-key">case </span><span class="j-num">2</span>:
+            <span class="j-key">return </span><span class="j-num">0.01</span>;
+        <span class="j-key">case </span><span class="j-num">3</span>:
+            <span class="j-key">return </span><span class="j-num">0.0</span>;
+        <span class="j-key">default</span>:
+            <span class="j-key">throw new </span>FormulaException
+                      <span class="j-sym">(</span><span class="j-str">&#34;#VALUE/REF! because index is out of range in INDEX&#34;</span><span class="j-sym">)</span>;
+        <span class="j-sym">}
+    }
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>RuntimeDouble_v2.numberToNum<span class="j-sym">(</span>$inputs.getArticlePrice<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>$inputs.getItemCount<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>String get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>Runtime_v2.stringFromString<span class="j-sym">(</span>$inputs.getCustomerCategory<span class="j-sym">())</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<p>Second, it&#8217;s corresponding factory:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.ComputationFactory;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.tutorials.QuickStart;
+
+<span class="j-key">public final class </span>$Factory
+    <span class="j-key">implements </span>ComputationFactory, QuickStart.PriceFinderFactory
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>Environment $environment;
+    
+    <span class="j-key">public </span>$Factory<span class="j-sym">(</span>Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>Computation newComputation<span class="j-sym">(</span>Object object<span class="j-sym">) {
+        </span><span class="j-key">return new </span>$Root<span class="j-sym">((</span>QuickStart.LineItem<span class="j-sym">) </span>object, $environment<span class="j-sym">)</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>QuickStart.PriceFinder newInstance
+        <span class="j-sym">(</span>QuickStart.LineItem lineitem<span class="j-sym">) {
+        </span><span class="j-key">return new </span>$Root<span class="j-sym">(</span>lineitem, $environment<span class="j-sym">)</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="pagetoc__8">The Runtime</a></h2>
+
+	<p>Computations compiled by <span class="caps">AFC</span> are plain compiled Java classes. They rely only on a single small runtime library, <code>formulacompiler-runtime.jar</code>. So it&#8217;s good practice to simply save them to a .jar file and reuse them from there across application starts (or to even split the compiling application from the using application). However, they do require a special classloader. <span class="caps">AFC</span> therefore provides special methods to save and load engines properly.</p>
+
+
+	<p>First, let&#8217;s save our engine:</p>
+
+	<pre class="java"><span class="j-key">private </span><span class="j-typ">void </span>save<span class="j-sym">( </span>SaveableEngine engine <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span>engine.saveTo<span class="j-sym">( </span><span class="j-key">new </span>FileOutputStream<span class="j-sym">( </span><span class="j-str">&#34;temp/test/CustomPriceFormula.jar&#34; </span><span class="j-sym">) )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Loading it back is just as easy:</p>
+
+	<pre class="java"><span class="j-key">private </span>Engine load<span class="j-sym">() </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span><span class="j-key">return </span>FormulaRuntime.loadEngine<span class="j-sym">( </span><span class="j-key">new </span>FileInputStream<span class="j-sym">( </span><span class="j-str">&#34;temp/test/CustomPriceFormula.jar&#34; </span><span class="j-sym">) )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Again, add the following to the main method to make it runnable:</p>
+
+	<pre class="java">app.save<span class="j-sym">( </span>engine <span class="j-sym">)</span>;
+
+QuickStart app2 = <span class="j-key">new </span>QuickStart<span class="j-sym">()</span>;
+Engine engine2 = app2.<span class="j-hl">load</span><span class="j-sym">()</span>;
+PriceFinderFactory factory2 = app2.factoryFor<span class="j-sym">( </span>engine2 <span class="j-sym">)</span>;
+BigDecimal price2 = app2.compute<span class="j-sym">( </span>factory2 <span class="j-sym">)</span>;
+System.out.println<span class="j-sym">( </span><span class="j-str">&#34;The result is &#34; </span>+ price2 <span class="j-sym">)</span>;</pre>
+
+
+	<p>Alright. Run it.</p>
+
+
+	<h2><a name="pagetoc__9">Summary</a></h2>
+
+	<p>As promised, you just&#8230;</p>
+
+<ul>
+	<li>created a spreadsheet defining a customized line item price computation,</li>
+	<li>made <span class="caps">AFC</span> compile it to Java classes,</li>
+	<li>used those classes in your application,</li>
+	<li>looked at the generated code in Java source form, and</li>
+	<li>saved and reloaded the classes from a .jar file.</li>
+</ul>
+
+	<p>Hopefully, you also played around with the spreadsheet, compiling different formulas. You really should.</p>
+
+
+	<p>Not bad. Now <a href="doc/index.htm">learn more</a> about the goals, the design, the <span class="caps">API</span>, and the supported functions of <span class="caps">AFC</span>.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">The Problem</a></li><li><a href="#pagetoc__2">The Spreadsheet</a></li><li><a href="#pagetoc__3">The Project</a></li><li><a href="#pagetoc__4">The Interfaces</a></li><li><a href="#pagetoc__5">The Compilation</a></li><li><a href="#pagetoc__6">The Computation</a></li><li><a href="#pagetoc__7">The Code</a></li><li><a href="#pagetoc__8">The Runtime</a></li><li><a href="#pagetoc__9">Summary</a></li></ul></div></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

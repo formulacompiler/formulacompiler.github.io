@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Adding A New Vector Computation To AFC - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Adding A New Vector Computation To <span class="caps">AFC</span></h1>
+
+	<p>A vector computation is a (typically financial) function that computes a single value from a vector (array) of values. Here, we shall look at how I implemented <code>NPV()</code>. So let&#8217;s assume <code>NPV()</code> has not been implemented yet.</p>
+
+
+	<p><em>Note: You must have read the topics on adding <a href="addprimitive.htm">primitive functions</a> and <a href="addrewrite.xhtml">high-level functions</a> to understand this section.</em></p>
+
+
+
+	<h2><a name="pagetoc__1">Docs and Tests</a></h2>
+
+	<p>As always, we start with the announcement in the release notes, and the tests:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+			<td>J</td>
+			<td>K</td>
+			<td>L</td>
+			<td>M</td>
+			<td>N</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Expected</span><br/><span class="xl-exp">=IF(Q1,"Expected","FAILED!")</span></td>
+			<td><span style="text-decoration: underline;">Actual</span></td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><span style="text-decoration: underline;"># of Inputs</span></td>
+			<td><span style="text-decoration: underline;">Name</span></td>
+			<td><span style="text-decoration: underline;">Highlight</span></td>
+			<td><span style="text-decoration: underline;">Excel says</span></td>
+			<td><span style="text-decoration: underline;">Skip for</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-num">1.188</td>
+			<td class="xl-num">1.188<br/><span class="xl-exp">=NPV(C2,D2:G2)</span></td>
+			<td class="xl-num">10%</td>
+			<td class="xl-num">-10</td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">4.2</td>
+			<td class="xl-num">6.8</td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">5</td>
+			<td>NPV</td>
+			<td>NPV</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td class="xl-num">1.922</td>
+			<td class="xl-num">1.922<br/><span class="xl-exp">=NPV(C3,E3:I3)+D3</span></td>
+			<td class="xl-num">8%</td>
+			<td class="xl-num">-40</td>
+			<td class="xl-num">8</td>
+			<td class="xl-num">9.2</td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">12</td>
+			<td class="xl-num">14.5</td>
+			<td class="xl-num">7</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>long, bigdecimal</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<h2><a name="pagetoc__2">Parsing</a></h2>
+
+	<p>Making <code>NPV()</code> known to the parser is much like what we did for <code>ABS()</code>. Array functions, however, need to accept vector arguments, not just simple values. These are denoted by <code>shapedRangeExpr()</code>:</p>
+
+	<pre class="j-text"><code>|	"NPV" open() expr() &lt;SEP&gt; shapedRangeExpr() closeFun( Function.NPV )</code></pre>
+
+
+	<p>This means:</p>
+
+<ul>
+	<li><code>open()</code> &#8211; open parenthesis, start collecting function arguments.</li>
+	<li><code>expr()</code> &#8211; single-valued expression.</li>
+	<li><code>shapedRangeExpr()</code> &#8211; vector range expression with shape information (width, height) available to compiler.</li>
+	<li><code>closeFun( Function.NPV )</code> &#8211; packs collected function arguments into a function expression node.</li>
+</ul>
+
+	<h2><a name="pagetoc__3">Mathematical Definition</a></h2>
+
+	<p>The function <code>NPV()</code> is defined in the Excel help file as follows:</p>
+
+
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+    <munderover><mo rspace="thinmathspace" lspace="thinmathspace">&#8721;</mo> <mrow><mi>i</mi>
+    <mo>=</mo><mn>1</mn></mrow> <mi>n</mi></munderover>
+    <mfrac><mrow><msub><mi>values</mi> <mi>i</mi></msub>
+    </mrow><mrow><mo>(</mo>
+    <mn>1</mn><mo>+</mo><mi>rate</mi><msup><mo>)</mo> <mi>i</mi></msup></mrow></mfrac>
+</math>
+	<p>What we need here is a <a href="rewrite_functions.htm">folding function</a> that gives us access to the current index <code>i</code>. The <code>fold</code> we already encountered does not support this, but the very similar <code>iterate</code> does.</p>
+
+
+	<h2><a name="pagetoc__4">Rewriting It</a></h2>
+
+	<p>Since <code>NPV</code> takes a <em>vector</em> as an argument, we need to apply the fold using <code>apply... to vectors {v1, ..., vn}</code> instead of <code>apply... to list xs</code>. And we tell the rewrite parser about this by suffixing the vector argument with <code>#</code>:</p>
+
+	<pre class="j-text"><code>rewrite npv( rate, vs# ) =
+	let rate1 = rate + 1
+	in
+		apply
+			iterate with
+				r = 0
+			index i
+			each vi as
+				r = r + vi / rate1 ^ i
+			end
+		to vectors {vs}</code></pre>
+
+
+	<p>Note how I used <code>let</code> here to move the common subexpression out of the folding loop.</p>
+
+
+	<h2><a name="pagetoc__5">Multiple Vectors</a></h2>
+
+	<p>As the syntax above suggests,  <code>apply... to vectors {v1, ..., vn}</code> can be used to fold multiple vectors in parallel. This demonstrated by <code>COVAR</code>:</p>
+
+	<pre class="j-text"><code>rewrite covar( xs#, ys# ) =
+	if COUNT( xs ) &lt;&gt; COUNT( ys ) then NA() else
+	apply
+		fold with
+			sx = 0,
+			sy = 0,
+			sxy = 0
+		each xi, yi as
+			sx = sx + xi,
+			sy = sy + yi,
+			sxy = sxy + xi * yi
+		with count n into
+			(sxy - sx*sy/n) / n
+		when empty err( "#DIV/0! because list doesn't contain numbers in COVAR" )                                 
+		end
+	to vectors {xs, ys}</code></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Adding A New Vector Computation To AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Docs and Tests</a></li><li><a href="#pagetoc__2">Parsing</a></li><li><a href="#pagetoc__3">Mathematical Definition</a></li><li><a href="#pagetoc__4">Rewriting It</a></li><li><a href="#pagetoc__5">Multiple Vectors</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

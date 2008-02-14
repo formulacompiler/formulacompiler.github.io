@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Financial Functions In AFC - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Reference</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Financial Functions In <span class="caps">AFC</span></h1>
+
+
+	<h3><a name="pagetoc__1">Financial Functions</a></h3>
+
+	<p>The supported numeric functions are shown by example below:</p>
+
+
+
+<h5 class="ref"><a name="pagetoc__1_1">NPV</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td class="xl-num">1.1884434123352206</td><td class="xl-exp"><a href="FinancialFunctions_2.htm">=<em>NPV</em>(C2,D2:G2)</a></td><td class="xl-num">0.1 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">-10.0</td><td class="xl-num">3.0</td><td class="xl-num">4.2</td><td class="xl-num">6.8</td><td></td></tr>
+<tr><td class="xl-row">3</td><td class="xl-num">1.9220615549323696</td><td class="xl-exp"><a href="FinancialFunctions_3.htm">=<em>NPV</em>(C3,E3:I3)+D3</a></td><td class="xl-num">0.08 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">-40.0</td><td class="xl-num">8.0</td><td class="xl-num">9.2</td><td class="xl-num">10.0</td><td class="xl-num">12.0</td><td class="xl-num">14.5</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_2">MIRR</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">5</td><td class="xl-num">0.0625220116777323</td><td class="xl-exp"><a href="FinancialFunctions_5.htm">=<em>MIRR</em>(C5:G5,H5,I5)</a></td><td class="xl-num">-120.0</td><td class="xl-num">39.0</td><td class="xl-num">30.0</td><td class="xl-num">21.0</td><td class="xl-num">37.0</td><td class="xl-num">0.1 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">0.12 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_3">IRR</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td></tr></thead><tbody>
+<tr><td class="xl-row">7</td><td class="xl-num">0.08663094803634251</td><td class="xl-exp"><a href="FinancialFunctions_7.htm">=<em>IRR</em>(C7:H7)</a></td><td class="xl-num">-70.0</td><td class="xl-num">12.0</td><td class="xl-num">15.0</td><td class="xl-num">18.0</td><td class="xl-num">21.0</td><td class="xl-num">26.0</td><td></td></tr>
+<tr><td class="xl-row">8</td><td class="xl-num">-0.44350694133465396</td><td class="xl-exp"><a href="FinancialFunctions_8.htm">=<em>IRR</em>(C8:E8,F8)</a></td><td class="xl-num">-70.0</td><td class="xl-num">12.0</td><td class="xl-num">15.0</td><td class="xl-num">-0.1 <span class="ref-prec">(#0.00)</span></td><td></td></tr>
+<tr><td class="xl-row">9</td><td class="xl-num">0.05188165495421505</td><td class="xl-exp"><a href="FinancialFunctions_9.htm">=<em>IRR</em>(C9:G9)</a></td><td class="xl-num">100.0</td><td class="xl-num">-50.0</td><td class="xl-num">-30.0</td><td class="xl-num">-20.0</td><td class="xl-num">-10.0</td><td></td></tr>
+<tr><td class="xl-row">10</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td class="xl-num">34.0</td><td class="xl-num">12.0</td><td class="xl-num">15.0</td><td class="xl-num">18.0</td><td class="xl-num">21.0</td><td></td><td class="ref-bad">Excel says: #NUM!</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_4">DB</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></tr></thead><tbody>
+<tr><td class="xl-row">12</td><td class="xl-num">2752.96176</td><td class="xl-exp"><a href="FinancialFunctions_12.htm">=<em>DB</em>(C12,D12,E12,F12)</a></td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">13</td><td class="xl-num">1003.4234680309769</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">14</td><td class="xl-num">284.17727671733377</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">15</td><td class="xl-num">1605.8943600000002</td><td class="xl-exp"><a href="FinancialFunctions_15.htm">=<em>DB</em>(C15,D15,E15,F15,G15)</a></td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td class="xl-num">7.0</td><td></td></tr>
+<tr><td class="xl-row">16</td><td class="xl-num">1123.4167291693875</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">5.0</td><td class="xl-num">7.0</td><td></td></tr>
+<tr><td class="xl-row">17</td><td class="xl-num">103.0043955434808</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">11.0</td><td class="xl-num">7.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_5">DDB</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></tr></thead><tbody>
+<tr><td class="xl-row">19</td><td class="xl-num">2469.0240000000003</td><td class="xl-exp"><a href="FinancialFunctions_19.htm">=<em>DDB</em>(C19,D19,E19,F19)</a></td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">20</td><td class="xl-num">904.5451574605321</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">5.5</td><td></td></tr>
+<tr><td class="xl-row">21</td><td class="xl-num">331.3867916574723</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">22</td><td class="xl-num">1851.768</td><td class="xl-exp"><a href="FinancialFunctions_22.htm">=<em>DDB</em>(C22,D22,E22,F22,G22)</a></td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td class="xl-num">1.5</td><td></td></tr>
+<tr><td class="xl-row">23</td><td class="xl-num">891.1929465967952</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">5.5</td><td class="xl-num">1.5</td><td></td></tr>
+<tr><td class="xl-row">24</td><td class="xl-num">428.9008493849543</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">10.0</td><td class="xl-num">1.5</td><td></td></tr>
+<tr><td class="xl-row">25</td><td class="xl-num">11357.47</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td class="xl-num">10.1</td><td></td></tr>
+<tr><td class="xl-row">26</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">1.001</td><td class="xl-num">10.1</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_6">SLN</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">28</td><td class="xl-num">2250.0</td><td class="xl-exp"><a href="FinancialFunctions_28.htm">=<em>SLN</em>(C28,D28,E28)</a></td><td class="xl-num">30000.0</td><td class="xl-num">7500.0</td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">29</td><td class="xl-num">2247.772227772228</td><td class="xl-exp">...</td><td class="xl-num">29999.95</td><td class="xl-num">7499.75</td><td class="xl-num">10.01</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_7">SYD</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr></thead><tbody>
+<tr><td class="xl-row">31</td><td class="xl-num">4090.909090909091</td><td class="xl-exp"><a href="FinancialFunctions_31.htm">=<em>SYD</em>(C31,D31,E31,F31)</a></td><td class="xl-num">30000.0</td><td class="xl-num">7500.0</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">32</td><td class="xl-num">409.09090909090907</td><td class="xl-exp">...</td><td class="xl-num">30000.0</td><td class="xl-num">7500.0</td><td class="xl-num">10.0</td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">33</td><td class="xl-num">3270.600462208092</td><td class="xl-exp">...</td><td class="xl-num">29999.95</td><td class="xl-num">7499.75</td><td class="xl-num">10.01</td><td class="xl-num">3.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_8">FV</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></tr></thead><tbody>
+<tr><td class="xl-row">35</td><td class="xl-num">2581.4033740601185</td><td class="xl-exp"><a href="FinancialFunctions_35.htm">=<em>FV</em>(C35,D35,E35,F35,G35)</a></td><td class="xl-num">0.0050 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">10.0</td><td class="xl-num">-200.0</td><td class="xl-num">-500.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">36</td><td class="xl-num">12682.503013196976</td><td class="xl-exp"><a href="FinancialFunctions_36.htm">=<em>FV</em>(C36,D36,E36)</a></td><td class="xl-num">0.01 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">12.0</td><td class="xl-num">-1000.0</td><td></td></tr>
+<tr><td class="xl-row">37</td><td class="xl-num">82898.06514315684</td><td class="xl-exp"><a href="FinancialFunctions_37.htm">=<em>FV</em>(C37,D37,E37,,F37)</a></td><td class="xl-num">0.0092 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">35.0</td><td class="xl-num">-2000.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">38</td><td class="xl-num">2301.4018303408993</td><td class="xl-exp"><a href="FinancialFunctions_38.htm">=<em>FV</em>(C38,D38,E38,F38,G38)</a></td><td class="xl-num">0.0050 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">12.0</td><td class="xl-num">-100.0</td><td class="xl-num">-1000.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">39</td><td class="xl-num">2295.23404915445</td><td class="xl-exp"><a href="FinancialFunctions_39.htm">=<em>FV</em>(C39,D39,E39,F39)</a></td><td class="xl-num">0.0050 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">12.0</td><td class="xl-num">-100.0</td><td class="xl-num">-1000.0</td><td></td></tr>
+<tr><td class="xl-row">40</td><td class="xl-num">2200.0</td><td class="xl-exp">...</td><td class="xl-num">0.0 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">12.0</td><td class="xl-num">-100.0</td><td class="xl-num">-1000.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_9">NPER</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></tr></thead><tbody>
+<tr><td class="xl-row">42</td><td class="xl-num">59.67386567429457</td><td class="xl-exp"><a href="FinancialFunctions_42.htm">=<em>NPER</em>(C42,D42,E42,F42,G42)</a></td><td class="xl-num">0.01 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">-100.0</td><td class="xl-num">-1000.0</td><td class="xl-num">10000.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">43</td><td class="xl-num">60.08212285376166</td><td class="xl-exp"><a href="FinancialFunctions_43.htm">=<em>NPER</em>(C43,D43,E43,F43)</a></td><td class="xl-num">0.01 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">-100.0</td><td class="xl-num">-1000.0</td><td class="xl-num">10000.0</td><td></td></tr>
+<tr><td class="xl-row">44</td><td class="xl-num">90.0</td><td class="xl-exp">...</td><td class="xl-num">0.0 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">-100.0</td><td class="xl-num">-1000.0</td><td class="xl-num">10000.0</td><td></td></tr>
+<tr><td class="xl-row">45</td><td class="xl-num">-9.578594039813161</td><td class="xl-exp"><a href="FinancialFunctions_45.htm">=<em>NPER</em>(C45,D45,E45)</a></td><td class="xl-num">0.01 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">-100.0</td><td class="xl-num">-1000.0</td><td></td></tr>
+<tr><td class="xl-row">46</td><td class="xl-num">-9.488095005505821</td><td class="xl-exp"><a href="FinancialFunctions_46.htm">=<em>NPER</em>(C46,D46,E46,,F46)</a></td><td class="xl-num">0.01 <span class="ref-prec">(#0.00)</span></td><td class="xl-num">-100.0</td><td class="xl-num">-1000.0</td><td class="xl-num">1.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_10">PMT</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></tr></thead><tbody>
+<tr><td class="xl-row">48</td><td class="xl-num">-1512.0079920253022</td><td class="xl-exp"><a href="FinancialFunctions_48.htm">=<em>PMT</em>(C48,D48,E48,F48,G48)</a></td><td class="xl-num">0.0066 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">10.0</td><td class="xl-num">10000.0</td><td class="xl-num">5000.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">49</td><td class="xl-num">-1500.0</td><td class="xl-exp"><a href="FinancialFunctions_49.htm">=<em>PMT</em>(C49,D49,E49,F49)</a></td><td class="xl-num">0.0 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">10.0</td><td class="xl-num">10000.0</td><td class="xl-num">5000.0</td><td></td></tr>
+<tr><td class="xl-row">50</td><td class="xl-num">-1029.8610800534268</td><td class="xl-exp"><a href="FinancialFunctions_50.htm">=<em>PMT</em>(C50,D50,E50,,F50)</a></td><td class="xl-num">0.0066 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">10.0</td><td class="xl-num">10000.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">51</td><td class="xl-num">-1036.6581631817796</td><td class="xl-exp"><a href="FinancialFunctions_51.htm">=<em>PMT</em>(C51,D51,E51)</a></td><td class="xl-num">0.0066 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">10.0</td><td class="xl-num">10000.0</td><td></td></tr>
+<tr><td class="xl-row">52</td><td class="xl-num">-129.08116086799728</td><td class="xl-exp"><a href="FinancialFunctions_52.htm">=<em>PMT</em>(C52,D52,E52,F52)</a></td><td class="xl-num">0.0050 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">216.0</td><td class="xl-num">0.0</td><td class="xl-num">50000.0</td><td></td></tr>
+<tr><td class="xl-row">53</td><td class="xl-num">-231.4814814814815</td><td class="xl-exp">...</td><td class="xl-num">0.0 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">216.0</td><td class="xl-num">0.0</td><td class="xl-num">50000.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_11">PV</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></tr></thead><tbody>
+<tr><td class="xl-row">55</td><td class="xl-num">-70842.65167097464</td><td class="xl-exp"><a href="FinancialFunctions_55.htm">=<em>PV</em>(C55,D55,E55,F55,G55)</a></td><td class="xl-num">0.0066 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">240.0</td><td class="xl-num">500.0</td><td class="xl-num">50000.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">56</td><td class="xl-num">-70445.76332409514</td><td class="xl-exp"><a href="FinancialFunctions_56.htm">=<em>PV</em>(C56,D56,E56,F56)</a></td><td class="xl-num">0.0066 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">240.0</td><td class="xl-num">500.0</td><td class="xl-num">50000.0</td><td></td></tr>
+<tr><td class="xl-row">57</td><td class="xl-num">-170000.0</td><td class="xl-exp">...</td><td class="xl-num">0.0 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">240.0</td><td class="xl-num">500.0</td><td class="xl-num">50000.0</td><td></td></tr>
+<tr><td class="xl-row">58</td><td class="xl-num">-60134.59801204454</td><td class="xl-exp"><a href="FinancialFunctions_58.htm">=<em>PV</em>(C58,D58,E58)</a></td><td class="xl-num">0.0066 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">240.0</td><td class="xl-num">500.0</td><td></td></tr>
+<tr><td class="xl-row">59</td><td class="xl-num">-60531.486358924034</td><td class="xl-exp"><a href="FinancialFunctions_59.htm">=<em>PV</em>(C59,D59,E59,,F59)</a></td><td class="xl-num">0.0066 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">240.0</td><td class="xl-num">500.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">60</td><td class="xl-num">-120000.0</td><td class="xl-exp"><a href="FinancialFunctions_60.htm">=<em>PV</em>(C60,D60,E60)</a></td><td class="xl-num">0.0 <span class="ref-prec">(#0.0000)</span></td><td class="xl-num">240.0</td><td class="xl-num">500.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_12">RATE</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td></tr></thead><tbody>
+<tr><td class="xl-row">62</td><td class="xl-num">0.007252054197075087</td><td class="xl-exp"><a href="FinancialFunctions_62.htm">=<em>RATE</em>(C62,D62,E62,F62,G62,H62)</a></td><td class="xl-num">48.0</td><td class="xl-num">-200.0</td><td class="xl-num">8000.0</td><td class="xl-num">200.0</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td></td></tr>
+<tr><td class="xl-row">63</td><td class="xl-num">0.007252054197077615</td><td class="xl-exp"><a href="FinancialFunctions_63.htm">=<em>RATE</em>(C63,D63,E63,F63,G63)</a></td><td class="xl-num">48.0</td><td class="xl-num">-200.0</td><td class="xl-num">8000.0</td><td class="xl-num">200.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">64</td><td class="xl-num">0.0069258280078605215</td><td class="xl-exp"><a href="FinancialFunctions_64.htm">=<em>RATE</em>(C64,D64,E64,F64)</a></td><td class="xl-num">48.0</td><td class="xl-num">-200.0</td><td class="xl-num">8000.0</td><td class="xl-num">200.0</td><td></td></tr>
+<tr><td class="xl-row">65</td><td class="xl-num">0.007701472488201368</td><td class="xl-exp"><a href="FinancialFunctions_65.htm">=<em>RATE</em>(C65,D65,E65)</a></td><td class="xl-num">48.0</td><td class="xl-num">-200.0</td><td class="xl-num">8000.0</td><td></td></tr>
+<tr><td class="xl-row">66</td><td class="xl-num">0.007701472488195906</td><td class="xl-exp"><a href="FinancialFunctions_66.htm">=<em>RATE</em>(C66,D66,E66,,,F66)</a></td><td class="xl-num">48.0</td><td class="xl-num">-200.0</td><td class="xl-num">8000.0</td><td class="xl-num">0.0</td><td></td></tr>
+<tr><td class="xl-row">67</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td class="xl-num">240.0</td><td class="xl-num">500.0</td><td class="xl-num">-120000.0</td><td class="xl-num">0.0</td><td></td></tr>
+<tr><td class="xl-row">68</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td class="xl-num">240.0</td><td class="xl-num">500.0</td><td class="xl-num">3.0</td><td class="xl-num">0.0</td><td></td><td class="ref-bad">Excel says: #NUM!</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_13">VDB</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">70</td><td class="xl-num">384.0</td><td class="xl-exp"><a href="FinancialFunctions_70.htm">=<em>VDB</em>(C70,D70,E70,F70,G70)</a></td><td class="xl-num">2400.0</td><td class="xl-num">300.0</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">71</td><td class="xl-num">307.2</td><td class="xl-exp">...</td><td class="xl-num">2400.0</td><td class="xl-num">300.0</td><td class="xl-num">10.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">72</td><td class="xl-num">329.1456000000001</td><td class="xl-exp">...</td><td class="xl-num">2400.0</td><td class="xl-num">300.0</td><td class="xl-num">10.0</td><td class="xl-num">6.0</td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">73</td><td class="xl-num">313.34400000000005</td><td class="xl-exp"><a href="FinancialFunctions_73.htm">=<em>VDB</em>(C73,D73,E73,F73,G73,H73,I73)</a></td><td class="xl-num">2400.0</td><td class="xl-num">300.0</td><td class="xl-num">10.0</td><td class="xl-num">2.3</td><td class="xl-num">3.4</td><td class="xl-num">2.0</td><td>true</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">74</td><td class="xl-num">3890.7484052950003</td><td class="xl-exp"><a href="FinancialFunctions_74.htm">=<em>VDB</em>(C74,D74,E74,F74,G74,H74)</a></td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">2.0</td><td class="xl-num">5.5</td><td class="xl-num">1.5</td><td></td></tr>
+<tr><td class="xl-row">75</td><td class="xl-num">428.9008493849543</td><td class="xl-exp"><a href="FinancialFunctions_75.htm">=<em>VDB</em>(C75,D75,E75,F75,G75,H75,I75)</a></td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">9.0</td><td class="xl-num">10.0</td><td class="xl-num">1.5</td><td>true</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">76</td><td class="xl-num">11357.47</td><td class="xl-exp"><a href="FinancialFunctions_76.htm">=<em>VDB</em>(C76,D76,E76,F76,G76,H76)</a></td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.0</td><td class="xl-num">10.1</td><td></td></tr>
+<tr><td class="xl-row">77</td><td class="xl-num">2488.7761920000003</td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.01</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">78</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="FinancialFunctions_78.htm">=<em>VDB</em>(C78,D78,E78,F78,G78)</a></td><td class="xl-num">2400.0</td><td class="xl-num">300.0</td><td class="xl-num">10.0</td><td class="xl-num">-1.0</td><td class="xl-num">2.0</td><td></td><td class="ref-bad">Excel says: #NUM!</td></tr>
+<tr><td class="xl-row">79</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td class="xl-num">2400.0</td><td class="xl-num">300.0</td><td class="xl-num">10.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td></td><td class="ref-bad">Excel says: #NUM!</td></tr>
+<tr><td class="xl-row">80</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">2401.0</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td><td class="ref-bad">Excel says: #NUM!</td></tr>
+<tr><td class="xl-row">81</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td class="xl-num">2400.0</td><td class="xl-num">2410.0</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">82</td><td class="xl-num">1147.10447</td><td class="xl-exp"><a href="FinancialFunctions_82.htm">=<em>VDB</em>(C82,D82,E82,F82,G82,H82)</a></td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.01</td><td class="xl-num">0.0</td><td></td></tr>
+<tr><td class="xl-row">83</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td class="xl-num">12345.12</td><td class="xl-num">987.65</td><td class="xl-num">10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.01</td><td class="xl-num">-0.0010</td><td></td><td class="ref-bad">Excel says: #NUM!</td></tr>
+</tbody></table><p></p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Financial Functions In AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Financial Functions</a><ul class="toc toc4"><li><a href="#pagetoc__1_1">NPV</a></li><li><a href="#pagetoc__1_2">MIRR</a></li><li><a href="#pagetoc__1_3">IRR</a></li><li><a href="#pagetoc__1_4">DB</a></li><li><a href="#pagetoc__1_5">DDB</a></li><li><a href="#pagetoc__1_6">SLN</a></li><li><a href="#pagetoc__1_7">SYD</a></li><li><a href="#pagetoc__1_8">FV</a></li><li><a href="#pagetoc__1_9">NPER</a></li><li><a href="#pagetoc__1_10">PMT</a></li><li><a href="#pagetoc__1_11">PV</a></li><li><a href="#pagetoc__1_12">RATE</a></li><li><a href="#pagetoc__1_13">VDB</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

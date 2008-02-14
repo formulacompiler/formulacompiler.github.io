@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Build Tools - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Build Tools</h1>
+
+	<p><span class="caps">AFC</span> comes with an Ant <a href="build.htm">build script</a> in <code>build.xml</code>. This document lists the tools required to run it.</p>
+
+
+
+	<h2><a name="pagetoc__1">Setup</a></h2>
+
+	<p>Many open-source libraries in the Java world include in the download everything needed to build a product from its sources. With <span class="caps">AFC</span>, I have relaxed this a little. The source download does include all of the required run-time libraries, as well as all the libraries required to build the .jar files, with the exception of <a href="http://ant.apache.org/">Ant</a> itself.</p>
+
+
+	<p>It does <em>not</em> include all the libraries and tools to build an entire distribution. Those are described here, with instructions on how to get and configure them. Except for Ant and JUnit, all of the tools should be configured in <code>build.properties</code>. Look in <code>build.default.properties</code> to see what you can configure.</p>
+
+
+	<h2><a name="pagetoc__2">Prepackaged Download</a></h2>
+
+	<p>The easiest setup is to simply download <code>formulacompiler-x.y.z-tools.zip</code>, unpack it to a central folder, and then set <code>tools.dir</code> to this folder in <code>build.properties</code>. If you unpack it into <span class="caps">AFC</span>&#8217;s install folder as <code>tools/</code>, then you don&#8217;t even have to create <code>build.properties</code>.</p>
+
+
+	<p>The download contains <a href="http://ant.apache.org/">Ant</a> and, contained within it, <a href="http://junit.org/">JUnit 3.x</a>. So running</p>
+
+	<pre><code>tools/apache-ant-1.7.0/bin/ant</code></pre>
+
+
+	<p>should properly build <span class="caps">AFC</span>.</p>
+
+
+	<h5>Note</h5>
+
+	<p>You still need to <a href="http://arrenbrecht.ch/rextile/install.htm">install the prerequisites for Rextile</a> and <a href="http://www.graphviz.org/">Graphviz</a>.</p>
+
+
+	<h2><a name="pagetoc__3">Manual Setup</a></h2>
+
+	<h3><a name="pagetoc__3_1">Mandatory Tools</a></h3>
+
+	<p>The following are the tools you need to set up in order to build a complete new distribution package for <span class="caps">AFC</span>. I strongly suggest you install them all if you consider <a href="contributing.htm">contributing to <span class="caps">AFC</span></a>.</p>
+
+
+<dl>
+<dt><a href="http://ant.apache.org/">Ant</a></dt><dd>You do, of course, need. Since Ant is rather big and such a widespread tool, I have chosen to not include it with <span class="caps">AFC</span>&#8217;s source distribution. This is the only install you need to run <code>ant build</code> which builds the <span class="caps">AFC</span> jars.</dd>
+
+<dt><a href="http://junit.org/">JUnit</a></dt><dd>is needed to run the tests with <code>ant test</code>. As per <a href="http://ant.apache.org/manual/OptionalTasks/junit.html">the instructions</a> and, in particular, <a href="http://ant.apache.org/faq.html#delegating-classloader">this discussion</a>, I suggest that you copy <code>junit.jar</code> to the <code>lib/</code> folder of your Ant installation.</dd>
+
+<dt><a href="http://innig.net/macker/index.html">Macker</a></dt><dd>checks class and package dependencies. <span class="caps">AFC</span> uses it to enforce the most important dependency rules. Configure it in <code>build.properties</code> (see above).</dd>
+
+<dt><a href="http://checkstyle.sourceforge.net/">CheckStyle</a></dt><dd>checks source code conformance. <span class="caps">AFC</span> uses it to check for missing JavaDoc tags and header comments. Configure it in <code>build.properties</code> (see above).</dd>
+
+<dt><a href="http://ruby-lang.org/">Ruby</a></dt><dd>runs configuration scripts.</dd>
+
+<dt><a href="http://arrenbrecht.ch/rextile/">Rextile</a></dt><dd>compiles documentation sources in <a href="http://en.wikipedia.org/wiki/Textile_%28markup_language%29">Textile</a> format to <span class="caps">XHTML</span>. AFC&#8217;s main documentation is written in Rextile&#8217;s format (this here, too). Please observe Rextile&#8217;s own <a href="http://arrenbrecht.ch/rextile/install.htm">installation instructions</a>. Configure it in <code>build.properties</code> (see above).</dd>
+
+<dt><a href="http://arrenbrecht.ch/jcite/">JCite</a></dt><dd>cites Java source code and Excel sheets into <span class="caps">HTML</span> documentation. <span class="caps">AFC</span> <a href="../../doc/tutorial/basics.htm">uses this extensively</a>. Configure it in <code>build.properties</code> (see above).</dd>
+
+<dt><a href="http://www.graphviz.org/">GraphViz</a></dt><dd>renders textual specifications of graphs to .png images. The <code>dot</code> command must be available on the system path.</dd>
+</dl>
+
+	<h3><a name="pagetoc__3_2">Optional Tools</a></h3>
+
+	<p>The following tools are not required to build a distribution, but they certainly help to maintain high quality.</p>
+
+
+<dl>
+<dt><a href="http://cobertura.sourceforge.net/">Cobertura</a></dt><dd>is a code coverage analysis tool, which you can run with <code>ant cover</code>. Configure it in <code>build.properties</code> (see above).</dd>
+
+<dt><a href="http://emma.sourceforge.net/">Emma</a></dt><dd>is, too, a code coverage analysis tool. It runs much faster than Cobertura, but produces&#8212;in my view&#8212;slightly less visually pleasing output. Configure it in <code>build.properties</code> (see above).</dd>
+</dl>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Build Tools</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Setup</a></li><li><a href="#pagetoc__2">Prepackaged Download</a></li><li class="withitems"><a href="#pagetoc__3">Manual Setup</a><ul class="toc toc2"><li><a href="#pagetoc__3_1">Mandatory Tools</a></li><li><a href="#pagetoc__3_2">Optional Tools</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

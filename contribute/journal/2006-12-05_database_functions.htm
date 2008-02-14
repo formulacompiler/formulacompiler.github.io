@@ -1,0 +1,508 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Database Functions - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Database Functions</h1>
+
+	<p>I have started implementing the database functions like <code>DSUM()</code>. Here I intend to sketch out the cases <span class="caps">SEJ</span> is going to support, and how.</p>
+
+
+
+	<h2><a name="pagetoc__1">General Remarks</a></h2>
+
+	<p>At least in the first implementation, I will not support constant folding of the <code>D...()</code> functions. Their arguments will, of course, be folded normally. This is because I don&#8217;t think we will, in practice, see any sheets with constant applications of these functions.</p>
+
+
+	<h2><a name="pagetoc__2">Base Data</a></h2>
+
+	<p>In the following examples, I will always consider references to this sheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+			<td>J</td>
+			<td>K</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">2</td>
+			<td><b>Test table</b></td>
+			<td>Tree</td>
+			<td>Height</td>
+			<td>Yield</td>
+			<td>Profit</td>
+			<td>Date</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td></td>
+			<td class="xl-r1">Apple</td>
+			<td class="xl-num xl-r1">18</td>
+			<td class="xl-num xl-r1">14</td>
+			<td class="xl-num xl-r1">105.00</td>
+			<td class="xl-date">8/2/05 14:15</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td class="xl-r1">Pear</td>
+			<td class="xl-num xl-r1">12</td>
+			<td class="xl-num xl-r1">10</td>
+			<td class="xl-num xl-r1">96.00</td>
+			<td class="xl-date">8/2/05 14:16</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td></td>
+			<td>Cherry</td>
+			<td class="xl-num">13</td>
+			<td class="xl-num">9</td>
+			<td class="xl-num">105.00</td>
+			<td class="xl-date">9/3/05</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td></td>
+			<td>Apple</td>
+			<td class="xl-num">14</td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">75.00</td>
+			<td class="xl-date">8:45</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td></td>
+			<td>Pear</td>
+			<td class="xl-num">9</td>
+			<td class="xl-num">8</td>
+			<td class="xl-num">76.80</td>
+			<td class="xl-date">8:44</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td></td>
+			<td>Apple</td>
+			<td class="xl-num">8</td>
+			<td class="xl-num">6</td>
+			<td class="xl-num">45.00</td>
+			<td class="xl-date">8:43</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td><b>Criteria sets</b></td>
+			<td>Tree</td>
+			<td>Height</td>
+			<td>Height</td>
+			<td>Tree</td>
+			<td>Height</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td></td>
+			<td class="xl-r3">Apple</td>
+			<td>&gt;10.0</td>
+			<td>&lt;16</td>
+			<td>Nonexistent</td>
+			<td>&lt;1.4e6</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td></td>
+			<td class="xl-r3">Pear</td>
+			<td></td>
+			<td>&lt;1'000</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">14</td>
+			<td></td>
+			<td>Tree</td>
+			<td>Height</td>
+			<td>Height</td>
+			<td>RefTree</td>
+			<td>RefHeight</td>
+			<td>RefHeight</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">15</td>
+			<td></td>
+			<td>Apple<br/><span class="xl-exp">=E15</span></td>
+			<td>&gt;10<br/><span class="xl-exp">="&gt;"&amp;F15</span></td>
+			<td>&lt;16<br/><span class="xl-exp">=CONCATENATE("&lt;",G15)</span></td>
+			<td class="xl-r4">Apple</td>
+			<td class="xl-num xl-r4">10</td>
+			<td class="xl-num xl-r4">16</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">16</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">17</td>
+			<td></td>
+			<td>Date</td>
+			<td>Date</td>
+			<td>Date</td>
+			<td>RefDate</td>
+			<td>Date</td>
+			<td>Date</td>
+			<td>RefDate</td>
+			<td>Date</td>
+			<td>Date</td>
+			<td>RefDate</td>
+		</tr>
+		<tr>
+			<td class="xl-row">18</td>
+			<td></td>
+			<td class="xl-date">8/2/05 14:16</td>
+			<td>&gt;=2.9.2005</td>
+			<td>&gt;=38597<br/><span class="xl-exp">="&gt;="&amp;E18</span></td>
+			<td class="xl-date">9/2/05<br/><span class="xl-name">(ValDate1)</span></td>
+			<td>&gt;=2.8.05 14:16</td>
+			<td>&gt;=38566.5944444444<br/><span class="xl-exp">="&gt;="&amp;H18</span></td>
+			<td class="xl-date">8/2/05 14:16<br/><span class="xl-name">(ValDate2)</span></td>
+			<td>&gt;=8:45</td>
+			<td>&gt;=0.364583333333333<br/><span class="xl-exp">="&gt;="&amp;K18</span></td>
+			<td class="xl-date">8:45<br/><span class="xl-name">(ValDate3)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">19</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">20</td>
+			<td></td>
+			<td>Free Form</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">21</td>
+			<td></td>
+			<td>false<br/><span class="xl-exp">=AND(B3="Apple",C3&gt;$F$15,C3&lt;$G$15)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+<br/><span class="xl-r1">B3:E4</span> <span class="xl-name">(Data1)</span><br/><span class="xl-r3">B11:B12</span> <span class="xl-name">(Vals1)</span><br/><span class="xl-r4">E15:G15</span> <span class="xl-name">(Vals2)</span>
+
+
+	<h2><a name="pagetoc__3">Simple Sum</a></h2>
+
+	<p>Consider</p>
+
+	<pre><code>DSUM(Table1;"Yield";Crit2)</code></pre>
+
+
+	<p>selecting all <code>Apple</code> trees. I shall generate the methods (with names properly made unique):</p>
+
+	<pre><code>boolean isMatch( String Bx, String B11 ) {
+    return Bx.equals( B11 );
+}
+double computeDSUM() {
+    String B11 = getB11();
+    double r = 0.0;
+    if (isMatch( getB3(), B11 )) r+= getE3();
+    ...
+    if (isMatch( getB8(), B11 )) r+= getE8();
+    return r;
+}</code></pre>
+
+
+	<p>Now consider</p>
+
+	<pre><code>DSUM(Table1;"Yield";Crit5)</code></pre>
+
+
+	<p>which a different match function</p>
+
+	<pre><code>boolean isMatch( String Bx, String B11, String B12 ) {
+    return Bx.equals( B11 ) || Bx.equals( B12 );
+}</code></pre>
+
+
+	<p>and an analogous <code>computeDSUM</code> method.</p>
+
+
+	<h2><a name="pagetoc__4">Section Sum</a></h2>
+
+	<p>If the table is or contains a dynamic range, the code becomes (assuming a dynamic section in <code>B4:F7</code>):</p>
+
+	<pre><code>double computeDSUM() {
+    String B11 = getB11();
+    double r = 0.0;
+    if (isMatch( getB3(), B11 )) r+= getE3();
+    for (SectionObj e : getSection()) {
+        if (isMatch( e.getB4(), B11 )) r+= e.getE4();
+    }
+    if (isMatch( getB8(), B11 )) r+= getE8();
+    return r;
+}</code></pre>
+
+
+	<h2><a name="pagetoc__5">Conditional Fold</a></h2>
+
+	<p>Consider</p>
+
+	<pre><code>DSUM(Table1;"Yield";Crit2)</code></pre>
+
+
+	<p>selecting all <code>Apple</code> trees. This could be rewritten to</p>
+
+	<pre><code>_LET( b11: B11;
+    _DFOLD( col: `col0 = `b11; r: 0; xi: `r + `xi; 3; `table ))</code></pre>
+
+
+	<p>Where <code>col:</code> means that the columns in the range are accessible as <code>col0</code>, <code>col1</code>, ..., and the <code>3</code> indicates the column to be summed &#8211; this could also be an expression. Likewise,</p>
+
+	<pre><code>DSUM(Table1;"Yield";Crit5)</code></pre>
+
+
+	<p>would become</p>
+
+	<pre><code>_LET( b11: B11;
+_LET( b12: B12;
+    _DFOLD( col: OR(`col0 = `b11, `col0 = `b12); r: 0; xi: `r + `xi; 3; `table )))</code></pre>
+
+
+	<p>Now, <code>_DFOLD()</code> is the thing that gets compiled to the two helper functions, the matcher and the folder. The normal closure computation is useful for the matcher. We will also need <code>_DREDUCE()</code> for <code>_DMIN()</code> and <code>_DMAX()</code>.</p>
+
+
+	<p>The rewrite rules given above will, of course, have to be implemented in plain Java, not through rewrite templates, as they involve some quite complex logic.</p>
+
+
+	<p>In the first version, I will not try to detect multiple references to the same cell in the criteria.</p>
+
+
+	<h2><a name="pagetoc__6">Comparisons</a></h2>
+
+	<p>Consider</p>
+
+	<pre><code>DSUM(Table1;D22;Crit6)</code></pre>
+
+
+	<p>which has computed criteria. I will support this as long as the computation follows the pattern</p>
+
+	<pre><code>CONCATENATE( "comparison", value )</code></pre>
+
+
+	<p>where <code>comparison</code> must be one of <code>=, &lt;&gt;, &lt;, &lt;=, &gt;, &gt;=</code>. Given the possibility for free form criteria, one might question whether <span class="caps">SEJ</span> has to support this. I believe it is worthwhile, though, because it is a simple extension of the the base criteria support that will likely be more familiar to users than free form criteria.</p>
+
+
+	<p>Criteria computed by <em>any other expression</em> are assumed to mean equality, even if they return a string starting with one of the comparison operators. This is different from Excel and unfortunate, as it means you may get different results without any warning. One possibilty to catch this, at least for numbers, would be to analyze the type of the referenced cell. If it&#8217;s a string used for a numeric column, <span class="caps">SEJ</span> might reject it.</p>
+
+
+	<h2><a name="pagetoc__7">Missing Things</a></h2>
+<ul>
+	<li>Wildcards with = (<code>=?u*</code>)</li>
+	<li>String searches are prefix searches</li>
+	<li>String searches are case-insensitive</li>
+	<li>Test free-form criteria with missing label</li>
+	<li><span class="caps">DSUM</span> needs shaped arguments. However, <span class="caps">SEJ</span> currently does not support dynamic sections in shaped arguments.</li>
+</ul>
+
+<ul>
+	<li>Maybe rewrite to two ranges, one for all used criteria, one for the data. Might even rewrite to n ranges for all used cols.</li>
+</ul>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Database Functions</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">General Remarks</a></li><li><a href="#pagetoc__2">Base Data</a></li><li><a href="#pagetoc__3">Simple Sum</a></li><li><a href="#pagetoc__4">Section Sum</a></li><li><a href="#pagetoc__5">Conditional Fold</a></li><li><a href="#pagetoc__6">Comparisons</a></li><li><a href="#pagetoc__7">Missing Things</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

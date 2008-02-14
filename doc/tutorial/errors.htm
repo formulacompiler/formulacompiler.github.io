@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Compiler Errors - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Compiler Errors</h1>
+
+	<p><span class="caps">AFC</span> does its best to give meaningful error messages which clearly identify both the problem and its source. This document shows the most typical errors, why they occur, and what to do about them.</p>
+
+
+
+	<h2><a name="pagetoc__1">Unreadable .xls Files</a></h2>
+
+	<p><span class="caps">AFC</span> uses <a href="http://jexcelapi.sourceforge.net/">JExcelAPI</a> to read files in Excel&#8217;s .xls format. It may happen that JExcelAPI fails to read the file before <span class="caps">AFC</span> has a chance to look at its contents.</p>
+
+
+	<h5>Hint</h5>
+
+	<p>It sometimes helps to start with a new file, and then selectively copy only the necessary formulas and values over from the old, unreadable one.</p>
+
+
+	<h2><a name="pagetoc__2">Unsupported Functions</a></h2>
+
+	<p>If JExcelAPI has managed to read the file, there may still be elements within it that <span class="caps">AFC</span> cannot handle. The most typical case is that a particular Excel function is not supported at all, meaning <span class="caps">AFC</span> cannot even parse expressions containing it. For example, the <code>INFO</code> function cannot be parsed by <span class="caps">AFC</span>. The function <code>PROPER</code>, while it can be parsed, is still not supported yet. However, <span class="caps">AFC</span> is smart enough to accept spreadsheets containing unsupported functions, <em>provided they are not referenced by any output cell</em>.</p>
+
+
+	<h5>Hint</h5>
+
+	<p>You may sometimes be able to substitute a combination of <a href="../reference/index.htm">supported functions</a> for an unsupported one.</p>
+
+
+	<h5>Example</h5>
+
+	<p>The following spreadsheet contains a cell which uses the <code>INFO</code> function in its formula, another cell which references the former cell, and a third cell that whose value does not involve the <code>INFO</code> function at all:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td class="xl-num">859865<br/><span class="xl-exp">=1.0+INFO(B1)</span><br/><span class="xl-name">(Info)</span></td>
+			<td>memused</td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-num">1719730<br/><span class="xl-exp">=A1*2.0</span><br/><span class="xl-name">(ReferencesInfo)</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=1.0+2.0</span><br/><span class="xl-name">(Independent)</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=LEN(LENB(B4))</span><br/><span class="xl-name">(Unsupported)</span></td>
+			<td>hello world</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Binding an output cell to the first cell containing the <code>INFO</code> function results in:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;Info&#34;</span></span> <span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span><span class="j-hl">builder.compile<span class="j-sym">()</span>;</span>
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedExpression e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34; 
+    </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Note that the failure only occurs when comiling the engine. Not when loading the spreadsheet, and not when binding cells. This is due to <span class="caps">AFC</span>&#8217;s lazy expression parser which only parses those expressions in the spreadsheet that are actually referenced by a bound output cell.</p>
+
+
+	<p>Binding the output cell to the second cell, which references the first cell, results in the same error, but note that the message identifies <code>A2</code> as the source of the reference:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;ReferencesInfo&#34;</span></span><span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
+  </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34; 
+    </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
+    </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>However, binding to the third cell, which is independent of the first cell containing the <code>INFO</code> function, works ok:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;Independent&#34;</span></span><span class="j-sym">)</span>;
+SaveableEngine engine = builder.compile<span class="j-sym">()</span>;
+MyFactory factory = <span class="j-sym">(</span>MyFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+MyComputation computation = factory.newComputation<span class="j-sym">( </span><span class="j-key">new </span>MyInputs<span class="j-sym">() )</span>;
+<span class="j-hl">assertEquals<span class="j-sym">( </span><span class="j-num">3</span>, computation.result<span class="j-sym">() )</span>;</span></pre>
+
+
+	<p>The final example shows the error message for a parseable, but unsupported function (<code>PROPER</code>):</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;Unsupported&#34;</span></span><span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Function LENB is not supported for double engines.&#34;</span></span>
+    + <span class="j-hl"><span class="j-str">&#34;\nIn expression LEN(  &gt;&gt; LENB( B4 ) &lt;&lt;  ); error location indicated by &gt;&gt;..&lt;&lt;.&#34;</span></span>
+    + <span class="j-str">&#34;\nCell containing expression is A4.&#34;
+    </span>+ <span class="j-str">&#34;\nReferenced by cell A4.&#34;</span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h2><a name="pagetoc__3">Unsupported Function Variants</a></h2>
+
+	<p>You may also encounter functions that are supported, but not with all possible variants of argument lists. For example, <span class="caps">AFC</span> currently does not support the <code>MATCH</code> function when its last argument (the match type) is bound to an input variable.</p>
+
+
+	<h5>Hint</h5>
+
+	<p>You may sometimes be able to work around such limitations by using <code>IF</code>.</p>
+
+
+	<h5>Example</h5>
+
+	<p>Consider the following spreadsheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=1.0+MATCH(B1,C1:E1,F1)</span><br/><span class="xl-name">(Bad)</span></td>
+			<td class="xl-num">20<br/><span class="xl-name">(LookedFor)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">20</td>
+			<td class="xl-num">30</td>
+			<td class="xl-num">4<br/><span class="xl-name">(Type)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-num">6<br/><span class="xl-exp">=A1*2.0</span><br/><span class="xl-name">(ReferencesBad)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+<br/><span class="xl-r1">A4:A4</span> <span class="xl-name">(Unsupported)</span>
+
+
+	<p>If we bind the output to <em>Bad</em> and make <em>Type</em> an input, then <span class="caps">AFC</span> will throw an error:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;Bad&#34;</span></span> <span class="j-sym">)</span>;
+<span class="j-hl">bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;Type&#34; </span><span class="j-sym">)</span>;</span>
+<span class="j-key">try </span><span class="j-sym">{
+  </span><span class="j-hl">builder.compile<span class="j-sym">()</span>;</span>
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedExpression e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;The last argument to MATCH, the match type, must be constant, but is MyInputs.value().&#34;
+      </span>+ <span class="j-str">&#34;\nIn expression (1.0 + MATCH( B1, C1:E1,  &gt;&gt; F1 &lt;&lt;  )); error location indicated by &gt;&gt;..&lt;&lt;.&#34;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34; </span>+ <span class="j-str">&#34;\nReferenced by cell A1.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The same happens if we bind the output to <em>ReferencesBad</em> and make <em>Type</em> an input, but again notice how the referencing cell is identified:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;ReferencesBad&#34;</span></span> <span class="j-sym">)</span>;
+bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;Type&#34; </span><span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
+  </span>String err = <span class="j-str">&#34;The last argument to MATCH, the match type, must be constant, but is MyInputs.value().&#34;
+      </span>+ <span class="j-str">&#34;\nIn expression (1.0 + MATCH( B1, C1:E1,  &gt;&gt; F1 &lt;&lt;  )); error location indicated by &gt;&gt;..&lt;&lt;.&#34;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34; </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h2><a name="pagetoc__4">Unsupported Data Type Conversions</a></h2>
+
+	<p><span class="caps">AFC</span> supports a wide range of <a href="type_conversion.htm">automatic data type conversions</a> when obtaining and returning values. Some, however, do not make sense. <span class="caps">AFC</span> will not, for example, automatically try to convert string-typed expressions to numeric return values.</p>
+
+
+	<h5>Hint</h5>
+
+	<p>Change the data types in your interface to <span class="caps">AFC</span> to fix such problems. If this interface is a given (ie. dictated by some other component), then you may have to create a fa�ade on top of an internal interface used for <span class="caps">AFC</span>.</p>
+
+
+	<h5>Example 1</h5>
+
+	<p>Consider the following sheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td>hello world!<br/><span class="xl-exp">=LOWER(B1)</span><br/><span class="xl-name">(stringOutput)</span></td>
+			<td>Hello WORLD!<br/><span class="xl-name">(stringInput)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-num">60<br/><span class="xl-exp">=B2*2.0</span><br/><span class="xl-name">(numOutput)</span></td>
+			<td class="xl-num">30<br/><span class="xl-name">(numInput)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>If we bind the cell <em>stringOutput</em> to an <code>int</code> method,</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>MyComputation
+<span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-typ">int </span>result<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>we get the following exception:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;stringOutput&#34;</span></span><span class="j-sym">)</span>;
+bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;stringInput&#34; </span><span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedDataType e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Cannot convert from a string to a int.&#34;
+      </span>+ <span class="j-str">&#34;\nCaused by return type of input 'public abstract int org.formulacompiler.tutorials.ErrorUnsupportedConversionToOutput$MyComputation.result()'.&#34;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
+      </span>+ <span class="j-str">&#34;\nReferenced by cell A1.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>(Note that binding <em>stringInput</em> to an <code>int</code> works as <span class="caps">AFC</span> does automatically convert from <code>int</code> to <code>String</code>.)</p>
+
+
+	<h5>Example 2</h5>
+
+	<p>If we bind the cell <em>numInput</em> to a <code>String</code> method,</p>
+
+	<pre class="java"><span class="j-key">public static class </span>MyInputs
+<span class="j-sym">{
+  </span><span class="j-key">public </span>String value<span class="j-sym">()
+  {
+    </span><span class="j-key">return </span><span class="j-str">&#34;Hello, world!&#34;</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>we get the following exception:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;numOutput&#34;</span></span> <span class="j-sym">)</span>;
+bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;numInput&#34; </span><span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedDataType e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Cannot convert from a java.lang.String to a double.&#34;
+      </span>+ <span class="j-str">&#34;\nCaused by return type of input 'public java.lang.String org.formulacompiler.tutorials.ErrorUnsupportedConversionFromInput$MyInputs.value()'.&#34;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is B2.&#34; </span>+ <span class="j-str">&#34;\nReferenced by cell B2.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>(Note that binding <em>numOutput</em> to an <code>int</code> again works as <span class="caps">AFC</span> does automatically convert from <code>int</code> to <code>String</code>.)</p>
+
+
+	<h2><a name="pagetoc__5">Improper Inner Section References</a></h2>
+
+	<p><span class="caps">AFC</span> supports <a href="repeatingsections.htm">repeating sections</a> of dynamic width or height. These can even be nested. However, outer sections may only reference inner sections as range arguments to functions &#8211; otherwise it would not be clear which element is meant to be accessed. Inner sections may, of course, reference outer cells as simple values. In addition, the range arguments must always cover the full variable extent (width or height) of the inner section.</p>
+
+
+	<h5>Hint</h5>
+
+	<p>Do reference a section cell directly. Use an aggregator like <code>SUM()</code> over the <em>entire</em> section column (for vertically repeating sections) or row (for horizontally repeating sections) instead.</p>
+
+
+	<h5>Examples</h5>
+
+	<p>Consider the following sheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><b>Vertically repeating section:</b></td>
+			<td><b>Name</b></td>
+			<td><b>Value</b></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td></td>
+			<td class="xl-r2">One</td>
+			<td class="xl-num xl-r3">1</td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td></td>
+			<td class="xl-r2">Two</td>
+			<td class="xl-num xl-r3">2</td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td class="xl-r2">Three</td>
+			<td class="xl-num xl-r3">3</td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td><b>This works:</b></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td>Aggregate entire column</td>
+			<td class="xl-num">6<br/><span class="xl-exp">=SUM(C2:C4)</span><br/><span class="xl-name">(GoodRef)</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td><b>This is an error:</b></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td>No aggregation</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=C2</span><br/><span class="xl-name">(BadRef)</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td>Not entire column (end bad)</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=SUM(C2:C3)</span><br/><span class="xl-name">(BadRange1)</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td>Not entire column (start bad)</td>
+			<td class="xl-num">5<br/><span class="xl-exp">=SUM(C3:C4)</span><br/><span class="xl-name">(BadRange2)</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">13</td>
+			<td>Not entire column (both bad)</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=SUM(C3:C3)</span><br/><span class="xl-name">(BadRange3)</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">14</td>
+			<td>Not entire column (single cell)</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=SUM(C3)</span><br/><span class="xl-name">(BadRange4)</span></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+<br/><span class="xl-r1">B2:B4</span> <span class="xl-name">(Name)</span><br/><span class="xl-r2">B2:C4</span> <span class="xl-name">(Section)</span><br/><span class="xl-r3">C2:C4</span> <span class="xl-name">(Value)</span>
+
+
+	<p>The range <em>Section</em> is bound as a repeating section, as follows:</p>
+
+	<pre class="java">Range range = sheet.getRange<span class="j-sym">( </span><span class="j-str">&#34;Section&#34; </span><span class="j-sym">)</span>;
+Section section = root.defineRepeatingSection<span class="j-sym">( </span>range, Orientation.REPEAT_ROWS, <span class="j-str">&#34;section&#34;</span>, MyElement.class, null,   <span class="j-key">null </span><span class="j-sym">)</span>;
+section.defineInputCell<span class="j-sym">( </span>sheet.getRange<span class="j-sym">( </span><span class="j-str">&#34;Name&#34; </span><span class="j-sym">)</span>.getTopLeft<span class="j-sym">()</span>, <span class="j-str">&#34;name&#34; </span><span class="j-sym">)</span>;
+section.defineInputCell<span class="j-sym">( </span>sheet.getRange<span class="j-sym">( </span><span class="j-str">&#34;Value&#34; </span><span class="j-sym">)</span>.getTopLeft<span class="j-sym">()</span>, <span class="j-str">&#34;value&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<h5>This works</h5>
+
+	<p>Binding the cell <em>GoodRef</em> yields</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;GoodRef&#34;</span></span> <span class="j-sym">)</span>;
+Engine engine = builder.compile<span class="j-sym">()</span>;
+MyFactory factory = <span class="j-sym">(</span>MyFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+MyComputation computation = factory.newComputation<span class="j-sym">( </span><span class="j-key">new </span>MyInputs<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-num">4 </span>+ <span class="j-num">5 </span>+ <span class="j-num">6 </span>+ <span class="j-num">7</span>, computation.result<span class="j-sym">() )</span>;</pre>
+
+
+	<h5>Bad cell ref</h5>
+
+	<p>If, on the other hand, we bind the cell <em>BadRef</em> to an output, we get</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;BadRef&#34;</span></span> <span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;C2 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell B10.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h5>Bad ranges</h5>
+
+	<p>Binding the cells with range specifications that don&#8217;t fully cover the height of the section also results in an error:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;BadRange1&#34;</span></span> <span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;C2:C3 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell B11.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;BadRange2&#34;</span></span> <span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;C3:C4 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell B12.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;BadRange3&#34;</span></span> <span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;C3 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell B13.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h5>Bad cell sum</h5>
+
+	<p>Using a sum over a single cell in the section does not work either:</p>
+
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;BadRange4&#34;</span></span> <span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>builder.compile<span class="j-sym">()</span>;
+  fail<span class="j-sym">()</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;C3 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell B14.&#34;</span></span>;
+  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Compiler Errors</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Unreadable .xls Files</a></li><li><a href="#pagetoc__2">Unsupported Functions</a></li><li><a href="#pagetoc__3">Unsupported Function Variants</a></li><li><a href="#pagetoc__4">Unsupported Data Type Conversions</a></li><li><a href="#pagetoc__5">Improper Inner Section References</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

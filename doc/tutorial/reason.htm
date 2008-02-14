@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Life Before the Abacus Formula Compiler - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Life Before the Abacus Formula Compiler</h1>
+
+	<p>Let&#8217;s assume we are doing a typical order processing application. This application needs to compute a rebate for every line item entered. The rebate computation is currently hard-wired as follows:</p>
+
+	<pre class="java"><span class="j-typ">double </span>computeRebate<span class="j-sym">()
+{
+  </span>Date orderDate = getOrder<span class="j-sym">()</span>.getDate<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>customerRebate = getOrder<span class="j-sym">()</span>.getCustomer<span class="j-sym">()</span>.getStandardRebate<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>articleRebate = getArticle<span class="j-sym">()</span>.getSpecialRebateValidOn<span class="j-sym">( </span>orderDate <span class="j-sym">)</span>;
+  <span class="j-key">return </span>Math.max<span class="j-sym">( </span>customerRebate, articleRebate <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Customers, however, have long been clamoring for a more flexible rebating scheme. Problem is, no two customers want it done the same way. So, in essence, we need to be able to replace the rebate computation with a specific version <em>for nearly each customer</em>!</p>
+
+
+	<p>Management decides that it is too expensive to accommodate all customers, but they do want to make an effort for some key accounts.</p>
+
+
+
+	<h2><a name="pagetoc__1">Strategy Pattern</a></h2>
+
+	<p>We duly refactor the application to make the rebate computation replaceable by introducing a <em>rebate computation strategy</em>:</p>
+
+	<pre class="java"><span class="j-key">public static abstract class </span>RebateComputation
+<span class="j-sym">{
+  </span><span class="j-key">static </span>RebateComputationFactory factory = <span class="j-key">new </span>StandardRebateComputationFactory<span class="j-sym">()</span>;
+
+  <span class="j-key">static </span>RebateComputation newInstance<span class="j-sym">( </span>RebateInputs _inputs <span class="j-sym">)
+  {
+    </span><span class="j-key">return </span>factory.newInstance<span class="j-sym">( </span>_inputs <span class="j-sym">)</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">protected final </span>RebateInputs inputs;
+
+  <span class="j-key">public </span>RebateComputation<span class="j-sym">( </span>RebateInputs _inputs <span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">()</span>;
+    <span class="j-key">this</span>.inputs = _inputs;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public abstract </span><span class="j-typ">double </span>getRebate<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span><span class="j-key">public static abstract class </span>RebateComputationFactory
+<span class="j-sym">{
+  </span><span class="j-key">public abstract </span>RebateComputation newInstance<span class="j-sym">( </span>RebateInputs _inputs <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>With this, the rebate computation on the line item becomes:</p>
+
+	<pre class="java"><span class="j-typ">double </span>computeRebate<span class="j-sym">()
+{
+  </span>RebateInputs inputs = <span class="j-key">new </span>RebateInputsAdaptor<span class="j-sym">( </span><span class="j-key">this </span><span class="j-sym">)</span>;
+  RebateComputation comp = RebateComputation.newInstance<span class="j-sym">( </span>inputs <span class="j-sym">)</span>;
+  <span class="j-key">return </span>comp.getRebate<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>To properly decouple the computations from changes to the line item model, we define an interface, <code>RebateInputs</code>, through which the computations access the line item:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>RebateInputs
+<span class="j-sym">{
+  </span><span class="j-typ">int </span>getCustomerCategory<span class="j-sym">()</span>;
+  <span class="j-typ">int </span>getArticleCategory<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getCustomerRebate<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getArticleRebate<span class="j-sym">()</span>;
+  Date getOrderDate<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>which is implemented by a simple adaptor class accessing the actual line item in question.</p>
+
+
+	<p>Now we write the specific implementations of <code>RebateComputation</code> for the standard case and our two key accounts and, depending on the program settings, register the appropriate one for use by <code>newInstance</code> above during startup. Here&#8217;s the standard implementation:</p>
+
+	<pre class="java"><span class="j-key">static class </span>StandardRebateComputation <span class="j-key">extends </span>RebateComputation
+<span class="j-sym">{
+  </span><span class="j-key">public </span>StandardRebateComputation<span class="j-sym">( </span>RebateInputs _inputs <span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">( </span>_inputs <span class="j-sym">)</span>;
+  <span class="j-sym">}
+
+  </span>@Override
+  <span class="j-key">public </span><span class="j-typ">double </span>getRebate<span class="j-sym">()
+  {
+    </span><span class="j-key">return </span>Math.max<span class="j-sym">( </span><span class="j-key">this</span>.inputs.getCustomerRebate<span class="j-sym">()</span>, <span class="j-key">this</span>.inputs.getArticleRebate<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="pagetoc__2">External Customization</a></h2>
+
+	<p>With the decoupling in place, we realize that we could even open up rebate customization to selected distribution partners. Those, in fact, whom we trust to write Java code to our rebate computation interface specs.</p>
+
+
+	<p>Alas, there are hardly any of those. Still, the few there are now can:</p>
+
+<ul>
+	<li>write their own implementation of the <code>RebateComputation</code> class,</li>
+	<li>compile it, and</li>
+	<li>register the resulting .class file with our application.</li>
+</ul>
+
+	<p>All we need to do is add a little magic that makes <code>newInstance</code> load and use the registered .class file.</p>
+
+
+	<h2><a name="pagetoc__3">Not Good Enough!</a></h2>
+
+	<p>This, however, still leaves the majority of our customers dissatisfied, with hardly a distributor capable of helping them. And we have opened up a potential security hole in that the system now loads and runs customer-supplied class files.</p>
+
+
+	<p>This kind of problem is where <span class="caps">AFC</span> really shines. In the next section, I show you how to make an application customizable using computation defined in spreadsheets &#8211; something even savvy users know how to do!</p>
+
+
+	<p><a href="basics.htm">Next: <span class="caps">AFC</span> to the rescue!</a></p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Life Before the Abacus Formula Compiler</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Strategy Pattern</a></li><li><a href="#pagetoc__2">External Customization</a></li><li><a href="#pagetoc__3">Not Good Enough!</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Automated Formula Tests - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Automated Formula Tests</h1>
+
+	<p>The spreadsheet files in</p>
+
+	<pre class="j-path">components<span class="j-pathsep">/</span>system<span class="j-pathsep">/</span>src<span class="j-pathsep">/</span>test-reference<span class="j-pathsep">/</span>data<span class="j-pathsep">/</span>org<span class="j-pathsep">/</span>formulacompiler<span class="j-pathsep">/</span>tests<span class="j-pathsep">/</span>reference</pre>
+
+
+	<p>contain formula tests. <span class="caps">AFC</span>&#8217;s build system runs them automatically for all the supported <a href="../../doc/tutorial/numeric_type.htm">numeric types</a> and with and without <a href="../../doc/tutorial/caching.htm">caching</a> enabled. It also makes them citable by writing out documentation fragments describing them.</p>
+
+
+
+	<h2><a name="pagetoc__1">Example</a></h2>
+
+	<p>Here are the tests for <code>ABS()</code>:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+			<td>J</td>
+			<td>K</td>
+			<td>L</td>
+			<td>M</td>
+			<td>N</td>
+			<td>O</td>
+			<td>P</td>
+			<td>Q</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Expected</span><br/><span class="xl-exp">=IF(Q1,"Expected","FAILED!")</span></td>
+			<td><span style="text-decoration: underline;">Actual</span></td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><span style="text-decoration: underline;"># of Inputs</span></td>
+			<td><span style="text-decoration: underline;">Name</span></td>
+			<td><span style="text-decoration: underline;">Highlight</span></td>
+			<td><span style="text-decoration: underline;">Excel says</span></td>
+			<td><span style="text-decoration: underline;">Skip for</span></td>
+			<td><span style="text-decoration: underline;">Custom check</span></td>
+			<td></td>
+			<td><span style="text-decoration: underline;">true</span><br/><span class="xl-exp">=AND(Q2:Q10000)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=ABS(C2)</span></td>
+			<td class="xl-num">-1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td>ABS</td>
+			<td>ABS</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td class="xl-num">0</td>
+			<td class="xl-num">0<br/><span class="xl-exp">=ABS(C3)</span></td>
+			<td class="xl-num">0</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=ABS(C4)</span></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=ABS(C5)</span></td>
+			<td class="xl-num">-2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=ABS(C6)</span></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td class="xl-num">0</td>
+			<td class="xl-num">0<br/><span class="xl-exp">=ABS(C7)</span></td>
+			<td>false</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=ABS(C8)</span></td>
+			<td>true</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=ABS(C9)</span></td>
+			<td class="xl-num">-3</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td class="xl-num">4</td>
+			<td class="xl-num">4<br/><span class="xl-exp">=ABS(C10)</span></td>
+			<td class="xl-num">-4</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">1</td>
+			<td>...</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>And here is <a href="../../doc/reference/numfuncs.htm">the documentation produced from it</a>. Note also how the list of supported functions in the <a href="../../doc/reference/index.htm">reference index</a> automatically includes <code>ABS</code>.</p>
+
+
+	<p>The omitted columns O-Q are macro-generated. They check that the expected and actual values really do match, which is then globally ascertained in the header. Here&#8217;s one row of them:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>O</td>
+			<td>P</td>
+			<td>Q</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">2</td>
+			<td></td>
+			<td>true<br/><span class="xl-exp">=OR(ISBLANK(B2),IF(ISERROR(B2),ERROR.TYPE(B2)=IF(ISBLANK(M2),ERROR.TYPE(A2),ERROR.TYPE(M2)),IF(ISBLANK(M2),AND(NOT(ISBLANK(A2)),A2=B2),B2=M2)))</span></td>
+			<td>true<br/><span class="xl-exp">=IF(ISBLANK(O2),IF(ISERROR(P2),false,P2),O2)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<h2><a name="pagetoc__2">Columns</a></h2>
+
+	<p>This spreadsheet has one row per test case. Blank rows are ignored. The columns have the following meanings. As examples, just look at what I inserted for the <code>ABS()</code> tests in the sheet above.</p>
+
+
+<dl>
+<dt>Expected (A)</dt><dd>Holds the expected result of the computation. You should always fill this cell by copying the value from column B, and then pasting it to column A using <em>Paste Special &rarr; Values Only</em>.</dd>
+
+<dt>Actual (B)</dt><dd>Holds the formula to be computed by <span class="caps">AFC</span>. It may reference constant values and any other cell. Normally, it references adjacent cells in columns C through I.</dd>
+
+<dt>Inputs (C-I)</dt><dd>Typically holds input values to the formula.</dd>
+
+<dt># of Inputs (J)</dt><dd>The number of cells in C-I which <span class="caps">AFC</span> should bind to input methods. This is indicated by a conditionally formatted green background on those cells in Excel. When a cell is bound, it still returns the value that is given for it in the sheet, so the expected result remains valid.</dd>
+
+<dt>Name (K)</dt><dd>The name of feature being tested and documented. Used as a subtitle in the generated documentation. Following rows with no name in this column are considered to be part of the last name&#8217;s tests. (See below for the meaning of <code>...</code> here.)</dd>
+
+<dt>Highlight (L)</dt><dd>A substring that should be highlighted in the formula as rendered in the generated documentation. Subsequent rows with nothing in this column reuse the last value. Putting <code>xx</code> into the column clears the highlighting. You can add more than one substring, separated by spaces. The first such substring is automatically added to the list of supported functions in the <a href="../../doc/reference/index.htm">reference index</a>.</dd>
+
+<dt>Excel says (M)</dt><dd>When <span class="caps">AFC</span> returns something different from Excel, you can document it here. This will be cited in the user documentation. Typical usage is when <span class="caps">AFC</span> returns 0, but Excel returns an error like <code>#NUM!</code>. You should then set this column to <code>'#NUM!</code> (note the tick at the start).</dd>
+
+<dt>Skip for (N)</dt><dd>If this column contains any of <code>double</code>, <code>big</code>, <code>long</code>, then the test is <em>not</em> run for the corresponding numeric type. You can list multiple types here. Use this when, for example, the precision of <code>long</code> is not sufficient for a particular test case.</dd>
+
+<dt>Custom Check (O)</dt><dd>Can contain an expression to replace the default comparison of actual vs. expected values in column P. You should not normally have to use this.</dd>
+
+<dt>(P)</dt><dd>Default comparison of actual vs. expected value. The formula in this column is macro-generated in Excel (see below) and checked by the reference test runner.</dd>
+
+<dt>(Q)</dt><dd>Result of comparison of actual vs. expected value. The formula in this column is macro-generated in Excel (see below) and checked by the reference test runner. The reference test runner also checks that it does, in fact, have the saved value <code>true</code>. So is the formula and saved value of cell Q1.</dd>
+</dl>
+
+	<h2><a name="pagetoc__3">Alternate Inputs</a></h2>
+
+	<p>When you specify bound input cells using column J, the automated test runner automatically runs the formula with all possible combinations of bound and unbound input values. This ensures that the runtime and compile time (constant folder) implementations work for all combinations.</p>
+
+
+	<p>These tests do not, however, check whether a bound input really reacts dynamically to its runtime input value. The dynamic input value is, after all, still the same as the constant values in the spreadsheet. This is so because the result has to remain the same for checking.</p>
+
+
+	<p>To check alternate input sets, you use the value <code>...</code> in the <em>Name</em> column K. This runs the test in the above row again, with the full set of inputs bound. The dynamic values are now taken from the alternate row instead of the original test row. So is the expected result. The formula in the alternate row, however, is ignored (because the original test row is run). While the formula is ignored by the test, you should still copy it down from the original test row to conveniently determine the expected result of the alternate row. The last test row for <code>ABS()</code> in the sheet above shows this. Finally, you can have more than one alternate row. Just add more rows with <code>...</code> in the <em>Name</em> column.</p>
+
+
+	<h2><a name="pagetoc__4">Macro-generated Columns</a></h2>
+
+	<p>There is an Excel macro</p>
+
+	<pre class="j-path">components<span class="j-pathsep">/</span>system<span class="j-pathsep">/</span>src<span class="j-pathsep">/</span>test-reference<span class="j-pathsep">/</span>scripts<span class="j-pathsep">/</span>refTestSheets.bas</pre>
+
+
+	<p>that can generate and refresh</p>
+
+<ul>
+	<li>the actual vs. expected columns P and Q,</li>
+	<li>the header row,</li>
+	<li>the conditional formatting that highlights actual vs. expected problems, and</li>
+	<li>the conditional formatting that highlights <span class="caps">AFC</span> vs. Excel differences (<em>Excel says</em>).</li>
+</ul>
+
+	<p>To install a macro for Microsoft Excel:</p>
+
+<ul>
+	<li>Create a new file <code>Macros.xls</code> (or any other name) in <code>%APPDATA%\Microsoft\Excel\XLSTART</code>. (On Windows XP, <code>%APPDATA%</code> is usually <code>C:\Documents and Settings\%USERNAME%\Application Data</code>.)</li>
+</ul>
+
+<ul>
+	<li>With the new file open, start the Visual Basic Editor (Tools &rarr; Macro &rarr; Visual Basic Editor).</li>
+</ul>
+
+<ul>
+	<li>Import the macro source file (File &rarr; Import File), for example <code>refTestSheets.bas</code>.</li>
+</ul>
+
+<ul>
+	<li>Save the new .xls file you created.</li>
+</ul>
+
+	<p>This file will now be opened automatically whenever you run Excel and make the macros available. To run such a macro:</p>
+
+<ul>
+	<li>Open a workbook with reference test data.</li>
+	<li>Run <code>ForceAllFormatsAndColumns</code> macro (Tools &rarr; Macro &rarr; Macros).</li>
+</ul>
+
+	<h2><a name="pagetoc__5">Running Tests</a></h2>
+
+	<p>Every formula test sheet corresponds to an entry in a test class in</p>
+
+	<pre><code>compononents/system/src/test-reference/java/org.formulacompiler.tests.reference</code></pre>
+
+
+	<p>For the sheet <code>NumericFunctions.xls</code>, for example, we need to run the test class <code>Basics</code>, which looks like this:</p>
+
+	<pre class="java"><span class="j-key">public static </span>Test suite<span class="j-sym">() </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span><span class="j-key">return </span>sheetSuite<span class="j-sym">( </span><span class="j-str">&#34;CellNames&#34;</span>, <span class="j-str">&#34;EmptyCells&#34;</span>, <span class="j-str">&#34;ErrorCells&#34;</span>, <span class="j-str">&#34;NumericOperators&#34;</span>, <span class="j-str">&#34;NumericComparisons&#34;</span>,
+      <span class="j-str">&#34;NumericFunctions&#34; </span><span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h2><a name="debug">Debug Test</a></h2>
+
+	<p>Running these tests can take quite a while. To speed up debugging, you can use special test cases derived from <code>org.formulacompiler.tests.reference.base.AbstractDebugSuiteSetup</code> in your <span class="caps">IDE</span>. Make sure you have added the following source path for this (not included in release builds):</p>
+
+	<pre class="j-path">components<span class="j-pathsep">/</span>system<span class="j-pathsep">/</span>src<span class="j-pathsep">/</span>test-reference<span class="j-pathsep">/</span>java-debug</pre>
+
+
+	<p>and also create your derived debug test cases there, in the <code>org.formulacompiler.tests.reference</code> package. Then they will be automatically ignored by Mercurial.</p>
+
+
+	<p>Here is an excerpt from this base test class. It should give you an idea of how to use it. It is also documented.</p>
+
+	<pre class="java"><span class="j-jdoc">/**
+ * Returns a suite that runs a single sheet for the number type double and with no caching.
+ * </span><span class="j-jdoc-html">&lt;p&gt;
+ </span><span class="j-jdoc">* See here how to build such a test runs: {@.jcite -- sheetImpl}.
+ * 
+ * </span><span class="j-jdoc-key">@param </span><span class="j-jdoc">_fileName is the base name of the file without path or extension.
+ */
+</span><span class="j-key">public static </span>Test dbgSheetSuite<span class="j-sym">( </span>String _fileName <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span><span class="j-cmt">// DO NOT REFORMAT BELOW THIS LINE
+  // -- sheetImpl
+  </span><span class="j-key">return </span>dbgSuiteBuilder<span class="j-sym">( </span>_fileName <span class="j-sym">)
+      </span><span class="j-cmt">// ... You could configure aspects here.
+      </span>.suite<span class="j-sym">()</span>;
+  <span class="j-cmt">// -- sheetImpl
+  // DO NOT REFORMAT ABOVE THIS LINE
+</span><span class="j-sym">}
+
+</span><span class="j-jdoc">/**
+ * Returns a suite that runs a single row's engine for the given number type and no caching.
+ * </span><span class="j-jdoc-html">&lt;p&gt;
+ </span><span class="j-jdoc">* See here how to build such a test runs: {@.jcite -- rowImpl}.
+ * 
+ * </span><span class="j-jdoc-key">@param </span><span class="j-jdoc">_fileName is the base name of the file without path or extension.
+ * </span><span class="j-jdoc-key">@param </span><span class="j-jdoc">_rowNumber is the 1-based row number for which to compile and run an engine.
+ * </span><span class="j-jdoc-key">@param </span><span class="j-jdoc">_numberType is the numeric type to use.
+ */
+</span><span class="j-key">public static </span>Test dbgRowSuite<span class="j-sym">( </span>String _fileName, <span class="j-typ">int </span>_rowNumber, BindingType _numberType <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span><span class="j-cmt">// DO NOT REFORMAT BELOW THIS LINE
+  // -- rowImpl
+  </span><span class="j-key">return </span>dbgSuiteBuilder<span class="j-sym">( </span>_fileName <span class="j-sym">)
+      </span>.row<span class="j-sym">( </span>_rowNumber <span class="j-sym">)
+      </span>.numberType<span class="j-sym">( </span>_numberType <span class="j-sym">)
+      </span><span class="j-cmt">// ... You could go on configuring more aspects here.
+      </span>.suite<span class="j-sym">()</span>;
+  <span class="j-cmt">// -- rowImpl
+  // DO NOT REFORMAT ABOVE THIS LINE
+</span><span class="j-sym">}
+
+</span><span class="j-jdoc">/**
+ * Returns a suite that runs a single row's engine for all number types and caching variants.
+ * </span><span class="j-jdoc-html">&lt;p&gt;
+ </span><span class="j-jdoc">* See here how to customize such complex test runs: {@.jcite -- fullRowImpl}.
+ * 
+ * </span><span class="j-jdoc-key">@param </span><span class="j-jdoc">_fileName is the base name of the file without path or extension.
+ * </span><span class="j-jdoc-key">@param </span><span class="j-jdoc">_rowNumber is the 1-based row number for which to compile and run an engine.
+ * 
+ * </span><span class="j-jdoc-key">@see </span><span class="j-jdoc">#dbgSuite(AbstractSetup)
+ * </span><span class="j-jdoc-key">@see </span><span class="j-jdoc">BuilderSetup
+ */
+</span><span class="j-key">public static </span>Test dbgFullRowSuite<span class="j-sym">( </span>String _fileName, <span class="j-key">final </span><span class="j-typ">int </span>_rowNumber <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+<span class="j-sym">{
+  </span><span class="j-cmt">// -- fullRowImpl
+  </span><span class="j-key">return </span>dbgSuite<span class="j-sym">( </span><span class="j-key">new </span>AllNumberTypesSetup<span class="j-sym">( </span><span class="j-key">new </span>AllCachingVariantsSetup<span class="j-sym">( </span><span class="j-key">new </span>BuilderSetup<span class="j-sym">( </span>_fileName <span class="j-sym">)
+  {
+    </span>@Override
+    <span class="j-key">protected </span><span class="j-typ">void </span>configure<span class="j-sym">( </span>SheetSuiteBuilder _builder <span class="j-sym">)
+    {
+      </span>_builder.row<span class="j-sym">( </span>_rowNumber <span class="j-sym">)</span>;
+      <span class="j-cmt">// ... You could go on configuring more aspects here.
+    </span><span class="j-sym">}
+  } ) ) )</span>;
+  <span class="j-cmt">// -- fullRowImpl
+</span><span class="j-sym">}</span></pre>
+
+
+	<h2><a name="pagetoc__7">Checking Compatibility with OpenOffice.org</a></h2>
+
+	<p><span class="caps">AFC</span>&#8217;s reference tests check compatibility with OpenOffice.org as follows:</p>
+
+<ul>
+	<li>For every test row in an Excel reference test sheet (<code>MySheet.xls</code>),</li>
+	<li>read the corresponding row from the parallel OpenOffice.org test sheet (<code>MySheet.ods</code>), and</li>
+	<li>ensure that the tests described by the two rows are equivalent.</li>
+	<li>Then compile and run an actual engine only from the row loaded from the .xls.</li>
+</ul>
+
+	<p>This means that when you add or modify reference tests in a .xls file, you have to similarly update the corresponding .ods file.</p>
+
+
+	<p>These tests ensure that the .ods parser is at least as capable as the .xls parser and returns the same internal model (and by consequence the same final engine). But since we do not yet compile engines loaded from .ods differently than when loaded from .xls, we don&#8217;t have to run the actual compilations twice. This will change when <span class="caps">AFC</span> properly handles differences between OpenOffice.orgs&#8217;s and Excel&#8217;s function implementations.</p>
+
+
+	<h2><a name="pagetoc__8">Change Tracking Using .yaml Files</a></h2>
+
+	<p>The reference test sheets are a key component in <span class="caps">AFC</span>&#8217;s system tests. So it is important to know what is being changed in them. Since binary .xls and .ods files are hard to diff, the reference tests write the most relevant data from them out to text files during tests runs. These text files are then versioned along with the .xls and .ods files.</p>
+
+
+	<p>The text files end in <code>.yaml</code> because they are in <span class="caps">YAML</span>:-yaml format. But that is not the key point. More important is that they are tuned for easy diffing. In particular, they do not contain row or cell numbers, so that inserting a row high up does not result in a huge number of diffs due to changed row numbers further below.</p>
+
+
+	<p>When possible, we try to use just one .yaml file for both of the .xls and .ods files. This has the added bonus of telling us that the two really contain the same relevant data and formulas. When this is possible, there is just a single <code>MySheet.yaml</code> for both <code>MySheet.xls</code> and <code>MySheet.ods</code>. When it isn&#8217;t, then there is an additional <code>MySheet.ods.yaml</code>. (That there is no <code>MySheet.xls.yaml</code> is a convention, meaning the .xls is the master.)</p>
+
+
+	<p>During test runs, the <span class="caps">YAML</span> text is regenerated from the actual .xls and .ods files. If the text differs from the actual content of the corresponding .yaml file, a file called <code>MySheet.xls-actual.yaml</code> is written out using the new text, and the test fails. To make a test pass again after accepting the change, just delete the old .yaml and move the -actual.yaml in its place.</p>
+
+
+	<p>We chose not to simply overwrite the .yaml files with new content so people are forced to notice when sheets change, even if not running under version control (which would detect the change on the next <code>hg stat</code>). However, if you set <code>test-ref-update-yaml: true</code> in <code>build.properties</code>, then the .yaml files are updated in place and the tests do not fail because of this. The rule is that .xls files update .yaml, unless .xls.yaml exists; .ods files alway update .ods.yaml.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Automated Formula Tests</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Example</a></li><li><a href="#pagetoc__2">Columns</a></li><li><a href="#pagetoc__3">Alternate Inputs</a></li><li><a href="#pagetoc__4">Macro-generated Columns</a></li><li><a href="#pagetoc__5">Running Tests</a></li><li><a href="#debug">Debug Test</a></li><li><a href="#pagetoc__7">Checking Compatibility with OpenOffice.org</a></li><li><a href="#pagetoc__8">Change Tracking Using .yaml Files</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

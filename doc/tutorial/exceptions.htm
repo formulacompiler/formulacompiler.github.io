@@ -1,0 +1,641 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Exceptions Thrown By Computations - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Exceptions Thrown By Computations</h1>
+
+	<p>In spreadsheet applications, error situations are flagged by the affected cells showing special error values, like <code>#VALUE!</code>. This is very much like throwing an exception in Java, so this is what <span class="caps">AFC</span> does in compiled computations.</p>
+
+
+
+	<h2><a name="pagetoc__1">Errors (<code>#VALUE!</code> etc.)</a></h2>
+
+	<p>In <span class="caps">AFC</span>, computations that result in <em>errors</em> like <code>#VALUE!</code>, <code>#NUM!</code>, <code>#DIV/0!</code>, etc. do:</p>
+
+<ul>
+	<li>throw a <code>FormulaException</code> where <span class="caps">AFC</span> tries to give a little more information about the cause of the error in the message,</li>
+	<li>throw Java&#8217;s own <code>ArithmeticException</code>, or</li>
+	<li>return one of Java&#8217;s own <code>Double.POSITIVE_INFINITY</code>, <code>Double.NEGATIVE_INFINITY</code>, or <code>Double.NaN</code>.</li>
+</ul>
+
+	<p>This means <span class="caps">AFC</span> uses Java&#8217;s own arithmetic semantics wherever possible. So when we bind cells from this sheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>Bad number</td>
+			<td>#NUM!<br/><span class="xl-exp">=ASIN(C3)</span></td>
+			<td class="xl-num">2</td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td>Bad value</td>
+			<td>#VALUE!<br/><span class="xl-exp">=CHOOSE(C4,12.0)</span></td>
+			<td class="xl-num">0</td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td>Division by zero</td>
+			<td>#DIV/0!<br/><span class="xl-exp">=1.0/C5</span></td>
+			<td class="xl-num">0</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>B3 yields (using a bunch of test-specific helper methods whose name should make clear what they do &#8211; if not, look at the <code>org.formulacompiler.tutorials.Exceptions</code> test class):</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B3&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C3&#34; </span><span class="j-sym">)</span>;
+<span class="j-cmt">// This works:
+</span>assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">1.0</span>, Math.asin<span class="j-sym">( </span><span class="j-num">1.0 </span><span class="j-sym">) )</span>;
+<span class="j-cmt">// Invalid argument to ASIN() fails with a special return value for doubles:
+</span>assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">2.0</span>, <span class="j-hl">Double.NaN</span> <span class="j-sym">)</span>;
+<span class="j-cmt">// But with an exception for BigDecimals:
+</span>useNumericType<span class="j-sym">( </span>FormulaCompiler.<span class="j-hl">BIGDECIMAL128</span> <span class="j-sym">)</span>;
+assertFailsWhenRunWithInput<span class="j-sym">( </span><span class="j-num">2.0</span>, <span class="j-hl">FormulaException.class</span>, <span class="j-str">&#34;#NUM! (value is NaN)&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>B4, likewise, yields:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B4&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C4&#34; </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">1.0</span>, <span class="j-num">12.0 </span><span class="j-sym">)</span>;
+assertFailsWhenRunWithInput<span class="j-sym">( </span><span class="j-num">0.0</span>, FormulaException.class, <span class="j-str">&#34;#VALUE! because index to CHOOSE is out of range&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>B5 yields:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B5&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C5&#34; </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">1.0</span>, <span class="j-num">1.0 </span><span class="j-sym">)</span>;
+<span class="j-cmt">// Division by zero fails with a special return value for doubles:
+</span>assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">0.0</span>, <span class="j-hl">Double.POSITIVE_INFINITY</span> <span class="j-sym">)</span>;
+<span class="j-cmt">// But with an exception for BigDecimals:
+</span>useNumericType<span class="j-sym">( </span>FormulaCompiler.<span class="j-hl">BIGDECIMAL128</span> <span class="j-sym">)</span>;
+assertFailsWhenRunWithInput<span class="j-sym">( </span><span class="j-num">0.0</span>, ArithmeticException.class, <span class="j-key">null </span><span class="j-sym">)</span>;</pre>
+
+
+	<h5>Compile-time</h5>
+
+	<p>If we compile B3 without any bound inputs, meaning the result will <em>always</em> be <code>#NUM!</code>, <span class="caps">AFC</span> still raises the error when the computation is run, not during compilation of the engine (which in principle it could):</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B3&#34; </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">2.0</span>, <span class="j-hl">Double.NaN</span> <span class="j-sym">)</span>;
+<span class="j-cmt">// The exception for BigDecimals is raised at *runtime*:
+</span>useNumericType<span class="j-sym">( </span>FormulaCompiler.BIGDECIMAL128 <span class="j-sym">)</span>;
+Outputs computation = newOutputs<span class="j-sym">( </span><span class="j-key">null </span><span class="j-sym">)</span>; <span class="j-cmt">// Compilation succeeds.
+</span><span class="j-key">try </span><span class="j-sym">{
+  </span><span class="j-typ">double </span>have = computation.result<span class="j-sym">()</span>; <span class="j-cmt">// Execution fails.
+  </span>fail<span class="j-sym">( </span><span class="j-str">&#34;Exception expected, but got &#34; </span>+ have <span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">catch </span><span class="j-sym">(</span>FormulaException err<span class="j-sym">) {
+  </span>assertEquals<span class="j-sym">( </span><span class="j-str">&#34;#NUM! (value is NaN)&#34;</span>, err.getMessage<span class="j-sym">() )</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h5>Caching</h5>
+
+	<p>If we enable <a href="caching.htm">caching</a>, repeated executions still repeatedly throw the error:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B3&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C3&#34; </span><span class="j-sym">)</span>;
+useNumericType<span class="j-sym">( </span>FormulaCompiler.BIGDECIMAL128 <span class="j-sym">)</span>;
+b.<span class="j-hl">setFullCaching<span class="j-sym">( </span><span class="j-key">true </span><span class="j-sym">)</span></span>;
+Outputs computation = newOutputs<span class="j-sym">( </span><span class="j-key">new </span>ValueInput<span class="j-sym">( </span><span class="j-num">2.0 </span><span class="j-sym">) )</span>;
+<span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i = <span class="j-num">0</span>; i &lt; <span class="j-num">2</span>; i++<span class="j-sym">) {
+  </span><span class="j-key">try </span><span class="j-sym">{
+    </span><span class="j-typ">double </span>have = computation.result<span class="j-sym">()</span>; <span class="j-cmt">// Execution fails repeatedly.
+    </span>fail<span class="j-sym">( </span><span class="j-str">&#34;Exception expected, but got &#34; </span>+ have <span class="j-sym">)</span>;
+  <span class="j-sym">}
+  </span><span class="j-key">catch </span><span class="j-sym">(</span>FormulaException err<span class="j-sym">) {
+    </span>assertEquals<span class="j-sym">( </span><span class="j-str">&#34;#NUM! (value is NaN)&#34;</span>, err.getMessage<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>However, <span class="caps">AFC</span> makes no guarantee that the failure is cached, nor that it always returns the same error instance. But it will always return the same error type and description. In fact, in the current version, <span class="caps">AFC</span> will not cache it but re-compute faulting expression(s) on every access.</p>
+
+
+	<h3><a name="pagetoc__1_1">Error Propagation</a></h3>
+
+	<p>As in spreadsheet applications, errors are propagated to other cells referencing them (which, of course, is what you&#8217;d expect from Java exceptions), so in:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">6</td>
+			<td>Error is propagated</td>
+			<td>#NUM!<br/><span class="xl-exp">=1.0+B3</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>B6, like cell B3 before, yields:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;B6&#34;</span></span> <span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C3&#34; </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">1.0</span>, <span class="j-hl">1.0 + </span>Math.asin<span class="j-sym">( </span><span class="j-num">1.0 </span><span class="j-sym">) )</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">2.0</span>, <span class="j-hl">Double.NaN</span> <span class="j-sym">)</span>;
+useNumericType<span class="j-sym">( </span>FormulaCompiler.<span class="j-hl">BIGDECIMAL128</span> <span class="j-sym">)</span>;
+assertFailsWhenRunWithInput<span class="j-sym">( </span><span class="j-num">2.0</span>, <span class="j-hl">FormulaException.class</span>, <span class="j-str">&#34;#NUM! (value is NaN)&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<h3><a name="pagetoc__1_2">Handling Errors In Expressions</a></h3>
+
+	<p>Errors can be detected and handled in spreadsheet formulas using the <code>ISERR(exp)</code> function, so in:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">7</td>
+			<td>Handle error</td>
+			<td class="xl-num">4712<br/><span class="xl-exp">=1.0+IF(ISERR(B3),4711.0,B3)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>B7 yields:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B7&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C3&#34; </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">1.0</span>, <span class="j-num">1.0 </span>+ Math.asin<span class="j-sym">( </span><span class="j-num">1.0 </span><span class="j-sym">) )</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-hl">2.0</span>, <span class="j-hl">4712</span> <span class="j-sym">)</span>;
+
+<span class="j-cmt">// The above failed when accessing B3 directly.
+</span>useNumericType<span class="j-sym">( </span>FormulaCompiler.<span class="j-hl">BIGDECIMAL128</span> <span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-hl">2.0</span>, <span class="j-hl">4712</span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>which compiles to:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.FormulaException;
+<span class="j-key">import </span>org.formulacompiler.runtime.NotAvailableException;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.tutorials.Exceptions;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, Exceptions.Outputs
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>Exceptions.Inputs $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>Exceptions.Inputs inputs, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = inputs;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-num">1.0 </span>+ <span class="j-sym">(</span>get$3<span class="j-sym">() </span>!= <span class="j-num">0.0 </span>? <span class="j-num">4711.0 </span>: get$1<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>result<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$3<span class="j-sym">() {
+        </span><span class="j-typ">double </span>d;
+        <span class="j-key">try </span><span class="j-sym">{
+            </span><span class="j-typ">double </span>d_0_;
+            d = <span class="j-sym">(</span>Double.isInfinite<span class="j-sym">(</span>d_0_ = get$1<span class="j-sym">()) </span>|| Double.isNaN<span class="j-sym">(</span>d_0_<span class="j-sym">) </span>? <span class="j-num">1.0
+                 </span>: <span class="j-num">0.0</span><span class="j-sym">)</span>;
+        <span class="j-sym">} </span><span class="j-key">catch </span><span class="j-sym">(</span>FormulaException formulaexception<span class="j-sym">) {
+            </span>d = <span class="j-num">1.0</span>;
+        <span class="j-sym">} </span><span class="j-key">catch </span><span class="j-sym">(</span>ArithmeticException arithmeticexception<span class="j-sym">) {
+            </span>d = <span class="j-num">1.0</span>;
+        <span class="j-sym">} </span><span class="j-key">catch </span><span class="j-sym">(</span>NotAvailableException notavailableexception<span class="j-sym">) {
+            </span>d = <span class="j-num">0.0</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span>d;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>Math.asin<span class="j-sym">(</span>get$2<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.value<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h3><a name="pagetoc__1_3">Throwing Errors</a></h3>
+
+	<p>You can also throw your own errors in input getter methods:</p>
+
+	<pre class="java"><span class="j-key">public static final class </span><span class="j-hl">ThrowingInput</span> <span class="j-key">implements </span>Inputs <span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-typ">double </span>value<span class="j-sym">() {
+    </span><span class="j-key">throw new </span><span class="j-hl">FormulaException</span><span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;My error&#34;</span></span> <span class="j-sym">)</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>which yields:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B3&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C3&#34; </span><span class="j-sym">)</span>;
+assertFailsWhenRunWithInput<span class="j-sym">( </span><span class="j-hl">new ThrowingInput<span class="j-sym">()</span></span>, FormulaException.class, <span class="j-hl"><span class="j-str">&#34;My error&#34;</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>You can, in fact, throw any unchecked exception. Throwing checked exceptions is currently not supported (because <span class="caps">AFC</span> would have to make sure that <em>all</em> bound output methods support <em>all</em> of the checked exceptions thrown by any bound input method).</p>
+
+
+	<h2><a name="pagetoc__2">Missing Values (<code>#N/A</code>)</a></h2>
+
+	<p>Spreadsheets also have a special function, <code>NA()</code>, that is similar to throwing an exception in Java code. It returns <code>#N/A</code>, which propagates to other cells like errors. You can also enter #N/A directly in cells, which <span class="caps">AFC</span> also supports. <span class="caps">AFC</span> throws a <code>NotAvailableException</code> when encountering any of these forms of <code>#N/A</code>. So in:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">9</td>
+			<td>Not available using NA()</td>
+			<td>#N/A<br/><span class="xl-exp">=NA()</span></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td>Not available using #N/A</td>
+			<td>#N/A</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">11</td>
+			<td>Not available thrown by getter</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=C11</span></td>
+			<td class="xl-num">1</td>
+		</tr>
+		<tr>
+			<td class="xl-row">12</td>
+			<td>Not available if</td>
+			<td>#N/A<br/><span class="xl-exp">=IF(C12=1.0,NA(),C12)</span></td>
+			<td class="xl-num">1</td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>B9 and <span class="caps">B10</span> yield:</p>
+
+	<pre class="java"><span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>row = <span class="j-num">9</span>; row &lt;= <span class="j-num">10</span>; row++<span class="j-sym">) {
+  </span>setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B&#34; </span>+ row <span class="j-sym">)</span>; <span class="j-cmt">// B9, B10
+  </span>Outputs computation = newOutputs<span class="j-sym">( </span><span class="j-key">null </span><span class="j-sym">)</span>; <span class="j-cmt">// Compilation succeeds.
+  </span><span class="j-key">try </span><span class="j-sym">{
+    </span><span class="j-typ">double </span>have = computation.result<span class="j-sym">()</span>; <span class="j-cmt">// Execution fails.
+    </span>fail<span class="j-sym">( </span><span class="j-str">&#34;Exception expected, but got &#34; </span>+ have <span class="j-sym">)</span>;
+  <span class="j-sym">}
+  </span><span class="j-key">catch </span><span class="j-sym">(</span>NotAvailableException err<span class="j-sym">) {
+    </span>assertEquals<span class="j-sym">( </span><span class="j-str">&#34;#N/A&#34;</span>, err.getMessage<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<h3><a name="pagetoc__2_1">Throwing <code>#N/A</code></a></h3>
+
+	<p>Like errors, you can throw <code>NotAvailableException</code> in input getter methods to signal data that is not available:</p>
+
+	<pre class="java"><span class="j-key">public static final class </span><span class="j-hl">InputNotAvailable</span> <span class="j-key">implements </span>Inputs <span class="j-sym">{
+  </span><span class="j-key">public </span><span class="j-typ">double </span>value<span class="j-sym">() {
+    </span><span class="j-key">throw new </span><span class="j-hl">NotAvailableException</span><span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;My message&#34;</span></span> <span class="j-sym">)</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>which yields:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B11&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C11&#34; </span><span class="j-sym">)</span>;
+assertFailsWhenRunWithInput<span class="j-sym">( </span><span class="j-hl">new InputNotAvailable<span class="j-sym">()</span></span>, NotAvailableException.class, <span class="j-hl"><span class="j-str">&#34;My message&#34;</span></span> <span class="j-sym">)</span>;</pre>
+
+
+	<h3><a name="pagetoc__2_2">Handling <code>#N/A</code> In Expressions</a></h3>
+
+	<p>Again like errors, you can handle <code>#N/A</code>, but using <code>ISNA(exp)</code>, as in:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">13</td>
+			<td>Handle N/A</td>
+			<td class="xl-num">4712<br/><span class="xl-exp">=1.0+IF(ISNA(B12),4711.0,B12)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>B7 yields:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B13&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C12&#34; </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">2.0</span>, <span class="j-num">3.0 </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">1.0</span>, <span class="j-num">4712 </span><span class="j-sym">)</span>;
+<span class="j-cmt">// The above failed when accessing B11 directly.</span></pre>
+
+
+	<p>which compiles to:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.FormulaException;
+<span class="j-key">import </span>org.formulacompiler.runtime.NotAvailableException;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Runtime_v2;
+<span class="j-key">import </span>org.formulacompiler.tutorials.Exceptions;
+
+<span class="j-key">final class </span>$Root <span class="j-key">implements </span>Computation, Exceptions.Outputs
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>Exceptions.Inputs $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    
+    $Root<span class="j-sym">(</span>Exceptions.Inputs inputs, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = inputs;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-num">1.0 </span>+ <span class="j-sym">(</span>get$3<span class="j-sym">() </span>!= <span class="j-num">0.0 </span>? <span class="j-num">4711.0 </span>: get$1<span class="j-sym">())</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>result<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$3<span class="j-sym">() {
+        </span><span class="j-typ">double </span>d;
+        <span class="j-key">try </span><span class="j-sym">{
+            </span>get$1<span class="j-sym">()</span>;
+            d = <span class="j-num">0.0</span>;
+        <span class="j-sym">} </span><span class="j-key">catch </span><span class="j-sym">(</span>NotAvailableException notavailableexception<span class="j-sym">) {
+            </span>d = <span class="j-num">1.0</span>;
+        <span class="j-sym">} </span><span class="j-key">catch </span><span class="j-sym">(</span>FormulaException formulaexception<span class="j-sym">) {
+            </span>d = <span class="j-num">0.0</span>;
+        <span class="j-sym">} </span><span class="j-key">catch </span><span class="j-sym">(</span>ArithmeticException arithmeticexception<span class="j-sym">) {
+            </span>d = <span class="j-num">0.0</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span>d;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-typ">double </span>d;
+        <span class="j-key">if </span><span class="j-sym">(</span>get$2<span class="j-sym">() </span>== <span class="j-num">1.0</span><span class="j-sym">) {
+            </span>Runtime_v2.fun_NA<span class="j-sym">()</span>;
+            d = <span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>-<span class="j-num">1</span>;
+        <span class="j-sym">} </span><span class="j-key">else
+            </span>d = get$2<span class="j-sym">()</span>;
+        <span class="j-key">return </span>d;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.value<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="pagetoc__3">Interplay</a></h2>
+
+	<h3><a name="pagetoc__3_1">Precedence</a></h3>
+
+	<p>When you evaluate something like:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">15</td>
+			<td>Error referenced before N/A</td>
+			<td>#NUM!<br/><span class="xl-exp">=B3+B9</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">16</td>
+			<td>N/A referenced before error</td>
+			<td>#N/A<br/><span class="xl-exp">=B9+B3</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>the result depends on the order in which the arguments to the functions or operators are evaluated. While mostly compatible with the way spreadsheet applications behave for this, <span class="caps">AFC</span> makes no guarantee that this is always so. This is because the constant folder can change the order in which operands are evaluated.</p>
+
+
+	<h3><a name="pagetoc__3_2">Handling <code>#N/A</code> And Errors In Parallel</a></h3>
+
+	<p>The <code>ISERROR(exp)</code> function is like <code>OR(ISNA(exp), ISERR(exp))</code>, but evaluates <code>exp</code> only once. So in:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">18</td>
+			<td>IsError() on N/A</td>
+			<td>true<br/><span class="xl-exp">=ISERROR(B12)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">19</td>
+			<td>IsError() on error</td>
+			<td>true<br/><span class="xl-exp">=ISERROR(B3)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">20</td>
+			<td>IsErr() on N/A</td>
+			<td>false<br/><span class="xl-exp">=ISERR(B12)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">21</td>
+			<td>IsNA() on error</td>
+			<td>false<br/><span class="xl-exp">=ISNA(B3)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p><span class="caps">B16</span> and <span class="caps">B17</span> yield:</p>
+
+	<pre class="java"><span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>row = <span class="j-num">18</span>; row &lt;= <span class="j-num">19</span>; row++<span class="j-sym">) {
+  </span>setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B&#34; </span>+ row <span class="j-sym">)</span>; <span class="j-cmt">// B18, B19
+  </span>assertRunsWithInputReturning<span class="j-sym">( </span>null, <span class="j-num">1.0 </span><span class="j-sym">)</span>; <span class="j-cmt">// 1.0 means true
+  </span>useNumericType<span class="j-sym">( </span>FormulaCompiler.BIGDECIMAL128 <span class="j-sym">)</span>;
+  assertRunsWithInputReturning<span class="j-sym">( </span>null, <span class="j-num">1.0 </span><span class="j-sym">)</span>; <span class="j-cmt">// 1.0 means true
+</span><span class="j-sym">}</span></pre>
+
+
+	<p>This is implemented by handling <code>ComputationException</code>, from which both <code>FormulaException</code> and <code>NotAvailableException</code> are derived. The Excel function <code>ERROR.TYPE(exp)</code> is currently not supported by <span class="caps">AFC</span>.</p>
+
+
+	<p>And, for the sake of completeness, for <span class="caps">B18</span> and <span class="caps">B19</span> we get:</p>
+
+	<pre class="java">setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B20&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C12&#34; </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">1.0</span>, <span class="j-num">0.0 </span><span class="j-sym">)</span>; <span class="j-cmt">// 0.0 means false
+
+</span>setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B21&#34; </span><span class="j-sym">)</span>;
+setupInputCell<span class="j-sym">( </span><span class="j-str">&#34;C3&#34; </span><span class="j-sym">)</span>;
+assertRunsWithInputReturning<span class="j-sym">( </span><span class="j-num">2.0</span>, <span class="j-num">0.0 </span><span class="j-sym">)</span>; <span class="j-cmt">// 0.0 means false</span></pre>
+
+
+	<h3><a name="pagetoc__3_3">Effect on <code>COUNT()</code> and <code>COUNTA()</code></a></h3>
+
+	<p>In spreadsheet applications, the function <code>COUNT()</code> <em>ignores</em> error values and <code>#N/A</code> (does not count them), while <code>COUNTA()</code> does. Both do <em>not propagate</em> the exception.</p>
+
+
+	<p>In <span class="caps">AFC</span>, this is similar, except that because of a known limitation, <code>COUNT()</code> behaves exactly like <code>COUNTA()</code>, meaning it counts exception values. So in:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">23</td>
+			<td>COUNT() ignores errors and N/A</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=COUNT(15.0,B3,B12)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">24</td>
+			<td>COUNTA() counts errors and N/A</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=COUNTA(15.0,B3,B12)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p><span class="caps">B21</span> and <span class="caps">B22</span> yield:</p>
+
+	<pre class="java"><span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>row = <span class="j-num">23</span>; row &lt;= <span class="j-num">24</span>; row++<span class="j-sym">) {
+  </span>setupOutputCell<span class="j-sym">( </span><span class="j-str">&#34;B&#34; </span>+ row <span class="j-sym">)</span>; <span class="j-cmt">// B23, B24
+  </span>assertRunsWithInputReturning<span class="j-sym">( </span>null, <span class="j-num">3.0 </span><span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Exceptions Thrown By Computations</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Errors (<code>#VALUE!</code> etc.)</a><ul class="toc toc2"><li><a href="#pagetoc__1_1">Error Propagation</a></li><li><a href="#pagetoc__1_2">Handling Errors In Expressions</a></li><li><a href="#pagetoc__1_3">Throwing Errors</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">Missing Values (<code>#N/A</code>)</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Throwing <code>#N/A</code></a></li><li><a href="#pagetoc__2_2">Handling <code>#N/A</code> In Expressions</a></li></ul></li><li class="withitems"><a href="#pagetoc__3">Interplay</a><ul class="toc toc2"><li><a href="#pagetoc__3_1">Precedence</a></li><li><a href="#pagetoc__3_2">Handling <code>#N/A</code> And Errors In Parallel</a></li><li><a href="#pagetoc__3_3">Effect on <code>COUNT()</code> and <code>COUNTA()</code></a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

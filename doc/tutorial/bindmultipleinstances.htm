@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Binding To Multiple Interface Instances - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Binding To Multiple Interface Instances</h1>
+
+	<p>What if you need to provide multiple separate instances of source interfaces as input providers, or need <span class="caps">AFC</span> to implement multiple separate instances of output interfaces?</p>
+
+
+	<p><em>The example code on this page, while syntactically checked, is not yet part of an automated test.</em></p>
+
+
+
+	<h2><a name="pagetoc__1">Inputs</a></h2>
+
+	<p>Let&#8217;s assume you have <em>n</em> separate customer categories. You want to bind all cells named after the pattern <em>CC_DISCOUNT</em><n>_ to the discount percentage associated with the customer category <em><n></n></em>. Here&#8217;s how you go about it.</n></p>
+
+
+	<p>Let&#8217;s assume the following customer interface:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>CustomerCategory
+<span class="j-sym">{
+  </span><span class="j-cmt">// ...
+  </span><span class="j-typ">double </span>getDiscount<span class="j-sym">()</span>;
+  <span class="j-cmt">// ...
+</span><span class="j-sym">}</span></pre>
+
+
+	<p>First, you define an accessor for the customer categories on the main input interface:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Input
+<span class="j-sym">{
+  </span>CustomerCategory getCC<span class="j-sym">( </span><span class="j-typ">int </span>_iCC <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Then, you bind input cells in a loop. The key is to use a call chain that supplies the proper index argument to the customer category accessor:</p>
+
+	<pre class="java">intfGetter = Input.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;getCC&#34;</span>, Integer.TYPE</span> <span class="j-sym">)</span>;
+valueGetter = CustomerCategory.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;getDiscount&#34;</span></span> <span class="j-sym">)</span>;
+<span class="j-key">for </span><span class="j-sym">(</span>Map.Entry&lt;String, Spreadsheet.Range&gt; def : spreadsheet.getRangeNames<span class="j-sym">()</span>.entrySet<span class="j-sym">()) {
+  </span><span class="j-key">final </span>Spreadsheet.Range range = def.getValue<span class="j-sym">()</span>;
+  <span class="j-key">if </span><span class="j-sym">(</span>range <span class="j-key">instanceof </span>Spreadsheet.Cell<span class="j-sym">) {
+    </span><span class="j-key">final </span>String name = def.getKey<span class="j-sym">()</span>;
+    <span class="j-key">if </span><span class="j-sym">(</span>name.startsWith<span class="j-sym">( </span><span class="j-str">&#34;CC_DISCOUNT_&#34; </span><span class="j-sym">)) {
+      </span><span class="j-key">final </span><span class="j-typ">int </span>iCC = Integer.parseInt<span class="j-sym">( </span>name.substring<span class="j-sym">( </span><span class="j-str">&#34;CC_DISCOUNT_&#34;</span>.length<span class="j-sym">() ) )</span>;
+      <span class="j-key">final </span>Spreadsheet.Cell cell = <span class="j-sym">(</span>Spreadsheet.Cell<span class="j-sym">) </span>range;
+      binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<span class="j-sym">( </span>intfGetter, <span class="j-hl">iCC</span> <span class="j-sym">)</span>.<span class="j-hl">chain</span><span class="j-sym">( </span>valueGetter <span class="j-sym">) )</span>;
+    <span class="j-sym">}
+  }
+}</span></pre>
+
+
+	<h2><a name="pagetoc__2">Outputs</a></h2>
+
+	<p>Let&#8217;s assume a spreadsheet is used to update next year&#8217;s discount percentage and credit limit for each customer category based on this year&#8217;s input. The sheet computes the outputs for all of the categories simultaneously because there may be dependencies between the categories. As above, the number of categories is not fixed at compile-time. You cannot use bands to model this sheet because you do not want to force the user to use the same computation model for every category.</p>
+
+
+	<p>The input model for this sheet can be implemented as described above. How do you specify the outputs? You have to use parametrized accessors for each value separately:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Output 
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getNewDiscount<span class="j-sym">( </span><span class="j-typ">int </span>_iCC <span class="j-sym">)</span>;
+  <span class="j-typ">double </span>getNewCreditLimit<span class="j-sym">( </span><span class="j-typ">int </span>_iCC <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>which you bind as follows:</p>
+
+	<pre class="java">outputGetter = Output.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;getNewDiscount&#34;</span>, Integer.TYPE</span> <span class="j-sym">)</span>;
+<span class="j-key">for </span><span class="j-sym">(</span>Map.Entry&lt;String, Spreadsheet.Range&gt; def : spreadsheet.getRangeNames<span class="j-sym">()</span>.entrySet<span class="j-sym">()) {
+  </span><span class="j-key">final </span>Spreadsheet.Range range = def.getValue<span class="j-sym">()</span>;
+  <span class="j-key">if </span><span class="j-sym">(</span>range <span class="j-key">instanceof </span>Spreadsheet.Cell<span class="j-sym">) {
+    </span><span class="j-key">final </span>String name = def.getKey<span class="j-sym">()</span>;
+    <span class="j-key">if </span><span class="j-sym">(</span>name.startsWith<span class="j-sym">( </span><span class="j-str">&#34;CC_NEWDISCOUNT_&#34; </span><span class="j-sym">)) {
+      </span><span class="j-key">final </span><span class="j-typ">int </span>iCC = Integer.parseInt<span class="j-sym">( </span>name.substring<span class="j-sym">( </span><span class="j-str">&#34;CC_NEWDISCOUNT_&#34;</span>.length<span class="j-sym">() ) )</span>;
+      <span class="j-key">final </span>Spreadsheet.Cell cell = <span class="j-sym">(</span>Spreadsheet.Cell<span class="j-sym">) </span>range;
+      binder.defineOutputCell<span class="j-sym">( </span>cell, builder.newCallFrame<span class="j-sym">( </span>outputGetter, <span class="j-hl">iCC</span> <span class="j-sym">) )</span>;
+    <span class="j-sym">}
+    </span><span class="j-cmt">// ... dito for CreditLimit
+  </span><span class="j-sym">}
+}</span></pre>
+
+
+	<p>You might think that the following interface definition would be much nicer:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Output2
+<span class="j-sym">{
+  </span>CC getCC<span class="j-sym">( </span><span class="j-typ">int </span>_iCC <span class="j-sym">)</span>;
+
+  <span class="j-key">public interface </span>CC
+  <span class="j-sym">{
+    </span><span class="j-typ">double </span>getNewDiscount<span class="j-sym">()</span>;
+    <span class="j-typ">double </span>getNewCreditLimit<span class="j-sym">()</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>I agree. Unfortunately, <span class="caps">AFC</span> does not directly support it (again a consequence of keeping the black box magic in <span class="caps">AFC</span> at a minimum). You are, however, free to put such a fa�ade on top of the original interface:</p>
+
+	<pre class="java"><span class="j-key">public static class </span>OutputFacade
+<span class="j-sym">{
+  </span><span class="j-key">final </span>Output output;
+
+  <span class="j-key">public </span>OutputFacade<span class="j-sym">(</span>Output _output<span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">()</span>;
+    <span class="j-key">this</span>.output = _output;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span>Output getOutput<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.output;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span>CC getCC<span class="j-sym">( </span><span class="j-hl">int n</span> <span class="j-sym">)
+  {
+    </span><span class="j-key">return new </span>CC<span class="j-sym">( </span><span class="j-hl">n</span> <span class="j-sym">)</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">private class </span>CC
+  <span class="j-sym">{
+    </span><span class="j-key">private </span><span class="j-typ">int </span>iCC;
+    
+    <span class="j-key">public </span>CC<span class="j-sym">(</span><span class="j-hl">int _iCC</span><span class="j-sym">)
+    {
+      </span><span class="j-key">super</span><span class="j-sym">()</span>;
+      <span class="j-key">this</span>.iCC = _iCC;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public </span><span class="j-typ">double </span>getNewDiscount<span class="j-sym">()
+    {
+      </span><span class="j-key">return </span>getOutput<span class="j-sym">()</span>.getNewDiscount<span class="j-sym">( </span><span class="j-hl">this.iCC</span> <span class="j-sym">)</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public </span><span class="j-typ">double </span>getNewCreditLimit<span class="j-sym">()
+    {
+      </span><span class="j-key">return </span>getOutput<span class="j-sym">()</span>.getNewCreditLimit<span class="j-sym">( </span><span class="j-hl">this.iCC</span> <span class="j-sym">)</span>;
+    <span class="j-sym">}
+  }
+}</span></pre>
+
+
+	<p>You might for example need to do this if you have to feed the sheet&#8217;s output to some other system that expects its input in the above form. The fa�ade would then have to implement the other system&#8217;s input interfaces, of course.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Binding To Multiple Interface Instances</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Inputs</a></li><li><a href="#pagetoc__2">Outputs</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Locale and Time Zone - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Locale and Time Zone</h1>
+
+	<p>There are a few spreadsheet functions that need to take a locale and time zone into account. When compiled engines are run, the default is to use the current settings of the <span class="caps">JVM</span>. Server-side applications, however, might want to override those on a per-session basis. And when compiling engines, the compiler has to know about the regional settings used by the creator of the sheet.</p>
+
+
+
+	<h2><a name="pagetoc__1">Background</a></h2>
+
+	<p>Why do we need locale information? For example, the <code>TEXT(num,fmt)</code> function must know the names of the days of the week when it sees <code>dddd</code> in the format string, or the decimal separator. Conversely, the <code>VALUE(text)</code> function needs to know the number and date format settings to correctly parse text into values.</p>
+
+
+	<p>And why a time zone? Because Excel and Java have <a href="datetime.htm#background">different ideas about date/time values</a>.</p>
+
+
+	<p>There are three different <span class="caps">AFC</span> components that need locale-specific configuration:</p>
+
+
+<dl>
+<dt>Computation</dt><dd>The computation configuration controls how compiled engines compute, for example, the result of the <code>TEXT()</code> function.</dd>
+
+<dt>Compiler</dt><dd>The compiler configuration controls how constant text values in the compiled spreadsheet are converted to numeric or date values during compilation, if this should prove necessary (the inverse, conversion to text, is never performed at compile-time). So it should reflect the locale used by the sheet author.</dd>
+
+<dt>Spreadsheet Saver</dt><dd>The spreadsheet saver configuration controls how constant date values in the internal spreadsheet model are converted to <a href="datetime.htm#background">local Excel dates</a>.</dd>
+</dl>
+
+	<p>An example is the compilation of</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td class="xl-num"><span class="xl-exp-only">=VALUE(B1)</span><br/><span class="xl-name">(ValueResult)</span></td>
+			<td>1,234.56<br/><span class="xl-name">(ValueInput)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>If we don&#8217;t bind <code>ValueInput</code> to an input method, this should clearly be done using the regional settings used by the sheet author &#8211; the compiler configuration. If we do bind <code>ValueInput</code> to an input method, the conversion in <code>ValueResult</code> becomes a runtime call and so uses the computation configuration, as the value fed to <code>ValueInput</code> at runtime is expected to be in the runtime number format.</p>
+
+
+	<h4>Warning!</h4>
+
+	<p>What if we mix the two? Consider</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-num"><span class="xl-exp-only">=VALUE(B2&amp;C2)</span><br/><span class="xl-name">(MixedResult)</span></td>
+			<td>0.</td>
+			<td>6<br/><span class="xl-name">(MixedInput)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>where only <code>MixedInput</code> is bound to an input method. This will fail unless the number format of the computation also has <code>.</code> as decimal separator. The reason is <span class="caps">AFC</span> will compile <code>MixedResult</code> as a runtime invocation of <code>VALUE</code>, which always uses the computation&#8217;s number format.</p>
+
+
+	<h2><a name="run">Computation Configuration</a></h2>
+
+	<p>How do you configure what locale and time zone a compiled computation is to use? The easiest way is to simply override the system defaults:</p>
+
+	<pre class="java"><span class="j-hl">Locale.setDefault</span><span class="j-sym">( </span>Locale.GERMAN <span class="j-sym">)</span>;
+assertComputation<span class="j-sym">( </span><span class="j-str">&#34;37287,4211&#34;</span>, <span class="j-sym">(</span>MyFactory<span class="j-sym">) </span>_engine.getComputationFactory<span class="j-sym">() )</span>;
+<span class="j-hl">Locale.setDefault</span><span class="j-sym">( </span>Locale.ENGLISH <span class="j-sym">)</span>;
+assertComputation<span class="j-sym">( </span><span class="j-str">&#34;37287.4211&#34;</span>, <span class="j-sym">(</span>MyFactory<span class="j-sym">) </span>_engine.getComputationFactory<span class="j-sym">() )</span>;</pre>
+
+
+	<p>But in a multi-threaded, internationally used server application, this will not do. To define a locale and time zone for only a specific set of computations, you request from <span class="caps">AFC</span> a computation <em>factory</em> configured accordingly. Here&#8217;s how:</p>
+
+	<pre class="java">Computation.Config <span class="j-hl">config</span> = <span class="j-key">new </span>Computation.Config<span class="j-sym">( </span><span class="j-hl">_locale</span> <span class="j-sym">)</span>;
+MyFactory factory = <span class="j-sym">(</span>MyFactory<span class="j-sym">) </span>_engine.<span class="j-hl">getComputationFactory<span class="j-sym">( </span>config <span class="j-sym">)</span></span>;</pre>
+
+
+	<p>Actual use of the factory and the computations created by it remains unchanged:</p>
+
+	<pre class="java">MyComputation computation = _factory.newComputation<span class="j-sym">( </span><span class="j-key">new </span>MyInputs<span class="j-sym">() )</span>;
+String actual = computation.formatted<span class="j-sym">()</span>;</pre>
+
+
+	<p>but still reacts to the configuration:</p>
+
+	<pre class="java">assertComputation<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;37287,4211&#34;</span></span>, _engine, Locale.<span class="j-hl">GERMAN</span> <span class="j-sym">)</span>;
+assertComputation<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;37287.4211&#34;</span></span>, _engine, Locale.<span class="j-hl">ENGLISH</span> <span class="j-sym">)</span>;</pre>
+
+
+	<p>The class <a href="../javadoc/org/formulacompiler/runtime/Computation.Config.html"><code>Computation.Config</code></a> currently supports locale and time zone information, but could be extended by other environment information we might need.</p>
+
+
+	<h4>Why this design?</h4>
+
+	<p>Why do we not simply configure a computation, as in</p>
+
+	<pre><code>outputs = factory.newComputation( inputs, new Computation.Config( locale ));</code></pre>
+
+
+	<p>Well, because it would <a href="avoid_dependencies.htm">pollute the factory interface</a> with an element specific to <span class="caps">AFC</span>: <code>Computation.Config</code>. This interface, however, is part of a <a href="reason.htm">strategy pattern instance</a> which is <em>not</em> specific to <span class="caps">AFC</span>. In a similar vein, we believe that locale and time zone information ought to be handled by the underlying user and session management (technical domain), not in the application interfaces (problem domain).</p>
+
+
+	<p>Then why not</p>
+
+	<pre><code>factory.setConfig( new Computation.Config( locale ));
+outputs = factory.newComputation( inputs );</code></pre>
+
+
+	<p>Because then the factory would be stateful, which could lead to all sorts of side effects and problems with thread-safety.</p>
+
+
+	<h2><a name="compile">Compiler Configuration</a></h2>
+
+	<p>Like with the runtime configuration, you could change the compile-time settings by changing the <span class="caps">JRE</span>&#8217;s default locale. Again, this is not recommended. Let&#8217;s look again at the example mentioned above to see how it&#8217;s done properly:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td class="xl-num"><span class="xl-exp-only">=VALUE(B1)</span><br/><span class="xl-name">(ValueResult)</span></td>
+			<td>1,234.56<br/><span class="xl-name">(ValueInput)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>In the following example, we deliberately switch to a German locale which has a comma as the decimal separator, and then test compiling a sheet authored in the US locale:</p>
+
+	<pre class="java">Locale oldLocale = Locale.getDefault<span class="j-sym">()</span>;
+Locale.<span class="j-hl">setDefault<span class="j-sym">( </span>Locale.GERMANY <span class="j-sym">)</span></span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>DecimalFormat decimalFormat = <span class="j-sym">((</span>DecimalFormat<span class="j-sym">) </span>NumberFormat.getInstance<span class="j-sym">())</span>;
+  assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-chr">','</span></span>, decimalFormat.getDecimalFormatSymbols<span class="j-sym">()</span>.getDecimalSeparator<span class="j-sym">() )</span>;
+
+  EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+  builder.loadSpreadsheet<span class="j-sym">( </span>filePath <span class="j-sym">)</span>;
+  <span class="j-hl">builder.getCompileTimeConfig<span class="j-sym">()</span>.locale = Locale.US;</span>
+  builder.setFactoryClass<span class="j-sym">( </span>ValueFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+  builder.getByNameBinder<span class="j-sym">()</span>.outputs<span class="j-sym">()</span>.bindAllMethodsToNamedCells<span class="j-sym">()</span>;
+  Engine engine = builder.compile<span class="j-sym">()</span>;
+  ValueFactory factory = <span class="j-sym">(</span>ValueFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+  ValueComputation computation = factory.newComputation<span class="j-sym">( </span><span class="j-key">null </span><span class="j-sym">)</span>;
+  assertEquals<span class="j-sym">( </span><span class="j-hl">1234.56</span>, computation.valueResult<span class="j-sym">()</span>, <span class="j-num">0.00001 </span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">finally </span><span class="j-sym">{
+  </span>Locale.setDefault<span class="j-sym">( </span>oldLocale <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h4>Runtime Variant</h4>
+
+	<p>If, however, we bind <code>ValueInput</code>, we need to pass a string in the runtime format (which we switched to German):</p>
+
+	<pre class="java"><span class="j-key">public </span>String valueInput<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-hl"><span class="j-str">&#34;6.543,21&#34;</span></span>; <span class="j-sym">}</span></pre>
+
+
+	<p>and get it back properly:</p>
+
+	<pre class="java">Locale oldLocale = Locale.getDefault<span class="j-sym">()</span>;
+Locale.setDefault<span class="j-sym">( </span>Locale.GERMANY <span class="j-sym">)</span>;
+<span class="j-key">try </span><span class="j-sym">{
+  </span>DecimalFormat decimalFormat = <span class="j-sym">((</span>DecimalFormat<span class="j-sym">) </span>NumberFormat.getInstance<span class="j-sym">())</span>;
+  assertEquals<span class="j-sym">( </span><span class="j-chr">','</span>, decimalFormat.getDecimalFormatSymbols<span class="j-sym">()</span>.getDecimalSeparator<span class="j-sym">() )</span>;
+
+  EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+  builder.loadSpreadsheet<span class="j-sym">( </span>DATA_PATH + <span class="j-str">&#34;Locale_en_US.xls&#34; </span><span class="j-sym">)</span>;
+  builder.setFactoryClass<span class="j-sym">( </span>ValueFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
+  builder.getByNameBinder<span class="j-sym">()</span>.outputs<span class="j-sym">()</span>.bindAllMethodsToNamedCells<span class="j-sym">()</span>;
+  builder.getByNameBinder<span class="j-sym">()</span>.<span class="j-hl">inputs<span class="j-sym">()</span>.bindAllMethodsToNamedCells<span class="j-sym">()</span></span>;
+  Engine engine = builder.compile<span class="j-sym">()</span>;
+  ValueFactory factory = <span class="j-sym">(</span>ValueFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+  ValueComputation computation = factory.newComputation<span class="j-sym">( </span><span class="j-key">new </span>ValueInputs<span class="j-sym">() )</span>;
+  assertEquals<span class="j-sym">( </span><span class="j-hl">6543.21</span>, computation.valueResult<span class="j-sym">()</span>, <span class="j-num">0.00001 </span><span class="j-sym">)</span>;
+<span class="j-sym">}
+</span><span class="j-key">finally </span><span class="j-sym">{
+  </span>Locale.setDefault<span class="j-sym">( </span>oldLocale <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h4>Why not use the saved info?</h4>
+
+	<p>Excel saves the country code of the regional settings that were active when a sheet was saved. Why does <span class="caps">AFC</span> not use this?</p>
+
+<ul>
+	<li>The settings might have been overridden in the Windows regional settings dialog.</li>
+	<li>The decimal point and thousands separator might have been overridden in Excel&#8217;s configuration.</li>
+</ul>
+
+	<h2><a name="save">Spreadsheet Saver Configuration</a></h2>
+
+	<p>When <a href="generatesheet.htm">saving generated spreadsheets</a>, <span class="caps">AFC</span> needs to know which time zone to use to convert <code>java.util.Date</code> constants to <a href="datetime.htm#background">Excel&#8217;s internal local time format</a>. Let&#8217;s consider an example:</p>
+
+	<pre class="java">TimeZone <span class="j-hl">gmt2</span> = TimeZone.getTimeZone<span class="j-sym">( </span><span class="j-str">&#34;GMT+2:00&#34; </span><span class="j-sym">)</span>;
+Calendar cal = Calendar.getInstance<span class="j-sym">( </span><span class="j-hl">gmt2</span> <span class="j-sym">)</span>;
+cal.clear<span class="j-sym">()</span>;
+cal.set<span class="j-sym">( </span><span class="j-num">1970</span>, <span class="j-num">6</span>, <span class="j-num">13</span>, <span class="j-num">12</span>, <span class="j-num">13 </span><span class="j-sym">)</span>;
+Date date = cal.getTime<span class="j-sym">()</span>;
+
+SpreadsheetBuilder b = SpreadsheetCompiler.newSpreadsheetBuilder<span class="j-sym">()</span>;
+b.newCell<span class="j-sym">( </span><span class="j-hl">b.cst<span class="j-sym">( </span>date <span class="j-sym">)</span></span> <span class="j-sym">)</span>;
+b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;result&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<p>We need to tell the saver that the embedded <code>java.util.Date</code> constant is to be taken relative to <span class="caps">GMT</span>+2. Here&#8217;s how:</p>
+
+	<pre class="java">SpreadsheetSaver.Config cfg = <span class="j-key">new </span>SpreadsheetSaver.Config<span class="j-sym">()</span>;
+cfg.spreadsheet = b.getSpreadsheet<span class="j-sym">()</span>;
+cfg.typeExtension = <span class="j-str">&#34;.xls&#34;</span>;
+cfg.outputStream = outputStream;
+<span class="j-hl">cfg.timeZone = gmt2;</span>
+SpreadsheetCompiler.newSpreadsheetSaver<span class="j-sym">( </span>cfg <span class="j-sym">)</span>.save<span class="j-sym">()</span>;</pre>
+
+
+	<p>When we load, compile and use this spreadsheet again, but using a different time zone in the computation configuration, the distance in hours between the two time zones can be noticed:</p>
+
+	<pre class="java">Spreadsheet loaded = SpreadsheetCompiler.loadSpreadsheet<span class="j-sym">( </span><span class="j-str">&#34;.xls&#34;</span>, inputStream <span class="j-sym">)</span>;
+EngineBuilder eb = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+eb.setSpreadsheet<span class="j-sym">( </span>loaded <span class="j-sym">)</span>;
+eb.setInputClass<span class="j-sym">( </span>Object.<span class="j-key">class </span><span class="j-sym">)</span>;
+eb.setOutputClass<span class="j-sym">( </span>DateComputation.<span class="j-key">class </span><span class="j-sym">)</span>;
+eb.bindAllByName<span class="j-sym">()</span>;
+SaveableEngine e = eb.compile<span class="j-sym">()</span>;
+
+TimeZone <span class="j-hl">gmt6</span> = TimeZone.getTimeZone<span class="j-sym">( </span><span class="j-str">&#34;GMT+6:00&#34; </span><span class="j-sym">)</span>;
+ComputationFactory f = e.getComputationFactory<span class="j-sym">( </span><span class="j-key">new </span>Computation.Config<span class="j-sym">( </span><span class="j-hl">gmt6</span> <span class="j-sym">) )</span>;
+DateComputation c = <span class="j-sym">(</span>DateComputation<span class="j-sym">) </span>f.newComputation<span class="j-sym">( </span><span class="j-key">null </span><span class="j-sym">)</span>;
+Date result = c.result<span class="j-sym">()</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl">fourHoursInMS</span>, date.getTime<span class="j-sym">() </span>- result.getTime<span class="j-sym">() )</span>;</pre>
+
+
+	<p>This demonstrates the effect of local Excel dates. The constant was created as 1970-06-13 12:13 (GMT+2), saved as just 1970-06-13 12:13 irrespective of time zone, then reinterpreted by the computation as 1970-06-13 12:13 (GMT+6). Hence the difference of 4 hours between the original and the final date.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Locale and Time Zone</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Background</a></li><li><a href="#run">Computation Configuration</a></li><li><a href="#compile">Compiler Configuration</a></li><li><a href="#save">Spreadsheet Saver Configuration</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

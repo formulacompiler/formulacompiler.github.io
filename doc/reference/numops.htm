@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Numeric Operators In AFC - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Reference</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Numeric Operators In <span class="caps">AFC</span></h1>
+
+
+	<h3><a name="pagetoc__1">Arithmetic Operators</a></h3>
+
+	<p>The supported numeric operators are shown by example below. The examples also show how operator precedence is taken into account.</p>
+
+
+
+<h5 class="ref"><a name="pagetoc__1_1">Addition (+)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="NumericOperators_2.htm">=C2<em>+</em>D2</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">3</td><td class="xl-num">12.0</td><td class="xl-exp"><a href="NumericOperators_3.htm">=C3<em>+</em>D3<em>+</em>E3</a></td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">4</td><td class="xl-num">6.6</td><td class="xl-exp">...</td><td class="xl-num">1.1</td><td class="xl-num">2.2</td><td class="xl-num">3.3</td><td></td></tr>
+<tr><td class="xl-row">3</td><td class="xl-num">12.0</td><td class="xl-exp">...</td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">3.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_2">Subtraction (-)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">6</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="NumericOperators_6.htm">=C6<em>-</em>D6</a></td><td class="xl-num">3.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">7</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="NumericOperators_7.htm">=C7<em>-</em>D7<em>-</em>E7</a></td><td class="xl-num">5.0</td><td class="xl-num">3.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">8</td><td class="xl-num">-4.4</td><td class="xl-exp">...</td><td class="xl-num">1.1</td><td class="xl-num">2.2</td><td class="xl-num">3.3</td><td></td></tr>
+<tr><td class="xl-row">7</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">5.0</td><td class="xl-num">3.0</td><td class="xl-num">1.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_3">Multiplication (*)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">10</td><td class="xl-num">35.0</td><td class="xl-exp"><a href="NumericOperators_10.htm">=C10<em>*</em>D10</a></td><td class="xl-num">5.0</td><td class="xl-num">7.0</td><td></td></tr>
+<tr><td class="xl-row">11</td><td class="xl-num">0.2</td><td class="xl-exp">...</td><td class="xl-num">0.4</td><td class="xl-num">0.5</td><td></td></tr>
+<tr><td class="xl-row">10</td><td class="xl-num">35.0</td><td class="xl-exp">...</td><td class="xl-num">5.0</td><td class="xl-num">7.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_4">Precedence (* before +)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">13</td><td class="xl-num">7.0</td><td class="xl-exp"><a href="NumericOperators_13.htm">=C13+D13<em>*</em>E13</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">14</td><td class="xl-num">9.0</td><td class="xl-exp"><a href="NumericOperators_14.htm">=<em>(</em>C14+D14<em>)</em><em>*</em>E14</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_5">Division (/)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">16</td><td class="xl-num">2.5</td><td class="xl-exp"><a href="NumericOperators_16.htm">=C16<em>/</em>D16</a></td><td class="xl-num">10.0</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">17</td><td class="xl-num">8.0</td><td class="xl-exp"><a href="NumericOperators_17.htm">=C17-D17<em>/</em>E17</a></td><td class="xl-num">10.0</td><td class="xl-num">4.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">18</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td class="xl-num">9.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">17</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td class="xl-num">4.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">19</td><td class="xl-num">9.666666666666666</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td class="xl-num">1.0</td><td class="xl-num">3.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_6">Division by zero</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">20</td><td>!<acronym title="Positive Infinity (double)">+Inf</acronym>/<acronym title="ArithmeticException">AE</acronym></td><td class="xl-exp"><a href="NumericOperators_20.htm">=C20<em>/</em>D20</a></td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td></td><td class="ref-bad">Excel says: #DIV/0!</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_7">Negation (-)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">22</td><td class="xl-num">-10.0</td><td class="xl-exp"><a href="NumericOperators_22.htm">=<em>-</em>C22</a></td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">23</td><td class="xl-num">-2.0</td><td class="xl-exp"><a href="NumericOperators_23.htm">=<em>-</em>C23<em>-</em><em>-</em>D23</a></td><td class="xl-num">5.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">24</td><td class="xl-num">-1.0</td><td class="xl-exp">...</td><td class="xl-num">-3.0</td><td class="xl-num">-4.0</td><td></td></tr>
+<tr><td class="xl-row">23</td><td class="xl-num">-2.0</td><td class="xl-exp">...</td><td class="xl-num">5.0</td><td class="xl-num">3.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_8">Percentage (%)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr></thead><tbody>
+<tr><td class="xl-row">26</td><td class="xl-num">0.15</td><td class="xl-exp"><a href="NumericOperators_26.htm">=C26<em>%</em></a></td><td class="xl-num">15.0</td><td></td></tr>
+<tr><td class="xl-row">27</td><td class="xl-num">5.13</td><td class="xl-exp"><a href="NumericOperators_27.htm">=(C27+D27)<em>%</em>+E27+F27<em>%</em></a></td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">28</td><td class="xl-num">3.377</td><td class="xl-exp">...</td><td class="xl-num">1.1</td><td class="xl-num">2.2</td><td class="xl-num">3.3</td><td class="xl-num">4.4</td><td></td></tr>
+<tr><td class="xl-row">27</td><td class="xl-num">5.13</td><td class="xl-exp">...</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_9">Exponentiation (^)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></tr></thead><tbody>
+<tr><td class="xl-row">30</td><td class="xl-num">256.0</td><td class="xl-exp"><a href="NumericOperators_30.htm">=C30<em>^</em>D30</a></td><td class="xl-num">2.0</td><td class="xl-num">8.0</td><td></td></tr>
+<tr><td class="xl-row">31</td><td class="xl-num">24.0</td><td class="xl-exp"><a href="NumericOperators_31.htm">=C31<em>^</em>D31+E31<em>^</em>(F31+G31)</a></td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">32</td><td class="xl-num">1240.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">31</td><td class="xl-num">24.0</td><td class="xl-exp">...</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td class="xl-num">3.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_10">Empty cells are 0</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">34</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="NumericOperators_34.htm">=C34+D34-E34</a></td><td class="xl-num">1.0</td><td></td><td></td><td></td></tr>
+<tr><td class="xl-row">35</td><td class="xl-num">17.0</td><td class="xl-exp">...</td><td></td><td class="xl-num">17.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">36</td><td class="xl-num">-2.0</td><td class="xl-exp">...</td><td class="xl-num">2.0</td><td></td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">37</td><td class="xl-num">0.0</td><td class="xl-exp"><a href="NumericOperators_37.htm">=C37*D37</a></td><td class="xl-num">3.0</td><td></td><td></td></tr>
+</tbody></table><p></p>
+
+	<h3><a name="pagetoc__2">Comparison Operators</a></h3>
+
+	<p>These are operators that return a boolean value, which is either the number 1 (true) or 0 (false) internally, shown by example:</p>
+
+
+
+<h5 class="ref"><a name="pagetoc__2_1">Equal (=)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td>false</td><td class="xl-exp"><a href="NumericComparisons_2.htm">=C2<em>=</em>D2</a></td><td class="xl-num">10.0</td><td class="xl-num">20.0</td><td></td></tr>
+<tr><td class="xl-row">3</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">4</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">50.0</td><td></td></tr>
+<tr><td class="xl-row">5</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">6</td><td>false</td><td class="xl-exp">...</td><td></td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">7</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">8</td><td>false</td><td class="xl-exp">...</td><td></td><td class="xl-num">-10.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_2">Not equal (&lt;&gt;)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">10</td><td>true</td><td class="xl-exp"><a href="NumericComparisons_10.htm">=C10<em>&lt;&gt;</em>D10</a></td><td class="xl-num">10.0</td><td class="xl-num">20.0</td><td></td></tr>
+<tr><td class="xl-row">11</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">12</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">50.0</td><td></td></tr>
+<tr><td class="xl-row">13</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">14</td><td>true</td><td class="xl-exp">...</td><td></td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">15</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">16</td><td>true</td><td class="xl-exp">...</td><td></td><td class="xl-num">-10.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_3">Greater than (&gt;)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">18</td><td>false</td><td class="xl-exp"><a href="NumericComparisons_18.htm">=C18<em>&gt;</em>D18</a></td><td class="xl-num">10.0</td><td class="xl-num">20.0</td><td></td></tr>
+<tr><td class="xl-row">19</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">20</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">50.0</td><td></td></tr>
+<tr><td class="xl-row">21</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">22</td><td>false</td><td class="xl-exp">...</td><td></td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">23</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">24</td><td>true</td><td class="xl-exp">...</td><td></td><td class="xl-num">-10.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_4">Less than (&lt;)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">26</td><td>true</td><td class="xl-exp"><a href="NumericComparisons_26.htm">=C26<em>&lt;</em>D26</a></td><td class="xl-num">10.0</td><td class="xl-num">20.0</td><td></td></tr>
+<tr><td class="xl-row">27</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">28</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">50.0</td><td></td></tr>
+<tr><td class="xl-row">29</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">30</td><td>true</td><td class="xl-exp">...</td><td></td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">31</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">32</td><td>false</td><td class="xl-exp">...</td><td></td><td class="xl-num">-10.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_5">Greater or equal (&gt;=)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">34</td><td>false</td><td class="xl-exp"><a href="NumericComparisons_34.htm">=C34<em>&gt;=</em>D34</a></td><td class="xl-num">10.0</td><td class="xl-num">20.0</td><td></td></tr>
+<tr><td class="xl-row">35</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">36</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">50.0</td><td></td></tr>
+<tr><td class="xl-row">37</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">38</td><td>false</td><td class="xl-exp">...</td><td></td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">39</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">40</td><td>true</td><td class="xl-exp">...</td><td></td><td class="xl-num">-10.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_6">Less or equal (&lt;=)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">42</td><td>true</td><td class="xl-exp"><a href="NumericComparisons_42.htm">=C42<em>&lt;=</em>D42</a></td><td class="xl-num">10.0</td><td class="xl-num">20.0</td><td></td></tr>
+<tr><td class="xl-row">43</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">44</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">50.0</td><td class="xl-num">50.0</td><td></td></tr>
+<tr><td class="xl-row">45</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">46</td><td>true</td><td class="xl-exp">...</td><td></td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">47</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">48</td><td>false</td><td class="xl-exp">...</td><td></td><td class="xl-num">-10.0</td><td></td></tr>
+</tbody></table><p></p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Numeric Operators In AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Arithmetic Operators</a><ul class="toc toc4"><li><a href="#pagetoc__1_1">Addition (+)</a></li><li><a href="#pagetoc__1_2">Subtraction (-)</a></li><li><a href="#pagetoc__1_3">Multiplication (*)</a></li><li><a href="#pagetoc__1_4">Precedence (* before +)</a></li><li><a href="#pagetoc__1_5">Division (/)</a></li><li><a href="#pagetoc__1_6">Division by zero</a></li><li><a href="#pagetoc__1_7">Negation (-)</a></li><li><a href="#pagetoc__1_8">Percentage (%)</a></li><li><a href="#pagetoc__1_9">Exponentiation (^)</a></li><li><a href="#pagetoc__1_10">Empty cells are 0</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">Comparison Operators</a><ul class="toc toc4"><li><a href="#pagetoc__2_1">Equal (=)</a></li><li><a href="#pagetoc__2_2">Not equal (&lt;&gt;)</a></li><li><a href="#pagetoc__2_3">Greater than (&gt;)</a></li><li><a href="#pagetoc__2_4">Less than (&lt;)</a></li><li><a href="#pagetoc__2_5">Greater or equal (&gt;=)</a></li><li><a href="#pagetoc__2_6">Less or equal (&lt;=)</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

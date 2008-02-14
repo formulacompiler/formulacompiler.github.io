@@ -1,0 +1,624 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Release Notes - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../download/index.htm">
+					<img src="../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../index.htm">Home</a> | 
+						
+					<a href="../quick.htm">Quick Start</a> | <a href="../doc/index.htm">Documentation</a> | <span class="selected"><a href="../download/index.htm">Download</a></span> | <a href="../support.htm">Support</a> | <a href="../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../index.htm">Home</a> &gt; <a href="index.htm">Download</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Release Notes</h1>
+
+	<p>Lists the new features, improvements, and fixes for each release of <span class="caps">AFC</span>. Note that the former name of <span class="caps">AFC</span> was <span class="caps">SEJ</span> (Spreadsheet Engine for Java). You may also want to look at:</p>
+
+<ul>
+	<li><a href="../doc/limitations.htm">Current Limitations</a></li>
+	<li><a href="../doc/roadmap.htm">Roadmap</a></li>
+</ul>
+
+
+	<h2><a name="pagetoc__1">Release 1.0</a></h2>
+
+	<h5><strong>Changed!</strong></h5>
+<ul>
+	<li>You can no longer bind to input methods throwing checked exceptions. (We may re-enable this later when <span class="caps">AFC</span> checks that all output methods declare all of those checked exceptions.)</li>
+	<li><span class="caps">AFC</span> no longer rounds final results to the precision specified in cell formats. If you want rounded results, use the <code>ROUND()</code> function. This only affects newly compiled engines.</li>
+	<li><span class="caps">AFC</span> no longer treats errors conditions like <code>#NUM!</code> as zero. Instead, it <a href="../doc/tutorial/exceptions.htm">signals an error</a>.</li>
+	<li><a href="../doc/javadoc/org/formulacompiler/spreadsheet/Spreadsheet.Cell.html"><code>Cell</code></a> now implements <a href="../doc/javadoc/org/formulacompiler/spreadsheet/Spreadsheet.Range.html"><code>Range</code></a>. The <code>contains(Cell)</code> method was removed from <a href="../doc/javadoc/org/formulacompiler/spreadsheet/Spreadsheet.Range.html"><code>Range</code></a>, because the <a href="../doc/javadoc/org/formulacompiler/spreadsheet/Spreadsheet.Range.html#contains(org.formulacompiler.spreadsheet.Spreadsheet.Range)"><code>contains(Range)</code></a> method can be used instead.</li>
+	<li>The <code>Spreadsheet.NameDefinition</code>, <code>Spreadsheet.CellNameDefinition</code>, and <code>Spreadsheet.RangeNameDefinition</code> interfaces were removed. The <code>getDefinedName(String)</code> method was removed from the <a href="../doc/javadoc/org/formulacompiler/spreadsheet/Spreadsheet.html"><code>Spreadsheet</code></a> interface. Its functionality is now provided by the <a href="../doc/javadoc/org/formulacompiler/spreadsheet/Spreadsheet.html#getDefinedNames()"><code>getDefinedNames()</code></a> method which now returns <code>Map&lt;String, Spreadsheet.Range&gt;</code>.</li>
+</ul>
+
+	<h5>New</h5>
+<ul>
+	<li><span class="caps">AFC</span> can now load spreadsheets in the OpenDocument <code>.ods</code> format (as written, for example, by <a href="http://openoffice.org/">OpenOffice.org</a> Calc).</li>
+	<li><code>COVAR()</code> is now <a href="../doc/reference/aggregators.htm">supported</a>.</li>
+	<li><code>SUMIF()</code>, and <code>COUNTIF()</code> are now <a href="../doc/reference/dbaggregators.htm">supported</a>.</li>
+	<li><code>CONFIDENCE()</code>, <code>BETADIST()</code>, <code>BINOMDIST()</code>, <code>CHIDIST()</code>, <code>CHITEST()</code>, <code>FDIST()</code>, <code>GAMMADIST()</code>, <code>NEGBINOMDIST()</code>, <code>NORMDIST()</code>, <code>NORMSDIST()</code>, <code>LOGNORMSDIST()</code>, <code>NORMINV()</code>, <code>NORMSINV()</code>, <code>LOGINV()</code>, <code>POISSON()</code>, <code>TDIST()</code>, <code>BETAINV()</code>, <code>CHIINV()</code>, <code>EXPONDIST()</code>, <code>FINV()</code>, <code>FISHER()</code>, <code>FISHERINV()</code>, <code>FTEST()</code>, <code>GAMMAINV()</code>, <code>GAMMALN()</code>, <code>HYPGEOMDIST()</code>, <code>PEARSON()</code>, <code>RSQ()</code>, <code>STANDARDIZE()</code>, <code>TINV()</code>, <code>TTEST()</code>, <code>WEIBULL()</code> and <code>ZTEST()</code> are now <a href="../doc/reference/statisticalfuncs.htm">supported</a>.</li>
+	<li><code>MEDIAN()</code>, <code>CORREL()</code>, <code>CRITBINOM()</code>, <code>LARGE()</code>, <code>MODE()</code>, <code>PERCENTILE()</code>, <code>PERCENTRANK()</code>, <code>PROB()</code>, <code>QUARTILE()</code>, <code>SMALL()</code>, <code>STDEVPA()</code>, <code>STEYX()</code>, <code>SUMX2MY2()</code>, <code>SUMX2PY2()</code>, <code>SUMXMY2()</code>, <code>TRIMMEAN()</code>,  <code>INTERCEPT()</code>, <code>SLOPE()</code>, <code>FORECAST()</code> and <code>VARA()</code> are now <a href="../doc/reference/statisticalfuncs.htm">supported</a>.</li>
+	<li><code>ACOSH()</code>, <code>ASINH()</code>, <code>ATANH()</code>, <code>SINH()</code>, <code>COSH()</code>, <code>TANH()</code>, <code>GEOMEAN()</code>, <code>HARMEAN()</code>, <code>PERMUT()</code>, <code>RAND()</code>, and <code>SIGN()</code> are now <a href="../doc/reference/numfuncs.htm">supported</a>.</li>
+	<li><code>VDB()</code> is now <a href="../doc/reference/financialfuncs.htm">supported</a></li>
+	<li><code>DCOUNTA()</code>, <code>DAVERAGE()</code>, <code>DVAR/P()</code>, <code>DSTDEV/P()</code>, <code>DGET()</code> are now <a href="../doc/reference/dbaggregators.htm">supported</a>.</li>
+	<li><code>CLEAN()</code> is now <a href="../doc/reference/strings.htm">supported</a></li>
+	<li><code>ROMAN()</code> and <code>FIXED()</code> are now <a href="../doc/reference/convfuncs.htm">supported</a></li>
+	<li><code>VALUE()</code> and <code>DSUM()</code> et al. now handle date/time strings.</li>
+	<li>You can now tell <span class="caps">AFC</span> to compile to more readable code when <a href="../doc/tutorial/decompile.htm">decompiled</a>.</li>
+	<li><code>DAYS360()</code> is now <a href="../doc/reference/datefuncs.htm">supported</a>.</li>
+	<li><code>CHAR()</code>, <code>CODE()</code>, <code>DOLLAR()</code>, <code>DATEVALUE()</code>, and <code>TIMEVALUE()</code> are now <a href="../doc/reference/convfuncs.htm">supported</a></li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>We now support binding unboxed numeric types as inputs (<code>double</code>, <code>long</code>, <code>int</code>, etc.) to string-valued cells.</li>
+	<li><code>MATCH()</code> is now supported for string comparisons.</li>
+	<li>When creating cell names from row titles, <span class="caps">AFC</span> now filters out typical illegal characters (spaces, for instance).</li>
+	<li>A few convenience variants of <code>defineInputCell</code> et al. make it easier to bind cells to methods. You no longer have to construct the <code>CallFrame</code> objects yourself, except for advanced binding.</li>
+</ul>
+
+	<h5>Internal</h5>
+<ul>
+	<li>The folding support (used to implement <code>SUM</code> etc.) has been rewritten completely. It can now handle multiple parallel vectors, multiple aggregators, and has much more streamlined code in the implementation.</li>
+	<li>We now verify the spreadsheet model loaded from our test spreadsheets against an external description (.yaml files). This ensures that test sheet changes are reflected in a diffable format.</li>
+	<li>The reference test sheets now have columns that check whether the expected and actual values truly match (in Excel). These columns are verified during reference tests (formulas and values).</li>
+	<li>You can set <code>test-ref-update-yaml: true</code> in <code>build.properties</code> to make reference tests silently update the .yaml files in-place. More streamlined when you detect changes using <code>hg stat</code> later on anyway.</li>
+</ul>
+
+	<h2><a name="pagetoc__2">Release 0.10.1</a></h2>
+
+	<h5><strong>Changed!</strong></h5>
+<ul>
+	<li>The method <a href="../doc/javadoc/org/formulacompiler/spreadsheet/EngineBuilder.html#bindAllByName()"><code>bindAllByName()</code></a> no longer throws an exception if cell remain unbound. Use <a href="../doc/javadoc/org/formulacompiler/spreadsheet/EngineBuilder.html#failIfByNameBindingLeftNamedCellsUnbound()"><code>failIfByNameBindingLeftNamedCellsUnbound()</code></a> after <code>bindAllByName()</code> if you want this behaviour back.</li>
+</ul>
+
+	<h5>New</h5>
+<ul>
+	<li><code>SUMSQ()</code> is now <a href="../doc/reference/aggregators.htm">supported</a>.</li>
+	<li><code>AVEDEV()</code>, <code>DEVSQ()</code>, and <code>RANK()</code> are now <a href="../doc/reference/statisticalfuncs.htm">supported</a>.</li>
+	<li>By name binding now supports <a href="../doc/javadoc/org/formulacompiler/spreadsheet/EngineBuilder.html#bindAllByName(java.lang.String,%20java.lang.String)">binding only cells with a given input and output prefix</a>.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>You can <a href="../doc/javadoc/org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.html#cellNamesLeftUnbound()">query the named cells</a> still unbound to warn users about potential automatic by-name binding problems.</li>
+</ul>
+
+	<h2><a name="pagetoc__3">Release 0.10.0</a></h2>
+
+	<h5><strong>Changed!</strong></h5>
+<ul>
+	<li>Changed the names of the runtimes to <code>Runtime..._v2</code> and removed deprecated features.
+<br /><strong>Your engines won&#8217;t run anymore. Recompile.</strong></li>
+	<li>Changed the names of the predefined scaled <code>BigDecimal</code> and <code>long</code> numeric types.</li>
+	<li>Changed the way <a href="../doc/tutorial/caching.htm">internal caching</a> is controlled.</li>
+	<li>Changed the <span class="caps">API</span> for manual value conversions using a given locale. Now uses a <code>Computation.Config</code> instead.</li>
+</ul>
+
+	<h5>New</h5>
+<ul>
+	<li><a href="../doc/tutorial/numeric_type.htm"><code>BigDecimal</code> with <code>MathContext</code></a> now supported. Older scaled <code>BigDecimal</code> no longer recommended and may be phased out in the future.</li>
+	<li><code>KURT()</code>, <code>SKEW()</code>, <code>STDEV()</code>, and <code>STDEVP()</code> are now <a href="../doc/reference/statisticalfuncs.htm">supported</a>.</li>
+	<li><code>COUNTA()</code> is now <a href="../doc/reference/aggregators.htm">supported</a>.</li>
+	<li><code>N()</code> and <code>T()</code> are now <a href="../doc/reference/convfuncs.htm">supported</a>.</li>
+	<li><code>ISTEXT()</code>, <code>ISNONTEXT()</code>, and <code>ISNUMBER()</code> are now <a href="../doc/reference/typefuncs.htm">supported</a>.</li>
+	<li><code>CEILING()</code>, <code>FLOOR()</code>, <code>ROUNDDOWN()</code>, and <code>ROUNDUP()</code> are now <a href="../doc/reference/numfuncs.htm">supported</a>.</li>
+	<li><code>CHOOSE()</code>, <code>LOOKUP()</code>, <code>HLOOKUP()</code>, and <code>VLOOKUP()</code> are now <a href="../doc/reference/lookupfuncs.htm">supported</a>.</li>
+	<li>You can optionally configure symbols (such as the decimal separator, the grouping separator, and so on) needed to format numbers.</li>
+	<li>Added option to load cell values of <em>all</em> cells, even computed ones, into the internal spreadsheet model. This is mainly useful to write automated tests (see <code>EngineBuilder.setLoadAllCellValues</code> and <code>Spreadsheet.Cell.getValue</code>).</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>Documented different way of computing date/time differences in <span class="caps">AFC</span>/Excel and Java in <a href="../doc/tutorial/datetime.htm">Date Tutorial</a>.</li>
+	<li>Computations involving repeating sections no longer need to implement <code>Resettable</code>.</li>
+	<li>Improved <a href="../doc/impl/lookup.htm">the way <code>MATCH()</code> and <code>INDEX()</code> are compiled</a>.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>Number to string conversions now all use the configured runtime locale. This means they are no longer computed at compile-time, even if constant</li>
+</ul>
+
+	<h2><a name="pagetoc__4">Release 0.9.1</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li>You can now <a href="../doc/tutorial/bindcells.htm">bind parameters of input methods to computed cells</a>.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>Upgraded to <a href="http://asm.objectweb.org/jdiff223to30/changes.html">ASM 3.0</a>.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>The <a href="../contribute/hacking/index.htm">hacking docs</a> have been updated to reflect the new project layout.</li>
+	<li><code>NOW()</code> and <code>TODAY()</code> functions now return the same value for the same computation. This value can be reset when output class implements <code>Resettable</code> by invoking <code>reset()</code>.</li>
+</ul>
+
+	<h5>Internals</h5>
+<ul>
+	<li>New <a href="../contribute/hacking/build.htm">build target</a> <code>compile</code> added.</li>
+	<li>Pass a root pointer instead of the environment to subengines. This is in preparation for having the root engine contain things like the current computation&#8217;s value of <code>NOW()</code>.</li>
+</ul>
+
+	<h2><a name="pagetoc__5">Release 0.9.0</a></h2>
+
+	<h5><strong>Changed!</strong></h5>
+<ul>
+	<li>The packages have been renamed. The prefix <code>sej.</code> has become <code>org.formulacompiler.</code>. Old compiled engines are <strong>not</strong> compatible with this release!</li>
+	<li>The central <span class="caps">API</span> has changed. <code>sej.runtime.SEJRuntime</code> has become <code>org.formulacompiler.runtime.FormulaRuntime</code>. <code>sej.SEJ</code> has been split up into <code>org.formulacompiler.compiler.FormulaCompiler</code> and, derived from this, <code>org.formulacompiler.spreadsheet.SpreadsheetCompiler</code>.</li>
+	<li>The folder layout has changed. The code is now split up into a separate component per .jar file (despite the earlier <a href="../contribute/journal/2007-04-24_modules.htm">reasons for not splitting the project up into modules</a>). The components live in the <code>components/</code> folder and each has its own <code>lib/</code> and <code>build/</code> folder. This shows clearly which <span class="caps">AFC</span> .jars need which supporting external .jars.</li>
+</ul>
+
+	<h5>New</h5>
+<ul>
+	<li>Date functions: <code>NOW()</code>, <code>DATE()</code>, <code>TIME()</code>, <code>SECOND()</code>, <code>MINUTE()</code>, <code>HOUR()</code>, <code>WEEKDAY()</code>, <code>DAY()</code>, <code>MONTH()</code>, and <code>YEAR()</code> are now supported.</li>
+	<li>Conversion functions: <code>VALUE()</code> is now partially supported, parsing dates and currency is not supported yet.</li>
+	<li>You can optionally <a href="../doc/tutorial/locale.htm">configure an explicit locale and time zone</a> for engine factories. Great for server applications with users all over the world.</li>
+	<li>You can make <span class="caps">AFC</span> treat Excel constant date/times as <a href="../doc/tutorial/datetime.htm">time-zone adjusted global times</a>.</li>
+	<li>You can <a href="../doc/tutorial/datetime.htm">pass pure times</a> properly to a computation.</li>
+	<li>You can <a href="../doc/tutorial/type_conversion.htm">pass dates as unboxed milliseconds since 1970</a> to a computation.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>Reorganized <a href="../contribute/hacking/build.htm">build targets</a> to make <code>build.xml</code> more manageable.</li>
+	<li>Cited examples now serve as <a href="http://arrenbrecht.ch/jcite/tripwire.htm">tripwires</a> in the documentation.</li>
+</ul>
+
+	<h2><a name="pagetoc__6">Release 0.8.4</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li>Mathematical functions: <code>ACOS()</code>, <code>ASIN()</code>, <code>ATAN()</code>, <code>ATAN2()</code>, <code>COS()</code>, <code>DEGREES()</code>, <code>EVEN()</code>, <code>EXP()</code>, <code>INT()</code>, <code>LN()</code>, <code>LOG()</code>, <code>LOG10()</code>, <code>MOD()</code>, <code>ODD()</code>, <code>PI()</code>, <code>POWER()</code>, <code>RADIANS()</code>, <code>SIN()</code>, <code>SQRT()</code>, <code>TAN()</code>, and <code>TRUNC()</code> are now supported.</li>
+	<li>Financial functions: <code>DB()</code>, <code>DDB()</code>, <code>SLN()</code>, <code>SYD()</code>, <code>FV()</code>, <code>NPER()</code>, <code>PMT()</code>, <code>PV()</code>, and <code>RATE()</code> are now supported.</li>
+	<li>String functions: <code>PROPER()</code>, <code>REPT()</code>, and <code>TRIM()</code> are now supported.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>For the <code>^</code> operator, as for the new <code>POWER()</code> function, invocations with non-integer exponents are converted to <code>double</code> operations.</li>
+	<li>Moved from hardwired service implementor constructors (in, for example, the class <code>SEJ</code>) to dynamically configured implementors. This mimics Java 6&#8217;s <code>java.util.ServiceLoader</code>, but also works on Java 5. For details, see the <a href="../contribute/journal/2007-01-22_modularization.htm">discussion in the dev journal</a> and also the <a href="../contribute/journal/2007-04-24_modules.htm">reasons for not splitting the project up into modules</a>.</li>
+	<li>Updated build script so the bootstrap dummy implementations for code that gets generated later on is no longer necessary.</li>
+	<li>Macker dependency checking rules are now generated from a central component description in <span class="caps">YAML</span> using Ruby. This description is also used to generate a <a href="../contribute/hacking/dependencies.htm">graph of the allowed component dependencies</a>.</li>
+	<li>The build now runs <a href="http://www.graphviz.org/">dot</a> and the <a href="http://ruby-lang.org/">Ruby</a> scripts to regenerate graphics and config files.</li>
+	<li><code>INDEX()</code> no longer generates a backing constant array if there are no constants.</li>
+	<li>Replaced the JFlex/CUP-based parser <a href="../contribute/journal/2007-05-16_parser.htm">with one generated by JavaCC</a> to work around a parser limit.</li>
+</ul>
+
+	<h2><a name="pagetoc__7">Release 0.8.3</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li>Added support for <a href="../doc/tutorial/decompile.htm">decompilation of generated engines</a>.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li><span class="caps">SEJ</span> generates the <code>InnerClass</code> attribute needed for proper decompilation and <a href="http://java.sun.com/docs/books/vmspec/2nd-edition/html/ClassFile.doc.html#79996">required by the <span class="caps">JVM</span> spec</a> when a factory or computation is based on a public static inner class.</li>
+</ul>
+
+	<h5>Documented</h5>
+<ul>
+	<li><a href="../doc/reference/index.htm">Function reference</a> now links to decompiled engines for example formulas.</li>
+	<li><a href="../doc/tutorial/index.htm">Tutorial</a> topics now contain decompiled engines to better show what <span class="caps">SEJ</span> does behind the scenes.</li>
+</ul>
+
+	<h2><a name="pagetoc__8">Release 0.8.2</a></h2>
+
+	<h5><strong>Changed!</strong></h5>
+<ul>
+	<li>Dropped support for <code>Operator.MIN</code>, <code>Operator.MAX</code>, and <code>Operator.NOOP</code>. Use <code>Function.MIN</code> and <code>Function.MAX</code> instead.</li>
+	<li>Renamed <a href="../contribute/hacking/rewrite_functions.htm">internal rewrite functions</a> <code>_FOLD_1ST</code> to <code>_REDUCE</code> and <code>_FOLD_1STOK</code> to <code>_FOLD_OR_REDUCE</code>. Simplified <code>_REDUCE</code>.</li>
+	<li>Dropped support for automatically aggregating outer sibling sections. You need to use an outer cell which aggregates the sibling section explicitly. This will probably be enabled more fully again later on.</li>
+</ul>
+
+	<h5>New</h5>
+<ul>
+	<li><code>NPV()</code>, <code>MIRR()</code>, and <code>IRR()</code> are now <a href="../doc/reference/financialfuncs.htm">supported</a> (not yet over dynamic sections, though).</li>
+	<li><code>DSUM()</code>, <code>DPRODUCT()</code>, <code>DCOUNT()</code>, <code>DMIN()</code>, <code>DMAX()</code> are now <a href="../doc/reference/dbaggregators.htm">supported</a>.</li>
+	<li><code>_MAKE_ARRAY()</code>, <code>_FOLD_ARRAY()</code> added to internal rewriting language.</li>
+	<li>Added <code>_DFOLD()</code> to the internal expression <span class="caps">AST</span>, but not the rewriting language. This is because rewriting a database fold like <code>DSUM()</code> is too complex for a simple rewrite. The rewriting is done in a specialized Java class.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>The constant folder now uses the template methods in <code>sej.internal.templates</code> to evaluate templated operators and functions. This got rid of a lot of redundant code, and it ensures that newly added templates automatically get constant folding support.</li>
+	<li>Moved <code>sej.internal.templates</code> to <code>sej.internal.model.templates</code>.</li>
+	<li>Cleaned up the implementation of <code>COUNT()</code>.</li>
+	<li><code>BigDecimal</code> exponentiation now fails with an internal <code>ArithmeticException</code> &#8220;Rounding necessary&#8221; if the exponent is not an integer.</li>
+	<li>Introduced <code>sej.util.New</code> which provides generic static getters to leverage Java 5 type inference (as suggested by Josh Bloch in his new slides on &#8220;Effective Java Reloaded&#8221;).</li>
+</ul>
+
+	<h5>Documented</h5>
+<ul>
+	<li>Checked whether <a href="../contribute/journal/2006-11-22_robust_storage.htm">the engine format needs to be more robust</a> for the future. It&#8217;s OK already.</li>
+	<li>Added a <a href="../contribute/hacking/functions_to_implement.htm">breakdown of missing spreadsheet functions</a>.</li>
+	<li>Added documentation of <a href="../contribute/hacking/rewrite_functions.htm">internal rewrite functions</a>.</li>
+	<li>Documented how to <a href="../contribute/hacking/addarray.xhtml">add an array computation</a>.</li>
+	<li>A few entries in the <a href="../contribute/journal/index.htm">developer&#8217;s journal</a>.</li>
+</ul>
+
+	<h2><a name="pagetoc__9">Release 0.8.1</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li>Added support for naive <a href="../doc/reference/strings.htm">string comparisons</a>. By <em>naive</em> I mean that they do not handle the fancy code-page stuff in Excel yet. It&#8217;s basically <code>String.compareToIgnoreCase()</code>.</li>
+	<li>Redid the <a href="../contribute/journal/index.htm">developer&#8217;s journal</a> so it indexes automatically. Added two entries.</li>
+</ul>
+
+	<h2><a name="pagetoc__10">Release 0.8.0</a></h2>
+
+	<h5><strong>Changed!</strong></h5>
+<ul>
+	<li>Dropped support for <span class="caps">JRE 1</span>.4. This could be re-enabled with some effort, if anyone really needs it.</li>
+	<li>Dropped support for <code>Operator.AND</code> and <code>Operator.OR</code>. Use <code>Function.AND</code> and <code>Function.OR</code> instead.</li>
+</ul>
+
+	<h5>New</h5>
+<ul>
+	<li>First version of <a href="../contribute/hacking/index.htm">hacking docs</a>.</li>
+	<li>Generation of byte-code compiler methods from <a href="../contribute/hacking/addprimitive.htm">plain Java template methods</a> to implement low-level functions.</li>
+	<li><a href="../contribute/hacking/addrewrite.xhtml">Expression rewriting</a> to implement high-level functions.</li>
+	<li><code>FOLD</code> and <code>LET</code> for <a href="../contribute/hacking/addagg.xhtml">rewriting of aggregators</a>.</li>
+	<li><code>ABS()</code>, <code>VAR()</code>, <code>VARP()</code>, <code>FACT()</code>, and <code>COMBIN()</code> are now supported.</li>
+	<li>Added generic test harness which allows me to fairly quickly debug users&#8217;s sheets.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li><code>SpreadsheetBuilder.newCell()</code> added for creating blank cells.</li>
+	<li>A number of automated tests compare generated .jar files against baseline versions to detect unwanted changes.</li>
+	<li>Documentation source now in the project in <a href="http://arrenbrecht.ch/rextile/">Rextile</a> format. Used to be in a custom format and only resulting <span class="caps">HTML</span> files were versioned in the project.</li>
+	<li><a href="../contribute/hacking/build.htm">Build script</a> greatly streamlined and documented. Made it properly configurable/portable.</li>
+	<li>Added download for build tools package to the main page.</li>
+	<li>Source distribution now includes <a href="../contribute/hacking/ide.htm">Eclipse project setup</a> with custom Java formatting rules and all.</li>
+	<li>Added internal logging package for structured (indented) debug log output.</li>
+	<li>Temporary build artefacts now get written to <code>temp/</code> rather than <code>build/</code>.</li>
+	<li>Constant folding support for <code>AND</code> and <code>OR</code>.</li>
+	<li>Eliminated redundant definitions of A1- and <span class="caps">R1C1</span>-style expression scanners.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>Excel spreadsheet saver now properly formats dates and booleans (added tests, too). Fixed issue with columns widths and default fonts not being copied from the template properly.</li>
+	<li>Code coverage ant targets no longer run the caching speed test as the speed varies too much when coverage tracking is enabled.</li>
+	<li>Use of <code>_FOLD</code> fixes a number of bugs with aggregation over nested sections.</li>
+	<li><code>SEARCH</code> with wildcards had bugs.</li>
+</ul>
+
+	<h2><a name="pagetoc__11">Release 0.7.3</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li>Support for <a href="../doc/tutorial/generatesheet.htm">writing initial spreadsheets</a> added.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li><span class="caps">SEJ</span> now supports multiple sheets in an Excel workbook and resolves <a href="../doc/reference/values.htm">references across sheets</a> properly.</li>
+	<li>The interface <code>Spreadsheet.Cell</code> now gives access to the formula text using <code>getExpressionText()</code>.</li>
+	<li>Call chaining for spreadsheet builder methods (they return <code>this</code> instead of <code>void</code>).</li>
+</ul>
+
+	<h2><a name="pagetoc__12">Release 0.7.2</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li><span class="caps">SEJ</span> now automatically <a href="../doc/reference/strings.htm">converts numeric values to strings</a> when a <code>String</code>-valued output method is bound to a numeric cell.</li>
+</ul>
+
+	<h2><a name="pagetoc__13">Release 0.7.1</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li>Much improved (and tested) <a href="../doc/tutorial/errors.htm">error reporting</a>. Error messages should now contain all information for users to be able to pinpoint the source of a problem in their original spreadsheet.</li>
+	<li>Code coverage analysis added using <a href="http://cobertura.sourceforge.net/">cobertura</a> and <a href="http://emma.sourceforge.net/">emma</a>. Use <code>ant cover</code> and <code>ant emma</code> to run them, then check <code>build/coverage/index.html</code> or <code>build/coverage/coverage.html</code> for the results.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li><code>MATCH</code> now properly handles type arguments other than 1, 0, and -1.</li>
+</ul>
+
+	<h2><a name="pagetoc__14">Release 0.7.0</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li><a href="../doc/reference/index.htm">Function reference</a> in the docs.</li>
+	<li><a href="../doc/reference/strings.htm">String support</a>.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>Much <a href="dev.htm#2006-08-30">improved Excel function tests</a>, used as base for reference docs.</li>
+	<li>Improved error messages should give clearer indication of the source of a problem.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>Fixed-scale <code>BigDecimal</code> engines now return all values with proper scale.</li>
+	<li>Boolean values are treated as numbers in constant folder, too.</li>
+	<li>Enabled proper constant folding for <code>AND</code> and <code>OR</code> when they are aggregators.</li>
+</ul>
+
+	<h2><a name="pagetoc__15">Release 0.6.3</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li>Documented and tested the use of a <a href="../doc/tutorial/bindcells.htm#Defaults">derived output class providing default implementations</a> with a factory method returning a superclass.</li>
+</ul>
+
+	<h2><a name="pagetoc__16">Release 0.6.2</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li>Implemented <a href="../doc/tutorial/repeatingsections_withoutputs.htm">repeating sections with outputs</a>.</li>
+	<li>Improved structure of <a href="../doc/tutorial/index.htm">tutorial index</a>.</li>
+	<li>Allow setting of a <a href="../doc/tutorial/customclassloader.htm">custom parent class loader</a> for compiled and loaded engines.</li>
+	<li>Updated to <a href="http://jexcelapi.sourceforge.net/">JExcelAPI</a> version <a href="http://sourceforge.net/project/shownotes.php?release_id=413377&#38;group_id=79926">2.6.0</a>, released on April 27, 2006.</li>
+	<li>Updated to <a href="http://retrotranslator.sourceforge.net/">Retrotranslator</a> version <a href="http://sourceforge.net/project/showfiles.php?group_id=153566&#38;package_id=170323&#38;release_id=429628">1.0.7</a>, released on July 4, 2006.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>The Ant build script now runs the tutorial tests for both the current <span class="caps">JRE</span> and <span class="caps">JRE 1</span>.4. They fell through so far because their class names do not end in <code>Test</code> for easier citability.</li>
+	<li>As a consequence of the above, I have fixed the automatic type conversions so that they run on <span class="caps">JRE 1</span>.4 (which lacks, for instance, <code>static Byte valueOf(byte)</code> in class <code>Byte</code>).</li>
+	<li>Also as a consequence of the above, unscaled <code>BigDecimal</code> division is no longer supported on <span class="caps">JRE 1</span>.4.</li>
+	<li>Give a clearer error message when an outer cell references an inner cell of a section without aggregating it.</li>
+</ul>
+
+	<h2><a name="pagetoc__17">Release 0.6.1</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li>The <a href="../doc/tutorial/basics.htm">sample spreadsheets in the documentation</a> are now cited from the real spreadsheet files used in the automated tests (using <a href="http://arrenbrecht.ch/jcite/">JCite</a> again). This ensures their correctness and improves the formatting.</li>
+	<li>The function <code>MATCH</code> is supported again. However, the last argument (the match type) must be constant, and the second argument (the match range) cannot reference a repeating section yet.</li>
+	<li>The function <code>INDEX</code> is now supported for one- and two-dimensional lookup. However, the range argument cannot reference a repeating section yet.</li>
+</ul>
+
+	<h2><a name="pagetoc__18">Release 0.6.0</a></h2>
+
+	<h5>Changed</h5>
+<ul>
+	<li>In <code>ComputationFactory</code>, renamed <code>newInstance()</code> to <code>newComputation()</code>.</li>
+</ul>
+
+	<h5>New</h5>
+<ul>
+	<li>Implemented input-only <a href="../doc/tutorial/repeatingsections.htm">repeating sections</a>. <code>AND</code> and <code>OR</code> are not yet supported as aggregators on them, though.</li>
+	<li>Implemented support for Excel functions <code>TODAY()</code> and <code>COUNT()</code>. (Although <code>COUNT</code> does not yet handle empty cells properly &#8211; this is because <span class="caps">SEJ</span> generally does not.)</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>Documented, tested and completed the handling of the full set of allowed <a href="../doc/tutorial/bindbyname.htm">input method parameters</a>.</li>
+	<li>Refactored the binding tutorial into more separate pages.</li>
+	<li>Added support for defining and referencing ranges to the <a href="../doc/javadoc/sej/SpreadsheetBuilder.html"><code>SpreadsheetBuilder</code></a>.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>Added some missing <code>switch</code> <code>break</code> statements discovered by Eclipse&#8217;s new check (should not ever trigger anyway, but still&#8230;)</li>
+	<li>Unbound output parameter combinations now throw <code>IllegalArgumentException</code> when there is now default implementation of the output method.</li>
+</ul>
+
+	<h2><a name="pagetoc__19">Release 0.5.4</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li><a href="../doc/tutorial/binding.htm#BindByName">Parametrized output methods</a> are supported now. The interactive demo thus runs again, but does not yet look good because there are some info methods missing on the spreadsheet interface.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>The examples for <a href="../doc/tutorial/binding.htm#BindCells">basic cell binding</a> and <a href="../doc/tutorial/binding.htm#BindByName">parametrized binding</a> are now cited from automated tests.</li>
+</ul>
+
+	<h2><a name="pagetoc__20">Release 0.5.3</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li><span class="caps">SEJ</span> now ships the new <code>sej-&lt;ver&gt;-srcjar.zip</code>, containing <code>sej-src.jar</code> and <code>sej-doc.jar</code> which contain, respectively, the entire source code and documentation for <span class="caps">SEJ</span>. Not included are the examples and test cases. These two .jar files make attaching source and docs in modern IDEs very easy.</li>
+	<li>Clarified behaviour differences between Excel and <span class="caps">SEJ</span> with respect to <code>null</code> input values. See <a href="../doc/tutorial/type_conversion.htm">tutorial on type conversions</a>.</li>
+	<li>Implemented <code>AND</code>, <code>OR</code>, <code>NOT</code>, and comparisons outside of the test of an <code>IF</code>.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>Fixed parsing of cell/range names containing dots (<code>.</code>) in the <span class="caps">R1C1</span>-style parser. Added unit test for parsing names (only had a system test before which did not test the <span class="caps">R1C1</span> parser).</li>
+</ul>
+
+	<h2><a name="pagetoc__21">Release 0.5.2</a></h2>
+
+	<h5>Fixed</h5>
+<ul>
+	<li><span class="caps">SEJ</span> should now accept all valid cell and range names according to Excel&#8217;s online help. In particular, Excel names may now contain dots (<code>.</code>) and do no longer have to start with an underscore or at least two alphabetic characters.</li>
+</ul>
+
+	<h2><a name="pagetoc__22">Release 0.5.1</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li>Type conversion is now <a href="../doc/tutorial/type_conversion.htm">documented</a>.</li>
+	<li>All exceptions are now called <code>...Exception</code>, not <code>...Error</code>.</li>
+	<li>Can call static input methods.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>Removed the superfluous <code>Engine*.jar</code> files from the binary distribution.</li>
+	<li>Can use non-static local classes as inputs again.</li>
+</ul>
+
+	<h2><a name="0.5.0">Release 0.5.0</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li>The new <a href="../doc/javadoc/sej/EngineBuilder.html"><code>EngineBuilder</code></a> supports the <a href="../doc/tutorial/basics.htm">most typical use-case</a> out of the box. The <code>SpreadsheetByNameBinder</code> and <code>SpreadsheetNameCreator</code> give more fine-grained control over this. This use-case is used to provide the motivation for using <span class="caps">SEJ</span> in the tutorial.</li>
+</ul>
+
+<ul>
+	<li>Separated the concept of a computation engine (collection of computation classes) from the concept of a computation factory. <a href="../doc/javadoc/sej/runtime/Engine.html">Engine</a> is now the thing being loaded and <a href="../doc/javadoc/sej/SaveableEngine.html">saved</a>. <a href="../doc/javadoc/sej/runtime/ComputationFactory.html">Factory</a> creates now computation instances. The factory can be forced to implement an application-specific interface or base class, which makes <span class="caps">SEJ</span> even more non-intrusive on application code (see use-case above).</li>
+</ul>
+
+<ul>
+	<li><span class="caps">SEJ</span> now converts between its internal numeric type and basically all numeric Java types in the input and output method result types. To support this, scaled <code>long</code> values in the interface must now be <a href="../doc/tutorial/numeric_type.htm#long">annotated with <code>ScaledLong</code></a>. (While already tested fairly rigorously, the full documentation for this feature is still missing.)</li>
+</ul>
+
+<ul>
+	<li>Saved engines are now normal .jar files, which can be inspected like any other .jar file. The generated classes are normal .class entries in the .jar file.</li>
+</ul>
+
+<ul>
+	<li>The new <a href="../doc/javadoc/sej/SpreadsheetBuilder.html"><code>SpreadsheetBuilder</code></a> supports <a href="../doc/tutorial/buildsheet.htm">constructing spreadsheets in memory</a>.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>I have reorganized the packages. Everything internal is now in <code>sej.internal</code>. Everything need for the loading and running of compiled engines is in <a href="../doc/javadoc/sej/runtime/package-summary.html"><code>sej.runtime</code></a>, <code>sej.internal.runtime</code>, and <code>sej.internal.bytecode.runtime</code>. The compile-time public <span class="caps">API</span> is in <a href="../doc/javadoc/sej/package-summary.html"><code>sej</code></a>.</li>
+</ul>
+
+<ul>
+	<li>I have rigorously trimmed the <span class="caps">API</span> again. Every non-trivial entity is now represented by an interface in the <span class="caps">API</span>, not a class. The central class <a href="../doc/javadoc/sej/SEJ.html"><code>sej.SEJ</code></a> provides factory methods for all of these.</li>
+</ul>
+
+<ul>
+	<li>The fairly monolithic low-level interface <code>sej.Compiler</code> has been broken up to reflect the processing chain: <a href="../doc/javadoc/sej/Spreadsheet.html"><code>sej.Spreadsheet</code></a>, <a href="../doc/javadoc/sej/SpreadsheetBinder.html"><code>sej.SpreadsheetBinder</code></a>, <a href="../doc/javadoc/sej/SpreadsheetBinding.html"><code>sej.SpreadsheetBinding</code></a>, <a href="../doc/javadoc/sej/SpreadsheetCompiler.html"><code>sej.SpreadsheetCompiler</code></a>. Most of these components have a consistent instantiation protocol with a factory method in <code>sej.SEJ</code> and a configuration class called <code>XY.Config</code> which supplies parameters to new instances. This is in preparation of being able to expose the internal computation model as a lightweight alternative to the spreadsheet model.</li>
+</ul>
+
+<ul>
+	<li>New base error class, <code>sej.runtime.SEJError</code>, from which all others are derived. Better separation of errors into <code>sej.SpreadsheetError</code>, <code>sej.CompilerError</code>, and <code>sej.runtime.EngineError</code>.</li>
+</ul>
+
+	<h2><a name="pagetoc__24">Release 0.4.2</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li>You can now generate engines that support <a href="../doc/tutorial/caching.htm">internal caching</a> of inputs, outputs and multiply referenced intermediate values.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>The <code>BigDecimal</code> numeric type now generates vastly more efficient constant values. They are preconstructed in <code>private static final BigDecimal</code> fields, using <code>BigDecimal.valueOf( long, int )</code> wherever possible.</li>
+</ul>
+
+	<h2><a name="pagetoc__25">Release 0.4.1</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li>Implemented <a href="../doc/tutorial/numeric_type.htm#long">scaled <code>long</code> support</a>.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li><code>sej.NumericType</code> now has support routines for value conversions.</li>
+	<li><code>sej.runtime</code> is a new package holding the runtime support classes. They used to be in <code>sej.engine</code>.</li>
+	<li>Added automated tests for serialization and deserialization of engines, as well as the use of the runtime-only jar for deserialization.</li>
+</ul>
+
+	<h2><a name="pagetoc__26">Release 0.4.0</a></h2>
+
+	<h5>New</h5>
+<ul>
+	<li>Implemented <a href="../doc/tutorial/numeric_type.htm#BigDecimal"><code>BigDecimal</code> support</a>.</li>
+</ul>
+
+	<h5>Better</h5>
+<ul>
+	<li>Removed <span class="caps">ASM</span> dependency from the base <code>Operator</code> class.</li>
+	<li>Removed general expression interpreter support. Introduced special constant folder support instead (much faster).</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>Exponentiation (<code>A1^A2</code>) and taking a percentage (<code>A1%</code>) now work when applied to input cells. Added this to the test suite.</li>
+</ul>
+
+	<h2><a name="pagetoc__27">Release 0.3.2</a></h2>
+
+	<h5>Better</h5>
+<ul>
+	<li><span class="caps">SEJ</span> ships with two new .jars, <code>sej-jre1.4.jar</code> and <code>sej-runtime-jre1.4.jar</code>, which have been converted from Java 5 to Java 1.4 by <a href="http://retrotranslator.sourceforge.net/">Retrotranslator</a>. Use these .jars if you plan to deploy <span class="caps">SEJ</span> on the <span class="caps">JRE 1</span>.4. All unit tests are now run automatically using both the <span class="caps">JDK 1</span>.5 and a <span class="caps">JRE 1</span>.4 during builds to ensure compatibility.</li>
+	<li>I dropped <code>Engine.Computation</code>. You no longer have to subclass this thing when defining an output type. As a consequence, you can now define an output as an interface instead of a class.</li>
+	<li>I moved the <code>saveTo()</code> functionality from <code>EngineFactory</code> to <code>Compiler</code>. That way, compiled engines don&#8217;t need the interface to the compiler, making <code>sej-runtime.jar</code> a little smaller still.</li>
+	<li><span class="caps">SEJ</span> accepts <code>boolean</code> input values and can return both <code>boolean</code> and <code>Date</code> values.</li>
+	<li>Moved all test and sample data to folders named <code>org/formulacompiler</code> for better compatibility with the source layout at Abacus.</li>
+</ul>
+
+	<h5>Fixed</h5>
+<ul>
+	<li>I fixed the contents of the distribution packages so the documentation style-sheets are included.</li>
+	<li>The run-time .jar now works (that is, contains all the required stuff).</li>
+</ul>
+
+	<h2><a name="pagetoc__28">Release 0.3.1</a></h2>
+
+	<p>This minor release changes the name <code>Compiler.NameSpace</code> to <code>Compiler.Section</code>. Since we are no longer binding by name, the term <em>NameSpace</em> is no longer appropriate.</p>
+
+
+	<p>In addition <code>Compiler.getRootNameSpace()</code> has been shortened to <code>Compiler.getRoot()</code>.</p>
+
+
+	<h2><a name="pagetoc__29">Release 0.3.0</a></h2>
+
+	<p>This is the first release with the new <span class="caps">API</span> based on <a href="../doc/tutorial/binding.htm">binding cells to native types</a>. The interpreter has been dropped and replaced by a byte code compiler producing very fast code.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../download/license.htm">Licensing</a></div>
+<div class="area"><span class="selected">Release Notes</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Release 1.0</a></li><li><a href="#pagetoc__2">Release 0.10.1</a></li><li><a href="#pagetoc__3">Release 0.10.0</a></li><li><a href="#pagetoc__4">Release 0.9.1</a></li><li><a href="#pagetoc__5">Release 0.9.0</a></li><li><a href="#pagetoc__6">Release 0.8.4</a></li><li><a href="#pagetoc__7">Release 0.8.3</a></li><li><a href="#pagetoc__8">Release 0.8.2</a></li><li><a href="#pagetoc__9">Release 0.8.1</a></li><li><a href="#pagetoc__10">Release 0.8.0</a></li><li><a href="#pagetoc__11">Release 0.7.3</a></li><li><a href="#pagetoc__12">Release 0.7.2</a></li><li><a href="#pagetoc__13">Release 0.7.1</a></li><li><a href="#pagetoc__14">Release 0.7.0</a></li><li><a href="#pagetoc__15">Release 0.6.3</a></li><li><a href="#pagetoc__16">Release 0.6.2</a></li><li><a href="#pagetoc__17">Release 0.6.1</a></li><li><a href="#pagetoc__18">Release 0.6.0</a></li><li><a href="#pagetoc__19">Release 0.5.4</a></li><li><a href="#pagetoc__20">Release 0.5.3</a></li><li><a href="#pagetoc__21">Release 0.5.2</a></li><li><a href="#pagetoc__22">Release 0.5.1</a></li><li><a href="#0.5.0">Release 0.5.0</a></li><li><a href="#pagetoc__24">Release 0.4.2</a></li><li><a href="#pagetoc__25">Release 0.4.1</a></li><li><a href="#pagetoc__26">Release 0.4.0</a></li><li><a href="#pagetoc__27">Release 0.3.2</a></li><li><a href="#pagetoc__28">Release 0.3.1</a></li><li><a href="#pagetoc__29">Release 0.3.0</a></li></ul></div></div>
+<div class="area"><a href="../download/versions.htm">Older Versions</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

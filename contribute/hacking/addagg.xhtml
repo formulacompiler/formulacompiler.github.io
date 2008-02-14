@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Adding A New Aggregator Function To AFC - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Adding A New Aggregator Function To <span class="caps">AFC</span></h1>
+
+	<p>An aggregator is a (typically statistical) function that computes a single value from a range of values. <code>SUM()</code> is the prime example. Here, we shall look at how I implemented <code>VAR()</code>. So let&#8217;s assume <code>VAR()</code> has not been implemented yet.</p>
+
+
+	<p><em>Note: You must have read the topics on adding <a href="addprimitive.htm">primitive functions</a> and <a href="addrewrite.xhtml">high-level functions</a> to understand this section.</em></p>
+
+
+
+	<h2><a name="pagetoc__1">Docs and Tests</a></h2>
+
+	<p>As always, we start with the announcement in the release notes, and the tests:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+			<td>J</td>
+			<td>K</td>
+			<td>L</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Expected</span><br/><span class="xl-exp">=IF(Q1,"Expected","FAILED!")</span></td>
+			<td><span style="text-decoration: underline;">Actual</span></td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><span style="text-decoration: underline;"># of Inputs</span></td>
+			<td><span style="text-decoration: underline;">Name</span></td>
+			<td><span style="text-decoration: underline;">Highlight</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">149</td>
+			<td class="xl-num">0.5</td>
+			<td class="xl-num">0.5<br/><span class="xl-exp">=VAR(C149,D149)</span></td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td>VAR (does not support blanks!)</td>
+			<td>VAR</td>
+		</tr>
+		<tr>
+			<td class="xl-row">150</td>
+			<td class="xl-num">0.5</td>
+			<td class="xl-num">0.5<br/><span class="xl-exp">=VAR(C150,D150)</span></td>
+			<td class="xl-num">4</td>
+			<td class="xl-num">5</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td>...</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">151</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">152</td>
+			<td class="xl-num">5.8</td>
+			<td class="xl-num">5.8<br/><span class="xl-exp">=VAR(C152:E152,G152,I152)</span></td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">100</td>
+			<td class="xl-num">5</td>
+			<td class="xl-num">200</td>
+			<td class="xl-num">7</td>
+			<td class="xl-num">7</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">153</td>
+			<td class="xl-num">2.5</td>
+			<td class="xl-num">2.5<br/><span class="xl-exp">=VAR(C153:E153,G153,I153)</span></td>
+			<td class="xl-num">6</td>
+			<td class="xl-num">7</td>
+			<td class="xl-num">8</td>
+			<td class="xl-num">80</td>
+			<td class="xl-num">9</td>
+			<td></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">7</td>
+			<td>...</td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<h2><a name="pagetoc__2">Parsing</a></h2>
+
+	<p>Making <code>VAR()</code> known to the parser is much like what we did for <code>ABS()</code>. Aggregators, however, need to accept range arguments, not just simple values. For the standard aggregators which treat all their arguments as a single range, we can mimick the definition of <code>SUM()</code> as follows:</p>
+
+	<pre class="j-text"><code>|	"VAR" aggN( Function.VAR )</code></pre>
+
+
+	<h2><a name="pagetoc__3">Mathematical Definition</a></h2>
+
+	<p>The function <code>VAR()</code> is defined in the Excel help file as follows:</p>
+
+
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+    <mfrac><mrow><mo rspace="thinmathspace" lspace="thinmathspace">&#8721;</mo>
+    <mrow><mo>(</mo>
+    <mi>x</mi><mo>-</mo><mover><mrow><mi>x</mi>
+    </mrow><mo>&#x000AF;</mo></mover><msup><mo>)</mo> <mn>2</mn></msup></mrow></mrow><mrow>
+    <mi>n</mi><mo>-</mo><mn>1</mn></mrow></mfrac>
+</math>
+	<p>Clearly, what we have here is a sum over a function on <em>all of the elements</em> in the range. How can we rewrite this using Excel functions? We cannot. But <span class="caps">AFC</span> defines a couple of <a href="rewrite_functions.htm">functions of its own</a> that help.</p>
+
+
+	<h2><a name="pagetoc__4">Folding Functions</a></h2>
+
+	<p>For a quick example, let&#8217;s look at how the rewrite rule for <code>SUM()</code> is defined in <span class="caps">AFC</span>:</p>
+
+	<pre class="j-text"><code>def sum = fold/reduce with s = 0 each xi as s = s + xi end
+rewrite sum( xs* ) = apply sum to list xs</code></pre>
+
+
+	<p>This means that the result, <code>s</code>, is initially 0. Then, for every <code>xi</code> in the range <code>xs</code>, we simply add <code>xi</code> to <code>s</code>. In the argument specification, the <code>*</code> indicates that <code>xs</code> represents all remaining arguments as a list (much like <code>int... a</code> in Java).</p>
+
+
+	<p>So the <a href="http://en.wikipedia.org/wiki/Foldl">folding function</a> iterates over a list of arguments. For every value in the list, it executes a given computation involving a so-called <em>accumulator value</em> (called <code>r</code> here) and the current value from the list (called <code>xi</code> here). The result becomes the new accumulator value. The final result is the accumulator value at the end of the list.</p>
+
+
+	<h4><a name="pagetoc__4_1">Special First Argument</a></h4>
+
+	<p>The version of <code>fold</code> I used here, <code>fold/reduce</code>, is simply <code>fold</code> with a hint that it is OK to directly use the first argument as the starting value, instead of the specified value 0. This is a performance optimization.</p>
+
+
+	<h2><a name="pagetoc__5">Rewriting It</a></h2>
+
+	<p>Let&#8217;s recap the mathematical definition:</p>
+
+
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+    <mfrac><mrow><mo rspace="thinmathspace" lspace="thinmathspace">&#8721;</mo>
+    <mo>(</mo><msub><mi>x</mi> <mi>i</mi></msub><mo>-</mo><mover><mrow><mi>x</mi>
+    </mrow><mo>&#x000AF;</mo></mover><msup><mo>)</mo> <mn>2</mn></msup></mrow><mrow><mi>n</mi>
+    <mo>-</mo><mn>1</mn></mrow></mfrac>
+</math>
+	<p>where the average is, of course, defined as:</p>
+
+
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+    <mover><mi>x</mi><mo>&#x000AF;</mo></mover>
+    <mo>=</mo><mfrac><mrow><mo rspace="thinmathspace" lspace="thinmathspace">&#8721;</mo>
+    <msub><mi>x</mi> <mi>i</mi></msub></mrow><mrow><mi>n</mi>
+    </mrow></mfrac>
+</math>
+	<p>We could formulate this as a rewrite rule directly using a <code>fold</code> as in <code>SUM</code> above, with the help of <code>COUNT</code> and <code>AVERAGE</code>. However, passing over the list of values only once is generally more efficient (especially once <span class="caps">AFC</span> supports cursor-style iteration over large repeating sections). A bit of algebra shows that the above is the same as:</p>
+
+
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+    <mfrac>
+        <mrow>
+            <mo rspace="thinmathspace" lspace="thinmathspace">&#8721;</mo>
+            <msup><mi>x</mi> <mn>2</mn></msup>
+            <mo>-</mo>
+            <mo>(</mo>
+            <mo rspace="thinmathspace" lspace="thinmathspace">&#8721;</mo>
+            <mi>x</mi>
+            <msup><mo>)</mo> <mn>2</mn></msup>
+            <mo>/</mo>
+            <mi>n</mi>
+        </mrow>
+        <mrow>
+            <mi>n</mi>
+            <mo>-</mo>
+            <mn>1</mn>
+        </mrow>
+    </mfrac>
+</math>
+
+	<p>So we need both the sum and the sum of squares of the list of values. We do this using two parallel accumulators:</p>
+
+	<pre class="j-text"><code>def var =
+	fold with
+		s = 0,
+		ss = 0
+	each xi as
+		s = s + xi,
+		ss = ss + xi * xi
+	with count n into
+		(ss - s*s/n) / (n - 1)
+	end
+rewrite var( xs* ) = apply var to list xs</code></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Adding A New Aggregator Function To AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Docs and Tests</a></li><li><a href="#pagetoc__2">Parsing</a></li><li><a href="#pagetoc__3">Mathematical Definition</a></li><li class="withitems"><a href="#pagetoc__4">Folding Functions</a><ul class="toc toc3"><li><a href="#pagetoc__4_1">Special First Argument</a></li></ul></li><li><a href="#pagetoc__5">Rewriting It</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

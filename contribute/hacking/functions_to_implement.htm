@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Spreadsheet Functions To Implement - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Spreadsheet Functions To Implement</h1>
+
+	<p>This document is based mainly on the requirements set forth in the <a href="http://www.oasis-open.org/committees/documents.php?wg_abbrev=office-formula">OpenDocument OpenFormula specification</a> as of November 2007. The first goal is to achieve reasonable compatibility with the &#8220;Small&#8221; group of functionality, then &#8220;Medium&#8221;. <em>Reasonable</em> here means where other important goals of <span class="caps">AFC</span> do not conflict with the demands of the spec. An example is nulls, which conflict with <span class="caps">AFC</span>&#8217;s goal to compile to primitive types.</p>
+
+
+	<p>Another source is the set of functions implemented in <a href="http://www.jedox.com/">Jedox&#8217;s Worksheet Server</a> (also  as of November 2007). It adds little to the &#8220;Medium&#8221; group, so I suggest we aim first for &#8220;Medium&#8221; and then for the Jedox set.</p>
+
+
+	<p>Finally, we have for the moment decided to not support function from the Excel Analysis ToolPak (mainly because parsing them is also not supported by <a href="http://jexcelapi.sourceforge.net/">JExcelAPI</a>).</p>
+
+
+
+	<h2><a name="pagetoc__1">&#8220;Small&#8221; Group</a></h2>
+
+	<p>Here&#8217;s what the <a href="http://www.oasis-open.org/committees/documents.php?wg_abbrev=office-formula">document</a> says about the &#8220;Small&#8221; group:</p>
+
+
+<blockquote>
+	<p>For an application to claim that it conforms to the &#8220;Small&#8221; group of functionality, it shall:</p>
+
+<ul>
+	<li>Support at least the limits defined in the &#8220;Basic Limits&#8221; section.</li>
+</ul>
+
+<ul>
+	<li>Support the relevant syntax required in these sections on syntax: Criteria; Namespace Selection; Basic Expressions; Constant Numbers; Constant Strings; Operators; Functions and Function Parameters; Nonstandard Function Names; References; Simple Named Expressions; External Named Expressions; Sheet-local Named Expressions; Errors; Whitespace</li>
+</ul>
+
+<ul>
+	<li>Implement all implicit conversions for its applicable types: at least Text, Conversion to Number, Reference, Conversion to Logical, and Error</li>
+</ul>
+
+<ul>
+	<li>Implement the following operators (which are all the operators except reference union (<code>~</code>)):  Infix Operator Ordered Comparison (<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>);  Infix Operator <code>&#38;</code>; Infix Operator <code>+</code>; Infix Operator <code>-</code>; Infix Operator <code>*</code>; Infix Operator <code>/</code>; Infix Operator <code>^</code>; Infix Operator <code>=</code>; Infix Operator <code>&lt;&gt;</code>; Postfix Operator <code>%</code>; Prefix Operator <code>+</code>; Prefix Operator <code>-</code>; Infix Operator Reference Intersection (<code>!</code>); Infix Operator Range (<code>:</code>)</li>
+</ul>
+
+<ul>
+	<li>Implement the following 109 functions as defined in this specification: <span class="caps">ABS</span>; ACOS; <span class="caps">AND</span>; ASIN; <span class="caps">ATAN</span>; ATAN2; <span class="caps">AVERAGE</span>; CHOOSE; <span class="caps">COLUMNS</span>; COS; <span class="caps">COUNT</span>; COUNTA; <span class="caps">COUNTBLANK</span>; COUNTIF; <span class="caps">DATE</span>; DAVERAGE; <span class="caps">DAY</span>; DCOUNT; <span class="caps">DCOUNTA</span>; DDB; <span class="caps">DEGREES</span>; DGET; <span class="caps">DMAX</span>; DMIN; <span class="caps">DPRODUCT</span>; DSTDEV; <span class="caps">DSTDEVP</span>; DSUM; <span class="caps">DVAR</span>; DVARP; <span class="caps">EVEN</span>; EXACT; <span class="caps">EXP</span>; FACT; <span class="caps">FALSE</span>; FIND; FV; <span class="caps">HLOOKUP</span>; HOUR; IF; <span class="caps">INDEX</span>; INT; <span class="caps">IRR</span>; ISBLANK; <span class="caps">ISERR</span>; ISERROR; <span class="caps">ISLOGICAL</span>; ISNA; <span class="caps">ISNONTEXT</span>; ISNUMBER; <span class="caps">ISTEXT</span>; LEFT; <span class="caps">LEN</span>; LN; <span class="caps">LOG</span>; LOG10; <span class="caps">LOWER</span>; MATCH; <span class="caps">MAX</span>; MID; <span class="caps">MIN</span>; MINUTE; <span class="caps">MOD</span>; MONTH; N; NA; <span class="caps">NOT</span>; NOW; <span class="caps">NPER</span>; NPV; <span class="caps">ODD</span>; OR; PI; <span class="caps">PMT</span>; POWER; <span class="caps">PRODUCT</span>; PROPER; PV; <span class="caps">RADIANS</span>; RATE; <span class="caps">REPLACE</span>; REPT; <span class="caps">RIGHT</span>; ROUND; <span class="caps">ROWS</span>; SECOND; <span class="caps">SIN</span>; SLN; <span class="caps">SQRT</span>; STDEV; <span class="caps">STDEVP</span>; SUBSTITUTE; <span class="caps">SUM</span>; SUMIF; <span class="caps">SYD</span>; T; <span class="caps">TAN</span>; TIME; <span class="caps">TODAY</span>; TRIM; <span class="caps">TRUE</span>; TRUNC; <span class="caps">UPPER</span>; VALUE; <span class="caps">VAR</span>; VARP; <span class="caps">VLOOKUP</span>; WEEKDAY; <span class="caps">YEAR</span></li>
+</ul>
+
+</blockquote>
+	<h3><a name="pagetoc__1_1">What&#8217;s missing?</a></h3>
+
+	<h4><a name="pagetoc__1_1_1">Syntax</a></h4>
+<ul>
+	<li>Namespace selection.</li>
+	<li>Forced recalc (second <code>=</code>).</li>
+	<li>Intersection of row/col labels, <code>!!</code>.</li>
+	<li>Exponential notation, eg. <code>1.0e-10</code>.</li>
+	<li>Omitting the leading <code>0</code> in decimals, as in <code>.54</code>.</li>
+	<li>Duplicate double quote as escape for double quote in the string.</li>
+</ul>
+
+	<h4><a name="pagetoc__1_1_2">Conversions</a></h4>
+<ul>
+	<li><span class="caps">AFC</span> currently does not filter out non-numeric cells from aggregators such as <code>SUM</code>. Nor does it filter booleans.</li>
+	<li><span class="caps">AFC</span> currently does not treat <code>'true</code> as <code>TRUE</code> and <code>'false</code> as <code>FALSE</code>.</li>
+	<li><span class="caps">AFC</span>, since it does not differentiate boolean types, cannot convert <code>TRUE</code> to <code>'true</code> and <code>FALSE</code> to <code>'false</code>.</li>
+</ul>
+
+	<h4><a name="pagetoc__1_1_3">Operators</a></h4>
+<ul>
+	<li>Not sure if <code>^</code> is left associative. Not sure if unary <code>+</code> and <code>-</code> bind stronger than <code>^</code>.</li>
+	<li>Infix Reference Intersection (<code>!</code>) is missing. Excel syntax is a space.</li>
+	<li>Union (<code>~</code>) is not required for &#8220;Small&#8221;, but implemented with Excel syntax (<code>,</code>).</li>
+</ul>
+
+	<h4><a name="pagetoc__1_1_4">Functions</a></h4>
+<ul>
+	<li><code>TRUE; FALSE</code> are implemented, but not yet parsed with trailing <code>()</code>.</li>
+	<li><code>COLUMNS; COUNTBLANK; ISBLANK; ISLOGICAL; ROWS</code> are not yet implemented.</li>
+</ul>
+
+	<h3><a name="pagetoc__1_2">Implementation Notes</a></h3>
+
+	<p>The function <code>COLUMNS; ROWS</code> probably need to be implemented using direct bytecode generation.</p>
+
+
+	<h2><a name="pagetoc__2">&#8220;Medium&#8221; Group</a></h2>
+
+	<p>This is what the <a href="http://www.oasis-open.org/committees/documents.php?wg_abbrev=office-formula">document</a> says about the &#8220;Medium&#8221; group:</p>
+
+
+<blockquote>
+	<p>Applications that conform to the &#8220;medium&#8221; group shall conform to the &#8220;small&#8221; group, and in addition, shall implement the following functions as defined in this specification:</p>
+
+
+	<p><span class="caps">ACCRINT</span>; ACCRINTM; <span class="caps">ACOSH</span>; ADDRESS; <span class="caps">ASINH</span>; ATANH; <span class="caps">AVEDEV</span>; BESSELI; <span class="caps">BESSELJ</span>; BESSELK; <span class="caps">BESSELY</span>; BETADIST; <span class="caps">BETAINV</span>; BINOMDIST; <span class="caps">CEILING</span>; CELL; <span class="caps">CHAR</span>; CHIDIST; <span class="caps">CHIINV</span>; CHITEST; <span class="caps">CLEAN</span>; CODE; <span class="caps">COLUMN</span>; COMBIN; <span class="caps">CONCATENATE</span>; CONFIDENCE; <span class="caps">CONVERT</span>; CORREL; <span class="caps">COSH</span>; COUPDAYBS; <span class="caps">COUPDAYS</span>; COUPDAYSNC; <span class="caps">COUPNCD</span>; COUPNUM; <span class="caps">COUPPCD</span>; COVAR; <span class="caps">CRITBINOM</span>; CUMIPMT; <span class="caps">CUMPRINC</span>; DATEDIF; <span class="caps">DATEVALUE</span>; DAYS360; DB; <span class="caps">DEVSQ</span>; DISC; <span class="caps">DOLLAR</span>; DOLLARDE; <span class="caps">DOLLARFR</span>; DURATION; <span class="caps">EOMONTH</span>; ERF; <span class="caps">ERFC</span>; EXPONDIST; <span class="caps">FDIST</span>; FINV; <span class="caps">FISHER</span>; FISHERINV; <span class="caps">FIXED</span>; FLOOR; <span class="caps">FORECAST</span>; FTEST; <span class="caps">GAMMADIST</span>; GAMMAINV; <span class="caps">GAMMALN</span>; GCD; <span class="caps">GEOMEAN</span>; HARMEAN; <span class="caps">HYPGEOMDIST</span>; INTERCEPT; <span class="caps">INTRATE</span>; ISEVEN; <span class="caps">ISODD</span>; KURT; <span class="caps">LARGE</span>; LCM; <span class="caps">LINEST</span>; LOGINV; <span class="caps">LOGNORMDIST</span>; LOOKUP; <span class="caps">MDURATION</span>; MEDIAN; <span class="caps">MINVERSE</span>; MIRR; <span class="caps">MMULT</span>; MODE; <span class="caps">MROUND</span>; MULTINOMIAL; <span class="caps">NEGBINOMDIST</span>; NETWORKDAYS; <span class="caps">NOMINAL</span>; NORMDIST; <span class="caps">NORMINV</span>; NORMSDIST; <span class="caps">NORMSINV</span>; ODDFPRICE; <span class="caps">ODDFYIELD</span>; ODDLPRICE; <span class="caps">ODDLYIELD</span>; OFFSET; <span class="caps">PEARSON</span>; PERCENTILE; <span class="caps">PERCENTRANK</span>; PERMUT; <span class="caps">POISSON</span>; PRICE; <span class="caps">PRICEMAT</span>; PROB; <span class="caps">QUARTILE</span>; QUOTIENT; <span class="caps">RAND</span>; RANDBETWEEN; <span class="caps">RANK</span>; RECEIVED; <span class="caps">ROMAN</span>; ROUNDDOWN; <span class="caps">ROUNDUP</span>; ROW; <span class="caps">RSQ</span>; SERIESSUM; <span class="caps">SIGN</span>; SINH; <span class="caps">SKEW</span>; SLOPE; <span class="caps">SMALL</span>; SQRTPI; <span class="caps">STANDARDIZE</span>; STDEVPA; <span class="caps">STEYX</span>; SUBTOTAL; <span class="caps">SUMPRODUCT</span>; SUMSQ; <span class="caps">SUMX2MY2</span>; SUMX2PY2; <span class="caps">SUMXMY2</span>; TANH; <span class="caps">TBILLEQ</span>; TBILLPRICE; <span class="caps">TBILLYIELD</span>; TDIST; <span class="caps">TIMEVALUE</span>; TINV; <span class="caps">TRANSPOSE</span>; TREND; <span class="caps">TRIMMEAN</span>; TTEST; <span class="caps">TYPE</span>; VARA; <span class="caps">VDB</span>; WEEKNUM; <span class="caps">WEIBULL</span>; WORKDAY; <span class="caps">XIRR</span>; XNPV; <span class="caps">YEARFRAC</span>; YIELD; <span class="caps">YIELDDISC</span>; YIELDMAT; <span class="caps">ZTEST</span></p>
+
+
+	<p>Applications that implement the medium group shall implement the &#8220;Infix Operator Reference Union (<code>~</code>)&#8221; and the ability to have references with more than one area.</p>
+
+
+</blockquote>
+	<h3><a name="pagetoc__2_1">What&#8217;s missing?</a></h3>
+
+	<h4><a name="pagetoc__2_1_1">Operators</a></h4>
+<ul>
+	<li>Union (<code>~</code>) is only implemented with Excel syntax (<code>,</code>).</li>
+</ul>
+
+	<h4><a name="pagetoc__2_1_2">Functions</a></h4>
+<ul>
+	<li><code>ADDRESS; CELL; COLUMN; CONVERT; LCM; LINEST; MINVERSE; MMULT; OFFSET; ROW; SUBTOTAL; SUMPRODUCT; TRANSPOSE; TREND; TYPE</code> are not yet implemented.</li>
+	<li><code>ACCRINT; ACCRINTM; BESSELI; BESSELJ; BESSELK; BESSELY; COUPDAYBS; COUPDAYS; COUPDAYSNC; COUPNCD; COUPNUM; COUPPCD; CUMIPMT; CUMPRINC; DATEDIF; DISC; DOLLARDE; DOLLARFR; DURATION; EOMONTH; ERF; ERFC; GCD; INTRATE; ISEVEN; ISODD; MDURATION; MROUND; MULTINOMIAL; NETWORKDAYS; NOMINAL; ODDFPRICE; ODDFYIELD; ODDLPRICE; ODDLYIELD; PRICE; PRICEMAT; QUOTIENT; RANDBETWEEN; RECEIVED; SERIESSUM; SQRTPI; TBILLEQ; TBILLPRICE; TBILLYIELD; WEEKNUM; WORKDAY; XIRR; XNPV; YEARFRAC; YIELD; YIELDDISC; YIELDMAT</code> from the Excel Analysis ToolPak are not yet implemented.</li>
+</ul>
+
+	<h3><a name="pagetoc__2_2">Implementation Notes</a></h3>
+<ul>
+	<li><code>LCM</code> probably needs additional compiler support.</li>
+	<li><code>OFFSET</code> probably needs direct bytecode generation.</li>
+	<li><code>LINEST; MINVERSE; MMULT; TRANSPOSE; TREND</code> are matrix or array returning functions (not yet supportable).</li>
+	<li><code>ADDRESS; CELL; COLUMN; CONVERT; ROW; SUBTOTAL; TYPE</code> do not make much sense for <span class="caps">AFC</span> to support.</li>
+</ul>
+
+	<h2><a name="pagetoc__3">&#8220;Large&#8221; Group</a></h2>
+
+	<p>This is what the <a href="http://www.oasis-open.org/committees/documents.php?wg_abbrev=office-formula">document</a> says about the &#8220;Large&#8221; group:</p>
+
+
+<blockquote>
+	<p>Applications that conform to the &#8220;large&#8221; group shall conform to the &#8220;medium&#8221; group, and shall also support the requirements given in these sections on syntax: &#8220;Inline Arrays&#8221;; &#8220;Automatic Intersection&#8221;. Applications conforming to the large group shall implement the complex number type, as discussed in the section on &#8220;Complex Number&#8221;, and &#8220;array formulas&#8221;.</p>
+
+
+	<p>In addition, applications that conform to the large group shall implement the following functions as defined in this specification:</p>
+
+
+	<p><span class="caps">ACOT</span>; ACOTH; <span class="caps">AMORDEGRC</span>; AMORLINC; <span class="caps">ARABIC</span>; AREAS; <span class="caps">ASC</span>; AVERAGEA; B; <span class="caps">BAHTTEXT</span>; BASE; <span class="caps">BIN2DEC</span>; BIN2HEX; <span class="caps">BIN2OCT</span>; BITAND; <span class="caps">BITLSHIFT</span>; BITOR; <span class="caps">BITRSHIFT</span>; BITXORCEILING; <span class="caps">COMBINA</span>; COMPLEX; <span class="caps">COT</span>; COTH; <span class="caps">CURRENT</span>; DAYS; <span class="caps">DBSC</span>; DDE; <span class="caps">DEC2BIN</span>; DEC2HEX; <span class="caps">DEC2OCT</span>; DECIMAL; <span class="caps">DELTA</span>; EDATE; <span class="caps">EFFECT</span>; EFFECTIVE; <span class="caps">ERROR</span>.TYPE; <span class="caps">FACTDOUBLE</span>; FINDB; <span class="caps">FORMULA</span>; FREQUENCY; <span class="caps">FVSCHEDULE</span>; GAMMA; <span class="caps">GAUSS</span>; GESTEP; <span class="caps">GETPIVOTDATA</span>; GROWTH; <span class="caps">HEX2BIN</span>; HEX2DEC; <span class="caps">HEX2OCT</span>; HYPERLINK; <span class="caps">HYPGEOMVERT</span>; IMABS; <span class="caps">IMAGINARY</span>; IMARGUMENT; <span class="caps">IMCONJUGATE</span>; IMCOS; <span class="caps">IMDIV</span>; IMEXP; <span class="caps">IMLN</span>; IMLOG10; <span class="caps">IMLOG2</span>; IMPOWER; <span class="caps">IMPRODUCT</span>; IMREAL; <span class="caps">IMSIN</span>; IMSQRT; <span class="caps">IMSUB</span>; IMSUM; <span class="caps">INDIRECT</span>; INFO; <span class="caps">IPMT</span>; ISFORMULA; <span class="caps">ISPMT</span>; ISREF; <span class="caps">LEFTB</span>; LENB; <span class="caps">MAXA</span>; MDETERM; <span class="caps">MUNIT</span>; MIDB; <span class="caps">MINA</span>; MNORMSINV; <span class="caps">NUMBERSTRING</span>; OCT2BIN; <span class="caps">OCT2DEC</span>; OCT2HEX; <span class="caps">PERMUTATIONA</span>; PHI; <span class="caps">PHONETIC</span>; PPMT; <span class="caps">PRICEDISC</span>; REPLACEB; <span class="caps">RIGHTB</span>; RRI; <span class="caps">RTD</span>; SEARCH; <span class="caps">SEARCHB</span>; SHEET; <span class="caps">SHEETS</span>; TEXT; <span class="caps">USDOLLAR</span>; VALUEL; <span class="caps">VARPA</span>; XOR</p>
+
+
+</blockquote>
+	<h3><a name="pagetoc__3_1">What&#8217;s missing?</a></h3>
+
+	<h4><a name="pagetoc__3_1_1">Syntax</a></h4>
+<ul>
+	<li>All except &#8220;Automatic Intersection&#8221;.</li>
+</ul>
+
+	<h4><a name="pagetoc__3_1_2">Functions</a></h4>
+<ul>
+	<li><code>ACOT; ACOTH; AMORDEGRC; AMORLINC; ARABIC; AREAS; ASC; AVERAGEA; B; BAHTTEXT; BASE; BIN2DEC; BIN2HEX; BIN2OCT; BITAND; BITLSHIFT; BITOR; BITRSHIFT; BITXORCEILING; COMBINA; COMPLEX; COT; COTH; CURRENT; DAYS; DBSC; DDE; DEC2BIN; DEC2HEX; DEC2OCT; DECIMAL; DELTA; EDATE; EFFECT; EFFECTIVE; ERROR.TYPE; FACTDOUBLE; FINDB; FORMULA; FREQUENCY; FVSCHEDULE; GAMMA; GAUSS; GESTEP; GETPIVOTDATA; GROWTH; HEX2BIN; HEX2DEC; HEX2OCT; HYPERLINK; HYPGEOMVERT; IMABS; IMAGINARY; IMARGUMENT; IMCONJUGATE; IMCOS; IMDIV; IMEXP; IMLN; IMLOG10; IMLOG2; IMPOWER; IMPRODUCT; IMREAL; IMSIN; IMSQRT; IMSUB; IMSUM; INDIRECT; INFO; IPMT; ISFORMULA; ISPMT; ISREF; LEFTB; LENB; MAXA; MDETERM; MIDB; MINA; MNORMSINV; MUNIT; NUMBERSTRING; OCT2BIN; OCT2DEC; OCT2HEX; PERMUTATIONA; PHI; PHONETIC; PPMT; PRICEDISC; REPLACEB; RIGHTB; RRI; RTD; SEARCHB; SHEET; SHEETS; USDOLLAR; VALUEL; VARPA; XOR</code> are not yet implemented.</li>
+</ul>
+
+	<h2><a name="pagetoc__4">Jedox Functions</a></h2>
+
+	<p>Here&#8217;s what <a href="http://www.jedox.com/">Jedox&#8217;s Worksheet Server</a> currently implements:</p>
+
+
+	<p><span class="caps">ABS</span>; 
+<span class="caps">ACOS</span>; 
+<span class="caps">AND</span>; 
+<span class="caps">ASIN</span>; 
+<span class="caps">ATAN</span>; 
+<span class="caps">AVERAGE</span>; 
+<span class="caps">CEILING</span>; 
+<span class="caps">CHAR</span>; 
+<span class="caps">CHECKBOX</span>; 
+<span class="caps">CODE</span>; 
+<span class="caps">CHOOSE</span>; 
+<span class="caps">COS</span>; 
+<span class="caps">COUNTIF</span>; 
+<span class="caps">COUNT</span>; 
+<span class="caps">COUNTA</span>; 
+<span class="caps">CONCATENATE</span>; 
+<span class="caps">DATE</span>; 
+<span class="caps">DATEVALUE</span>; 
+<span class="caps">DAY</span>; 
+DB; 
+<span class="caps">DDB</span>; 
+<span class="caps">EXACT</span>; 
+<span class="caps">EXP</span>; 
+<span class="caps">EOMONTH</span>; 
+<span class="caps">FIND</span>; 
+<span class="caps">FLOOR</span>; 
+<span class="caps">FIXED</span>; 
+<span class="caps">FLOOR</span>; 
+FV; 
+<span class="caps">HYPERLINK</span>; 
+<span class="caps">HOUR</span>; 
+IF; 
+<span class="caps">INDEX</span>; 
+<span class="caps">INT</span>; 
+<span class="caps">INTERCEPT</span>; 
+<span class="caps">IPMT</span>; 
+<span class="caps">IRR</span>; 
+<span class="caps">ISERR</span>; 
+<span class="caps">ISERROR</span>; 
+<span class="caps">ISNUMBER</span>; 
+<span class="caps">ISNUMERIC</span>; 
+<span class="caps">ISREF</span>; 
+<span class="caps">ISTEXT</span>; 
+<span class="caps">LARGE</span>; 
+<span class="caps">LEFT</span>; 
+<span class="caps">LEN</span>; 
+<span class="caps">LIN</span>; 
+<span class="caps">LOG</span>; 
+<span class="caps">LOOKUP</span>; 
+<span class="caps">LOWER</span>; 
+<span class="caps">MATCH</span>; 
+<span class="caps">MAX</span>; 
+<span class="caps">MEDIAN</span>; 
+<span class="caps">MIN</span>; 
+<span class="caps">MIRR</span>; 
+<span class="caps">MAX</span>; 
+<span class="caps">MOD</span>; 
+<span class="caps">MINUTE</span>; 
+<span class="caps">MONTH</span>; 
+<span class="caps">MROUND</span>; 
+<span class="caps">MOD</span>; 
+<span class="caps">MONTH</span>; 
+<span class="caps">NOT</span>; 
+<span class="caps">NOW</span>; 
+<span class="caps">NPER</span>; 
+<span class="caps">NPV</span>; 
+<span class="caps">OFFSET</span> (Das erste Argument darf nicht eine einzelne Zelle sein, der maximale Bereich muss hier definiert);
+OR; 
+PI; 
+<span class="caps">PMT</span>; 
+<span class="caps">POWER</span>; 
+<span class="caps">PPMT</span>; 
+<span class="caps">PRODUCT</span>
+<span class="caps">PROPER</span>; 
+PV; 
+<span class="caps">RANK</span>; 
+<span class="caps">RATE</span>; 
+<span class="caps">REPLACE</span>; 
+<span class="caps">REPT</span>; 
+<span class="caps">RIGHT</span>; 
+<span class="caps">RMZ</span>; 
+<span class="caps">ROUND</span>; 
+<span class="caps">ROUNDDOWN</span>;
+<span class="caps">ROUNDUP</span>; 
+<span class="caps">SEARCH</span>; 
+<span class="caps">SIGN</span>; 
+<span class="caps">SLN</span>; 
+<span class="caps">SLOPE</span>; 
+<span class="caps">SMALL</span>; 
+<span class="caps">SQRT</span>; 
+<span class="caps">SUBSTITUTE</span> (the optional Parameter &#8220;Instance_Num&#8221; is not supported);
+<span class="caps">SUM</span>; 
+<span class="caps">SUMIF</span>; 
+<span class="caps">SUMPRODUCT</span>; 
+<span class="caps">SUMSQ</span>; 
+<span class="caps">SYD</span>; 
+<span class="caps">TAN</span>; 
+<span class="caps">TIME</span>; 
+<span class="caps">TREND</span>; 
+<span class="caps">TRIM</span>; 
+<span class="caps">TEXT</span>; 
+<span class="caps">TODAY</span>; 
+<span class="caps">TRUNC</span>; 
+<span class="caps">UPPER</span>; 
+<span class="caps">VALUE</span>; 
+<span class="caps">VDB</span>; 
+<span class="caps">VLOOKUP</span>; 
+<span class="caps">WORKDAY</span>; 
+<span class="caps">YEAR</span></p>
+
+
+	<h3><a name="pagetoc__4_1">What does this add to OpenFormula?</a></h3>
+
+	<h4><a name="pagetoc__4_1_1">&#8220;Small&#8221;</a></h4>
+
+	<p><span class="caps">CEILING</span>; CHAR; <span class="caps">CHECKBOX</span>; CODE; <span class="caps">CONCATENATE</span>; DATEVALUE; DB; <span class="caps">EOMONTH</span>; FLOOR; <span class="caps">FIXED</span>; FLOOR; <span class="caps">HYPERLINK</span>; INTERCEPT; <span class="caps">IPMT</span>; ISNUMERIC; <span class="caps">ISREF</span>; LARGE; <span class="caps">LIN</span>; LOOKUP; <span class="caps">MEDIAN</span>; MIRR; <span class="caps">MROUND</span>; OFFSET; <span class="caps">PPMT</span>; RANK; <span class="caps">RMZ</span>; ROUNDDOWN; <span class="caps">ROUNDUP</span>; SEARCH; <span class="caps">SIGN</span>; SLOPE; <span class="caps">SMALL</span>; SUMPRODUCT; <span class="caps">SUMSQ</span>; TREND; <span class="caps">TEXT</span>; VDB; <span class="caps">WORKDAY</span></p>
+
+
+	<h4><a name="pagetoc__4_1_2">&#8220;Medium&#8221;</a></h4>
+
+	<p><span class="caps">CHECKBOX</span>; HYPERLINK; <span class="caps">IPMT</span>; ISNUMERIC; <span class="caps">ISREF</span>; LIN; <span class="caps">PPMT</span>; RMZ; <span class="caps">SEARCH</span>; TEXT</p>
+
+
+	<h3><a name="pagetoc__4_2">What&#8217;s missing?</a></h3>
+
+	<h4><a name="pagetoc__4_2_1">Functions</a></h4>
+<ul>
+	<li><code>CHECKBOX; HYPERLINK; IPMT; ISNUMERIC; ISREF; LIN; OFFSET; PPMT; RMZ; SUMPRODUCT; TREND</code> are not yet implemented.</li>
+	<li><code>EOMONTH; MROUND; WORKDAY</code> from the Excel Analysis ToolPak are not yet implemented.</li>
+</ul>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Spreadsheet Functions To Implement</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">&#8220;Small&#8221; Group</a><ul class="toc toc2"><li class="withitems"><a href="#pagetoc__1_1">What&#8217;s missing?</a><ul class="toc toc3"><li><a href="#pagetoc__1_1_1">Syntax</a></li><li><a href="#pagetoc__1_1_2">Conversions</a></li><li><a href="#pagetoc__1_1_3">Operators</a></li><li><a href="#pagetoc__1_1_4">Functions</a></li></ul></li><li><a href="#pagetoc__1_2">Implementation Notes</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">&#8220;Medium&#8221; Group</a><ul class="toc toc2"><li class="withitems"><a href="#pagetoc__2_1">What&#8217;s missing?</a><ul class="toc toc3"><li><a href="#pagetoc__2_1_1">Operators</a></li><li><a href="#pagetoc__2_1_2">Functions</a></li></ul></li><li><a href="#pagetoc__2_2">Implementation Notes</a></li></ul></li><li class="withitems"><a href="#pagetoc__3">&#8220;Large&#8221; Group</a><ul class="toc toc2"><li class="withitems"><a href="#pagetoc__3_1">What&#8217;s missing?</a><ul class="toc toc3"><li><a href="#pagetoc__3_1_1">Syntax</a></li><li><a href="#pagetoc__3_1_2">Functions</a></li></ul></li></ul></li><li class="withitems"><a href="#pagetoc__4">Jedox Functions</a><ul class="toc toc2"><li class="withitems"><a href="#pagetoc__4_1">What does this add to OpenFormula?</a><ul class="toc toc3"><li><a href="#pagetoc__4_1_1">&#8220;Small&#8221;</a></li><li><a href="#pagetoc__4_1_2">&#8220;Medium&#8221;</a></li></ul></li><li class="withitems"><a href="#pagetoc__4_2">What&#8217;s missing?</a><ul class="toc toc3"><li><a href="#pagetoc__4_2_1">Functions</a></li></ul></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

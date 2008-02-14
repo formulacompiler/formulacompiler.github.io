@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Decompiled Code For SMALL(C881:F881,G881) - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Reference</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Decompiled Code For <code>SMALL(C881:F881,G881)</code></h1>
+
+	<p>The expression</p>
+
+
+<pre><code>=SMALL(C881:F881,G881)</code></pre>
+	<p>is compiled to the following class(es):</p>
+
+
+<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeDouble_v2;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Runtime_v2;
+<span class="j-key">import </span>org.formulacompiler.tests.reference.base.Inputs;
+<span class="j-key">import </span>org.formulacompiler.tests.reference.base.Outputs;
+
+<span class="j-key">final class </span>$Root <span class="j-key">extends </span>Outputs <span class="j-key">implements </span>Computation
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>Inputs $inputs;
+    <span class="j-key">final </span>Environment $environment;
+
+    $Root<span class="j-sym">(</span>Inputs inputs, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = inputs;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
+        </span><span class="j-typ">double </span>d;
+        <span class="j-key">if </span><span class="j-sym">(</span>!<span class="j-sym">(</span>get$5<span class="j-sym">() </span>&lt;= <span class="j-num">4.0</span><span class="j-sym">) </span>|| get$5<span class="j-sym">() </span>&lt; <span class="j-num">1.0</span><span class="j-sym">) {
+            </span>Runtime_v2
+                .fun_ERROR<span class="j-sym">(</span><span class="j-str">&#34;#NUM! because not 1 &lt;= k &lt;= n in SMALL/LARGE&#34;</span><span class="j-sym">)</span>;
+            d = <span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>-<span class="j-num">1</span>;
+        <span class="j-sym">} </span><span class="j-key">else </span><span class="j-sym">{
+            </span><span class="j-typ">double </span>d_0_;
+            d = get$6<span class="j-sym">(</span>d_0_ = get$5<span class="j-sym">())</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span>d;
+    <span class="j-sym">}
+
+    </span><span class="j-key">public final </span><span class="j-typ">double </span>dbl<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$6<span class="j-sym">(</span><span class="j-typ">double </span>d<span class="j-sym">) {
+        </span><span class="j-typ">double </span>d_1_ = -<span class="j-num">1.7976931348623157</span>E308;
+        <span class="j-typ">double </span>d_2_ = <span class="j-num">1.0</span>;
+        d_1_ = d_2_ &gt; d ? d_1_ : get$7<span class="j-sym">(</span>d_2_, d_1_<span class="j-sym">)</span>;
+        d_2_++;
+        d_1_ = d_2_ &gt; d ? d_1_ : get$8<span class="j-sym">(</span>d_2_, d_1_<span class="j-sym">)</span>;
+        d_2_++;
+        d_1_ = d_2_ &gt; d ? d_1_ : get$9<span class="j-sym">(</span>d_2_, d_1_<span class="j-sym">)</span>;
+        d_2_++;
+        d_1_ = d_2_ &gt; d ? d_1_ : get$10<span class="j-sym">(</span>d_2_, d_1_<span class="j-sym">)</span>;
+        d_2_++;
+        <span class="j-key">return </span>d_1_;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$7<span class="j-sym">(</span><span class="j-typ">double </span>d, <span class="j-typ">double </span>d_3_<span class="j-sym">) {
+        </span><span class="j-typ">double </span>d_4_ = <span class="j-num">1.7976931348623157</span>E308;
+        <span class="j-typ">double </span>d_5_ = <span class="j-num">0.0</span>;
+        d_4_ = get$1<span class="j-sym">() </span>&gt; d_3_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$1<span class="j-sym">()</span>, d_4_<span class="j-sym">) </span>: d_4_;
+        d_5_ = get$1<span class="j-sym">() </span>&lt;= d_3_ ? d_5_ + <span class="j-num">1.0 </span>: d_5_;
+        d_4_ = get$2<span class="j-sym">() </span>&gt; d_3_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$2<span class="j-sym">()</span>, d_4_<span class="j-sym">) </span>: d_4_;
+        d_5_ = get$2<span class="j-sym">() </span>&lt;= d_3_ ? d_5_ + <span class="j-num">1.0 </span>: d_5_;
+        d_4_ = get$3<span class="j-sym">() </span>&gt; d_3_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$3<span class="j-sym">()</span>, d_4_<span class="j-sym">) </span>: d_4_;
+        d_5_ = get$3<span class="j-sym">() </span>&lt;= d_3_ ? d_5_ + <span class="j-num">1.0 </span>: d_5_;
+        d_4_ = get$4<span class="j-sym">() </span>&gt; d_3_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$4<span class="j-sym">()</span>, d_4_<span class="j-sym">) </span>: d_4_;
+        d_5_ = get$4<span class="j-sym">() </span>&lt;= d_3_ ? d_5_ + <span class="j-num">1.0 </span>: d_5_;
+        <span class="j-key">return </span>d_5_ &gt;= d ? d_3_ : d_4_;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$8<span class="j-sym">(</span><span class="j-typ">double </span>d, <span class="j-typ">double </span>d_6_<span class="j-sym">) {
+        </span><span class="j-typ">double </span>d_7_ = <span class="j-num">1.7976931348623157</span>E308;
+        <span class="j-typ">double </span>d_8_ = <span class="j-num">0.0</span>;
+        d_7_ = get$1<span class="j-sym">() </span>&gt; d_6_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$1<span class="j-sym">()</span>, d_7_<span class="j-sym">) </span>: d_7_;
+        d_8_ = get$1<span class="j-sym">() </span>&lt;= d_6_ ? d_8_ + <span class="j-num">1.0 </span>: d_8_;
+        d_7_ = get$2<span class="j-sym">() </span>&gt; d_6_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$2<span class="j-sym">()</span>, d_7_<span class="j-sym">) </span>: d_7_;
+        d_8_ = get$2<span class="j-sym">() </span>&lt;= d_6_ ? d_8_ + <span class="j-num">1.0 </span>: d_8_;
+        d_7_ = get$3<span class="j-sym">() </span>&gt; d_6_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$3<span class="j-sym">()</span>, d_7_<span class="j-sym">) </span>: d_7_;
+        d_8_ = get$3<span class="j-sym">() </span>&lt;= d_6_ ? d_8_ + <span class="j-num">1.0 </span>: d_8_;
+        d_7_ = get$4<span class="j-sym">() </span>&gt; d_6_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$4<span class="j-sym">()</span>, d_7_<span class="j-sym">) </span>: d_7_;
+        d_8_ = get$4<span class="j-sym">() </span>&lt;= d_6_ ? d_8_ + <span class="j-num">1.0 </span>: d_8_;
+        <span class="j-key">return </span>d_8_ &gt;= d ? d_6_ : d_7_;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$9<span class="j-sym">(</span><span class="j-typ">double </span>d, <span class="j-typ">double </span>d_9_<span class="j-sym">) {
+        </span><span class="j-typ">double </span>d_10_ = <span class="j-num">1.7976931348623157</span>E308;
+        <span class="j-typ">double </span>d_11_ = <span class="j-num">0.0</span>;
+        d_10_ = get$1<span class="j-sym">() </span>&gt; d_9_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$1<span class="j-sym">()</span>, d_10_<span class="j-sym">) </span>: d_10_;
+        d_11_ = get$1<span class="j-sym">() </span>&lt;= d_9_ ? d_11_ + <span class="j-num">1.0 </span>: d_11_;
+        d_10_ = get$2<span class="j-sym">() </span>&gt; d_9_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$2<span class="j-sym">()</span>, d_10_<span class="j-sym">) </span>: d_10_;
+        d_11_ = get$2<span class="j-sym">() </span>&lt;= d_9_ ? d_11_ + <span class="j-num">1.0 </span>: d_11_;
+        d_10_ = get$3<span class="j-sym">() </span>&gt; d_9_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$3<span class="j-sym">()</span>, d_10_<span class="j-sym">) </span>: d_10_;
+        d_11_ = get$3<span class="j-sym">() </span>&lt;= d_9_ ? d_11_ + <span class="j-num">1.0 </span>: d_11_;
+        d_10_ = get$4<span class="j-sym">() </span>&gt; d_9_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$4<span class="j-sym">()</span>, d_10_<span class="j-sym">) </span>: d_10_;
+        d_11_ = get$4<span class="j-sym">() </span>&lt;= d_9_ ? d_11_ + <span class="j-num">1.0 </span>: d_11_;
+        <span class="j-key">return </span>d_11_ &gt;= d ? d_9_ : d_10_;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$10<span class="j-sym">(</span><span class="j-typ">double </span>d, <span class="j-typ">double </span>d_12_<span class="j-sym">) {
+        </span><span class="j-typ">double </span>d_13_ = <span class="j-num">1.7976931348623157</span>E308;
+        <span class="j-typ">double </span>d_14_ = <span class="j-num">0.0</span>;
+        d_13_ = get$1<span class="j-sym">() </span>&gt; d_12_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$1<span class="j-sym">()</span>, d_13_<span class="j-sym">) </span>: d_13_;
+        d_14_ = get$1<span class="j-sym">() </span>&lt;= d_12_ ? d_14_ + <span class="j-num">1.0 </span>: d_14_;
+        d_13_ = get$2<span class="j-sym">() </span>&gt; d_12_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$2<span class="j-sym">()</span>, d_13_<span class="j-sym">) </span>: d_13_;
+        d_14_ = get$2<span class="j-sym">() </span>&lt;= d_12_ ? d_14_ + <span class="j-num">1.0 </span>: d_14_;
+        d_13_ = get$3<span class="j-sym">() </span>&gt; d_12_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$3<span class="j-sym">()</span>, d_13_<span class="j-sym">) </span>: d_13_;
+        d_14_ = get$3<span class="j-sym">() </span>&lt;= d_12_ ? d_14_ + <span class="j-num">1.0 </span>: d_14_;
+        d_13_ = get$4<span class="j-sym">() </span>&gt; d_12_ ? RuntimeDouble_v2.min<span class="j-sym">(</span>get$4<span class="j-sym">()</span>, d_13_<span class="j-sym">) </span>: d_13_;
+        d_14_ = get$4<span class="j-sym">() </span>&lt;= d_12_ ? d_14_ + <span class="j-num">1.0 </span>: d_14_;
+        <span class="j-key">return </span>d_14_ &gt;= d ? d_12_ : d_13_;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">0</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">1</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">2</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$4<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">3</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$5<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">4</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Decompiled Code For SMALL(C881:F881,G881)</span></div>
+</div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Implementation of LOOKUP, MATCH, and INDEX - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Implementation of <code>LOOKUP</code>, <code>MATCH</code>, and <code>INDEX</code></h1>
+
+	<p>The <code>LOOKUP</code> function, and its foundations <code>MATCH</code> and <code>INDEX</code>, are likely to be heavily used in Abacus&#8217; financial applications. So they must be implemented efficiently both space- and runtime-wise.</p>
+
+
+
+	<h2><a name="pagetoc__1">Fixed-size Tables</a></h2>
+
+	<p>Most lookup tables are going to be constant, I predict. Often they will be largish tables of data imported from official sources, like tax rates of different sorts. Such data is most efficiently handled in arrays. So a natural implementation of <code>MATCH</code> would take a form like</p>
+
+	<pre><code>final double val = get$1();
+final double[] vals = new double[] { 1.0, 2.0, ... };
+// ...
+return RuntimeDouble.fun_MATCH( val, vals, type );</code></pre>
+
+
+	<p>where <code>fun_MATCH</code> performs a binary search when <code>type</code> is -1 or 1, as Excel does. If the value array contains only a few values computed at runtime, then augmenting this to something like</p>
+
+	<pre><code>final double val = get$1();
+final double[] vals = new double[] { 1.0, 2.0, ... };
+vals[3] = get$2();
+vals[10] = get$3();
+// ...
+return RuntimeDouble.fun_MATCH( val, vals, type );</code></pre>
+
+
+	<p>would work nicely. Similarly, <code>INDEX</code> would be something like</p>
+
+	<pre><code>// ...
+return vals[ (int) val ]; // range check omitted</code></pre>
+
+
+	<p>or, more efficiently when dynamic values are involved</p>
+
+	<pre><code>final double[] vals = new double[] { 1.0, 2.0, ... };
+final int v = (int) val;
+switch (v) {
+case 3:
+    return get$2();
+case 10:
+    return get$3();
+default:
+    return vals[ v ]; // range check omitted
+}</code></pre>
+
+
+	<p>And since all the variants of <code>LOOKUP</code> are mapped to <code>INDEX</code> and <code>MATCH</code>, this covers the lot. However, I think <code>LOOKUP</code> should not be rewritten to <code>INDEX</code> and <code>MATCH</code>, but instead mapped by the compiler. This allows me to avoid the conversion of <code>MATCH</code>&#8217;s result to a <code>double</code> and back to <code>int</code> in <code>INDEX</code>.</p>
+
+
+	<h5>Multiple Lookups</h5>
+
+	<p>But what if multiple, different values are looked up? Consider</p>
+
+	<pre><code>A1 =MATCH( B1, C$1:Z$1 )
+A2 =MATCH( B2, C$1:Z$1 )</code></pre>
+
+
+	<p>We clearly need to factor the common construction of the array for <code>C$1:Z$1</code> out of the generated code for the cells A1 and A2. To do this, we first need to recognise the commonality. This is hard to do efficiently for the computation model compiler as it has no notion of cell adjacency and, thus, no notion of contiguous arrays. So I think the spreadsheet compiler will have to name instances of <code>ExpressionNodeForArrayReference</code> it generates to help the computation model compiler recognize repeated occurrences. So we might get</p>
+
+	<pre><code>private double[] vals$1 = null;
+private get$vals$1() {
+    if (vals$1 == null) {
+        vals$1 = new double[] { 1.0, 2.0, ... };
+        vals$1[3] = get$2();
+        vals$1[10] = get$3();
+    }
+    return vals$1;
+}</code></pre>
+
+
+	<p>and then</p>
+
+	<pre><code>return RuntimeDouble.fun_MATCH( val, get$vals$1(), type );</code></pre>
+
+
+	<p>Which leaves us with <em>state</em> in the computation. However, this is no longer new, as <code>NOW()</code> already introduced state even when caching is off. So I&#8217;m going to change caching configuration to be independent of <code>Resettable</code> and document clearly that you cannot expect computations to be stateless, even if caching is off.</p>
+
+
+	<p>The same goes for <code>INDEX</code>, but the common code includes the generated <code>switch</code>. So we need to factor out not just <code>get$vals$1</code>, but something like</p>
+
+	<pre><code>private get$index$1( int v ) {
+    final double[] vals = get$static$vals$1();
+    switch (v) {
+        // ...
+    default:
+        return vals[ v ]; // range check omitted
+    }
+}</code></pre>
+
+
+	<p>where <code>get$static$vals$1()</code> is modelled after <code>get$vals$1()</code> but sets only the static values and we would change <code>get$vals$1()</code> so it uses <code>get$static$vals$1()</code> to initialize <code>vals$1</code>.</p>
+
+
+	<h5>Unrolling</h5>
+
+	<p>When most or all array values are computed, and maybe even expensive to compute, then this is probably not the best approach. Unrolling the linear or binary search in the generated code might be better as it avoids computing cells not touched by the search. But this sounds like a highly improbable scenario, so I won&#8217;t address it.</p>
+
+
+	<p>However, lookups into very small tables might also perform better if implemented as unrolled code. Array setup might just turn out to be too expensive for them. But, while nifty, this adds too much complexity for too little gain, I believe. And people needing the speed can rewrite their small lookups to nested <code>IF</code>s anyway.</p>
+
+
+	<h2><a name="pagetoc__2">Input Tables of Varying Size</a></h2>
+
+	<p>What if the lookup table is a repeating section? For the moment, I will not support this. Still, here are my current ideas on it.</p>
+
+
+	<p>In the current implementation of repeating sections where every element is represented by its own sub-computation instance, I see two options:</p>
+
+<ul>
+	<li>Build the arrays used above from the repeating data, then proceed as before. Adds additional arrays, but also caches lookup tables. This sounds like a good choice for <code>MATCH</code>.</li>
+	<li>Generate code that directly works on the internal sub-instance arrays for <code>MATCH</code> and <code>INDEX</code>. Avoids the additional arrays, but repeatedly evaluates the values touched during lookup. This sounds like a good choice for <code>INDEX</code>.</li>
+</ul>
+
+	<p>If <span class="caps">AFC</span> ever supports memory-efficient forward-only iteration of largish repeating sections, then this would have to change. <code>MATCH</code> and <code>INDEX</code> would have to sequentially scan the section until the result is found. <code>LOOKUP</code> would have to be implemented directly as scanning twice for <code>MATCH</code> and then <code>INDEX</code> would be silly.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Implementation of LOOKUP, MATCH, and INDEX</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Fixed-size Tables</a></li><li><a href="#pagetoc__2">Input Tables of Varying Size</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Aggregators In AFC - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Reference</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Aggregators In <span class="caps">AFC</span></h1>
+
+	<p>Aggregators are functions that compute values over (possibly non-contiguous) ranges of values.</p>
+
+
+
+	<h3><a name="pagetoc__1"><code>SUM</code> and Range Specifications</a></h3>
+
+	<p>I use the <code>SUM</code> function to show the types of range specification supported by <span class="caps">AFC</span>, as well as the support for <code>SUM</code> as such:</p>
+
+
+
+<h5 class="ref"><a name="pagetoc__1_1">1-dim range</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="FunctionSUM_2.htm">=<em>SUM</em>(C2:E2)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">3</td><td class="xl-num">15.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">2</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_2">2-dim range</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">5</td><td class="xl-num">21.0</td><td class="xl-exp"><a href="FunctionSUM_5.htm">=SUM(C5:E6)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">6</td><td class="xl-num">30.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">5</td><td class="xl-num">21.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_3">Single cell</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
+<tr><td class="xl-row">8</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="FunctionSUM_8.htm">=SUM(C8)</a></td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">9</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">8</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_4">Multiple cells</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">11</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="FunctionSUM_11.htm">=SUM(C11,D11)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">12</td><td class="xl-num">9.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">11</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_5">Three cells with blanks</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">14</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="FunctionSUM_14.htm">=SUM(C14,D14,E14)</a></td><td></td><td class="xl-num">2.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">15</td><td class="xl-num">10.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td></td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">14</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td></td><td class="xl-num">2.0</td><td></td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_6">Non-contiguous cells</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">17</td><td class="xl-num">15.0</td><td class="xl-exp"><a href="FunctionSUM_17.htm">=SUM(C17,G17,D17,I17)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">18</td><td class="xl-num">17.0</td><td class="xl-exp">...</td><td class="xl-num">7.0</td><td class="xl-num">6.0</td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">17</td><td class="xl-num">15.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_7">Cells referenced multiply</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
+<tr><td class="xl-row">20</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="FunctionSUM_20.htm">=SUM(D20,C20,C20,D20)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">21</td><td class="xl-num">18.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">20</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_8">Named range</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">23</td><td class="xl-num">15.0</td><td class="xl-exp"><a href="FunctionSUM_23.htm">=SUM(SumRange)</a></td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">24</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">23</td><td class="xl-num">15.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_9">Range with blanks</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td></tr></thead><tbody>
+<tr><td class="xl-row">26</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="FunctionSUM_26.htm">=SUM(C26:H26)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td class="xl-row">27</td><td class="xl-num">15.0</td><td class="xl-exp">...</td><td></td><td class="xl-num">4.0</td><td></td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td><td></td></tr>
+<tr><td class="xl-row">26</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__1_10">Mixture of ranges and cells with blanks</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">29</td><td class="xl-num">9.0</td><td class="xl-exp"><a href="FunctionSUM_29.htm">=SUM(C29:E29,G29,I29)</a></td><td class="xl-num">1.0</td><td></td><td></td><td class="xl-num">100.0</td><td></td><td class="xl-num">200.0</td><td class="xl-num">8.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">30</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td></td><td class="xl-num">2.0</td><td></td><td class="xl-num">80.0</td><td class="xl-num">4.0</td><td></td><td></td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">29</td><td class="xl-num">9.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td><td></td><td class="xl-num">100.0</td><td></td><td class="xl-num">200.0</td><td class="xl-num">8.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+
+	<h3><a name="pagetoc__2">Other Aggregators Like <code>SUM</code></a></h3>
+
+	<p>There are a number of other supported aggregation functions which behave much like <code>SUM</code> in the type of arguments they accept. They are:</p>
+
+
+
+<h5 class="ref"><a name="pagetoc__2_1">PRODUCT (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="Aggregators_2.htm">=<em>PRODUCT</em>(C2:E2)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">3</td><td class="xl-num">120.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">2</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">5</td><td class="xl-num">720.0</td><td class="xl-exp"><a href="Aggregators_5.htm">=<em>PRODUCT</em>(C5:E6)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">6</td><td class="xl-num">14400.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">5</td><td class="xl-num">720.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">8</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_8.htm">=<em>PRODUCT</em>(C8)</a></td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">9</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">8</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">11</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Aggregators_11.htm">=<em>PRODUCT</em>(C11,D11)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">12</td><td class="xl-num">20.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">11</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">14</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="Aggregators_14.htm">=<em>PRODUCT</em>(C14,D14,E14)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">15</td><td class="xl-num">120.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">14</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">17</td><td class="xl-num">70.0</td><td class="xl-exp"><a href="Aggregators_17.htm">=<em>PRODUCT</em>(C17,G17,D17,I17)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">18</td><td class="xl-num">126.0</td><td class="xl-exp">...</td><td class="xl-num">7.0</td><td class="xl-num">6.0</td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">17</td><td class="xl-num">70.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">20</td><td class="xl-num">4.0</td><td class="xl-exp"><a href="Aggregators_20.htm">=<em>PRODUCT</em>(D20,C20,C20,D20)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">21</td><td class="xl-num">400.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">20</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">23</td><td class="xl-num">120.0</td><td class="xl-exp"><a href="Aggregators_23.htm">=<em>PRODUCT</em>(ProductRange)</a></td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">24</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">23</td><td class="xl-num">120.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">26</td><td class="xl-num">210.0</td><td class="xl-exp"><a href="Aggregators_26.htm">=<em>PRODUCT</em>(C26:E26,G26,I26)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">27</td><td class="xl-num">30240.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">8.0</td><td class="xl-num">80.0</td><td class="xl-num">9.0</td><td></td><td class="xl-num">10.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">26</td><td class="xl-num">210.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_2">COUNT (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">29</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Aggregators_29.htm">=<em>COUNT</em>(C29:E29)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">30</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">29</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">32</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="Aggregators_32.htm">=<em>COUNT</em>(C32:E33)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">33</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">32</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">35</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_35.htm">=<em>COUNT</em>(C35)</a></td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">36</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">35</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">38</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Aggregators_38.htm">=<em>COUNT</em>(C38,D38)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">39</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">38</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">41</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Aggregators_41.htm">=<em>COUNT</em>(C41,D41,E41)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">42</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">41</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">44</td><td class="xl-num">4.0</td><td class="xl-exp"><a href="Aggregators_44.htm">=<em>COUNT</em>(C44,G44,D44,I44)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">45</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">7.0</td><td class="xl-num">6.0</td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">44</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">47</td><td class="xl-num">4.0</td><td class="xl-exp"><a href="Aggregators_47.htm">=<em>COUNT</em>(D47,C47,C47,D47)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">48</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">47</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">50</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Aggregators_50.htm">=<em>COUNT</em>(CountRange)</a></td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">51</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">50</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">53</td><td class="xl-num">5.0</td><td class="xl-exp"><a href="Aggregators_53.htm">=<em>COUNT</em>(C53:E53,G53,I53)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">54</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">8.0</td><td class="xl-num">80.0</td><td class="xl-num">9.0</td><td></td><td class="xl-num">10.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">53</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_3">COUNTA</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
+<tr><td class="xl-row">56</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Aggregators_56.htm">=<em>COUNTA</em>(C56:E56)</a></td><td class="xl-num">1.0</td><td> </td><td>true</td><td></td></tr>
+<tr><td class="xl-row">57</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>false</td><td class="xl-num">5.0</td><td>Hello</td><td></td></tr>
+<tr><td class="xl-row">56</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td> </td><td>true</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_4">AVERAGE (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">59</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Aggregators_59.htm">=<em>AVERAGE</em>(C59:E59)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">60</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">59</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">62</td><td class="xl-num">3.5</td><td class="xl-exp"><a href="Aggregators_62.htm">=<em>AVERAGE</em>(C62:E63)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">63</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">62</td><td class="xl-num">3.5</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">65</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_65.htm">=<em>AVERAGE</em>(C65)</a></td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">66</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">65</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">68</td><td class="xl-num">1.5</td><td class="xl-exp"><a href="Aggregators_68.htm">=<em>AVERAGE</em>(C68,D68)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">69</td><td class="xl-num">4.5</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">68</td><td class="xl-num">1.5</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">71</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Aggregators_71.htm">=<em>AVERAGE</em>(C71,D71,E71)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">72</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">71</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">74</td><td class="xl-num">3.75</td><td class="xl-exp"><a href="Aggregators_74.htm">=<em>AVERAGE</em>(C74,G74,D74,I74)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">75</td><td class="xl-num">4.25</td><td class="xl-exp">...</td><td class="xl-num">7.0</td><td class="xl-num">6.0</td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">74</td><td class="xl-num">3.75</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">77</td><td class="xl-num">1.5</td><td class="xl-exp"><a href="Aggregators_77.htm">=<em>AVERAGE</em>(D77,C77,C77,D77)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">78</td><td class="xl-num">4.5</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">77</td><td class="xl-num">1.5</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">80</td><td class="xl-num">5.0</td><td class="xl-exp"><a href="Aggregators_80.htm">=<em>AVERAGE</em>(AverageRange)</a></td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">81</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">80</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">83</td><td class="xl-num">3.6</td><td class="xl-exp"><a href="Aggregators_83.htm">=<em>AVERAGE</em>(C83:E83,G83,I83)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">84</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">8.0</td><td class="xl-num">80.0</td><td class="xl-num">9.0</td><td></td><td class="xl-num">10.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">83</td><td class="xl-num">3.6</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_5">MIN (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">86</td><td class="xl-num">-1.0</td><td class="xl-exp"><a href="Aggregators_86.htm">=<em>MIN</em>(C86:E86)</a></td><td class="xl-num">-1.0</td><td class="xl-num">2.0</td><td class="xl-num">-1.0</td><td></td></tr>
+<tr><td class="xl-row">87</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">86</td><td class="xl-num">-1.0</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">2.0</td><td class="xl-num">-1.0</td><td></td></tr>
+<tr><td class="xl-row">89</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_89.htm">=<em>MIN</em>(C89:E90)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">90</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">89</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">92</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_92.htm">=<em>MIN</em>(C92)</a></td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">93</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">92</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">95</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_95.htm">=<em>MIN</em>(C95,D95)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">96</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">95</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">98</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_98.htm">=<em>MIN</em>(C98,D98,E98)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">99</td><td class="xl-num">-6.0</td><td class="xl-exp">...</td><td class="xl-num">-4.0</td><td class="xl-num">-5.0</td><td class="xl-num">-6.0</td><td></td></tr>
+<tr><td class="xl-row">98</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">101</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_101.htm">=<em>MIN</em>(C101,G101,D101,I101)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">102</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">7.0</td><td class="xl-num">6.0</td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">101</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">104</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_104.htm">=<em>MIN</em>(D104,C104,C104,D104)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">105</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">104</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">107</td><td class="xl-num">4.0</td><td class="xl-exp"><a href="Aggregators_107.htm">=<em>MIN</em>(MinRange)</a></td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">108</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">107</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">110</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_110.htm">=<em>MIN</em>(C110:E110,G110,I110)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">111</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">8.0</td><td class="xl-num">80.0</td><td class="xl-num">9.0</td><td></td><td class="xl-num">10.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">110</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_6">MAX (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">113</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Aggregators_113.htm">=<em>MAX</em>(C113:E113)</a></td><td class="xl-num">-1.0</td><td class="xl-num">2.0</td><td class="xl-num">-1.0</td><td></td></tr>
+<tr><td class="xl-row">114</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">113</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">2.0</td><td class="xl-num">-1.0</td><td></td></tr>
+<tr><td class="xl-row">116</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="Aggregators_116.htm">=<em>MAX</em>(C116:E117)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">117</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">116</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">119</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="Aggregators_119.htm">=<em>MAX</em>(C119)</a></td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">120</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">119</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">122</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Aggregators_122.htm">=<em>MAX</em>(C122,D122)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">123</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">122</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">125</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Aggregators_125.htm">=<em>MAX</em>(C125,D125,E125)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">126</td><td class="xl-num">-4.0</td><td class="xl-exp">...</td><td class="xl-num">-4.0</td><td class="xl-num">-5.0</td><td class="xl-num">-6.0</td><td></td></tr>
+<tr><td class="xl-row">125</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">128</td><td class="xl-num">7.0</td><td class="xl-exp"><a href="Aggregators_128.htm">=<em>MAX</em>(C128,G128,D128,I128)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">129</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td class="xl-num">7.0</td><td class="xl-num">6.0</td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">1.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">128</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">131</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Aggregators_131.htm">=<em>MAX</em>(D131,C131,C131,D131)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">132</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">131</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">134</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="Aggregators_134.htm">=<em>MAX</em>(MaxRange)</a></td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">135</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">134</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">137</td><td class="xl-num">7.0</td><td class="xl-exp"><a href="Aggregators_137.htm">=<em>MAX</em>(C137:E137,G137,I137)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">138</td><td class="xl-num">10.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">8.0</td><td class="xl-num">80.0</td><td class="xl-num">9.0</td><td></td><td class="xl-num">10.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">137</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_7">VARP (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">140</td><td class="xl-num">0.0</td><td class="xl-exp"><a href="Aggregators_140.htm">=<em>VARP</em>(C140)</a></td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">141</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">140</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">143</td><td class="xl-num">0.25</td><td class="xl-exp"><a href="Aggregators_143.htm">=<em>VARP</em>(C143,D143)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">144</td><td class="xl-num">0.25</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">143</td><td class="xl-num">0.25</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">146</td><td class="xl-num">4.64</td><td class="xl-exp"><a href="Aggregators_146.htm">=<em>VARP</em>(C146:E146,G146,I146)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">147</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">8.0</td><td class="xl-num">80.0</td><td class="xl-num">9.0</td><td></td><td class="xl-num">10.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">146</td><td class="xl-num">4.64</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_8">VAR (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">149</td><td class="xl-num">0.5</td><td class="xl-exp"><a href="Aggregators_149.htm">=<em>VAR</em>(C149,D149)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">150</td><td class="xl-num">0.5</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">149</td><td class="xl-num">0.5</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">152</td><td class="xl-num">5.8</td><td class="xl-exp"><a href="Aggregators_152.htm">=<em>VAR</em>(C152:E152,G152,I152)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">153</td><td class="xl-num">2.5</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td class="xl-num">7.0</td><td class="xl-num">8.0</td><td class="xl-num">80.0</td><td class="xl-num">9.0</td><td></td><td class="xl-num">10.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">152</td><td class="xl-num">5.8</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">100.0</td><td class="xl-num">5.0</td><td class="xl-num">200.0</td><td class="xl-num">7.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_9">STDEV (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">155</td><td class="xl-num">2.8284271247461903</td><td class="xl-exp"><a href="Aggregators_155.htm">=<em>STDEV</em>(C155,D155)</a></td><td class="xl-num">-1.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">156</td><td class="xl-num">2.0816659994661326</td><td class="xl-exp"><a href="Aggregators_156.htm">=<em>STDEV</em>(C156,D156,E156)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">158</td><td class="xl-num">40.688718279617696</td><td class="xl-exp"><a href="Aggregators_158.htm">=<em>STDEV</em>(C158:E158,F158:H158,I158)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">159</td><td class="xl-num">4.15187851918806</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td class="xl-num">-1.0</td><td class="xl-num">-2.0</td><td class="xl-num">3.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">158</td><td class="xl-num">40.688718279617696</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_10">STDEVP (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">161</td><td class="xl-num">0.0</td><td class="xl-exp"><a href="Aggregators_161.htm">=<em>STDEVP</em>(C161)</a></td><td class="xl-num">7.0</td><td></td></tr>
+<tr><td class="xl-row">162</td><td class="xl-num">1.5</td><td class="xl-exp"><a href="Aggregators_162.htm">=<em>STDEVP</em>(C162,D162)</a></td><td class="xl-num">2.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">163</td><td class="xl-num">2.0548046676563256</td><td class="xl-exp"><a href="Aggregators_163.htm">=<em>STDEVP</em>(C163,D163,E163)</a></td><td class="xl-num">2.0</td><td class="xl-num">0.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">165</td><td class="xl-num">37.6704332172529</td><td class="xl-exp"><a href="Aggregators_165.htm">=<em>STDEVP</em>(C165:E165,F165:H165,I165)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">166</td><td class="xl-num">3.843892584878203</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td class="xl-num">-1.0</td><td class="xl-num">-2.0</td><td class="xl-num">3.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">165</td><td class="xl-num">37.6704332172529</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_11">AVEDEV (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">168</td><td class="xl-num">0.0</td><td class="xl-exp"><a href="Aggregators_168.htm">=<em>AVEDEV</em>(C168)</a></td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">169</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Aggregators_169.htm">=<em>AVEDEV</em>(C169,D169)</a></td><td class="xl-num">-1.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">170</td><td class="xl-num">1.5555555555555554</td><td class="xl-exp"><a href="Aggregators_170.htm">=<em>AVEDEV</em>(C170,D170,E170)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">172</td><td class="xl-num">26.092653061224492</td><td class="xl-exp"><a href="Aggregators_172.htm">=<em>AVEDEV</em>(C172:E172,F172:H172,I172)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">173</td><td class="xl-num">2.693877551020408</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td class="xl-num">-1.0</td><td class="xl-num">-2.0</td><td class="xl-num">3.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">172</td><td class="xl-num">26.092653061224492</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_12">DEVSQ (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">175</td><td class="xl-num">0.0</td><td class="xl-exp"><a href="Aggregators_175.htm">=<em>DEVSQ</em>(C175)</a></td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">176</td><td class="xl-num">8.0</td><td class="xl-exp"><a href="Aggregators_176.htm">=<em>DEVSQ</em>(C176,D176)</a></td><td class="xl-num">-1.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">177</td><td class="xl-num">8.666666666666668</td><td class="xl-exp"><a href="Aggregators_177.htm">=<em>DEVSQ</em>(C177,D177,E177)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">179</td><td class="xl-num">9933.430771428571</td><td class="xl-exp"><a href="Aggregators_179.htm">=<em>DEVSQ</em>(C179:E179,F179:H179,I179)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">180</td><td class="xl-num">103.4285714285714</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td class="xl-num">-1.0</td><td class="xl-num">-2.0</td><td class="xl-num">3.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">179</td><td class="xl-num">9933.430771428571</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_13">SKEW (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">182</td><td class="xl-num">0.9352195295828235</td><td class="xl-exp"><a href="Aggregators_182.htm">=<em>SKEW</em>(C182,D182,E182)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">184</td><td class="xl-num">-2.532706643504132</td><td class="xl-exp"><a href="Aggregators_184.htm">=<em>SKEW</em>(C184:E184,F184:H184,I184)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">185</td><td class="xl-num">-1.8491263727532468</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td class="xl-num">-1.0</td><td class="xl-num">-2.0</td><td class="xl-num">3.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">184</td><td class="xl-num">-2.532706643504132</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_14">KURT (does not support blanks!)</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">187</td><td class="xl-num">0.3905325443786989</td><td class="xl-exp"><a href="Aggregators_187.htm">=<em>KURT</em>(C187,D187,E187,F187)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">4.0</td><td class="xl-num">-1.0</td><td></td></tr>
+<tr><td class="xl-row">189</td><td class="xl-num">6.5478454980828005</td><td class="xl-exp"><a href="Aggregators_189.htm">=<em>KURT</em>(C189:E189,F189:H189,I189)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">190</td><td class="xl-num">4.2380757608131585</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td class="xl-num">0.0</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td class="xl-num">-1.0</td><td class="xl-num">-2.0</td><td class="xl-num">3.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">189</td><td class="xl-num">6.5478454980828005</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_15">SUMSQ</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">192</td><td class="xl-num">49.0</td><td class="xl-exp"><a href="Aggregators_192.htm">=<em>SUMSQ</em>(C192)</a></td><td class="xl-num">7.0</td><td></td></tr>
+<tr><td class="xl-row">193</td><td class="xl-num">29.0</td><td class="xl-exp"><a href="Aggregators_193.htm">=<em>SUMSQ</em>(C193,D193)</a></td><td class="xl-num">2.0</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">194</td><td class="xl-num">29.0</td><td class="xl-exp"><a href="Aggregators_194.htm">=<em>SUMSQ</em>(C194,D194,E194)</a></td><td class="xl-num">2.0</td><td></td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">196</td><td class="xl-num">10460.3069</td><td class="xl-exp"><a href="Aggregators_196.htm">=<em>SUMSQ</em>(C196:E196,F196:H196,I196)</a></td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">197</td><td class="xl-num">115.0</td><td class="xl-exp">...</td><td class="xl-num">-10.0</td><td></td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td class="xl-num">-1.0</td><td class="xl-num">-2.0</td><td class="xl-num">3.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">196</td><td class="xl-num">10460.3069</td><td class="xl-exp">...</td><td class="xl-num">-1.0</td><td class="xl-num">0.0</td><td class="xl-num">5.45</td><td class="xl-num">7.62</td><td class="xl-num">12.7</td><td class="xl-num">14.5</td><td class="xl-num">-100.0</td><td class="xl-num">7.0</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_16">COVAR</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td></tr></thead><tbody>
+<tr><td class="xl-row">199</td><td class="xl-num">0.6666666666666666</td><td class="xl-exp"><a href="Aggregators_199.htm">=<em>COVAR</em>(C199:E199,F199:H199)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">200</td><td class="xl-num">-0.1111111111111111</td><td class="xl-exp">...</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">2.0</td><td class="xl-num">2.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">199</td><td class="xl-num">0.6666666666666666</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">202</td><td class="xl-num">0.25</td><td class="xl-exp"><a href="Aggregators_202.htm">=<em>COVAR</em>(C202:D202,E202:F202)</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">203</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp"><a href="Aggregators_203.htm">=<em>COVAR</em>(C203:E203,F203:G203)</a></td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td class="xl-num">5.0</td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__2_17">SUMIF</a></h5>
+<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr></thead><tbody>
+<tr><td class="xl-row">205</td><td class="xl-num">43.0</td><td class="xl-exp"><a href="Aggregators_205.htm">=<em>SUMIF</em>(D205:F205,"&gt;"&amp;C205,G205:I205)</a></td><td class="xl-num">10.0</td><td class="xl-num">10.0</td><td class="xl-num">11.0</td><td class="xl-num">12.0</td><td class="xl-num">20.0</td><td class="xl-num">21.0</td><td class="xl-num">22.0</td><td class="xl-num">7.0</td></tr>
+<tr><td class="xl-row">206</td><td class="xl-num">23.0</td><td class="xl-exp"><a href="Aggregators_206.htm">=<em>SUMIF</em>(D206:F206,"&gt;"&amp;C206)</a></td><td class="xl-num">10.0</td><td class="xl-num">10.0</td><td class="xl-num">11.0</td><td class="xl-num">12.0</td><td></td></tr>
+</tbody></table><p></p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Aggregators In AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1"><code>SUM</code> and Range Specifications</a><ul class="toc toc4"><li><a href="#pagetoc__1_1">1-dim range</a></li><li><a href="#pagetoc__1_2">2-dim range</a></li><li><a href="#pagetoc__1_3">Single cell</a></li><li><a href="#pagetoc__1_4">Multiple cells</a></li><li><a href="#pagetoc__1_5">Three cells with blanks</a></li><li><a href="#pagetoc__1_6">Non-contiguous cells</a></li><li><a href="#pagetoc__1_7">Cells referenced multiply</a></li><li><a href="#pagetoc__1_8">Named range</a></li><li><a href="#pagetoc__1_9">Range with blanks</a></li><li><a href="#pagetoc__1_10">Mixture of ranges and cells with blanks</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">Other Aggregators Like <code>SUM</code></a><ul class="toc toc4"><li><a href="#pagetoc__2_1">PRODUCT (does not support blanks!)</a></li><li><a href="#pagetoc__2_2">COUNT (does not support blanks!)</a></li><li><a href="#pagetoc__2_3">COUNTA</a></li><li><a href="#pagetoc__2_4">AVERAGE (does not support blanks!)</a></li><li><a href="#pagetoc__2_5">MIN (does not support blanks!)</a></li><li><a href="#pagetoc__2_6">MAX (does not support blanks!)</a></li><li><a href="#pagetoc__2_7">VARP (does not support blanks!)</a></li><li><a href="#pagetoc__2_8">VAR (does not support blanks!)</a></li><li><a href="#pagetoc__2_9">STDEV (does not support blanks!)</a></li><li><a href="#pagetoc__2_10">STDEVP (does not support blanks!)</a></li><li><a href="#pagetoc__2_11">AVEDEV (does not support blanks!)</a></li><li><a href="#pagetoc__2_12">DEVSQ (does not support blanks!)</a></li><li><a href="#pagetoc__2_13">SKEW (does not support blanks!)</a></li><li><a href="#pagetoc__2_14">KURT (does not support blanks!)</a></li><li><a href="#pagetoc__2_15">SUMSQ</a></li><li><a href="#pagetoc__2_16">COVAR</a></li><li><a href="#pagetoc__2_17">SUMIF</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

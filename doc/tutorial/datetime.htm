@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Dates, Times, Durations and Time Zones - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Dates, Times, Durations and Time Zones</h1>
+
+	<p>Apart from <a href="locale.htm">setting the current runtime time-zone</a>, there are other caveats with dates and times in Java and Excel. Pure times need special treatment, in particular.</p>
+
+
+
+	<h2><a name="pagetoc__1">Time-Of-Day and Durations</a></h2>
+
+	<p>It is problematic to use <code>java.util.Date</code> as a container for time-only values, like a time of day or a time duration. Java always does time-zone adjustment, so one has to be very careful to only use <code>java.util.Date</code> with the <span class="caps">UTC</span> time zone for time-only values. We therefore don&#8217;t think it is a good idea to use <code>java.util.Date</code> here.</p>
+
+
+	<p><span class="caps">AFC</span> therefore accepts and returns time-only values as a number of milliseconds in a <code>long</code>, not in a <code>java.util.Date</code>. To make it clear that you are passing a time value, you have to annotate the method in question with <code>Milliseconds</code>. For time of day values, you simply pass it the number of milliseconds since 00:00 am.</p>
+
+
+	<p>As an example, we check the local time of day someone was born:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">14</td>
+			<td>TimeOfBirth</td>
+			<td class="xl-date">12:00<br/><span class="xl-name">(TimeOfBirth)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">15</td>
+			<td>Demarcation</td>
+			<td class="xl-date">12:00</td>
+		</tr>
+		<tr>
+			<td class="xl-row">16</td>
+			<td>IsBeforeTime</td>
+			<td><b>false</b><br/><span class="xl-exp">=C14&lt;C15</span><br/><span class="xl-name">(IsBeforeTime)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Here&#8217;s the input interface:</p>
+
+	<pre class="java">@Milliseconds
+<span class="j-key">public </span><span class="j-typ">long </span>time<span class="j-sym">()
+{
+  </span><span class="j-key">return this</span>.millis;
+<span class="j-sym">}</span></pre>
+
+
+	<p>And the input value setup code:</p>
+
+	<pre class="java"><span class="j-typ">long </span>millis = <span class="j-sym">(</span>_hour * <span class="j-num">60L </span>+ _minute<span class="j-sym">) </span>* <span class="j-num">60L </span>* <span class="j-num">1000L</span>;</pre>
+
+
+	<p>(If you still want to use <code>java.util.Date</code> for time-only values and are careful to always do this in the <span class="caps">UTC</span> time zone, then calling <code>Date.getTime()</code> will return the proper value to pass to <span class="caps">AFC</span>, and <code>new Date(long)</code> will convert a value from <span class="caps">AFC</span> to a <code>java.util.Date</code>.)</p>
+
+
+	<h2><a name="pagetoc__2">Local and Global Time</a></h2>
+
+	<p>As described in the <a href="#background">background information</a> below, we need to differentiate local and global times in Excel date/time constants. The examples below assume a hypothetical need to classify people by elements of their date and time of birth.</p>
+
+
+	<h3><a name="pagetoc__2_1">Date only</a></h3>
+
+	<p>We check if people were born before 1981/01/01. Here&#8217;s a very simple sheet for this:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">8</td>
+			<td>DateOfBirth</td>
+			<td class="xl-date">1/1/81<br/><span class="xl-name">(DateOfBirth)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">9</td>
+			<td>Demarcation</td>
+			<td class="xl-date">1/1/81</td>
+		</tr>
+		<tr>
+			<td class="xl-row">10</td>
+			<td>IsBeforeDate</td>
+			<td><b>false</b><br/><span class="xl-exp">=C8&lt;C9</span><br/><span class="xl-name">(IsBeforeDate)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Local time is perfectly suitable for this.</p>
+
+
+	<p>In fact, time-zone adjustment of the constant &#8220;1981/1/1&#8221; would be a problem here. Say we set up the input for the date of birth as follows:</p>
+
+	<pre class="java">Calendar calendar = Calendar.getInstance<span class="j-sym">( </span>_timeZone <span class="j-sym">)</span>;
+calendar.clear<span class="j-sym">()</span>;
+calendar.set<span class="j-sym">( </span>_y, _m, _d <span class="j-sym">)</span>;</pre>
+
+
+	<p>A time-zone adjustment of the constant would occasionally lead to wrong results. This is because the comparison is with 1981/01/01 <em>00:00 am</em> internally. And 00:00 am in the sheet designer&#8217;s time-zone would not always be 00:00 am in the user&#8217;s time-zone. So people born exactly on 1981/01/01 from time-zones where 00:00 am is before 00:00 am in the designer&#8217;s time-zone would be considered born before 1981/01/01.</p>
+
+
+	<h3><a name="pagetoc__2_2">Point in time</a></h3>
+
+	<p>Now we check if people were born before 1981/01/01 <em>12:00 am <span class="caps">CET</span></em>. The constant is now a global point in time. So we do need time-zone adjustment. Here&#8217;s the sheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">20</td>
+			<td>DateTimeOfBirth</td>
+			<td class="xl-date">1/1/81 12:00<br/><span class="xl-name">(DateTimeOfBirth)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">21</td>
+			<td>Demarcation (CET)</td>
+			<td class="xl-date">01 01 1981 12:00:00</td>
+		</tr>
+		<tr>
+			<td class="xl-row">22</td>
+			<td>IsBeforeDateTime</td>
+			<td><b>false</b><br/><span class="xl-exp">=C20&lt;C21</span><br/><span class="xl-name">(IsBeforeDateTime)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>As shown, this will not work properly because <span class="caps">AFC</span> still treats the constant as local time. So we need a way to make <span class="caps">AFC</span> treat the constant as global time. When I say &#8220;we&#8221; here, I really mean us as sheet designers, not as application programmers. So the setup is something we do in the sheet, not the application code:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>GlobalTimeZoneName</td>
+			<td>CET<br/><span class="xl-name">(GlobalTimeZoneName)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td>GlobalTimeFormat</td>
+			<td class="xl-date">01 01 2000 11:12:00<br/><span class="xl-name">(GlobalTimeFormat)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Here&#8217;s the recipe:</p>
+
+<ul>
+	<li>Choose a new cell in the sheet.</li>
+	<li>Name it <code>GlobalTimeFormat</code>.</li>
+	<li>Enter a sample date/time into it.</li>
+	<li>Apply a distinctive date format to it. A good format includes date, time, and a designation of your (the sheet designer&#8217;s) time zone. I use <code>TT.MM.JJJJ hh:mm "CET"</code> (German format string).</li>
+	<li>Apply the same distinctive format to all cells you want <span class="caps">AFC</span> to treat as global time, and only those.</li>
+</ul>
+
+<ul>
+	<li>Choose another new cell in the sheet.</li>
+	<li>Name it <code>GlobalTimeZoneName</code>.</li>
+	<li>Enter into it the identifier of the time zone your global times are specified in, for example &#8220;CET&#8221;, &#8220;EET&#8221;, &#8220;PST&#8221;, &#8220;EST&#8221;. See <code>TimeZone getTimeZone(String)</code> in the <code>java.util.TimeZone</code> class for details.</li>
+</ul>
+
+	<p>Now the constant is considered global time and converted to <span class="caps">UTC</span> when the sheet is compiled. Then, when the compiled engine run, it is again adjusted for the current runtime time-zone.</p>
+
+
+	<p>If you don&#8217;t set up a cell named <code>GlobalTimeZoneName</code>, <span class="caps">AFC</span> simply uses the default time zone active when compiling the sheet. This may not be what you wanted.</p>
+
+
+	<h2><a name="pagetoc__3">Durations Between Points In Time</a></h2>
+
+	<p>Because Excel and <span class="caps">AFC</span> treat date/time values as local time, computing a difference between two such values sometimes differs from what you would get in Java. The reason is daylight saving. In Java, when you do</p>
+
+	<pre class="java">DLSInput input = <span class="j-key">new </span>DLSInput<span class="j-sym">()</span>;
+Date w = input.inWinter<span class="j-sym">()</span>;
+Date s = input.inSummer<span class="j-sym">()</span>;
+<span class="j-typ">long </span>diffHours = <span class="j-sym">(</span>s.getTime<span class="j-sym">() </span>- w.getTime<span class="j-sym">()) </span>/ <span class="j-num">1000 </span>/ <span class="j-num">3600</span>;
+assertEquals<span class="j-sym">( </span>JAVA_DIFF_HOURS, diffHours <span class="j-sym">)</span>;</pre>
+
+
+	<p>where</p>
+
+	<pre class="java"><span class="j-key">private static final </span><span class="j-typ">long </span>JAVA_DIFF_HOURS = <span class="j-num">4343L</span>;
+<span class="j-key">private static final </span><span class="j-typ">long </span>EXCEL_DIFF_HOURS = <span class="j-num">4344L</span>;</pre>
+
+
+	<pre class="java"><span class="j-key">public class </span>DLSInput <span class="j-sym">{
+
+  </span><span class="j-key">public </span>Date inWinter<span class="j-sym">() {
+    </span>Calendar w = <span class="j-key">new </span>GregorianCalendar<span class="j-sym">( </span>CET <span class="j-sym">)</span>;
+    w.clear<span class="j-sym">()</span>;
+    w.set<span class="j-sym">( </span><span class="j-num">1981</span>, <span class="j-num">0</span>, <span class="j-num">1</span>, <span class="j-num">12</span>, <span class="j-num">0 </span><span class="j-sym">)</span>;
+    <span class="j-key">return </span>w.getTime<span class="j-sym">()</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span>Date inSummer<span class="j-sym">() {
+    </span>Calendar s = <span class="j-key">new </span>GregorianCalendar<span class="j-sym">( </span>CET <span class="j-sym">)</span>;
+    s.clear<span class="j-sym">()</span>;
+    s.set<span class="j-sym">( </span><span class="j-num">1981</span>, <span class="j-num">6</span>, <span class="j-num">1</span>, <span class="j-num">12</span>, <span class="j-num">0 </span><span class="j-sym">)</span>;
+    <span class="j-key">return </span>s.getTime<span class="j-sym">()</span>;
+  <span class="j-sym">}
+
+}</span></pre>
+
+
+	<p>you get a difference that takes the daylight saving in summer into account. The same thing in Excel does not:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">26</td>
+			<td>InWinter</td>
+			<td class="xl-date">1/1/81 12:00<br/><span class="xl-name">(InWinter)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">27</td>
+			<td>InSummer</td>
+			<td class="xl-date">7/1/81 12:00<br/><span class="xl-name">(InSummer)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">28</td>
+			<td>Const in winter (CET)</td>
+			<td class="xl-date">01 01 1981 12:00:00</td>
+		</tr>
+		<tr>
+			<td class="xl-row">29</td>
+			<td>Const in summer (CET)</td>
+			<td class="xl-date">01 07 1981 12:00:00</td>
+		</tr>
+		<tr>
+			<td class="xl-row">30</td>
+			<td>Const in winter (local)</td>
+			<td class="xl-date">1/1/81 12:00</td>
+		</tr>
+		<tr>
+			<td class="xl-row">31</td>
+			<td>Const in summer (local)</td>
+			<td class="xl-date">7/1/81 12:00</td>
+		</tr>
+		<tr>
+			<td class="xl-row">32</td>
+			<td>InputDiff</td>
+			<td class="xl-num"><b>4344</b><br/><span class="xl-exp">=(C27-C26)*24.0</span><br/><span class="xl-name">(InputDiff)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">33</td>
+			<td>ConstCETDiff</td>
+			<td class="xl-num"><b>4344</b><br/><span class="xl-exp">=(C29-C28)*24.0</span><br/><span class="xl-name">(ConstCETDiff)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">34</td>
+			<td>ConstLocalDiff</td>
+			<td class="xl-num"><b>4344</b><br/><span class="xl-exp">=(C31-C30)*24.0</span><br/><span class="xl-name">(ConstLocalDiff)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>and neither does <span class="caps">AFC</span>:</p>
+
+	<pre class="java">DLSInput input = <span class="j-key">new </span>DLSInput<span class="j-sym">()</span>;
+DLSOutput out = <span class="j-sym">(</span>DLSOutput<span class="j-sym">) </span>factory.newComputation<span class="j-sym">( </span>input <span class="j-sym">)</span>;
+assertEquals<span class="j-sym">( </span><span class="j-str">&#34;input&#34;</span>, EXCEL_DIFF_HOURS, out.inputDiff<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-str">&#34;CET&#34;</span>, EXCEL_DIFF_HOURS, out.constCETDiff<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-str">&#34;local&#34;</span>, EXCEL_DIFF_HOURS, out.constLocalDiff<span class="j-sym">() )</span>;</pre>
+
+
+	<h2><a name="background">Background</a></h2>
+
+	<p>Excel and Java have different ideas about date/time values. Consider the value &#8220;1983/02/21 3:45 am&#8221; (in yyyy/mm/dd notation).</p>
+
+
+	<h3><a name="pagetoc__4_1">Excel</a></h3>
+
+	<p>If you enter this date into an Excel sheet in Zurich (GMT+1), save the sheet, and then reopen it in Kharkov (GMT+2), it still reads &#8220;1983/02/21 3:45 am&#8221; (assuming the date <em>format</em> is set to yyyy/mm/dd in both places). So a date/time in Excel represents a value in relation to your local time zone, wherever you are. We will call this a <em>local date/time</em>. Significantly, its string representation does <em>not</em> indicate a time zone.</p>
+
+
+	<p>This is suitable for </p>
+
+<ul>
+	<li>plain dates (no time component), or</li>
+	<li>plain times of day or durations (no date component).</li>
+</ul>
+
+	<h3><a name="pagetoc__4_2">Java</a></h3>
+
+	<p>However, if you convert the string &#8220;1983/02/21 3:45 am&#8221; to a <code>java.util.Date</code> in Zurich (GMT+1), serialize it, then deserialize it in Kharkov (GMT+2) and convert it back to a string, you will get &#8220;1983/02/21 4:45 am&#8221;. So a <code>java.util.Date</code> represents an absolute point in time, internally expressed as a <a href="http://en.wikipedia.org/wiki/Coordinated_Universal_Time" title="Coordinated Universal Time">UTC</a> value. We will call this a <em>global time</em> (we don&#8217;t call it <em>global date/time</em> because it makes no sense without a date). Its complete string representation contains a time zone, so &#8220;1983/02/21 2:45 am <span class="caps">UTC</span>&#8221; or &#8220;1983/02/21 4:45 am <span class="caps">EET</span>&#8221;.</p>
+
+
+	<p>This is suitable for </p>
+
+<ul>
+	<li>points in time (both date and time component).</li>
+</ul>
+
+	<h3><a name="pagetoc__4_3">Conversion</a></h3>
+
+	<p>Trouble strikes when we convert values. Consider an Excel cell with the value &#8220;1981/01/01 00:00 am&#8221; in it. You compare this cell to a date obtained from an input method. Did you mean to compare local time, so essentially compare the calendar day only? Or did you mean to compare global time, so &#8220;1981/01/01 00:00 am <span class="caps">CET</span>&#8221; (assuming you compile the sheet in <span class="caps">CET</span>)?</p>
+
+
+	<p>Currently, <span class="caps">AFC</span> makes no attempt to be especially clever. It simply treats Excel date/time fields like Excel does. (We have thought hard about cleverer rules, but found none that was totally satisfying.) But you can override this behaviour.</p>
+
+
+	<p>A conversion thus becomes a source of trouble if</p>
+
+<ul>
+	<li>the sheet contains <em>hard-coded</em> date/time values which are <em>meant to be</em> absolute time references but treated by Excel and <span class="caps">AFC</span> as relative,</li>
+	<li>it is designed in one time zone (so the absolute references are expressed in that time zone), and</li>
+	<li>the resulting engine is run in <em>another</em> time zone.</li>
+</ul>
+
+	<p>So we need a change in time zone. Users accessing a server-side service from all over the world cause this. Moving compiled engines to different time zones does, too.</p>
+
+
+	<p>Do we have plausible <span class="caps">AFC</span> usage scenarios where there are hard-coded date/time cells meant to be absolute?</p>
+
+<ul>
+	<li>One class of scenario uses demarcation dates, which make a computation go one way if a specified date is before the demarcation date, and another way if it is after (see the examples above).</li>
+</ul>
+
+<ul>
+	<li>Another class involves lookup tables, where the compiled engine returns date/time values depending on some input data. This class would probably be solved more typically in databases, but people might still want to use <span class="caps">AFC</span> for it.</li>
+</ul>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Dates, Times, Durations and Time Zones</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Time-Of-Day and Durations</a></li><li class="withitems"><a href="#pagetoc__2">Local and Global Time</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Date only</a></li><li><a href="#pagetoc__2_2">Point in time</a></li></ul></li><li><a href="#pagetoc__3">Durations Between Points In Time</a></li><li class="withitems"><a href="#background">Background</a><ul class="toc toc2"><li><a href="#pagetoc__4_1">Excel</a></li><li><a href="#pagetoc__4_2">Java</a></li><li><a href="#pagetoc__4_3">Conversion</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

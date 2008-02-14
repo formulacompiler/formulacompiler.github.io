@@ -1,0 +1,540 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Outputs in Repeating Sections - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Outputs in Repeating Sections</h1>
+
+	<p>Sometimes you need to compute distinct output values for each of the elements of a variable-length data series. This is what we did before, in the <a href="repeatingsections.htm">customer rating</a> example, where the application loops of the customers itself. There are cases, however, where doing the loop yourself severely limits the range of computations your users can formulate. Mainly this is because they then cannot aggregate over the whole series. For this case, <span class="caps">AFC</span> supports per-element outputs in repeating sections.</p>
+
+
+
+	<h2><a name="pagetoc__1">Sample Spreadsheet</a></h2>
+
+	<p>For example, consider an application that must compute the individual yearly bonus amounts for each employee, given the total bonus amount for the entire company and some base data about each employee&#8217;s performance. Typically, such a computation will first compute some sort of overall performance indicator for each employee, given his or her base data. It will then sum this indicator across the company, and finally distribute the bonus to each employee proportionally to his or her individual performance.</p>
+
+
+	<p>So: given the total bonus amount, compute the individual bonus amounts for all employees. As (rather simplistic) base performance data, we will pass in the base salary and hours overtime for each employee. The sample spreadsheet shown below computes the total salary, including overtime at a fixed rate, as the employee performance indicator. It then computes each employee&#8217;s share of the bonus to be proportional to his or her share of the total salary of all employees (which is computed in the spreadsheet):</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Name</span></td>
+			<td><span style="text-decoration: underline;">Base salary</span></td>
+			<td><span style="text-decoration: underline;">Overtime</span></td>
+			<td><span style="text-decoration: underline;">Total</span></td>
+			<td><span style="text-decoration: underline;">Bonus %</span></td>
+			<td><span style="text-decoration: underline;">Bonus amt</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td class="xl-r1">Ann</td>
+			<td class="xl-num xl-r1">$5,600.00<br/><span class="xl-name">(BaseSalary)</span></td>
+			<td class="xl-num xl-r1">20<br/><span class="xl-name">(HoursOvertime)</span></td>
+			<td class="xl-num xl-r1">$6,600.00<br/><span class="xl-exp">=B2+C2*B$6</span></td>
+			<td class="xl-num xl-r1">36%<br/><span class="xl-exp">=D2/D$5</span></td>
+			<td class="xl-num xl-r1">$7,232.88<br/><span class="xl-exp">=B$7*E2</span><br/><span class="xl-name">(BonusAmount)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td class="xl-r1">Beth</td>
+			<td class="xl-num xl-r1">$5,400.00</td>
+			<td class="xl-num xl-r1">15</td>
+			<td class="xl-num xl-r1">$6,150.00<br/><span class="xl-exp">=B3+C3*B$6</span></td>
+			<td class="xl-num xl-r1">34%<br/><span class="xl-exp">=D3/D$5</span></td>
+			<td class="xl-num xl-r1">$6,739.73<br/><span class="xl-exp">=B$7*E3</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td class="xl-r1">Charlie</td>
+			<td class="xl-num xl-r1">$5,500.00</td>
+			<td class="xl-num xl-r1">0</td>
+			<td class="xl-num xl-r1">$5,500.00<br/><span class="xl-exp">=B4+C4*B$6</span></td>
+			<td class="xl-num xl-r1">30%<br/><span class="xl-exp">=D4/D$5</span></td>
+			<td class="xl-num xl-r1">$6,027.40<br/><span class="xl-exp">=B$7*E4</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td><span style="text-decoration: underline;">Total</span></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">$18,250.00<br/><span class="xl-exp">=SUM(D2:D4)</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td><span style="text-decoration: underline;">Overtime rate</span></td>
+			<td class="xl-num">$50.00<br/><span class="xl-name">(OvertimeSalaryPerHour)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td><span style="text-decoration: underline;">Bonus total</span></td>
+			<td class="xl-num">$20,000.00<br/><span class="xl-name">(BonusTotal)</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+<br/><span class="xl-r1">A2:F4</span> <span class="xl-name">(Employees)</span>
+
+
+	<p>To consider:</p>
+
+<ul>
+	<li>The bonus total and fixed overtime rate (salary per hour) are global inputs.</li>
+	<li>The base salary and hours overtime are inputs per employee.</li>
+	<li>The final bonus amount is an <em>output per employee</em>.</li>
+	<li>The employee name is not bound. It simply enhances the expressiveness of the example spreadsheet.</li>
+	<li>Cell <code>D5</code> is an intermediate sum over the repeating section.</li>
+	<li>Cells <code>E2:E4</code> use this intermediate sum again, within the section.</li>
+</ul>
+
+	<p>Note that in scenarios like this one, where an outer aggregation over a possibly large repeating section is reused within the section, the mandatory <a href="caching.htm">caching of values</a> pays off quickly.</p>
+
+
+	<h2><a name="pagetoc__2">Interfaces</a></h2>
+
+	<p>The following exposition assumes that you have read and understood the simpler <a href="repeatingsections.htm">customer rating example</a>.</p>
+
+
+	<h3><a name="pagetoc__2_1">Inputs</a></h3>
+
+	<p>Since we need to tell the computation how many employees there are, and what their base performance data is, our inputs look much like they did for the <a href="repeatingsections.htm">customer rating example</a>. We are going to use a <a href="numeric_type.htm#long">scaled long</a> engine here, however, because this is a financial computation:</p>
+
+	<pre class="java">@ScaledLong<span class="j-sym">( </span><span class="j-num">4 </span><span class="j-sym">)
+</span><span class="j-key">public static interface </span>BonusData
+<span class="j-sym">{
+  </span><span class="j-typ">long </span>bonusTotal<span class="j-sym">()</span>;
+  <span class="j-typ">long </span>overtimeSalaryPerHour<span class="j-sym">()</span>;
+  <span class="j-hl">EmployeeBonusData<span class="j-sym">[]</span></span> employees<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span>@ScaledLong<span class="j-sym">( </span><span class="j-num">4 </span><span class="j-sym">)
+</span><span class="j-key">public static interface </span><span class="j-hl">EmployeeBonusData</span>
+<span class="j-sym">{
+  </span><span class="j-typ">long </span>baseSalary<span class="j-sym">()</span>;
+  <span class="j-typ">int </span>hoursOvertime<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h3><a name="pagetoc__2_2">Outputs</a></h3>
+
+	<p>The factory, too, is straightforward:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>BonusComputationFactory
+<span class="j-sym">{
+  </span><span class="j-key">public </span>BonusComputation newComputation<span class="j-sym">( </span>BonusData _data <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Now, however, we need to get at an output value for each individual employee (the bonus amount), not just a global output as before. The concept is the same as for the individual inputs: we define a global output which defines an accessor for an array of outputs for the individual employees:</p>
+
+	<pre class="java">@ScaledLong<span class="j-sym">( </span><span class="j-num">4 </span><span class="j-sym">)
+</span><span class="j-key">public static interface </span>BonusComputation <span class="j-key">extends </span>Resettable
+<span class="j-sym">{
+  </span><span class="j-hl">EmployeeBonusComputation<span class="j-sym">[]</span></span> employees<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span>@ScaledLong<span class="j-sym">( </span><span class="j-num">4 </span><span class="j-sym">)
+</span><span class="j-key">public static interface </span><span class="j-hl">EmployeeBonusComputation</span>
+<span class="j-sym">{
+  </span><span class="j-typ">long </span>bonusAmount<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>This accessor will be implemented by <span class="caps">AFC</span>, just like other output methods. Apart from arrays, <span class="caps">AFC</span> supports <code>List</code> and its ancestors <code>Collection</code> and <code>Iterable</code>, as well as <code>Iterator</code> as the result type of section accessor methods:</p>
+
+	<pre class="java"><span class="j-hl">List&lt;EmployeeBonusComputation&gt;</span> employeesList<span class="j-sym">()</span>;
+<span class="j-hl">Collection&lt;EmployeeBonusComputation&gt;</span> employeesCollection<span class="j-sym">()</span>;
+<span class="j-hl">Iterator&lt;EmployeeBonusComputation&gt;</span> employeesIterator<span class="j-sym">()</span>;</pre>
+
+
+	<h2><a name="pagetoc__3">Binding</a></h2>
+
+	<p>Binding the sheet to this structure now becomes straightforward again. The main difference is that when binding the section, we bind both an input and an output method and target type:</p>
+
+	<pre class="java">Section binder = _builder.getRootBinder<span class="j-sym">()</span>;
+Range range = sheet.getRange<span class="j-sym">( </span><span class="j-str">&#34;Employees&#34; </span><span class="j-sym">)</span>;
+
+<span class="j-cmt">// input
+</span>Method inputMethod = <span class="j-hl">BonusData</span>.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;employees&#34;</span></span> <span class="j-sym">)</span>;
+Class inputType = <span class="j-hl">EmployeeBonusData</span>.<span class="j-key">class</span>;
+
+<span class="j-cmt">// output
+</span>Method outputMethod = <span class="j-hl">BonusComputation</span>.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;employees&#34;</span></span> <span class="j-sym">)</span>;
+Class outputType = <span class="j-hl">EmployeeBonusComputation</span>.<span class="j-key">class</span>;
+
+Orientation orient = Orientation.VERTICAL;
+
+Section <span class="j-hl">employees</span> = binder.<span class="j-hl">defineRepeatingSection</span><span class="j-sym">( </span>range, orient, inputMethod, inputType,
+    outputMethod, outputType <span class="j-sym">)</span>;</pre>
+
+
+	<p>The employee inputs are bound just as before:</p>
+
+	<pre class="java">Cell salaryCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;BaseSalary&#34; </span><span class="j-sym">)</span>;
+Method salaryMethod = <span class="j-hl">inputType</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;baseSalary&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">employees</span>.defineInputCell<span class="j-sym">( </span>salaryCell, salaryMethod <span class="j-sym">)</span>;
+
+Cell overtimeCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;HoursOvertime&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">employees</span>.defineInputCell<span class="j-sym">( </span>overtimeCell, <span class="j-str">&#34;hoursOvertime&#34; </span><span class="j-sym">)</span>; <span class="j-cmt">// shorter form</span></pre>
+
+
+	<p>Binding the employee output, the bonus amount, is similar in concept as binding its inputs. We simply use <code>defineOutputCell</code>:</p>
+
+	<pre class="java">Cell bonusCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;BonusAmount&#34; </span><span class="j-sym">)</span>;
+Method bonusMethod = <span class="j-hl">outputType</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;bonusAmount&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">employees</span>.<span class="j-hl">defineOutputCell</span><span class="j-sym">( </span>bonusCell, bonusMethod <span class="j-sym">)</span>;</pre>
+
+
+	<p>Finally, we need to bind the globals:</p>
+
+	<pre class="java">Cell bonusTotalCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;BonusTotal&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">binder</span>.defineInputCell<span class="j-sym">( </span>bonusTotalCell, <span class="j-str">&#34;bonusTotal&#34; </span><span class="j-sym">)</span>;
+
+Cell overtimeRateCell = sheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;OvertimeSalaryPerHour&#34; </span><span class="j-sym">)</span>;
+<span class="j-hl">binder</span>.defineInputCell<span class="j-sym">( </span>overtimeRateCell, <span class="j-str">&#34;overtimeSalaryPerHour&#34; </span><span class="j-sym">)</span>;</pre>
+
+
+	<h2><a name="pagetoc__4">Using It</a></h2>
+
+	<p>The interfaces given above can now be used as follows. First, we set up the input data in mock objects and request a computation for it:</p>
+
+	<pre class="java">BonusDataImpl data = <span class="j-key">new </span>BonusDataImpl<span class="j-sym">( </span>_bonusTotal, _overtimeSalaryPerHour <span class="j-sym">)</span>;
+<span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i = <span class="j-num">0</span>; i &lt; _salaries.length; i++<span class="j-sym">) {
+  </span>EmployeeBonusDataImpl emp = <span class="j-key">new </span>EmployeeBonusDataImpl<span class="j-sym">( </span>_salaries<span class="j-sym">[ </span>i <span class="j-sym">]</span>, _hoursOvertime<span class="j-sym">[ </span>i <span class="j-sym">] )</span>;
+  data.addEmployee<span class="j-sym">( </span>emp <span class="j-sym">)</span>;
+<span class="j-sym">}
+</span>BonusComputation computation = _factory.newComputation<span class="j-sym">( </span>data <span class="j-sym">)</span>;</pre>
+
+
+	<p>Then, we read back individual bonus amounts from the computation:</p>
+
+	<pre class="java">EmployeeBonusComputation<span class="j-sym">[] </span><span class="j-hl">emps = computation.employees<span class="j-sym">()</span></span>;
+<span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i = <span class="j-num">0</span>; i &lt; _expectedBonusAmounts.length; i++<span class="j-sym">) {
+  </span><span class="j-typ">long </span>expected = _expectedBonusAmounts<span class="j-sym">[ </span>i <span class="j-sym">]</span>;
+  <span class="j-typ">long </span>actual = <span class="j-hl">emps<span class="j-sym">[ </span>i <span class="j-sym">]</span>.bonusAmount<span class="j-sym">()</span></span>;
+  assertEquals<span class="j-sym">( </span>expected, actual <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Or, using the other supported return types <code>List</code>, <code>Collection</code>, and <code>Iterator</code>:</p>
+
+	<pre class="java">List&lt;EmployeeBonusComputation&gt; <span class="j-hl">empList = computation.employeesList<span class="j-sym">()</span></span>;
+<span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i = <span class="j-num">0</span>; i &lt; _expectedBonusAmounts.length; i++<span class="j-sym">) {
+  </span><span class="j-typ">long </span>expected = _expectedBonusAmounts<span class="j-sym">[ </span>i <span class="j-sym">]</span>;
+  <span class="j-typ">long </span>actual = <span class="j-hl">empList.get<span class="j-sym">( </span>i <span class="j-sym">)</span>.bonusAmount<span class="j-sym">()</span></span>;
+  assertEquals<span class="j-sym">( </span>expected, actual <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<pre class="java">Collection&lt;EmployeeBonusComputation&gt; <span class="j-hl">empColl = computation.employeesCollection<span class="j-sym">()</span></span>;
+assertEquals<span class="j-sym">( </span>_expectedBonusAmounts.length, empColl.size<span class="j-sym">() )</span>;
+<span class="j-typ">int </span>ix = <span class="j-num">0</span>;
+<span class="j-key">for </span><span class="j-sym">(</span>EmployeeBonusComputation emp : empColl<span class="j-sym">) {
+  </span><span class="j-typ">long </span>expected = _expectedBonusAmounts<span class="j-sym">[ </span>ix++ <span class="j-sym">]</span>;
+  <span class="j-typ">long </span>actual = <span class="j-hl">emp.bonusAmount<span class="j-sym">()</span></span>;
+  assertEquals<span class="j-sym">( </span>expected, actual <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<pre class="java">Iterator&lt;EmployeeBonusComputation&gt; <span class="j-hl">empIter = computation.employeesIterator<span class="j-sym">()</span></span>;
+<span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i = <span class="j-num">0</span>; i &lt; _expectedBonusAmounts.length; i++<span class="j-sym">) {
+  </span>assertTrue<span class="j-sym">( </span>empIter.hasNext<span class="j-sym">() )</span>;
+  <span class="j-typ">long </span>expected = _expectedBonusAmounts<span class="j-sym">[ </span>i <span class="j-sym">]</span>;
+  <span class="j-typ">long </span>actual = <span class="j-hl">empIter.next<span class="j-sym">()</span>.bonusAmount<span class="j-sym">()</span></span>;
+  assertEquals<span class="j-sym">( </span>expected, actual <span class="j-sym">)</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<h2><a name="pagetoc__5">Generated Code</a></h2>
+
+	<p>As in the simpler <a href="repeatingsections.htm">input-only case</a>, <span class="caps">AFC</span> generates a separate engine class for the repeating section. This time, however, it implements our output interface, <code>EmployeeBonusComputation</code>:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.tutorials.BonusPerEmployee;
+
+<span class="j-key">final class </span>$Sect0
+    <span class="j-key">implements </span>Computation, BonusPerEmployee.EmployeeBonusComputation
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>BonusPerEmployee.EmployeeBonusData $inputs;
+    <span class="j-key">final </span>$Root $parent;
+    <span class="j-key">final </span>$Root $root;
+    
+    $Sect0<span class="j-sym">(</span>BonusPerEmployee.EmployeeBonusData employeebonusdata, $Root root<span class="j-sym">) {
+        </span>$parent = root;
+        $root = root;
+        $inputs = employeebonusdata;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">void </span>reset<span class="j-sym">() {
+        </span><span class="j-blk">/* empty */
+    </span><span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$0<span class="j-sym">() {
+        </span>$Root root = $parent;
+        <span class="j-typ">long </span>l = root.get$0<span class="j-sym">()</span>;
+        <span class="j-typ">long </span>l_0_ = get$1<span class="j-sym">() </span>* <span class="j-num">10000L</span>;
+        $Root root_1_ = $parent;
+        <span class="j-key">return </span>l * <span class="j-sym">(</span>l_0_ / root_1_.get$2<span class="j-sym">()) </span>/ <span class="j-num">10000L</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">long </span>bonusAmount<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$1<span class="j-sym">() {
+        </span><span class="j-typ">long </span>l = get$2<span class="j-sym">()</span>;
+        <span class="j-typ">long </span>l_2_ = get$3<span class="j-sym">()</span>;
+        $Root root = $parent;
+        <span class="j-key">return </span>l + l_2_ * root.get$1<span class="j-sym">() </span>/ <span class="j-num">10000L</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.baseSalary<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$3<span class="j-sym">() {
+        </span><span class="j-key">return </span><span class="j-sym">(</span><span class="j-typ">long</span><span class="j-sym">) </span>$inputs.hoursOvertime<span class="j-sym">() </span>* <span class="j-num">10000L</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<p>Its instances are again built in the main engine when the repeating section is first accessed. In particular, this now happens when our section output accessor <code>employees()</code> is called:</p>
+
+	<pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
+<span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
+<span class="j-key">import </span>org.formulacompiler.tutorials.BonusPerEmployee;
+
+<span class="j-key">final class </span>$Root <span class="j-key">extends </span>BonusPerEmployee.BonusComputationDefaults
+    <span class="j-key">implements </span>Computation
+<span class="j-sym">{
+    </span><span class="j-key">private final </span>BonusPerEmployee.BonusData $inputs;
+    <span class="j-key">final </span>Environment $environment;
+    <span class="j-key">private </span>$Sect0<span class="j-sym">[] </span>get$Sect0;
+    
+    $Root<span class="j-sym">(</span>BonusPerEmployee.BonusData bonusdata, Environment environment<span class="j-sym">) {
+        </span>$environment = environment;
+        $inputs = bonusdata;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span><span class="j-typ">void </span>reset<span class="j-sym">() {
+        </span>get$Sect0 = <span class="j-key">null</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.bonusTotal<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.overtimeSalaryPerHour<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$3<span class="j-sym">()</span>;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span><span class="j-typ">long </span>get$3<span class="j-sym">() {
+        </span><span class="j-typ">long </span>l = <span class="j-num">0L</span>;
+        $Sect0<span class="j-sym">[] </span>sect0s = get$Sect0<span class="j-sym">()</span>;
+        <span class="j-typ">int </span>i = sect0s.length;
+        <span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i_0_ = <span class="j-num">0</span>; i_0_ &lt; i; i_0_++<span class="j-sym">) {
+            </span>$Sect0 sect0 = sect0s<span class="j-sym">[</span>i_0_<span class="j-sym">]</span>;
+            l += sect0.get$1<span class="j-sym">()</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span>l;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">final </span>$Sect0<span class="j-sym">[] </span>get$Sect0<span class="j-sym">() {
+        </span><span class="j-key">if </span><span class="j-sym">(</span>get$Sect0 == <span class="j-key">null</span><span class="j-sym">) {
+            </span>BonusPerEmployee.EmployeeBonusData<span class="j-sym">[] </span>employeebonusdatas
+                = $inputs.employees<span class="j-sym">()</span>;
+            <span class="j-key">if </span><span class="j-sym">(</span>employeebonusdatas != <span class="j-key">null</span><span class="j-sym">) {
+                </span><span class="j-typ">int </span>i = employeebonusdatas.length;
+                $Sect0<span class="j-sym">[] </span>sect0s = <span class="j-key">new </span>$Sect0<span class="j-sym">[</span>i<span class="j-sym">]</span>;
+                <span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i_1_ = <span class="j-num">0</span>; i_1_ &lt; i; i_1_++<span class="j-sym">)
+                    </span>sect0s<span class="j-sym">[</span>i_1_<span class="j-sym">] </span>= <span class="j-key">new </span>$Sect0<span class="j-sym">(</span>employeebonusdatas<span class="j-sym">[</span>i_1_<span class="j-sym">]</span>, <span class="j-key">this</span><span class="j-sym">)</span>;
+                get$Sect0 = sect0s;
+            <span class="j-sym">} </span><span class="j-key">else
+                </span>get$Sect0 = <span class="j-key">new </span>$Sect0<span class="j-sym">[</span><span class="j-num">0</span><span class="j-sym">]</span>;
+        <span class="j-sym">}
+        </span><span class="j-key">return </span>get$Sect0;
+    <span class="j-sym">}
+    
+    </span><span class="j-key">public final </span>BonusPerEmployee.EmployeeBonusComputation<span class="j-sym">[] </span>employees<span class="j-sym">() {
+        </span><span class="j-key">return </span>get$Sect0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+}</span></pre>
+
+
+	<h2><a name="pagetoc__6">Linking Outputs To Inputs</a></h2>
+
+	<p>Note that in the setup shown above, we have no way of associating an employee output interface with its corresponding input interface other than by its position in the array (or collection, or iterator).</p>
+
+
+	<p>We can change this in much the same way as to get access to the input data to provide <a href="bindcells.htm#Defaults">default output implementations</a>. Namely, by accepting the input data as the sole argument to the output type&#8217;s constructor. To do this we have to change our employee output interface to an abstract class, of course. We can then expose an accessor for the input data value passed to our constructor:</p>
+
+	<pre class="java">@ScaledLong<span class="j-sym">( </span><span class="j-num">4 </span><span class="j-sym">)
+</span><span class="j-key">public static interface </span>BonusComputation <span class="j-key">extends </span>Resettable
+<span class="j-sym">{
+  </span>EmployeeBonusComputation<span class="j-sym">[] </span>employees<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span>@ScaledLong<span class="j-sym">( </span><span class="j-num">4 </span><span class="j-sym">)
+</span><span class="j-key">public static abstract class </span>EmployeeBonusComputation
+<span class="j-sym">{
+  </span><span class="j-key">private final </span>EmployeeBonusData inputs;
+
+  <span class="j-key">public </span>EmployeeBonusComputation<span class="j-sym">( </span><span class="j-hl">EmployeeBonusData _inputs</span> <span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">()</span>;
+    <span class="j-key">this</span>.inputs = _inputs;
+  <span class="j-sym">}
+
+  </span>public<span class="j-hl"> EmployeeBonusData inputs<span class="j-sym">()</span></span>
+  <span class="j-sym">{
+    </span><span class="j-key">return this</span>.inputs;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public abstract </span><span class="j-typ">long </span>bonusAmount<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Now we have the desired association:</p>
+
+	<pre class="java">BonusComputation comp = _factory.newComputation<span class="j-sym">( </span>data <span class="j-sym">)</span>;
+EmployeeBonusComputation<span class="j-sym">[] </span><span class="j-hl">empOutputs = comp.employees<span class="j-sym">()</span></span>;
+EmployeeBonusData<span class="j-sym">[] </span><span class="j-hl">empInputs = data.employees<span class="j-sym">()</span></span>;
+<span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i = <span class="j-num">0</span>; i &lt; _expectedBonusAmounts.length; i++<span class="j-sym">) {
+  </span><span class="j-hl">assertSame<span class="j-sym">( </span>empInputs<span class="j-sym">[ </span>i <span class="j-sym">]</span>, empOutputs<span class="j-sym">[ </span>i <span class="j-sym">]</span>.inputs<span class="j-sym">() )</span>;</span>
+<span class="j-sym">}</span></pre>
+
+
+	<h2><a name="pagetoc__7">Linking Outputs To Parent Outputs</a></h2>
+
+	<p>In your constructor, you can also get the parent section&#8217;s output object in case you need to access it in your default implementations. Here&#8217;s how:</p>
+
+	<pre class="java">@ScaledLong<span class="j-sym">( </span><span class="j-num">4 </span><span class="j-sym">)
+</span><span class="j-key">public static interface </span>BonusComputation <span class="j-key">extends </span>Resettable
+<span class="j-sym">{
+  </span>EmployeeBonusComputation<span class="j-sym">[] </span>employees<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span>@ScaledLong<span class="j-sym">( </span><span class="j-num">4 </span><span class="j-sym">)
+</span><span class="j-key">public static abstract class </span>EmployeeBonusComputation
+<span class="j-sym">{
+  </span><span class="j-key">private final </span>BonusComputation parent;
+
+  <span class="j-key">public </span>EmployeeBonusComputation<span class="j-sym">( </span>EmployeeBonusData _inputs, <span class="j-hl">BonusComputation _parent</span> <span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">()</span>;
+    <span class="j-key">this</span>.parent = _parent;
+  <span class="j-sym">}
+
+  </span>public<span class="j-hl"> BonusComputation parent<span class="j-sym">()</span></span>
+  <span class="j-sym">{
+    </span><span class="j-key">return this</span>.parent;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public abstract </span><span class="j-typ">long </span>bonusAmount<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Note that if you need to get the parent, you must also specify the input object as a constructor parameter. Here&#8217;s the effect at runtime:</p>
+
+	<pre class="java">BonusComputation <span class="j-hl">comp = _factory.newComputation<span class="j-sym">( </span>data <span class="j-sym">)</span></span>;
+EmployeeBonusComputation<span class="j-sym">[] </span><span class="j-hl">empOutputs = comp.employees<span class="j-sym">()</span></span>;
+<span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i = <span class="j-num">0</span>; i &lt; _expectedBonusAmounts.length; i++<span class="j-sym">) {
+  </span><span class="j-hl">assertSame<span class="j-sym">( </span>comp, empOutputs<span class="j-sym">[ </span>i <span class="j-sym">]</span>.parent<span class="j-sym">() )</span>;</span>
+<span class="j-sym">}</span></pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Outputs in Repeating Sections</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Sample Spreadsheet</a></li><li class="withitems"><a href="#pagetoc__2">Interfaces</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Inputs</a></li><li><a href="#pagetoc__2_2">Outputs</a></li></ul></li><li><a href="#pagetoc__3">Binding</a></li><li><a href="#pagetoc__4">Using It</a></li><li><a href="#pagetoc__5">Generated Code</a></li><li><a href="#pagetoc__6">Linking Outputs To Inputs</a></li><li><a href="#pagetoc__7">Linking Outputs To Parent Outputs</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Binding To Multiple Interfaces - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Binding To Multiple Interfaces</h1>
+
+	<p><span class="caps">AFC</span> allows you to set only a single interface to provide inputs to or obtain outputs from a computation. How can you work around this?</p>
+
+
+	<p><em>The example code on this page, while syntactically checked, is not yet part of an automated test.</em></p>
+
+
+
+	<h2><a name="pagetoc__1">Inputs</a></h2>
+
+	<p>To feed information to a computation from various sources, each with its own interface, you need to define a wrapper that gives access to the source interfaces.</p>
+
+
+	<p>Consider these two source interfaces:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>InputA
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getValue<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span><span class="j-key">public static interface </span>InputB
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getValue<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getOther<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>The wrapper is a class with accessor properties returning instances the two source interfaces:</p>
+
+	<pre class="java"><span class="j-key">public static final class </span>Input
+<span class="j-sym">{
+  </span><span class="j-key">private final </span>InputA a;
+  <span class="j-key">private final </span>InputB b;
+
+  <span class="j-key">public </span>Input<span class="j-sym">(</span>InputA _a, InputB _b<span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">()</span>;
+    <span class="j-key">this</span>.a = _a;
+    <span class="j-key">this</span>.b = _b;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span>InputA getA<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.a;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span>InputB getB<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.b;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>You then bind cells to elements of a particular source interface by using a <em>call chain</em>. <span class="caps">AFC</span> allows you to bind cells to the result of calling a chain of methods:</p>
+
+	<pre class="java">cell = spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;A_VALUE&#34; </span><span class="j-sym">)</span>;
+intfGetter = Input.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;getA&#34;</span></span> <span class="j-sym">)</span>;
+valueGetter = String.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getValue&#34; </span><span class="j-sym">)</span>;
+binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<span class="j-sym">( </span>intfGetter <span class="j-sym">)</span>.<span class="j-hl">chain</span><span class="j-sym">( </span>valueGetter <span class="j-sym">) )</span>;
+
+cell = spreadsheet.getCell<span class="j-sym">( </span><span class="j-str">&#34;B_VALUE&#34; </span><span class="j-sym">)</span>;
+intfGetter = Input.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;getB&#34;</span></span> <span class="j-sym">)</span>;
+valueGetter = String.<span class="j-key">class</span>.getMethod<span class="j-sym">( </span><span class="j-str">&#34;getValue&#34; </span><span class="j-sym">)</span>;
+binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<span class="j-sym">( </span>intfGetter <span class="j-sym">)</span>.<span class="j-hl">chain</span><span class="j-sym">( </span>valueGetter <span class="j-sym">) )</span>;</pre>
+
+
+	<h5>Note</h5>
+
+	<p><span class="caps">AFC</span> does not support multiple input interfaces directly because this would add a part of the application logic to <span class="caps">AFC</span> that does not need to be customizable by spreadsheets. Therefore, it is better to leave this logic outside of <span class="caps">AFC</span>. This gives you full control over it and avoids adding more black box behaviour than necessary.</p>
+
+
+	<h2><a name="pagetoc__2">Outputs</a></h2>
+
+	<p>Assume a computation in a sheet must supply output values for two different interfaces:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>OutputA
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getResult<span class="j-sym">()</span>;
+<span class="j-sym">}
+
+</span><span class="j-key">public static interface </span>OutputB
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getResult<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getOther<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>To achieve this, the simplest approach is to simply make your output class implement both of the target interfaces:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Output <span class="j-key">extends </span>OutputA, OutputB
+<span class="j-sym">{
+  </span><span class="j-cmt">// no own content
+</span><span class="j-sym">}</span></pre>
+
+
+	<p>You can then use your computation&#8217;s output with both targets. However, this only works if name clashes are acceptable, that is, <code>OutputA.getResult()</code> maps to the same spreadsheet cell as <code>OutputB.getResult()</code>.</p>
+
+
+	<h3><a name="pagetoc__2_1">Disambiguation</a></h3>
+
+	<p>If this is not the case, you have to do a little more work. You define your output class as follows:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Output2 
+<span class="j-sym">{
+  </span><span class="j-typ">double </span>getResultA<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getResultB<span class="j-sym">()</span>;
+  <span class="j-typ">double </span>getOtherB<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>Then, you define wrappers which implement the proper interfaces:</p>
+
+	<pre class="java"><span class="j-key">public static class </span>OutputAImpl <span class="j-key">implements </span><span class="j-hl">OutputA</span>
+<span class="j-sym">{
+  </span><span class="j-key">private final </span>Output2 output;
+
+  <span class="j-key">public </span>OutputAImpl<span class="j-sym">(</span>Output2 _output<span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">()</span>;
+    <span class="j-key">this</span>.output = _output;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span><span class="j-typ">double </span>getResult<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.output.<span class="j-hl">getResultA</span><span class="j-sym">()</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<p>and</p>
+
+	<pre class="java"><span class="j-key">public static class </span>OutputBImpl <span class="j-key">implements </span><span class="j-hl">OutputB</span>
+<span class="j-sym">{
+  </span><span class="j-key">private final </span>Output2 output;
+
+  <span class="j-key">public </span>OutputBImpl<span class="j-sym">(</span>Output2 _output<span class="j-sym">)
+  {
+    </span><span class="j-key">super</span><span class="j-sym">()</span>;
+    <span class="j-key">this</span>.output = _output;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span><span class="j-typ">double </span>getResult<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.output.<span class="j-hl">getResultB</span><span class="j-sym">()</span>;
+  <span class="j-sym">}
+
+  </span><span class="j-key">public </span><span class="j-typ">double </span>getOther<span class="j-sym">()
+  {
+    </span><span class="j-key">return this</span>.output.getOtherB<span class="j-sym">()</span>;
+  <span class="j-sym">}
+}</span></pre>
+
+
+	<h5>Note</h5>
+
+	<p><span class="caps">AFC</span> does not support the following idiom:</p>
+
+	<pre class="java"><span class="j-key">public static interface </span>Output3
+<span class="j-sym">{
+  </span>OutputA getA<span class="j-sym">()</span>;
+  OutputB getB<span class="j-sym">()</span>;
+<span class="j-sym">}</span></pre>
+
+
+	<p>as it did for inputs. This is because for outputs, it is <span class="caps">AFC</span>&#8217;s responsibility to implement this interface. It only supports the approach with the least black box magic.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Binding To Multiple Interfaces</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Inputs</a></li><li class="withitems"><a href="#pagetoc__2">Outputs</a><ul class="toc toc2"><li><a href="#pagetoc__2_1">Disambiguation</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.htm">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

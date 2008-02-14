@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Developer&#8217;s Journal - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Developer&#8217;s Journal</h1>
+
+	<p>This is an unstructured journal regarding the development of <span class="caps">AFC</span>. I use it to keep track of ideas, goals and discussion notes. Note that the former name of <span class="caps">AFC</span> was <span class="caps">SEJ</span> (Spreadsheet Engine for Java).</p>
+
+
+	<p>Check the <a href="../../doc/roadmap.htm">roadmap</a> for the current priorities, and the <a href="../releasenotes.htm">release notes</a> for what&#8217;s already been done.</p>
+
+
+	<h2>November 2007</h2>
+
+	<h4>Nov 06</h4>
+
+	<p><a href="2007-11-06_reference-tests.htm">Refactoring the Reference Tests</a> &#8211; Goals: <span class="when">...<a href="2007-11-06_reference-tests.htm">more</a></span></p>
+
+
+	<h2>October 2007</h2>
+
+	<h4>Oct 16</h4>
+
+	<p><a href="2007-10-16_types_and_rewrites.htm">Typing, Rewrites, and Transforms</a> &#8211; Currently, <span class="caps"><span class="caps">AFC</span></span> transforms the computation model constructed from the spreadsheet as follows: <span class="when">...<a href="2007-10-16_types_and_rewrites.htm">more</a></span></p>
+
+
+	<h2>August 2007</h2>
+
+	<h4>Aug 17</h4>
+
+	<p><a href="2007-08-17_dbfold.htm"><code>SUM</code> and <code>DSUM</code>, etc.</a> &#8211; The definition of the plain and the database aggregators should really be the same. What I need is a fold/reduce operation that applies equally to plain and database aggregations. <span class="when">...<a href="2007-08-17_dbfold.htm">more</a></span></p>
+
+
+	<h4>Aug 08</h4>
+
+	<p><a href="2007-08-08_lookup.htm">Implementation of <code>LOOKUP</code>, <code>MATCH</code>, and <code>INDEX</code></a> &#8211; The <code>LOOKUP</code> function, and its foundations <code>MATCH</code> and <code>INDEX</code>, are likely to be heavily used in Abacus&#8217; financial applications. So they must be implemented efficiently both space- and runtime-wise. <span class="when">...<a href="2007-08-08_lookup.htm">more</a></span></p>
+
+
+	<h2>May 2007</h2>
+
+	<h4>May 25</h4>
+
+	<p><a href="2007-05-25_scale_vs_precision.htm">Scale vs. Precision with BigDecimal Engines</a> &#8211; <span class="caps"><span class="caps">AFC</span></span> currently uses a fixed scale for BigDecimal computations. For anything more complicated than basic addition, subtraction and multiplication, a minimum precision seems more desirable. Problem is, Abacus uses fixed scales internally, too. What do we do? <span class="when">...<a href="2007-05-25_scale_vs_precision.htm">more</a></span></p>
+
+
+	<h4>May 16</h4>
+
+	<p><a href="2007-05-16_parser.htm">Who Parses Function Names?</a> &#8211; We have been running against a table size limit in <a href="http://www2.in.tum.de/projects/cup/"><span class="caps">CUP</span></a>. So I replaced <span class="caps"><span class="caps">CUP</span></span> by <a href="https://javacc.dev.java.net/">JavaCC</a>. With great results so far. <span class="when">...<a href="2007-05-16_parser.htm">more</a></span></p>
+
+
+	<h2>April 2007</h2>
+
+	<h4>Apr 24</h4>
+
+	<p><a href="2007-04-24_modules.htm">Modules and IDEs</a> &#8211; I have implemented the internal modularization as <a href="2007-01-22_modularization.htm">described earlier on</a>. However, I have not split the project up into modules. Here&#8217;s why. <span class="when">...<a href="2007-04-24_modules.htm">more</a></span></p>
+
+
+	<h2>January 2007</h2>
+
+	<h4>Jan 22</h4>
+
+	<p><a href="2007-01-22_modularization.htm">Modularization</a> &#8211; <span class="caps"><span class="caps">SEJ</span></span> is quite nicely modularized in theory. In practice, though, there are a number of problems in the current project setup. <span class="when">...<a href="2007-01-22_modularization.htm">more</a></span></p>
+
+
+	<h2>December 2006</h2>
+
+	<h4>Dec 29</h4>
+
+	<p><a href="2006-12-29_decompiling.htm">Decompiling Generated Engines</a> &#8211; The <a href="../design.htm">design document</a> makes &#8220;trustworthiness&#8221; a major goal of <span class="caps"><span class="caps">SEJ</span></span>. It suggests that <span class="caps"><span class="caps">SEJ</span></span> should, in parallel to the default byte-code generator, include a source-code generator. This would allow users to inspect the code <span class="caps"><span class="caps">SEJ</span></span> generates for their spreadsheets. Maybe the <a href="http://jode.sourceforge.net/"><span class="caps">JODE</span></a> Java decompiler can get us this feature for free. <span class="when">...<a href="2006-12-29_decompiling.htm">more</a></span></p>
+
+
+	<h4>Dec 18</h4>
+
+	<p><a href="2006-12-18_vector_operators.htm">Vector Operators</a> &#8211; I just discovered that Excel supports vector operators. Both combinations of vectors and scalars are supported, as well as combination of vectors with vectors (which are pairwise operations returning another vector). <span class="when">...<a href="2006-12-18_vector_operators.htm">more</a></span></p>
+
+
+	<h4>Dec 15</h4>
+
+	<p><a href="2006-12-15_ranges_overlapping_sections.htm">Ranges Overlapping Section Bounds</a> &#8211; I have started to implement support for <code>DFOLD()</code> over dynamic sections in the data. For this to work reasonably, I have to first support range references that overlap section bounds. This is because <code>DSUM()</code> et al. only take a single range reference in their arguments. <span class="when">...<a href="2006-12-15_ranges_overlapping_sections.htm">more</a></span></p>
+
+
+	<h4>Dec 14</h4>
+
+	<p><a href="2006-12-14_xmlproc.htm">XmlProc</a> &#8211; I have had an idea for a very convincing demo application for <span class="caps"><span class="caps">SEJ</span></span> (I think). It is a batch processor that transforms <span class="caps"><span class="caps">XML</span></span> data using a spreadsheet-defined computation. See <a href="../examples/xmlproc.htm">here</a>. <span class="when">...<a href="2006-12-14_xmlproc.htm">more</a></span></p>
+
+
+	<h4>Dec 14</h4>
+
+	<p><a href="2006-12-14_sections_and_external_data.htm">Dynamic Sections and External Data</a> &#8211; I recently discovered a little feature in Excel that might point the way to an explicit representation of dynamic sections. When importing external data, you can set the flags &#8220;Fill down formulas in columns adjacent to data&#8221; and &#8220;Insert entire rows for new data&#8221;. Imported <span class="caps"><span class="caps">XML</span></span> data is even better. <span class="when">...<a href="2006-12-14_sections_and_external_data.htm">more</a></span></p>
+
+
+	<h4>Dec 05</h4>
+
+	<p><a href="2006-12-05_database_functions.htm">Database Functions</a> &#8211; I have started implementing the database functions like <code>DSUM()</code>. Here I intend to sketch out the cases <span class="caps"><span class="caps">SEJ</span></span> is going to support, and how. <span class="when">...<a href="2006-12-05_database_functions.htm">more</a></span></p>
+
+
+	<h2>November 2006</h2>
+
+	<h4>Nov 29</h4>
+
+	<p><a href="2006-11-29_array_functions.htm">Array Functions</a> &#8211; I am implementing <code>IRR( values [, guess] )</code> and similar functions to see what new expression language and/or template function constructs are needed to support this kind of function. <acronym title="Internal Rate of Return"><span class="caps">IRR</span></acronym> is a function that takes a range of values in its first argument, has a second, optional argument, and is, internally, an iterative solver. This poses a number of new (or not so new) problems. <span class="when">...<a href="2006-11-29_array_functions.htm">more</a></span></p>
+
+
+	<h4>Nov 22</h4>
+
+	<p><a href="2006-11-22_robust_storage.htm">Robust Engine Storage</a> &#8211; I have decided that <span class="caps"><span class="caps">SEJ</span></span>&#8217;s current engine storage format (a .jar file) is robust enough to let <span class="caps"><span class="caps">SEJ</span></span> evolve while maintaining compatibility with existing engines. Contrary to my earlier thoughts, I also don&#8217;t think <span class="caps"><span class="caps">SEJ</span></span> should store a description of the engine in the .jar for helping with problem diagnosis. Here are my reasons. <span class="when">...<a href="2006-11-22_robust_storage.htm">more</a></span></p>
+
+
+	<h4>Nov 17</h4>
+
+	<p><a href="2006-11-17_section_caching.htm">Repeating Sections and Caching</a> &#8211; Right now, <span class="caps"><span class="caps">SEJ</span></span> mandates caching for engines with repeating sections. This is because, internally, <span class="caps"><span class="caps">SEJ</span></span> constructs an array of section element engines for every element in a repeating section when the section is first accessed. This is a cache, and so <span class="caps"><span class="caps">SEJ</span></span> mandates <code>Resettable</code> on your output interface. <span class="when">...<a href="2006-11-17_section_caching.htm">more</a></span></p>
+
+
+	<h4>Nov 16</h4>
+
+	<p><a href="2006-11-16_common_subexprs.htm">Common Sub-Expressions In Large Sheets</a> &#8211; The following sheet, while grossly oversimplified, seems to be a very typical sheet for the insurance models used by insurance companies (a relative of mine is a mathematician at one of them). The typical things are the large table and its inhomogeneity (in practice, the tables are much larger than the one here). This is not a simple repeating section with a perfectly homogeneous structure. <span class="when">...<a href="2006-11-16_common_subexprs.htm">more</a></span></p>
+
+
+	<h2>October 2006</h2>
+
+	<h4>Oct 03</h4>
+
+	<p><a href="2006-10-03_template_methods.htm">Generating Compilers</a> &#8211; I have started to write the <a href="../hacking/index.htm">hacking docs</a>. As usual, having to explain things made me realize how important it is to make them as simple as possible. Right now, when you add a new function to <span class="caps"><span class="caps">SEJ</span></span>, you have to <span class="when">...<a href="2006-10-03_template_methods.htm">more</a></span></p>
+
+
+	<h2>Older Entries</h2>
+
+	<p>...can be <a href="../dev.htm">found here</a>.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected">Peter's Journal</span></div>
+<div class="nested">
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

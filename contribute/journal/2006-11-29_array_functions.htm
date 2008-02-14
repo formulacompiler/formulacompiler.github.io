@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Array Functions - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Journal</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Array Functions</h1>
+
+	<p>I am implementing <code>IRR( values [, guess] )</code> and similar functions to see what new expression language and/or template function constructs are needed to support this kind of function. <acronym title="Internal Rate of Return">IRR</acronym> is a function that takes a range of values in its first argument, has a second, optional argument, and is, internally, an iterative solver. This poses a number of new (or not so new) problems.</p>
+
+
+
+	<h2><a name="pagetoc__1"><acronym title="Net Present Value">NPV</acronym></a></h2>
+
+	<p><code>NPV()</code> is quite simple, but requires one additional feature that <code>_FOLD()</code> does not yet support: the loop index. So I&#8217;ll add that to the syntax:</p>
+
+	<pre><code>NPV( rate, vs ) = _LET( rate1: `rate + 1;
+    _FOLD_1STOK( r: 0; vi, i: `r + `vi / `rate1 ^ `i; `vs ))</code></pre>
+
+
+	<p>The <code>_FOLD()</code> functions are always unrolled right now (except for dynamic sections). For <code>NPV()</code>, where the folding step is already fairly complex, this seems inappropriate. On the other hand, one will hardly see <code>NPV()</code> called on a large range. So <code>NPV()</code> would benefit from having its range argument converted into a proper array first so the main loop can iterate the array. So, using <code>vs#</code> as the notation indicating this:</p>
+
+	<pre><code>NPV( rate, vs# ) = _LET( rate1: `rate + 1;
+    _FOLD_ARRAY( r: 0; vi, i: `r + `vi / `rate1 ^ `i; `vs ))</code></pre>
+
+
+	<p>Since <code>vs#</code> is an array of values, there is no reason to compile the body of <code>NPV()</code> inline. It should really be implemented once in the runtime. However, the runtime is specific for every numeric type. So I&#8217;d like to be able to define the runtime method as an expression and have it compiled to a static runtime method for me. That I do by setting a flag on the definition of <code>NPV()</code> above.</p>
+
+
+	<h2><a name="pagetoc__2"><acronym title="Modified Internal Rate of Return">MIRR</acronym></a></h2>
+
+	<p><code>MIRR()</code> is like <code>NPV()</code>. Its implementation makes use of <code>NPV()</code>. So I would like to write:</p>
+
+	<pre><code>MIRR( vs#, frate, rrate ) =
+    _LET( n: COUNT( `vs );
+        ((-NPV( `rrate, _MAP_ARRAY( vi: IF( `vi &gt; 0, `vi, 0 ))) * (1 + `rrate) ^ `n)
+         / (NPV( `frate, _MAP_ARRAY( vi: IF( `vi &lt; 0, `vi, 0 ))) * (1 + `frate)))
+        ^ (1 / (`n - 1))
+        - 1 )</code></pre>
+
+
+	<p>Note that <span class="caps">SEJ</span> will have to properly determine that the result of the new function <code>_MAP_ARRAY()</code> already is an array when passing it to <code>NPV()</code>. A little bit of math, however, shows that this can be formulated more efficiently as:</p>
+
+	<pre><code>MIRR( vs#, frate, rrate ) = 
+    _LET( n: COUNT( `vs );
+    _LET( rrate1: `rrate + 1;
+    _LET( frate1: `frate + 1;
+        ((-_FOLD_ARRAY( r: 0; vi, i: `r + IF( `vi &gt; 0, `vi, 0 ) * `rrate1 ^ (`n - `i); `vs ))
+         / _FOLD_ARRAY( r: 0; vi, i: `r + IF( `vi &lt; 0, `vi, 0 ) / `frate1 ^ (`i - 1); `vs ))
+        ^ (1 / (`n - 1))
+        - 1 )))</code></pre>
+
+
+	<h2><a name="pagetoc__3"><acronym title="Internal Rate of Return">IRR</acronym></a></h2>
+
+	<p><code>IRR()</code> uses <a href="http://en.wikipedia.org/wiki/Newton's_method">Newton&#8217;s method</a> to solve <code>NPV()</code> for the rate of return given a fixed result of 0. That gives us</p>
+
+	<pre><code>x[i + 1] = x[i] - NPV( x[i] ) / NPV'( x[i] )</code></pre>
+
+
+	<p>where <code>NPV'()</code> is the first derivative of <code>NPV()</code>. We repeat this until the difference between <code>x[i+1]</code> and <code>x[i]</code> is less than some given epsilon.</p>
+
+
+	<p>So I&#8217;d like to write this for the default guess (an alternative would be to put the default guess into the parser):</p>
+
+	<pre><code>IRR( vs ) = IRR( `vs, 0.1 )</code></pre>
+
+
+	<p>and this to implement <code>IRR()</code>:</p>
+
+	<pre><code>IRR( vs#, guess ) = _NEWTON( x0: `guess;
+    xi, vs: _LET( xi1: `xi + 1;
+        xi - NPV( `xi, `vs )
+            + _FOLD_1STOK( r: 0; vi: `r - `i * `vi / `xi ^ (`i + 1); `vs ) );
+    0.0000001;
+    20;
+    `vs )</code></pre>
+
+
+	<p>So I am reusing <code>NPV()</code> here again. Its first derivative is given inline.</p>
+
+
+	<p>Of course, if I were to implement a proper <a href="http://en.wikipedia.org/wiki/Scheme_%28programming_language%29">Scheme</a> dialect with recursive <code>let</code> and tail-calls, I could formulate <code>NEWTON()</code> directly in the language. However, in all of the OpenOffice source I find only two references to Newton&#8217;s method: for <code>IRR()</code> and for <code>RATE()</code>. Other functions like <code>FINV()</code> use the <em>regula falsi</em>. So this would be overkill. Given the paucity of similar cases, I might even consider implementing <code>IRR()</code> and <code>RATE()</code> directly in Java as template methods with runtime backing.</p>
+
+
+	<h2><a name="pagetoc__4">Range Parameters</a></h2>
+
+	<p>So far, <span class="caps">SEJ</span>&#8217;s templates and rewrite rules only had to handle functions where ranges occurred as the only parameter to a functions, as in <code>SUM()</code>. Of course, <code>MATCH()</code> et al. are different, but they are so far handled internally with specifically tailored code. And they don&#8217;t support dynamic sections. Since <code>SUM()</code> et al. don&#8217;t need to know the shape of the range they get passed, <span class="caps">SEJ</span> simply passes them all the range elements as individual arguments, mixed with arguments that iterate over a section.</p>
+
+
+	<p><code>INDEX()</code>, however, needs the range shape. So it gets passed a <code>RangeValue</code> which describes the range and contains the range elements as a list of subnodes. I could simply use the same approach for <code>IRR()</code> et al.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><span class="selected"><a href="../../contribute/journal/index.htm">Peter's Journal</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Array Functions</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1"><acronym title="Net Present Value">NPV</acronym></a></li><li><a href="#pagetoc__2"><acronym title="Modified Internal Rate of Return">MIRR</acronym></a></li><li><a href="#pagetoc__3"><acronym title="Internal Rate of Return">IRR</acronym></a></li><li><a href="#pagetoc__4">Range Parameters</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

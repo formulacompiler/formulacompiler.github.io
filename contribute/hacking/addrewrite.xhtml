@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Adding A New High-Level Spreadsheet Function To AFC - Abacus Formula Compiler for Java</title>
+    <style type="text/css" media="screen">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="download_band">
+				<a href="../../download/index.htm">
+					<img src="../../site_img/download_button.gif" />
+				</a>
+			</div>
+			<div id="area_band">
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <a href="../../doc/index.htm">Documentation</a> | <a href="../../download/index.htm">Download</a> | <a href="../../support.htm">Support</a> | <span class="selected"><a href="../../contribute/index.htm">Contribute</a></span>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Contribute</a> &gt; <a href="index.htm">Hacking</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Adding A New High-Level Spreadsheet Function To <span class="caps">AFC</span></h1>
+
+	<p>A <em>high-level function</em>, in this context, is one that can be defined by rewriting it in terms of other, lower-level Excel functions. Doing this makes it immediately available to the constant folder, and to all the different <a href="../../doc/tutorial/numeric_type.htm">numeric types</a> supported by <span class="caps">AFC</span>.</p>
+
+
+	<p>As an example of a <em>high-level</em> function we will look at how I added <code>COMBIN()</code> to the list of supported spreadsheet functions. So for the rest of this page, we will assume <code>COMBIN()</code> has not been implemented yet.</p>
+
+
+	<p><em>Note: You must have read <a href="addprimitive.htm">adding a new primitive function</a> to understand this section.</em></p>
+
+
+
+	<h2><a name="pagetoc__1">Docs and Tests</a></h2>
+
+	<p>As with <a href="addprimitive.htm">ABS</a>, we start with documentation (announcing <code>COMBIN()</code> in the release notes), and the citable test cases:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+			<td>J</td>
+			<td>K</td>
+			<td>L</td>
+			<td>M</td>
+			<td>N</td>
+			<td>O</td>
+			<td>P</td>
+			<td>Q</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Expected</span><br/><span class="xl-exp">=IF(Q1,"Expected","FAILED!")</span></td>
+			<td><span style="text-decoration: underline;">Actual</span></td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><span style="text-decoration: underline;"># of Inputs</span></td>
+			<td><span style="text-decoration: underline;">Name</span></td>
+			<td><span style="text-decoration: underline;">Highlight</span></td>
+			<td><span style="text-decoration: underline;">Excel says</span></td>
+			<td><span style="text-decoration: underline;">Skip for</span></td>
+			<td><span style="text-decoration: underline;">Custom check</span></td>
+			<td></td>
+			<td><span style="text-decoration: underline;">true</span><br/><span class="xl-exp">=AND(Q2:Q10000)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">450</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=COMBIN(C450,D450)</span></td>
+			<td class="xl-num">0</td>
+			<td class="xl-num">0</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td>COMBIN</td>
+			<td>COMBIN</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">451</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=COMBIN(C451,D451)</span></td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">0</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">452</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=COMBIN(C452,D452)</span></td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">453</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=COMBIN(C453,D453)</span></td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">0</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">454</td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">2<br/><span class="xl-exp">=COMBIN(C454,D454)</span></td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">455</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=COMBIN(C455,D455)</span></td>
+			<td class="xl-num">2</td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">456</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=COMBIN(C456,D456)</span></td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">0</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">457</td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=COMBIN(C457,D457)</span></td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">458</td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">3<br/><span class="xl-exp">=COMBIN(C458,D458)</span></td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">459</td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">1<br/><span class="xl-exp">=COMBIN(C459,D459)</span></td>
+			<td class="xl-num">3</td>
+			<td class="xl-num">3</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">460</td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">10<br/><span class="xl-exp">=COMBIN(C460,D460)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">461</td>
+			<td class="xl-num">252</td>
+			<td class="xl-num">252<br/><span class="xl-exp">=COMBIN(C461,D461)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">5</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">462</td>
+			<td class="xl-num">120</td>
+			<td class="xl-num">120<br/><span class="xl-exp">=COMBIN(C462,D462)</span></td>
+			<td class="xl-num">10</td>
+			<td class="xl-num">7</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td>...</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>Again, as explained in the topic on the <a href="referencetests.htm">reference test sheets</a>, you also have to update the corresponding .ods and .yaml files. If you forget, running the tests will tell you.</p>
+
+
+	<h2><a name="pagetoc__2">Parsing</a></h2>
+
+	<p>Making <code>COMBIN()</code> known to the parser is again just like what we did for <code>ABS()</code>. The only point worth noting is that we need two arguments:</p>
+
+	<pre class="j-text"><code>|	"COMBIN" fun2( Function.COMBIN )</code></pre>
+
+
+	<h2><a name="pagetoc__3">Rewriting It</a></h2>
+
+	<p>Now we get to the interesting part. We rewrite <code>COMBIN(n,k)</code> in terms of lower-level Excel and <span class="caps">AFC</span> functions. From the Excel help file we see that <code>COMBIN(n,k)</code> is</p>
+
+
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+    <mfrac>
+        <mrow><mi>n</mi><mo>!</mo></mrow>
+        <mrow><mi>k</mi><mo>! (</mo><mi>n</mi><mo>-</mo><mi>k</mi><mo>)!</mo></mrow>
+    </mfrac>
+</math>
+	<p>where, in Excel, the factorial <em>n!</em> is <code>FACT(n)</code>. So we would like to define, in <span class="caps">AFC</span>:</p>
+
+	<pre><code>COMBIN(n,k) = FACT(n) / FACT(k) / FACT(n - k)</code></pre>
+
+
+	<p>However, we should also test for error cases, like the following:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>G</td>
+			<td>H</td>
+			<td>I</td>
+			<td>J</td>
+			<td>K</td>
+			<td>L</td>
+			<td>M</td>
+			<td>N</td>
+			<td>O</td>
+			<td>P</td>
+			<td>Q</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><span style="text-decoration: underline;">Expected</span><br/><span class="xl-exp">=IF(Q1,"Expected","FAILED!")</span></td>
+			<td><span style="text-decoration: underline;">Actual</span></td>
+			<td><span style="text-decoration: underline;">Inputs</span></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><span style="text-decoration: underline;"># of Inputs</span></td>
+			<td><span style="text-decoration: underline;">Name</span></td>
+			<td><span style="text-decoration: underline;">Highlight</span></td>
+			<td><span style="text-decoration: underline;">Excel says</span></td>
+			<td><span style="text-decoration: underline;">Skip for</span></td>
+			<td><span style="text-decoration: underline;">Custom check</span></td>
+			<td></td>
+			<td><span style="text-decoration: underline;">true</span><br/><span class="xl-exp">=AND(Q2:Q10000)</span></td>
+		</tr>
+		<tr>
+			<td class="xl-row">463</td>
+			<td>!NUM:FE</td>
+			<td>#NUM!<br/><span class="xl-exp">=COMBIN(C463,D463)</span></td>
+			<td class="xl-num">0</td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td>#NUM!</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">464</td>
+			<td>!NUM:FE</td>
+			<td>#NUM!<br/><span class="xl-exp">=COMBIN(C464,D464)</span></td>
+			<td class="xl-num">1</td>
+			<td class="xl-num">-1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td>#NUM!</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">465</td>
+			<td>!NUM:FE</td>
+			<td>#NUM!<br/><span class="xl-exp">=COMBIN(C465,D465)</span></td>
+			<td class="xl-num">-1</td>
+			<td class="xl-num">1</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="xl-num">2</td>
+			<td></td>
+			<td></td>
+			<td>#NUM!</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+	<p>This shows that we need to add a few tests for invalid arguments. We can do this with <code>IF</code>, as you can see further below.</p>
+
+
+	<h2><a name="pagetoc__4">Rewrite Rule</a></h2>
+
+	<p>To define a rewrite rule in <span class="caps">AFC</span>, you need to add the rule to the file</p>
+
+	<pre class="j-path">components<span class="j-pathsep">/</span>compiler<span class="j-pathsep">/</span>src<span class="j-pathsep">/</span>build<span class="j-pathsep">/</span>resources<span class="j-pathsep">/</span>org<span class="j-pathsep">/</span>formulacompiler<span class="j-pathsep">/</span>compiler<span class="j-pathsep">/</span>internal<span class="j-pathsep">/</span>build<span class="j-pathsep">/</span>rewriting<span class="j-pathsep">/</span>rewrite.rules</pre>
+
+
+	<p>This is done as follows:</p>
+
+	<pre class="j-text"><code>rewrite combin( n, k ) =
+	if OR( n &lt; 0, k &lt; 0, n &lt; k ) then err( "#NUM! because n &lt; 0 or k &lt; 0 or n &lt; k in COMBIN" )
+	else if n = k then 1
+	else if k = 1 then n
+	else
+		FACT(n) / FACT(k) / FACT(n-k)</code></pre>
+
+
+	<p>(Note that I have added two optimizations for <em>n = k</em> and <em>k = 1</em> here.)</p>
+
+
+	<p>The definition should look straightforward.</p>
+
+
+	<p>Running <code>ant build</code> regenerates the rewriter so it includes the new definition. (In the <span class="caps">IDE</span>, you can simply run the class <code>RewriteRulesCompiler</code>, which we just modified, to regenerate.)</p>
+
+
+	<h4><a name="pagetoc__4_1">Parameter Reuse</a></h4>
+
+	<p>When you access a parameter more than once (as we do above), <span class="caps">AFC</span>&#8217;s rule compiler automatically inserts a <code>let</code> around the parameter in question. This ensures that parameters are not evaluated more than once. For example, an application like</p>
+
+	<pre><code>COMBIN( A1+A2, B1-B2 )</code></pre>
+
+
+	<p>results in inlined code like</p>
+
+	<pre><code>int n, k;
+return ... fac((n = A1+A2)) / fac((k = B1-B2)) / fac(n - k) ...</code></pre>
+
+
+	<p>where <code>fac()</code> is the runtime support function for <code>FACT()</code>.</p>
+
+
+	<h4><a name="pagetoc__4_2">No Runtime</a></h4>
+
+	<p>A rewrite rule always generates code directly into the computation. There is no option to move support code into the runtime, as there is for <a href="addprimitive.htm">primitive functions</a> (see <code>fac()</code> above). This may change in a future release.</p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><span class="selected"><a href="../../contribute/hacking/index.htm">Developer Documentation</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Adding A New High-Level Spreadsheet Function To AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Docs and Tests</a></li><li><a href="#pagetoc__2">Parsing</a></li><li><a href="#pagetoc__3">Rewriting It</a></li><li class="withitems"><a href="#pagetoc__4">Rewrite Rule</a><ul class="toc toc3"><li><a href="#pagetoc__4_1">Parameter Reuse</a></li><li><a href="#pagetoc__4_2">No Runtime</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../contribute/copyright.htm">Granting Of Rights</a></div>
+<div class="area"><a href="../../contribute/journal/index.htm">Peter's Journal</a></div>
+<div class="area"><a href="../../contribute/journal_old.htm">... Older Journal</a></div>
+<div class="area"><a href="../../contribute/journal_older.htm">... Ancient Journal</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>
