@@ -117,8 +117,8 @@
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedExpression e</span><span class="j-sym">) {
-  </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34; 
-    </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;</span></span>;
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -128,22 +128,22 @@
 
 	<p>Binding the output cell to the second cell, which references the first cell, results in the same error, but note that the message identifies <code>A2</code> as the source of the reference:</p>
 
-	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;ReferencesInfo&#34;</span></span><span class="j-sym">)</span>;
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;ReferencesInfo&#34;</span></span> <span class="j-sym">)</span>;
 <span class="j-key">try </span><span class="j-sym">{
   </span>builder.compile<span class="j-sym">()</span>;
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
-  </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34; 
-    </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
-    </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
+  </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
+      </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
 
 	<p>However, binding to the third cell, which is independent of the first cell containing the <code>INFO</code> function, works ok:</p>
 
-	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;Independent&#34;</span></span><span class="j-sym">)</span>;
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;Independent&#34;</span></span> <span class="j-sym">)</span>;
 SaveableEngine engine = builder.compile<span class="j-sym">()</span>;
 MyFactory factory = <span class="j-sym">(</span>MyFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
 MyComputation computation = factory.newComputation<span class="j-sym">( </span><span class="j-key">new </span>MyInputs<span class="j-sym">() )</span>;
@@ -152,16 +152,16 @@ MyComputation computation = factory.newComputation<span class="j-sym">( </span><
 
 	<p>The final example shows the error message for a parseable, but unsupported function (<code>PROPER</code>):</p>
 
-	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;Unsupported&#34;</span></span><span class="j-sym">)</span>;
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;Unsupported&#34;</span></span> <span class="j-sym">)</span>;
 <span class="j-key">try </span><span class="j-sym">{
   </span>builder.compile<span class="j-sym">()</span>;
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
   </span>String err = <span class="j-hl"><span class="j-str">&#34;Function LENB is not supported for double engines.&#34;</span></span>
-    + <span class="j-hl"><span class="j-str">&#34;\nIn expression LEN(  &gt;&gt; LENB( B4 ) &lt;&lt;  ); error location indicated by &gt;&gt;..&lt;&lt;.&#34;</span></span>
-    + <span class="j-str">&#34;\nCell containing expression is A4.&#34;
-    </span>+ <span class="j-str">&#34;\nReferenced by cell A4.&#34;</span>;
+      + <span class="j-hl"><span class="j-str">&#34;\nIn expression LEN(  &gt;&gt; LENB( B4 ) &lt;&lt;  ); error location indicated by &gt;&gt;..&lt;&lt;.&#34;</span></span>
+      + <span class="j-str">&#34;\nCell containing expression is A4.&#34;
+      </span>+ <span class="j-str">&#34;\nReferenced by cell A4.&#34;</span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -296,7 +296,7 @@ bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;Typ
 
 	<p>we get the following exception:</p>
 
-	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;stringOutput&#34;</span></span><span class="j-sym">)</span>;
+	<pre class="java">EngineBuilder builder = builderForComputationOfCellNamed<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;stringOutput&#34;</span></span> <span class="j-sym">)</span>;
 bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;stringInput&#34; </span><span class="j-sym">)</span>;
 <span class="j-key">try </span><span class="j-sym">{
   </span>builder.compile<span class="j-sym">()</span>;
@@ -462,7 +462,8 @@ bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;num
 	<p>The range <em>Section</em> is bound as a repeating section, as follows:</p>
 
 	<pre class="java">Range range = sheet.getRange<span class="j-sym">( </span><span class="j-str">&#34;Section&#34; </span><span class="j-sym">)</span>;
-Section section = root.defineRepeatingSection<span class="j-sym">( </span>range, Orientation.REPEAT_ROWS, <span class="j-str">&#34;section&#34;</span>, MyElement.class, null,   <span class="j-key">null </span><span class="j-sym">)</span>;
+Section section = root.defineRepeatingSection<span class="j-sym">( </span>range, Orientation.REPEAT_ROWS, <span class="j-str">&#34;section&#34;</span>, MyElement.class, null,
+    <span class="j-key">null </span><span class="j-sym">)</span>;
 section.defineInputCell<span class="j-sym">( </span>sheet.getRange<span class="j-sym">( </span><span class="j-str">&#34;Name&#34; </span><span class="j-sym">)</span>.getTopLeft<span class="j-sym">()</span>, <span class="j-str">&#34;name&#34; </span><span class="j-sym">)</span>;
 section.defineInputCell<span class="j-sym">( </span>sheet.getRange<span class="j-sym">( </span><span class="j-str">&#34;Value&#34; </span><span class="j-sym">)</span>.getTopLeft<span class="j-sym">()</span>, <span class="j-str">&#34;value&#34; </span><span class="j-sym">)</span>;</pre>
 

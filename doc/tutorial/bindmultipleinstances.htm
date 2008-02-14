@@ -88,7 +88,8 @@ valueGetter = CustomerCategory.<span class="j-key">class</span>.getMethod<span c
     <span class="j-key">if </span><span class="j-sym">(</span>name.startsWith<span class="j-sym">( </span><span class="j-str">&#34;CC_DISCOUNT_&#34; </span><span class="j-sym">)) {
       </span><span class="j-key">final </span><span class="j-typ">int </span>iCC = Integer.parseInt<span class="j-sym">( </span>name.substring<span class="j-sym">( </span><span class="j-str">&#34;CC_DISCOUNT_&#34;</span>.length<span class="j-sym">() ) )</span>;
       <span class="j-key">final </span>Spreadsheet.Cell cell = <span class="j-sym">(</span>Spreadsheet.Cell<span class="j-sym">) </span>range;
-      binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<span class="j-sym">( </span>intfGetter, <span class="j-hl">iCC</span> <span class="j-sym">)</span>.<span class="j-hl">chain</span><span class="j-sym">( </span>valueGetter <span class="j-sym">) )</span>;
+      <span class="j-key">final </span>CallFrame chain = builder.newCallFrame<span class="j-sym">( </span>intfGetter, <span class="j-hl">iCC</span> <span class="j-sym">)</span>.<span class="j-hl">chain</span><span class="j-sym">( </span>valueGetter <span class="j-sym">)</span>;
+      binder.defineInputCell<span class="j-sym">( </span>cell, chain <span class="j-sym">)</span>;
     <span class="j-sym">}
   }
 }</span></pre>
@@ -101,7 +102,7 @@ valueGetter = CustomerCategory.<span class="j-key">class</span>.getMethod<span c
 
 	<p>The input model for this sheet can be implemented as described above. How do you specify the outputs? You have to use parametrized accessors for each value separately:</p>
 
-	<pre class="java"><span class="j-key">public static interface </span>Output 
+	<pre class="java"><span class="j-key">public static interface </span>Output
 <span class="j-sym">{
   </span><span class="j-typ">double </span>getNewDiscount<span class="j-sym">( </span><span class="j-typ">int </span>_iCC <span class="j-sym">)</span>;
   <span class="j-typ">double </span>getNewCreditLimit<span class="j-sym">( </span><span class="j-typ">int </span>_iCC <span class="j-sym">)</span>;
@@ -118,7 +119,7 @@ valueGetter = CustomerCategory.<span class="j-key">class</span>.getMethod<span c
     <span class="j-key">if </span><span class="j-sym">(</span>name.startsWith<span class="j-sym">( </span><span class="j-str">&#34;CC_NEWDISCOUNT_&#34; </span><span class="j-sym">)) {
       </span><span class="j-key">final </span><span class="j-typ">int </span>iCC = Integer.parseInt<span class="j-sym">( </span>name.substring<span class="j-sym">( </span><span class="j-str">&#34;CC_NEWDISCOUNT_&#34;</span>.length<span class="j-sym">() ) )</span>;
       <span class="j-key">final </span>Spreadsheet.Cell cell = <span class="j-sym">(</span>Spreadsheet.Cell<span class="j-sym">) </span>range;
-      binder.defineOutputCell<span class="j-sym">( </span>cell, builder.newCallFrame<span class="j-sym">( </span>outputGetter, <span class="j-hl">iCC</span> <span class="j-sym">) )</span>;
+      binder.defineOutputCell<span class="j-sym">( </span>cell, outputGetter, <span class="j-hl">iCC</span> <span class="j-sym">)</span>;
     <span class="j-sym">}
     </span><span class="j-cmt">// ... dito for CreditLimit
   </span><span class="j-sym">}
@@ -145,7 +146,7 @@ valueGetter = CustomerCategory.<span class="j-key">class</span>.getMethod<span c
 <span class="j-sym">{
   </span><span class="j-key">final </span>Output output;
 
-  <span class="j-key">public </span>OutputFacade<span class="j-sym">(</span>Output _output<span class="j-sym">)
+  <span class="j-key">public </span>OutputFacade<span class="j-sym">( </span>Output _output <span class="j-sym">)
   {
     </span><span class="j-key">super</span><span class="j-sym">()</span>;
     <span class="j-key">this</span>.output = _output;
@@ -164,18 +165,18 @@ valueGetter = CustomerCategory.<span class="j-key">class</span>.getMethod<span c
   </span><span class="j-key">private class </span>CC
   <span class="j-sym">{
     </span><span class="j-key">private </span><span class="j-typ">int </span>iCC;
-    
-    <span class="j-key">public </span>CC<span class="j-sym">(</span><span class="j-hl">int _iCC</span><span class="j-sym">)
+
+    <span class="j-key">public </span>CC<span class="j-sym">( </span><span class="j-hl">int _iCC</span> <span class="j-sym">)
     {
       </span><span class="j-key">super</span><span class="j-sym">()</span>;
       <span class="j-key">this</span>.iCC = _iCC;
     <span class="j-sym">}
-    
+
     </span><span class="j-key">public </span><span class="j-typ">double </span>getNewDiscount<span class="j-sym">()
     {
       </span><span class="j-key">return </span>getOutput<span class="j-sym">()</span>.getNewDiscount<span class="j-sym">( </span><span class="j-hl">this.iCC</span> <span class="j-sym">)</span>;
     <span class="j-sym">}
-    
+
     </span><span class="j-key">public </span><span class="j-typ">double </span>getNewCreditLimit<span class="j-sym">()
     {
       </span><span class="j-key">return </span>getOutput<span class="j-sym">()</span>.getNewCreditLimit<span class="j-sym">( </span><span class="j-hl">this.iCC</span> <span class="j-sym">)</span>;

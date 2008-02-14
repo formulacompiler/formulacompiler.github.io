@@ -653,10 +653,10 @@
 
 	<pre class="java"><span class="j-key">public static final class </span>OutputsCurrent <span class="j-key">implements </span>Outputs
 <span class="j-sym">{
-  </span><span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>COST_TABLE = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">150</span>, <span class="j-num">180</span>, <span class="j-num">240 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
+  </span><span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>COST_TABLE = <span class="j-sym">{ </span><span class="j-num">150</span>, <span class="j-num">180</span>, <span class="j-num">240 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
   <span class="j-key">private final </span>Inputs i;
 
-  <span class="j-key">public </span>OutputsCurrent<span class="j-sym">(</span>Inputs _inputs<span class="j-sym">)
+  <span class="j-key">public </span>OutputsCurrent<span class="j-sym">( </span>Inputs _inputs <span class="j-sym">)
   {
     </span><span class="j-key">this</span>.i = _inputs;
   <span class="j-sym">}
@@ -1147,14 +1147,14 @@
 
 	<pre class="java"><span class="j-key">public static final class </span>OutputsDesired <span class="j-key">implements </span>Outputs
 <span class="j-sym">{
-  </span><span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>COST_TABLE = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">150</span>, <span class="j-num">180</span>, <span class="j-num">240 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
-  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>PERCENT_TABLE = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">.03</span>, <span class="j-num">.03</span>, <span class="j-num">.03  </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
-  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>AGE_UPTO = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">20</span>, <span class="j-num">20</span>, <span class="j-num">20 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
-  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>INSURED_AMOUNT_UPTO = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">5000</span>, <span class="j-num">6000</span>, <span class="j-num">8000 </span><span class="j-sym">}</span>;
+  </span><span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>COST_TABLE = <span class="j-sym">{ </span><span class="j-num">150</span>, <span class="j-num">180</span>, <span class="j-num">240 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
+  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>PERCENT_TABLE = <span class="j-sym">{ </span><span class="j-num">.03</span>, <span class="j-num">.03</span>, <span class="j-num">.03 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
+  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>AGE_UPTO = <span class="j-sym">{ </span><span class="j-num">20</span>, <span class="j-num">20</span>, <span class="j-num">20 </span><span class="j-blk">/* ... all of 37 elts */</span><span class="j-sym">}</span>;
+  <span class="j-key">private static final </span><span class="j-typ">double</span><span class="j-sym">[] </span>INSURED_AMOUNT_UPTO = <span class="j-sym">{ </span><span class="j-num">5000</span>, <span class="j-num">6000</span>, <span class="j-num">8000 </span><span class="j-sym">}</span>;
 
   <span class="j-key">private final </span>Inputs i;
 
-  <span class="j-key">public </span>OutputsDesired<span class="j-sym">(</span>Inputs _inputs<span class="j-sym">)
+  <span class="j-key">public </span>OutputsDesired<span class="j-sym">( </span>Inputs _inputs <span class="j-sym">)
   {
     </span><span class="j-key">this</span>.i = _inputs;
   <span class="j-sym">}

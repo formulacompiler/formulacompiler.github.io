@@ -80,7 +80,7 @@
   </span><span class="j-key">private final </span>InputA a;
   <span class="j-key">private final </span>InputB b;
 
-  <span class="j-key">public </span>Input<span class="j-sym">(</span>InputA _a, InputB _b<span class="j-sym">)
+  <span class="j-key">public </span>Input<span class="j-sym">( </span>InputA _a, InputB _b <span class="j-sym">)
   {
     </span><span class="j-key">super</span><span class="j-sym">()</span>;
     <span class="j-key">this</span>.a = _a;
@@ -148,7 +148,7 @@ binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<sp
 
 	<p>If this is not the case, you have to do a little more work. You define your output class as follows:</p>
 
-	<pre class="java"><span class="j-key">public static interface </span>Output2 
+	<pre class="java"><span class="j-key">public static interface </span>Output2
 <span class="j-sym">{
   </span><span class="j-typ">double </span>getResultA<span class="j-sym">()</span>;
   <span class="j-typ">double </span>getResultB<span class="j-sym">()</span>;
@@ -162,7 +162,7 @@ binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<sp
 <span class="j-sym">{
   </span><span class="j-key">private final </span>Output2 output;
 
-  <span class="j-key">public </span>OutputAImpl<span class="j-sym">(</span>Output2 _output<span class="j-sym">)
+  <span class="j-key">public </span>OutputAImpl<span class="j-sym">( </span>Output2 _output <span class="j-sym">)
   {
     </span><span class="j-key">super</span><span class="j-sym">()</span>;
     <span class="j-key">this</span>.output = _output;
@@ -181,7 +181,7 @@ binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<sp
 <span class="j-sym">{
   </span><span class="j-key">private final </span>Output2 output;
 
-  <span class="j-key">public </span>OutputBImpl<span class="j-sym">(</span>Output2 _output<span class="j-sym">)
+  <span class="j-key">public </span>OutputBImpl<span class="j-sym">( </span>Output2 _output <span class="j-sym">)
   {
     </span><span class="j-key">super</span><span class="j-sym">()</span>;
     <span class="j-key">this</span>.output = _output;

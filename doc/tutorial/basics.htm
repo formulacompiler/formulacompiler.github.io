@@ -324,7 +324,7 @@ bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getBoth&#34;</spa
   builder.<span class="j-hl">setFactoryClass</span><span class="j-sym">( </span>RebateComputationFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
   builder.<span class="j-hl">bindAllByName</span><span class="j-sym">()</span>;
   builder.<span class="j-hl">failIfByNameBindingLeftNamedCellsUnbound</span><span class="j-sym">()</span>;
-  
+
   Engine engine = builder.<span class="j-hl">compile</span><span class="j-sym">()</span>;
   <span class="j-key">return </span><span class="j-sym">(</span>RebateComputationFactory<span class="j-sym">) </span>engine.<span class="j-hl">getComputationFactory</span><span class="j-sym">()</span>;
 <span class="j-sym">}</span></pre>

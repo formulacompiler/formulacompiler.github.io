@@ -100,7 +100,7 @@ Factory factory = <span class="j-sym">(</span>Factory<span class="j-sym">) </spa
 	<p>In this example, we divide <em>InputA</em> by <em>InputB</em> and add <em>InputA</em>, ie. 1 + 1/6. The result is returned with <code>double</code>&#8217;s precision:</p>
 
 	<pre class="java">Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">() )</span>;
-assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1.1666666666666667&#34;</span></span>, String.valueOf<span class="j-sym">( </span>output.getResult<span class="j-sym">()) )</span>;</pre>
+assertEquals<span class="j-sym">( </span><span class="j-hl"><span class="j-str">&#34;1.1666666666666667&#34;</span></span>, String.valueOf<span class="j-sym">( </span>output.getResult<span class="j-sym">() ) )</span>;</pre>
 
 
 	<p>as is witnessed by the generated engine:</p>
@@ -492,13 +492,13 @@ assertEquals<span class="j-sym">( </span><span class="j-hl">1L</span>, output.ge
 
 	<pre class="java"><span class="j-key">public static class </span>Input
 <span class="j-sym">{
-  </span><span class="j-key">public </span>Input<span class="j-sym">(</span><span class="j-typ">int </span>b<span class="j-sym">)  { </span><span class="j-key">this</span>.b = b; <span class="j-sym">}
-  </span><span class="j-key">public </span><span class="j-hl">long</span> getA<span class="j-sym">()  { </span><span class="j-key">return </span><span class="j-num">1</span>; <span class="j-sym">} </span><span class="j-cmt">// will be scaled by AFC 
-  </span><span class="j-key">public </span><span class="j-hl">@ScaledLong<span class="j-sym">(</span><span class="j-num">3</span><span class="j-sym">) </span>long</span> getB<span class="j-sym">()  { </span><span class="j-key">return </span>ScaledLongSupport.scale<span class="j-sym">( </span><span class="j-key">this</span>.b, <span class="j-num">3 </span><span class="j-sym">)</span>; <span class="j-sym">}
+  </span><span class="j-key">public </span>Input<span class="j-sym">( </span><span class="j-typ">int </span>b <span class="j-sym">) { </span><span class="j-key">this</span>.b = b; <span class="j-sym">}
+  </span><span class="j-key">public </span><span class="j-hl">long</span> getA<span class="j-sym">() { </span><span class="j-key">return </span><span class="j-num">1</span>; <span class="j-sym">} </span><span class="j-cmt">// will be scaled by AFC
+  </span><span class="j-key">public </span><span class="j-hl">@ScaledLong<span class="j-sym">( </span><span class="j-num">3 </span><span class="j-sym">) </span>long</span> getB<span class="j-sym">() { </span><span class="j-key">return </span>ScaledLongSupport.scale<span class="j-sym">( </span><span class="j-key">this</span>.b, <span class="j-num">3 </span><span class="j-sym">)</span>; <span class="j-sym">}
   </span><span class="j-key">private final </span><span class="j-typ">int </span>b;
 <span class="j-sym">}
 
-</span><span class="j-hl">@ScaledLong<span class="j-sym">(</span><span class="j-num">3</span><span class="j-sym">)</span></span>
+</span><span class="j-hl">@ScaledLong<span class="j-sym">( </span><span class="j-num">3 </span><span class="j-sym">)</span></span>
 <span class="j-key">public static interface </span>Output
 <span class="j-sym">{
   </span><span class="j-hl">long</span> getResult<span class="j-sym">()</span>;

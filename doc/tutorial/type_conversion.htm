@@ -66,7 +66,7 @@
 <span class="j-typ">short </span>getShort<span class="j-sym">()</span>;
 <span class="j-typ">int </span>getInt<span class="j-sym">()</span>;
 <span class="j-typ">long </span>getLong<span class="j-sym">()</span>;
-@ScaledLong<span class="j-sym">(</span><span class="j-num">7</span><span class="j-sym">) </span><span class="j-typ">long </span>getLong7<span class="j-sym">()</span>;
+@ScaledLong<span class="j-sym">( </span><span class="j-num">7 </span><span class="j-sym">) </span><span class="j-typ">long </span>getLong7<span class="j-sym">()</span>;
 <span class="j-typ">double </span>getDouble<span class="j-sym">()</span>;
 <span class="j-typ">float </span>getFloat<span class="j-sym">()</span>;
 <span class="j-typ">boolean </span>getBoolean<span class="j-sym">()</span>;
@@ -76,7 +76,7 @@
 Short getBoxedShort<span class="j-sym">()</span>;
 Integer getBoxedInt<span class="j-sym">()</span>;
 Long getBoxedLong<span class="j-sym">()</span>;
-@ScaledLong<span class="j-sym">(</span><span class="j-num">7</span><span class="j-sym">) </span>Long getBoxedLong7<span class="j-sym">()</span>;
+@ScaledLong<span class="j-sym">( </span><span class="j-num">7 </span><span class="j-sym">) </span>Long getBoxedLong7<span class="j-sym">()</span>;
 Double getBoxedDouble<span class="j-sym">()</span>;
 Float getBoxedFloat<span class="j-sym">()</span>;
 Boolean getBoxedBoolean<span class="j-sym">()</span>;
@@ -85,13 +85,15 @@ Boolean getBoxedBoolean<span class="j-sym">()</span>;
 </span>BigDecimal getBigDecimal<span class="j-sym">()</span>;
 BigInteger getBigInteger<span class="j-sym">()</span>;
 
-<span class="j-cmt">// Date is converted to a number as in Excel; can also use long value as returned by Date.getTime().
+<span class="j-cmt">// Date is converted to a number as in Excel; can also use long value as returned by
+// Date.getTime().
 // These values are time-zone adjusted.
 </span>Date getDate<span class="j-sym">()</span>;
 @MillisecondsSinceUTC1970 <span class="j-typ">long </span>getDateMs<span class="j-sym">()</span>;
 @MillisecondsSinceUTC1970 Long getBoxedDateMs<span class="j-sym">()</span>;
 
-<span class="j-cmt">// With @Milliseconds annotation, long is treated as a time duration in milliseconds for an Excel time cell.
+<span class="j-cmt">// With @Milliseconds annotation, long is treated as a time duration in milliseconds for an
+// Excel time cell.
 // These values or *not* time-zone adjusted.
 </span>@Milliseconds <span class="j-typ">long </span>getTime<span class="j-sym">()</span>;
 @Milliseconds Long getBoxedTime<span class="j-sym">()</span>;
@@ -124,7 +126,7 @@ BigInteger getBigInteger<span class="j-sym">()</span>;
 <span class="j-typ">short </span>calcShort<span class="j-sym">()</span>;
 <span class="j-typ">int </span>calcInt<span class="j-sym">()</span>;
 <span class="j-typ">long </span>calcLong<span class="j-sym">()</span>;
-@ScaledLong<span class="j-sym">(</span><span class="j-num">5</span><span class="j-sym">) </span><span class="j-typ">long </span>calcLong5<span class="j-sym">()</span>;
+@ScaledLong<span class="j-sym">( </span><span class="j-num">5 </span><span class="j-sym">) </span><span class="j-typ">long </span>calcLong5<span class="j-sym">()</span>;
 <span class="j-typ">double </span>calcDouble<span class="j-sym">()</span>;
 <span class="j-typ">float </span>calcFloat<span class="j-sym">()</span>;
 <span class="j-typ">boolean </span>calcBoolean<span class="j-sym">()</span>;
@@ -134,7 +136,7 @@ BigInteger getBigInteger<span class="j-sym">()</span>;
 Short calcBoxedShort<span class="j-sym">()</span>;
 Integer calcBoxedInt<span class="j-sym">()</span>;
 Long calcBoxedLong<span class="j-sym">()</span>;
-@ScaledLong<span class="j-sym">(</span><span class="j-num">5</span><span class="j-sym">) </span>Long calcBoxedLong5<span class="j-sym">()</span>;
+@ScaledLong<span class="j-sym">( </span><span class="j-num">5 </span><span class="j-sym">) </span>Long calcBoxedLong5<span class="j-sym">()</span>;
 Double calcBoxedDouble<span class="j-sym">()</span>;
 Float calcBoxedFloat<span class="j-sym">()</span>;
 Boolean calcBoxedBoolean<span class="j-sym">()</span>;
@@ -143,13 +145,15 @@ Boolean calcBoxedBoolean<span class="j-sym">()</span>;
 </span>BigDecimal calcBigDecimal<span class="j-sym">()</span>;
 BigInteger calcBigInteger<span class="j-sym">()</span>;
 
-<span class="j-cmt">// Date is converted from a number as in Excel; can also use long value as in &#34;new Date(long)&#34;.
+<span class="j-cmt">// Date is converted from a number as in Excel; can also use long value as in &#34;new
+// Date(long)&#34;.
 // These values are time-zone adjusted.
 </span>Date calcDate<span class="j-sym">()</span>;
 @MillisecondsSinceUTC1970 <span class="j-typ">long </span>calcDateMs<span class="j-sym">()</span>;
 @MillisecondsSinceUTC1970 Long calcBoxedDateMs<span class="j-sym">()</span>;
 
-<span class="j-cmt">// With @Milliseconds annotation, long is converted from an Excel time cell to a time duration in milliseconds.
+<span class="j-cmt">// With @Milliseconds annotation, long is converted from an Excel time cell to a time duration
+// in milliseconds.
 // These values are *not* time-zone adjusted.
 </span>@Milliseconds <span class="j-typ">long </span>calcTime<span class="j-sym">()</span>;
 @Milliseconds Long calcBoxedTime<span class="j-sym">()</span>;
