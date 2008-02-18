@@ -46,14 +46,12 @@
 			<div class="content" id="content">
 
 <div class="blurb">
-<div class="rounded_box">
-<div class="rounded_top"><div></div></div>
-<div class="rounded_content">
-	<p>Your <strong>users</strong> want to <strong>customize formulas</strong>. They know <strong>Excel</strong> (or OpenOffice).
-<br />So <strong>use spreadsheets directly</strong>. At <strong>native speed</strong>, and it&#8217;s <strong>thread safe</strong>.
-<br />Using <strong>double</strong> or <strong>BigDecimal</strong>; it&#8217;s your choice.</p>
+	<p><strong>Your users want to customize formulas. They know Excel (or OpenOffice).</strong>
+<br />So use spreadsheets directly. At native speed, and it&#8217;s thread safe.
+<br />Using double or BigDecimal; it&#8217;s your choice.</p>
 
-	<pre class="java"><span class="j-cmt">// Compile price finding factory and strategy implementation from spreadsheet:
+
+<pre class="java"><span class="j-cmt">// Compile price finding factory and strategy implementation from spreadsheet:
 </span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
 builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>PATH, <span class="j-hl"><span class="j-str">&#34;CustomPriceFormula.xls&#34;</span></span> <span class="j-sym">) )</span>;
 builder.setFactoryClass<span class="j-sym">( </span>PriceFinderFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
@@ -65,14 +63,9 @@ PriceFinderFactory factory = <span class="j-sym">(</span>PriceFinderFactory<span
 </span>LineItem item = getCurrentLineItem<span class="j-sym">()</span>;
 PriceFinder priceFinder = factory.<span class="j-hl">newInstance</span><span class="j-sym">( </span>item <span class="j-sym">)</span>;
 BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-sym">()</span>;</pre>
+	<p>Available under the <span class="caps">GPL</span> and commercially (<a href="download/license.htm">details</a>).</p>
 
 
-	<p>Available under the <strong>GPL</strong> and <strong>commercially</strong> (<a href="download/license.htm">details</a>).</p>
-
-
-</div>
-<div class="rounded_bot"><div></div></div>
-</div>
 </div>
 	<h1>Abacus Formula Compiler for Java</h1>
 
@@ -91,13 +84,7 @@ BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-
 	<h3><a href="download/releasenotes.htm">Release 1.0</a></h3>
 
 	<p>is the first public <span class="caps">GPL</span> release and adds a host of changes.
-<br /><span class="when">August 24, 2007</span></p>
-
-
-	<h3><a href="download/releasenotes.htm">Release 0.10.1</a></h3>
-
-	<p>adds improved by-name binding and some more functions.
-<br /><span class="when">(milestone only)</span></p>
+<br /><span class="when">February 19, 2008</span></p>
 
 
 </div>
