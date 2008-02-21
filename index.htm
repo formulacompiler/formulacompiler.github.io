@@ -46,9 +46,7 @@
 			<div class="content" id="content">
 
 <div class="blurb">
-	<p><strong>Your users want to customize formulas. They know Excel (or OpenOffice).</strong>
-<br />So use spreadsheets directly. At native speed, and it&#8217;s thread safe.
-<br />Using double or BigDecimal; it&#8217;s your choice.</p>
+	<p><strong>Your users want to customize formulas. They know Excel or OpenOffice.</strong></p>
 
 
 <pre class="java"><span class="j-cmt">// Compile price finding factory and strategy implementation from spreadsheet:
@@ -63,7 +61,14 @@ PriceFinderFactory factory = <span class="j-sym">(</span>PriceFinderFactory<span
 </span>LineItem item = getCurrentLineItem<span class="j-sym">()</span>;
 PriceFinder priceFinder = factory.<span class="j-hl">newInstance</span><span class="j-sym">( </span>item <span class="j-sym">)</span>;
 BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-sym">()</span>;</pre>
-	<p>Available under the <span class="caps">GPL</span> and commercially (<a href="download/license.htm">details</a>).</p>
+	<p><strong>Compile parametrized spreadsheets directly to bytecode.</strong><ul>
+	<li>No need to have Excel, OpenOffice, or a <span class="caps">JDK</span> installed.</li>
+	<li>Native speed, thread safe execution.</li>
+	<li>Bind directly to your computation strategy interfaces.</li>
+	<li>Using double, or BigDecimal for financial applications.</li>
+	<li>Available under the <span class="caps">GPL</span> and commercially (<a href="download/license.htm">details</a>).</li>
+</ul>
+</p>
 
 
 </div>
@@ -77,22 +82,23 @@ BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-
 
 	<p><a href="doc/index.htm">Learn more</a> about the goals, the design, the <span class="caps">API</span>, and the supported functions.</p>
 
-
-<div class="news">
-	<h2>News</h2>
-
-	<h3><a href="download/releasenotes.htm">Release 1.0</a></h3>
-
-	<p>is the first public <span class="caps">GPL</span> release and adds a host of changes.
-<br /><span class="when">February 19, 2008</span></p>
-
-
-</div>
-
 			</div>
 			<div class="chrome" id="inner_bottom_chrome">
 			</div>
 		</div>
+		
+		
+		<div id="news">
+			<h2>News</h2>
+
+<h3><a href="download/releasenotes.htm">Release 1.0</a></h3>
+
+<p>is the first public GPL release and adds a host of changes.
+<br /><span class="when">February 21, 2008</span></p>
+
+
+		</div>
+		
 		
 		<div class="chrome" id="left_top_chrome">
 			

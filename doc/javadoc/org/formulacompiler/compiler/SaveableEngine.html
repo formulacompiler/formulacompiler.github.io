@@ -99,9 +99,11 @@ Interface SaveableEngine</H2>
 Defines the <A HREF="../../../org/formulacompiler/compiler/SaveableEngine.html#saveTo(java.io.OutputStream)"><CODE>saveTo(OutputStream)</CODE></A> method for engines returned by an engine compiler. This
  allows you to save a compiled engine to persistent storage and then later re-instatiate it using
  <A HREF="../../../org/formulacompiler/runtime/FormulaRuntime.html#loadEngine(java.io.InputStream)"><CODE>FormulaRuntime.loadEngine(java.io.InputStream)</CODE></A>.
- 
+ <p>
  The <A HREF="../../../org/formulacompiler/runtime/Engine.html" title="interface in org.formulacompiler.runtime"><CODE>Engine</CODE></A> interface does not have save support so as not to
  burden the run-time-only support with it.
+ <p>
+ <em>This interface is an API only. Do not implement it yourself.</em>
 <P>
 
 <P>
