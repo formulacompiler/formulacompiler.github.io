@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Current Limitations - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../style_print.css" rel="stylesheet" type="text/css" media="print" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../download/index.htm">
-					<img src="../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../download/index.htm">
+						<img src="../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../index.htm">Home</a> | 
@@ -61,30 +61,46 @@ pageTracker._trackPageview();
 
 
 
-	<h2><a name="pagetoc__1">Spreadsheet Formats</a></h2>
-<ul>
-	<li>Excel .xml support is missing (parked for resurrection in an earlier version).</li>
-	<li>The Excel .xls loader does not yet handle references to labels in formulas.</li>
-</ul>
+	<h2><a name="pagetoc__1">Spreadsheets</a></h2>
 
 	<h5>Excel</h5>
 <ul>
-	<li><span class="caps">AFC</span> currently supports only the subset of Excel documented in this <a href="reference/index.htm">reference</a>.</li>
+	<li>Only the subset of Excel documented in this <a href="reference/index.htm">reference</a> is guaranteed to be supported.</li>
 	<li><a href="reference/values.htm">Null values</a> (empty cells) are not yet supported. In particular, an <code>AVERAGE</code> involving empty cells will return a different result than Excel.</li>
-	<li>Range intersections are parsed but not evaluated correctly.</li>
-	<li>Ranges specified using named cells as endpoints are not supported. <a href="reference/values.htm">Named ranges</a>, however, are.</li>
-	<li>Named range unions are not supported. They are ignored when the spreadsheet is loaded and their name will therefore not be known to <span class="caps">AFC</span>.</li>
-	<li>With <a href="reference/lookupfuncs.htm"><code>MATCH</code></a>, the last argument (the match type) must be constant, and the second argument (the match range) cannot reference a repeating section yet.</li>
-	<li>With <a href="reference/lookupfuncs.htm"><code>MATCH</code></a>, the range must be strictly ascending or descending for sorted searches to ensure results consistent with Excel.</li>
-	<li>With <a href="reference/lookupfuncs.htm"><code>INDEX</code></a>, the range argument cannot reference a repeating section yet. It also does not support 3-dimensional lookups.</li>
-	<li><a href="reference/lookupfuncs.htm"><code>INDEX</code></a> does not return arrays (as in <code>=SUM(INDEX(A1:B2;2))</code>).</li>
-	<li><a href="reference/booleans.htm"><code>AND</code> and <code>OR</code></a> cannot be used as aggregators over repeating sections yet.</li>
-	<li>Functions like <code>NPV()</code>, <code>MIRR()</code>, and <code>IRR()</code> cannot be used over repeating sections.</li>
-	<li>Array expressions are not supported (such as <code>{=INDEX({1,2;3,4};0;2)}</code>).</li>
 	<li>In Excel, a formula like <code>(A1 = 0)</code> returns false when <code>A1</code> is <code>FALSE</code>. In <span class="caps">AFC</span> it is true. In both <span class="caps">AFC</span> and Excel, <code>(A1 + 0 = 0)</code> returns true.</li>
 	<li>In Excel, <code>SUM</code> ignores booleans. In <span class="caps">AFC</span> it does not. In both, numeric operators like <code>+</code> treat booleans as numbers.</li>
 	<li>String comparisons don&#8217;t sort umlauts and such the way Excel does (see <a href="reference/strings.htm">String Comparisons</a>).</li>
 	<li>The options flag &#8220;Precision as displayed&#8221; is not supported. <span class="caps">AFC</span> always uses the full precision of the configured numeric type internally and only rounds final outputs.</li>
+	<li>The Excel .xls loader does not yet handle references to labels in formulas.</li>
+</ul>
+
+	<h5>Ranges</h5>
+<ul>
+	<li>Range intersections are parsed but not evaluated correctly.</li>
+	<li>Ranges specified using named cells as endpoints are not supported. <a href="reference/values.htm">Named ranges</a>, however, are.</li>
+	<li>Named range unions are not supported. They are ignored when the spreadsheet is loaded and their name will therefore not be known to <span class="caps">AFC</span>.</li>
+	<li>Array expressions are not supported (such as <code>{=INDEX({1,2;3,4};0;2)}</code>).</li>
+</ul>
+
+	<h5>Repeating Sections</h5>
+<ul>
+	<li><a href="reference/booleans.htm"><code>AND</code> and <code>OR</code></a> cannot be used as aggregators over repeating sections.</li>
+	<li>Functions like <code>NPV()</code>, <code>MIRR()</code>, and <code>IRR()</code> cannot be used over repeating sections.</li>
+</ul>
+
+	<h5><a href="reference/lookupfuncs.htm"><code>MATCH</code></a></h5>
+<ul>
+	<li>The last argument (the match type) must be constant, and the second argument (the match range) cannot reference a repeating section.</li>
+	<li>The range must be strictly ascending or descending for sorted searches to ensure results consistent with Excel.</li>
+</ul>
+
+	<h5><a href="reference/lookupfuncs.htm"><code>INDEX</code></a></h5>
+<ul>
+	<li>The range argument cannot reference a repeating section.</li>
+	<li>No 3-dimensional lookups.</li>
+	<li>Does not return arrays (as in <code>=SUM(INDEX(A1:B2;2))</code>).</li>
+	<li>For 1-dimensional lookups, the index argument for the other direction must be either omitted, set to the <em>constant</em> value 0 (Excel accepts any expression returning 0), or set to an expression returning 1 (as in <code>=INDEX(HorizVector;0;A1)</code>).</li>
+	<li>Does not slice ranges into relative vectors for 1-dimensional lookups (as in <code>=INDEX(Data;0;3)</code> where this formula is in a row intersecting <code>Data</code>).</li>
 </ul>
 
 	<h2><a name="pagetoc__2">Numeric Types</a></h2>
@@ -130,7 +146,7 @@ pageTracker._trackPageview();
 <div class="area"><a href="../doc/examples/index.htm">Sample Applications</a></div>
 <div class="area"><a href="../doc/impl/index.htm">Implementation Details</a></div>
 <div class="area"><span class="selected">Limitations</span></div>
-<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Spreadsheet Formats</a></li><li><a href="#pagetoc__2">Numeric Types</a></li><li><a href="#pagetoc__3">Interfacing with Java</a></li><li><a href="#pagetoc__4">Miscellaneous</a></li></ul></div></div></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Spreadsheets</a></li><li><a href="#pagetoc__2">Numeric Types</a></li><li><a href="#pagetoc__3">Interfacing with Java</a></li><li><a href="#pagetoc__4">Miscellaneous</a></li></ul></div></div></div>
 		</div>
 		</div>
 		<div class="chrome" id="left_bottom_chrome">

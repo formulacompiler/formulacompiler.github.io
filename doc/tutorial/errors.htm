@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Compiler Errors - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -127,10 +127,17 @@ pageTracker._trackPageview();
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedExpression e</span><span class="j-sym">) {
-  </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
-      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;</span></span>;
-  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
-<span class="j-sym">}</span></pre>
+  </span><span class="j-key">if </span><span class="j-sym">(</span>getSpreadsheetExtension<span class="j-sym">()</span>.equals<span class="j-sym">( </span><span class="j-str">&#34;.xls&#34; </span><span class="j-sym">)) {
+    </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;</span></span>;
+    assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+  </span><span class="j-key">else </span><span class="j-sym">{
+    </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1+INFO( &lt;&lt;? [.B1]); error location indicated by &lt;&lt;?.&#34;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;</span></span>;
+    assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+}</span></pre>
 
 
 	<p>Note that the failure only occurs when comiling the engine. Not when loading the spreadsheet, and not when binding cells. This is due to <span class="caps">AFC</span>&#8217;s lazy expression parser which only parses those expressions in the spreadsheet that are actually referenced by a bound output cell.</p>
@@ -144,11 +151,19 @@ pageTracker._trackPageview();
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
-  </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
-      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
-      </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
-  assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
-<span class="j-sym">}</span></pre>
+  </span><span class="j-key">if </span><span class="j-sym">(</span>getSpreadsheetExtension<span class="j-sym">()</span>.equals<span class="j-sym">( </span><span class="j-str">&#34;.xls&#34; </span><span class="j-sym">)) {
+    </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
+        </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
+    assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+  </span><span class="j-key">else </span><span class="j-sym">{
+    </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1+INFO( &lt;&lt;? [.B1]); error location indicated by &lt;&lt;?.&#34;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
+        </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
+    assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+}</span></pre>
 
 
 	<p>However, binding to the third cell, which is independent of the first cell containing the <code>INFO</code> function, works ok:</p>
@@ -223,7 +238,7 @@ MyComputation computation = factory.newComputation<span class="j-sym">( </span><
 		</tr>
 	</tbody>
 </table>
-<br/><span class="xl-r1">A4:A4</span> <span class="xl-name">(Unsupported)</span>
+
 
 
 	<p>If we bind the output to <em>Bad</em> and make <em>Type</em> an input, then <span class="caps">AFC</span> will throw an error:</p>

@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Decompiled Code For TODAY() - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -66,6 +66,7 @@ pageTracker._trackPageview();
 
 <pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
 <span class="j-key">import </span>org.formulacompiler.runtime.Computation;
+<span class="j-key">import </span>org.formulacompiler.runtime.ComputationMode;
 <span class="j-key">import </span>org.formulacompiler.runtime.internal.ComputationTime;
 <span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
 <span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeDouble_v2;
@@ -77,15 +78,18 @@ pageTracker._trackPageview();
     </span><span class="j-key">private final </span>Inputs $inputs;
     <span class="j-key">final </span>Environment $environment;
     <span class="j-key">final </span>ComputationTime $computationTime;
+    <span class="j-key">final </span>ComputationMode $computationMode;
 
     $Root<span class="j-sym">(</span>Inputs inputs, Environment environment<span class="j-sym">) {
         </span>$environment = environment;
         $inputs = inputs;
+        $computationMode = ComputationMode.OPEN_OFFICE_CALC;
         $computationTime = <span class="j-key">new </span>ComputationTime<span class="j-sym">()</span>;
     <span class="j-sym">}
 
     </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
-        </span><span class="j-key">return </span>RuntimeDouble_v2.fun_TODAY<span class="j-sym">(</span>$environment, $computationTime<span class="j-sym">)</span>;
+        </span><span class="j-key">return </span>RuntimeDouble_v2.fun_TODAY<span class="j-sym">(</span>$environment, $computationTime,
+                                          $computationMode<span class="j-sym">)</span>;
     <span class="j-sym">}
 
     </span><span class="j-key">public final </span><span class="j-typ">double </span>dbl<span class="j-sym">() {

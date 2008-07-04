@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Locale and Time Zone - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -244,7 +244,7 @@ Locale.setDefault<span class="j-sym">( </span>Locale.GERMANY <span class="j-sym"
   assertEquals<span class="j-sym">( </span><span class="j-chr">','</span>, decimalFormat.getDecimalFormatSymbols<span class="j-sym">()</span>.getDecimalSeparator<span class="j-sym">() )</span>;
 
   EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-  builder.loadSpreadsheet<span class="j-sym">( </span>DATA_PATH + <span class="j-str">&#34;Locale_en_US.xls&#34; </span><span class="j-sym">)</span>;
+  builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
   builder.setFactoryClass<span class="j-sym">( </span>ValueFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
   builder.getByNameBinder<span class="j-sym">()</span>.outputs<span class="j-sym">()</span>.bindAllMethodsToNamedCells<span class="j-sym">()</span>;
   builder.getByNameBinder<span class="j-sym">()</span>.<span class="j-hl">inputs<span class="j-sym">()</span>.bindAllMethodsToNamedCells<span class="j-sym">()</span></span>;
@@ -286,15 +286,15 @@ b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;result&#34; </sp
 
 	<pre class="java">SpreadsheetSaver.Config cfg = <span class="j-key">new </span>SpreadsheetSaver.Config<span class="j-sym">()</span>;
 cfg.spreadsheet = b.getSpreadsheet<span class="j-sym">()</span>;
-cfg.typeExtension = <span class="j-str">&#34;.xls&#34;</span>;
-cfg.outputStream = outputStream;
+cfg.typeExtension = getSpreadsheetExtension<span class="j-sym">()</span>; <span class="j-cmt">// .xls or .ods
+</span>cfg.outputStream = outputStream;
 <span class="j-hl">cfg.timeZone = gmt2;</span>
 SpreadsheetCompiler.newSpreadsheetSaver<span class="j-sym">( </span>cfg <span class="j-sym">)</span>.save<span class="j-sym">()</span>;</pre>
 
 
 	<p>When we load, compile and use this spreadsheet again, but using a different time zone in the computation configuration, the distance in hours between the two time zones can be noticed:</p>
 
-	<pre class="java">Spreadsheet loaded = SpreadsheetCompiler.loadSpreadsheet<span class="j-sym">( </span><span class="j-str">&#34;.xls&#34;</span>, inputStream <span class="j-sym">)</span>;
+	<pre class="java">Spreadsheet loaded = SpreadsheetCompiler.loadSpreadsheet<span class="j-sym">( </span>getSpreadsheetExtension<span class="j-sym">()</span>, inputStream <span class="j-sym">)</span>;
 EngineBuilder eb = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
 eb.setSpreadsheet<span class="j-sym">( </span>loaded <span class="j-sym">)</span>;
 eb.setInputClass<span class="j-sym">( </span>Object.<span class="j-key">class </span><span class="j-sym">)</span>;

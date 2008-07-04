@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Design Overview - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../style_print.css" rel="stylesheet" type="text/css" media="print" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../download/index.htm">
-					<img src="../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../download/index.htm">
+						<img src="../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../index.htm">Home</a> | 
@@ -140,7 +140,7 @@ pageTracker._trackPageview();
 </span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
 
 <span class="j-cmt">// Load and parse the spreadsheet file into memory.
-</span>builder.loadSpreadsheet<span class="j-sym">( </span>DATA_PATH + <span class="j-str">&#34;test.xls&#34; </span><span class="j-sym">)</span>;
+</span>builder.loadSpreadsheet<span class="j-sym">( </span>getSpreadsheetFile<span class="j-sym">() )</span>;
 
 <span class="j-cmt">// Set the factory interface to implement. This interface defines the method
 // Outputs newInstance( Inputs _inputs ), from which AFC derives the input
@@ -360,7 +360,7 @@ Outputs outputs = factory.newInstance<span class="j-sym">( </span>inputs <span c
 </span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
 
 <span class="j-cmt">// Load and parse the spreadsheet file into memory.
-</span>builder.loadSpreadsheet<span class="j-sym">( </span>DATA_PATH + <span class="j-str">&#34;test.xls&#34; </span><span class="j-sym">)</span>;
+</span>builder.loadSpreadsheet<span class="j-sym">( </span>getSpreadsheetFile<span class="j-sym">() )</span>;
 
 <span class="j-cmt">// Set the factory interface to implement. This interface defines the method
 // Outputs newInstance( Inputs _inputs ), from which AFC derives the input
@@ -405,7 +405,7 @@ Outputs outputs = factory.newInstance<span class="j-sym">( </span>inputs <span c
 
 	<pre class="java"><span class="j-cmt">// Build an engine for the given spreadsheet, inputs, and outputs.
 </span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-builder.loadSpreadsheet<span class="j-sym">( </span>DATA_PATH + <span class="j-str">&#34;test.xls&#34; </span><span class="j-sym">)</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>getSpreadsheetFile<span class="j-sym">() )</span>;
 builder.setFactoryClass<span class="j-sym">( </span>OutputFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
 builder.bindAllByName<span class="j-sym">()</span>;
 SaveableEngine compiledEngine = builder.compile<span class="j-sym">()</span>;

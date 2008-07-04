@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Type Functions In AFC - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -65,30 +65,30 @@ pageTracker._trackPageview();
 
 
 <h5 class="ref"><a name="pagetoc__1_1">ISTEXT (does not support blanks!)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">2</td><td>true</td><td class="xl-exp"><a href="TypeFunctions_2.htm">=<em>ISTEXT</em>(C2)</a></td><td>Abc</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td>true</td><td class="xl-exp"><a href="TypeFunctions_2.htm">=<em>ISTEXT</em>([.C2])</a></td><td>Abc</td><td></td></tr>
 <tr><td class="xl-row">3</td><td>true</td><td class="xl-exp">...</td><td>Абвгд</td><td></td></tr>
 <tr><td class="xl-row">4</td><td>true</td><td class="xl-exp">...</td><td>12345</td><td></td></tr>
 <tr><td class="xl-row">5</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">12345.0</td><td></td></tr>
 <tr><td class="xl-row">6</td><td>false</td><td class="xl-exp">...</td><td>true</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_2">ISNONTEXT (does not support blanks!)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">8</td><td>false</td><td class="xl-exp"><a href="TypeFunctions_8.htm">=<em>ISNONTEXT</em>(C8)</a></td><td>Abc</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">8</td><td>false</td><td class="xl-exp"><a href="TypeFunctions_8.htm">=<em>ISNONTEXT</em>([.C8])</a></td><td>Abc</td><td></td></tr>
 <tr><td class="xl-row">9</td><td>false</td><td class="xl-exp">...</td><td>Абвгд</td><td></td></tr>
 <tr><td class="xl-row">10</td><td>false</td><td class="xl-exp">...</td><td>12345</td><td></td></tr>
 <tr><td class="xl-row">11</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">12345.0</td><td></td></tr>
 <tr><td class="xl-row">12</td><td>true</td><td class="xl-exp">...</td><td>true</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_3">ISNUMBER (does not support blanks and logical values!)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">14</td><td>false</td><td class="xl-exp"><a href="TypeFunctions_14.htm">=<em>ISNUMBER</em>(C14)</a></td><td>Abc</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">14</td><td>false</td><td class="xl-exp"><a href="TypeFunctions_14.htm">=<em>ISNUMBER</em>([.C14])</a></td><td>Abc</td><td></td></tr>
 <tr><td class="xl-row">15</td><td>false</td><td class="xl-exp">...</td><td>Абвгд</td><td></td></tr>
 <tr><td class="xl-row">16</td><td>false</td><td class="xl-exp">...</td><td>12345</td><td></td></tr>
 <tr><td class="xl-row">17</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">12345.0</td><td></td></tr>
 <tr><td class="xl-row">18</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">39117.0</td><td></td></tr>
-<tr><td class="xl-row">19</td><td>true</td><td class="xl-exp">...</td><td>true</td><td></td><td class="ref-bad">Excel says: false</td></tr>
-<tr><td class="xl-row">20</td><td>true</td><td class="xl-exp">...</td><td>false</td><td></td><td class="ref-bad">Excel says: false</td></tr>
+<tr><td class="xl-row">19</td><td>true</td><td class="xl-exp">...</td><td>true</td><td></td></tr>
+<tr><td class="xl-row">20</td><td>true</td><td class="xl-exp">...</td><td>false</td><td></td></tr>
 </tbody></table><p></p>
 
 			</div>

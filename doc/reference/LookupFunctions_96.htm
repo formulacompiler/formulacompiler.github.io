@@ -3,8 +3,8 @@
 
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<title>Decompiled Code For HLOOKUP(C96,D96:G98,3.0) - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+	<title>Decompiled Code For LOOKUP([.C96];[.D$96:.F$98]) - Abacus Formula Compiler for Java</title>
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -55,12 +55,12 @@ pageTracker._trackPageview();
 
 			<div class="content" id="content">
 
-<h1>Decompiled Code For <code>HLOOKUP(C96,D96:G98,3.0)</code></h1>
+<h1>Decompiled Code For <code>LOOKUP([.C96];[.D$96:.F$98])</code></h1>
 
 	<p>The expression</p>
 
 
-<pre><code>=HLOOKUP(C96,D96:G98,3.0)</code></pre>
+<pre><code>=LOOKUP([.C96];[.D$96:.F$98])</code></pre>
 	<p>is compiled to the following class(es):</p>
 
 
@@ -98,9 +98,6 @@ pageTracker._trackPageview();
             </span>$arr$0$init = <span class="j-key">true</span>;
             <span class="j-typ">double</span><span class="j-sym">[] </span>ds = $constarr$0<span class="j-sym">()</span>;
             ds<span class="j-sym">[</span><span class="j-num">0</span><span class="j-sym">] </span>= get$2<span class="j-sym">()</span>;
-            ds<span class="j-sym">[</span><span class="j-num">1</span><span class="j-sym">] </span>= get$3<span class="j-sym">()</span>;
-            ds<span class="j-sym">[</span><span class="j-num">2</span><span class="j-sym">] </span>= get$4<span class="j-sym">()</span>;
-            ds<span class="j-sym">[</span><span class="j-num">3</span><span class="j-sym">] </span>= get$5<span class="j-sym">()</span>;
             <span class="j-key">return </span>ds;
         <span class="j-sym">}
         </span><span class="j-key">return </span>$constarr$0<span class="j-sym">()</span>;
@@ -108,20 +105,18 @@ pageTracker._trackPageview();
 
     </span><span class="j-key">final </span><span class="j-typ">double</span><span class="j-sym">[] </span>$constarr$0<span class="j-sym">() {
         </span><span class="j-key">if </span><span class="j-sym">(</span>$constarr$0 == <span class="j-key">null</span><span class="j-sym">)
-            </span>$constarr$0 = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[</span><span class="j-num">4</span><span class="j-sym">]</span>;
+            </span>$constarr$0 = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">0.0</span>, <span class="j-num">20.0</span>, <span class="j-num">30.0 </span><span class="j-sym">}</span>;
         <span class="j-key">return </span>$constarr$0;
     <span class="j-sym">}
 
     </span><span class="j-key">final </span><span class="j-typ">double </span>$idx$0<span class="j-sym">(</span><span class="j-typ">int </span>i<span class="j-sym">) {
         </span><span class="j-key">switch </span><span class="j-sym">(</span>i<span class="j-sym">) {
         </span><span class="j-key">case </span><span class="j-num">0</span>:
-            <span class="j-key">return </span><span class="j-num">21.0</span>;
+            <span class="j-key">return </span>get$3<span class="j-sym">()</span>;
         <span class="j-key">case </span><span class="j-num">1</span>:
             <span class="j-key">return </span><span class="j-num">22.0</span>;
         <span class="j-key">case </span><span class="j-num">2</span>:
             <span class="j-key">return </span><span class="j-num">23.0</span>;
-        <span class="j-key">case </span><span class="j-num">3</span>:
-            <span class="j-key">return </span><span class="j-num">24.0</span>;
         <span class="j-key">default</span>:
             <span class="j-key">throw new </span>FormulaException
                       <span class="j-sym">(</span><span class="j-str">&#34;#VALUE/REF! because index is out of range in INDEX&#34;</span><span class="j-sym">)</span>;
@@ -137,15 +132,7 @@ pageTracker._trackPageview();
     <span class="j-sym">}
 
     </span><span class="j-key">final </span><span class="j-typ">double </span>get$3<span class="j-sym">() {
-        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">2</span><span class="j-sym">)</span>;
-    <span class="j-sym">}
-
-    </span><span class="j-key">final </span><span class="j-typ">double </span>get$4<span class="j-sym">() {
         </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">3</span><span class="j-sym">)</span>;
-    <span class="j-sym">}
-
-    </span><span class="j-key">final </span><span class="j-typ">double </span>get$5<span class="j-sym">() {
-        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">4</span><span class="j-sym">)</span>;
     <span class="j-sym">}
 }</span></pre>
 
@@ -161,7 +148,7 @@ pageTracker._trackPageview();
 <div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
 <div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
 <div class="nested">
-<div class="area"><span class="selected">Decompiled Code For HLOOKUP(C96,D96:G98,3.0)</span></div>
+<div class="area"><span class="selected">Decompiled Code For LOOKUP([.C96];[.D$96:.F$98])</span></div>
 </div>
 <div class="area"><a href="../../doc/javadoc/index.html">API Reference</a></div>
 <div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>

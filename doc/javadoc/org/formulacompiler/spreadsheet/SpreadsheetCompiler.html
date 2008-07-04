@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-SpreadsheetCompiler (Abacus Formula Compiler API (Version 1.0.1))
+SpreadsheetCompiler (Abacus Formula Compiler API (Version 1.1.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.spreadsheet.SpreadsheetCompiler class">
@@ -13,7 +13,7 @@ SpreadsheetCompiler (Abacus Formula Compiler API (Version 1.0.1))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="SpreadsheetCompiler (Abacus Formula Compiler API (Version 1.0.1))";
+    parent.document.title="SpreadsheetCompiler (Abacus Formula Compiler API (Version 1.1.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -205,6 +205,15 @@ Static class defining factory methods for the various elements of AFC. This clas
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetCompiler.html#loadSpreadsheet(java.io.File)">loadSpreadsheet</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/File.html" title="class or interface in java.io">File</A>&nbsp;_file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads a spreadsheet from a file and constructs an internal representation of it.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetCompiler.html#loadSpreadsheet(java.io.File, org.formulacompiler.spreadsheet.SpreadsheetLoader.Config)">loadSpreadsheet</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/File.html" title="class or interface in java.io">File</A>&nbsp;_file,
+                <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetLoader.Config.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetLoader.Config</A>&nbsp;_config)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads a spreadsheet from a file and constructs an internal representation of it.</TD>
@@ -448,6 +457,28 @@ public static <A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>_file</CODE> - is the file to load.
+<DT><B>Returns:</B><DD>the loaded spreadsheet representation.
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/FileNotFoundException.html" title="class or interface in java.io">FileNotFoundException</A></CODE>
+<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A></CODE>
+<DD><CODE><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="loadSpreadsheet(java.io.File, org.formulacompiler.spreadsheet.SpreadsheetLoader.Config)"><!-- --></A><H3>
+loadSpreadsheet</H3>
+<PRE>
+public static <A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A> <B>loadSpreadsheet</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/File.html" title="class or interface in java.io">File</A>&nbsp;_file,
+                                          <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetLoader.Config.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetLoader.Config</A>&nbsp;_config)
+                                   throws <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/FileNotFoundException.html" title="class or interface in java.io">FileNotFoundException</A>,
+                                          <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A>,
+                                          <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></PRE>
+<DL>
+<DD>Loads a spreadsheet from a file and constructs an internal representation of it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>_file</CODE> - is the file to load.<DD><CODE>_config</CODE> - configures the loader; can be set to <code>null</code>.
 <DT><B>Returns:</B><DD>the loaded spreadsheet representation.
 <DT><B>Throws:</B>
 <DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/FileNotFoundException.html" title="class or interface in java.io">FileNotFoundException</A></CODE>

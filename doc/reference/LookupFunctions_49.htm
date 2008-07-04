@@ -3,8 +3,8 @@
 
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<title>Decompiled Code For INDEX(C49:E50,2.0,2.0) - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+	<title>Decompiled Code For INDEX([.C49:.E50];2;2) - Abacus Formula Compiler for Java</title>
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -55,12 +55,12 @@ pageTracker._trackPageview();
 
 			<div class="content" id="content">
 
-<h1>Decompiled Code For <code>INDEX(C49:E50,2.0,2.0)</code></h1>
+<h1>Decompiled Code For <code>INDEX([.C49:.E50];2;2)</code></h1>
 
 	<p>The expression</p>
 
 
-<pre><code>=INDEX(C49:E50,2.0,2.0)</code></pre>
+<pre><code>=INDEX([.C49:.E50];2;2)</code></pre>
 	<p>is compiled to the following class(es):</p>
 
 
@@ -83,12 +83,19 @@ pageTracker._trackPageview();
     <span class="j-sym">}
 
     </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
-        </span><span class="j-key">return </span>$idx$0<span class="j-sym">(((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span><span class="j-num">2.0</span><span class="j-sym">) </span>- <span class="j-num">1</span><span class="j-sym">) </span>* <span class="j-num">3
-                      </span>+ <span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span><span class="j-num">2.0</span><span class="j-sym">) </span>- <span class="j-num">1</span><span class="j-sym">))</span>;
+        </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>$lin$2$3<span class="j-sym">((</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span><span class="j-num">2.0</span><span class="j-sym">)</span>,
+                               <span class="j-sym">(</span><span class="j-typ">int</span><span class="j-sym">) </span>Runtime_v2.checkDouble<span class="j-sym">(</span><span class="j-num">2.0</span><span class="j-sym">)))</span>;
     <span class="j-sym">}
 
     </span><span class="j-key">public final </span><span class="j-typ">double </span>dbl<span class="j-sym">() {
         </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">int </span>$lin$2$3<span class="j-sym">(</span><span class="j-typ">int </span>i, <span class="j-typ">int </span>i_0_<span class="j-sym">) {
+        </span><span class="j-key">if </span><span class="j-sym">(</span>i &gt;= <span class="j-num">1 </span>&amp;#<span class="j-num">38</span>;&amp;#<span class="j-num">38</span>; i &lt;= <span class="j-num">2 </span>&amp;#<span class="j-num">38</span>;&amp;#<span class="j-num">38</span>; i_0_ &gt;= <span class="j-num">1 </span>&amp;#<span class="j-num">38</span>;&amp;#<span class="j-num">38</span>; i_0_ &lt;= <span class="j-num">3</span><span class="j-sym">)
+            </span><span class="j-key">return </span><span class="j-sym">(</span>i - <span class="j-num">1</span><span class="j-sym">) </span>* <span class="j-num">3 </span>+ <span class="j-sym">(</span>i_0_ - <span class="j-num">1</span><span class="j-sym">)</span>;
+        <span class="j-key">throw new </span>FormulaException
+                  <span class="j-sym">(</span><span class="j-str">&#34;#VALUE/REF! because index is out of range in INDEX&#34;</span><span class="j-sym">)</span>;
     <span class="j-sym">}
 
     </span><span class="j-key">final </span><span class="j-typ">double </span>$idx$0<span class="j-sym">(</span><span class="j-typ">int </span>i<span class="j-sym">) {
@@ -136,7 +143,7 @@ pageTracker._trackPageview();
 <div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
 <div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
 <div class="nested">
-<div class="area"><span class="selected">Decompiled Code For INDEX(C49:E50,2.0,2.0)</span></div>
+<div class="area"><span class="selected">Decompiled Code For INDEX([.C49:.E50];2;2)</span></div>
 </div>
 <div class="area"><a href="../../doc/javadoc/index.html">API Reference</a></div>
 <div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>

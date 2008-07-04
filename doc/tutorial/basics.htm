@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>The Basics - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -345,7 +345,7 @@ bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getBoth&#34;</spa
 	<pre class="java"><span class="j-key">public </span><span class="j-typ">void </span>testAFC<span class="j-sym">() </span><span class="j-key">throws </span>Exception
 <span class="j-sym">{
   </span>LineItem item = <span class="j-key">new </span>StrategyLineItem<span class="j-sym">()</span>;
-  <span class="j-hl">RebateComputation.factory = compileFactoryFromSpreadsheet<span class="j-sym">( </span>CUSTOMSHEETNAME <span class="j-sym">)</span>;</span>
+  <span class="j-hl">RebateComputation.factory = compileFactoryFromSpreadsheet<span class="j-sym">( </span>getCustomSheetFileName<span class="j-sym">() )</span>;</span>
   <span class="j-typ">double </span>rebate = item.computeRebate<span class="j-sym">()</span>;
   assertEquals<span class="j-sym">( </span><span class="j-num">0.15</span>, rebate, <span class="j-num">0.00001 </span><span class="j-sym">)</span>;
 <span class="j-sym">}</span></pre>

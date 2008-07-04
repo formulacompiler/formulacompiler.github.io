@@ -3,8 +3,8 @@
 
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<title>Decompiled Code For PROB(C775:D776,E775:F776,G775) - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+	<title>Decompiled Code For SLOPE([.C774:.E775];[.F774:.H775]) - Abacus Formula Compiler for Java</title>
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -55,19 +55,18 @@ pageTracker._trackPageview();
 
 			<div class="content" id="content">
 
-<h1>Decompiled Code For <code>PROB(C775:D776,E775:F776,G775)</code></h1>
+<h1>Decompiled Code For <code>SLOPE([.C774:.E775];[.F774:.H775])</code></h1>
 
 	<p>The expression</p>
 
 
-<pre><code>=PROB(C775:D776,E775:F776,G775)</code></pre>
+<pre><code>=SLOPE([.C774:.E775];[.F774:.H775])</code></pre>
 	<p>is compiled to the following class(es):</p>
 
 
 <pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
 <span class="j-key">import </span>org.formulacompiler.runtime.Computation;
 <span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
-<span class="j-key">import </span>org.formulacompiler.runtime.internal.Runtime_v2;
 <span class="j-key">import </span>org.formulacompiler.tests.reference.base.Inputs;
 <span class="j-key">import </span>org.formulacompiler.tests.reference.base.Outputs;
 
@@ -82,33 +81,31 @@ pageTracker._trackPageview();
     <span class="j-sym">}
 
     </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
-        </span><span class="j-typ">double </span>d;
-        <span class="j-key">return </span>get$6<span class="j-sym">(</span>d = get$5<span class="j-sym">())</span>;
+        </span><span class="j-key">return </span>get$7<span class="j-sym">()</span>;
     <span class="j-sym">}
 
     </span><span class="j-key">public final </span><span class="j-typ">double </span>dbl<span class="j-sym">() {
         </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
     <span class="j-sym">}
 
-    </span><span class="j-key">final </span><span class="j-typ">double </span>get$6<span class="j-sym">(</span><span class="j-typ">double </span>d<span class="j-sym">) {
-        </span><span class="j-typ">double </span>d_0_ = <span class="j-num">0.0</span>;
-        <span class="j-typ">double </span>d_1_ = <span class="j-num">0.0</span>;
-        d_0_ = d_0_ + <span class="j-sym">(</span>get$1<span class="j-sym">() </span>&gt;= d &amp;#<span class="j-num">38</span>;&amp;#<span class="j-num">38</span>; get$1<span class="j-sym">() </span>&lt;= d ? get$3<span class="j-sym">() </span>: <span class="j-num">0.0</span><span class="j-sym">)</span>;
-        d_1_ += get$3<span class="j-sym">()</span>;
-        d_0_ = d_0_ + <span class="j-sym">(</span>get$2<span class="j-sym">() </span>&gt;= d &amp;#<span class="j-num">38</span>;&amp;#<span class="j-num">38</span>; get$2<span class="j-sym">() </span>&lt;= d ? get$4<span class="j-sym">() </span>: <span class="j-num">0.0</span><span class="j-sym">)</span>;
-        d_1_ += get$4<span class="j-sym">()</span>;
-        d_0_ = d_0_ + <span class="j-sym">(</span><span class="j-num">2.0 </span>&gt;= d &amp;#<span class="j-num">38</span>;&amp;#<span class="j-num">38</span>; <span class="j-num">2.0 </span>&lt;= d ? <span class="j-num">0.1 </span>: <span class="j-num">0.0</span><span class="j-sym">)</span>;
-        d_1_ += <span class="j-num">0.1</span>;
-        d_0_ = d_0_ + <span class="j-sym">(</span><span class="j-num">3.0 </span>&gt;= d &amp;#<span class="j-num">38</span>;&amp;#<span class="j-num">38</span>; <span class="j-num">3.0 </span>&lt;= d ? <span class="j-num">0.4 </span>: <span class="j-num">0.0</span><span class="j-sym">)</span>;
-        d_1_ += <span class="j-num">0.4</span>;
-        <span class="j-typ">double </span>d_2_;
-        <span class="j-key">if </span><span class="j-sym">(</span>Math.abs<span class="j-sym">(</span>d_1_ - <span class="j-num">1.0</span><span class="j-sym">) </span>&gt; <span class="j-num">1.0</span>E-<span class="j-num">7</span><span class="j-sym">) {
-            </span>Runtime_v2.fun_ERROR
-                <span class="j-sym">(</span><span class="j-str">&#34;#NUM! because the sum of probabilities != 1 in PROB&#34;</span><span class="j-sym">)</span>;
-            d_2_ = <span class="j-sym">(</span><span class="j-typ">double</span><span class="j-sym">) </span>-<span class="j-num">1</span>;
-        <span class="j-sym">} </span><span class="j-key">else
-            </span>d_2_ = d_0_;
-        <span class="j-key">return </span>d_2_;
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$7<span class="j-sym">() {
+        </span><span class="j-typ">double </span>d = <span class="j-num">16.0</span>;
+        <span class="j-typ">double </span>d_0_ = <span class="j-num">14.0</span>;
+        <span class="j-typ">double </span>d_1_ = <span class="j-num">114.0</span>;
+        <span class="j-typ">double </span>d_2_ = <span class="j-num">89.0</span>;
+        d += get$4<span class="j-sym">()</span>;
+        d_0_ += get$1<span class="j-sym">()</span>;
+        d_1_ += get$4<span class="j-sym">() </span>* get$4<span class="j-sym">()</span>;
+        d_2_ += get$4<span class="j-sym">() </span>* get$1<span class="j-sym">()</span>;
+        d += get$5<span class="j-sym">()</span>;
+        d_0_ += get$2<span class="j-sym">()</span>;
+        d_1_ += get$5<span class="j-sym">() </span>* get$5<span class="j-sym">()</span>;
+        d_2_ += get$5<span class="j-sym">() </span>* get$2<span class="j-sym">()</span>;
+        d += get$6<span class="j-sym">()</span>;
+        d_0_ += get$3<span class="j-sym">()</span>;
+        d_1_ += get$6<span class="j-sym">() </span>* get$6<span class="j-sym">()</span>;
+        d_2_ += get$6<span class="j-sym">() </span>* get$3<span class="j-sym">()</span>;
+        <span class="j-key">return </span><span class="j-sym">(</span><span class="j-num">6.0 </span>* d_2_ - d * d_0_<span class="j-sym">) </span>/ <span class="j-sym">(</span><span class="j-num">6.0 </span>* d_1_ - d * d<span class="j-sym">)</span>;
     <span class="j-sym">}
 
     </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
@@ -130,6 +127,10 @@ pageTracker._trackPageview();
     </span><span class="j-key">final </span><span class="j-typ">double </span>get$5<span class="j-sym">() {
         </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">4</span><span class="j-sym">)</span>;
     <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$6<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">5</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
 }</span></pre>
 
 			</div>
@@ -144,7 +145,7 @@ pageTracker._trackPageview();
 <div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
 <div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
 <div class="nested">
-<div class="area"><span class="selected">Decompiled Code For PROB(C775:D776,E775:F776,G775)</span></div>
+<div class="area"><span class="selected">Decompiled Code For SLOPE([.C774:.E775];[.F774:.H775])</span></div>
 </div>
 <div class="area"><a href="../../doc/javadoc/index.html">API Reference</a></div>
 <div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>

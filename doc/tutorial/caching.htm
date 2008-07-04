@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Caching Of Values and Reusing Computations - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -138,7 +138,7 @@ assertEquals<span class="j-sym">( </span><span class="j-hl">5</span>, input.getN
 	<p>Let&#8217;s now turn on explicit, full caching:</p>
 
 	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>getPath<span class="j-sym">() )</span>;
 builder.setInputClass<span class="j-sym">( </span>Input.<span class="j-key">class </span><span class="j-sym">)</span>;
 builder.setOutputClass<span class="j-sym">( </span>Output.<span class="j-key">class </span><span class="j-sym">)</span>;
 builder.setNumericType<span class="j-sym">( </span>unboundedBigDecimal <span class="j-sym">)</span>;
@@ -168,15 +168,23 @@ assertEquals<span class="j-sym">( </span><span class="j-hl">1</span>, input.getN
 	<pre class="java"><span class="j-typ">long </span>startTime = System.nanoTime<span class="j-sym">()</span>;
 output.getArea<span class="j-sym">()</span>;
 output.getVolume<span class="j-sym">()</span>;
+output.getArea<span class="j-sym">()</span>;
+output.getVolume<span class="j-sym">()</span>;
+output.getArea<span class="j-sym">()</span>;
+output.getVolume<span class="j-sym">()</span>;
 <span class="j-typ">long </span>timeTaken = System.nanoTime<span class="j-sym">() </span>- startTime;</pre>
 
 
 	<p>We find that caching is faster by more than than half:</p>
 
 	<pre class="java">input.setSide<span class="j-sym">( </span><span class="j-str">&#34;123456789123456789123456789123456789123456789123456789123456789123456789&#34; </span><span class="j-sym">)</span>;
-<span class="j-typ">long </span>plainTime = time<span class="j-sym">( </span>plainFactory, input <span class="j-sym">)</span>;
-<span class="j-typ">long </span>cachingTime = time<span class="j-sym">( </span>cachingFactory, input <span class="j-sym">)</span>;
-assertTrue<span class="j-sym">( </span><span class="j-str">&#34;Caching is at least half as fast again; caching is &#34; </span>+ cachingTime + <span class="j-str">&#34; vs. &#34; </span>+ plainTime,
+<span class="j-typ">long </span>plainTime = <span class="j-num">0</span>;
+<span class="j-typ">long </span>cachingTime = <span class="j-num">0</span>;
+<span class="j-key">for </span><span class="j-sym">(</span><span class="j-typ">int </span>i = <span class="j-num">0</span>; i &lt; <span class="j-num">100</span>; i++<span class="j-sym">) {
+  </span>plainTime += time<span class="j-sym">( </span>plainFactory, input <span class="j-sym">)</span>;
+  cachingTime += time<span class="j-sym">( </span>cachingFactory, input <span class="j-sym">)</span>;
+<span class="j-sym">}
+</span>assertTrue<span class="j-sym">( </span><span class="j-str">&#34;Caching is at least half as fast again; caching is &#34; </span>+ cachingTime + <span class="j-str">&#34; vs. &#34; </span>+ plainTime,
     cachingTime * <span class="j-num">3 </span>/ <span class="j-num">2 </span>&lt; plainTime <span class="j-sym">)</span>;</pre>
 
 

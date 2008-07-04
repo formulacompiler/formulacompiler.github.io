@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Strings In AFC - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -62,47 +62,47 @@ pageTracker._trackPageview();
 
 
 <h5 class="ref"><a name="pagetoc__1_1">Reference to other string</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">2</td><td>Text</td><td class="xl-exp"><a href="Strings_en_US_2.htm">=C2</a></td><td>Text</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td>Text</td><td class="xl-exp"><a href="Strings_en_US_2.htm">=[.C2]</a></td><td>Text</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_2">Numbers as returned by String valued outputs</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">3</td><td>0</td><td class="xl-exp"><a href="Strings_en_US_3.htm">=C3</a></td><td class="xl-num">0.0</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">3</td><td>0</td><td class="xl-exp"><a href="Strings_en_US_3.htm">=[.C3]</a></td><td class="xl-num">0.0</td><td></td></tr>
 <tr><td class="xl-row">4</td><td>12345.6789</td><td class="xl-exp">...</td><td class="xl-num">12345.6789</td><td></td></tr>
 <tr><td class="xl-row">5</td><td>1200000</td><td class="xl-exp">...</td><td class="xl-num">1200000.0</td><td></td></tr>
 <tr><td class="xl-row">6</td><td>123456789</td><td class="xl-exp">...</td><td class="xl-num">1.23456789E8</td><td></td></tr>
-<tr><td class="xl-row">7</td><td>0.1</td><td class="xl-exp">...</td><td class="xl-num">0.1 <span class="ref-prec">(#0.00)</span></td><td></td></tr>
+<tr><td class="xl-row">7</td><td>0.1</td><td class="xl-exp">...</td><td class="xl-num">0.1</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_3">Booleans are treated as 0/1!</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">8</td><td>1</td><td class="xl-exp"><a href="Strings_en_US_8.htm">=C8</a></td><td>true</td><td></td><td class="ref-bad">Excel says: true</td></tr>
-<tr><td class="xl-row">9</td><td>0</td><td class="xl-exp">...</td><td>false</td><td></td><td class="ref-bad">Excel says: false</td></tr>
-<tr><td class="xl-row">10</td><td>1</td><td class="xl-exp"><a href="Strings_en_US_10.htm">=C10=D10</a></td><td class="xl-num">1.0</td><td class="xl-num">1.0</td><td></td><td class="ref-bad">Excel says: true</td></tr>
-<tr><td class="xl-row">11</td><td>0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td><td class="ref-bad">Excel says: false</td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">8</td><td>1</td><td class="xl-exp"><a href="Strings_en_US_8.htm">=[.C8]</a></td><td>true</td><td><td class="ref-bad">Excel says: true</td></td></tr>
+<tr><td class="xl-row">9</td><td>0</td><td class="xl-exp">...</td><td>false</td><td><td class="ref-bad">Excel says: false</td></td></tr>
+<tr><td class="xl-row">10</td><td>1</td><td class="xl-exp"><a href="Strings_en_US_10.htm">=[.C10]=[.D10]</a></td><td class="xl-num">1.0</td><td class="xl-num">1.0</td><td><td class="ref-bad">Excel says: true</td></td></tr>
+<tr><td class="xl-row">11</td><td>0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td><td class="ref-bad">Excel says: false</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_4">Date format is not respected!</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">12</td><td>38032</td><td class="xl-exp"><a href="Strings_en_US_12.htm">=C12</a></td><td class="xl-num">38032.0</td><td></td><td class="ref-bad">Excel says: 38032.0</td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">12</td><td>38032</td><td class="xl-exp"><a href="Strings_en_US_12.htm">=[.C12]</a></td><td class="xl-num">38032.0</td><td><td class="ref-bad">Excel says: 38032.0</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_5">Value conversion with concatenation</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">14</td><td>Zero is 0</td><td class="xl-exp"><a href="Strings_en_US_14.htm">=C14&amp;" is "&amp;D14</a></td><td>Zero</td><td class="xl-num">0.0</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">14</td><td>Zero is 0</td><td class="xl-exp"><a href="Strings_en_US_14.htm">=[.C14]&amp;" is "&amp;[.D14]</a></td><td>Zero</td><td class="xl-num">0.0</td><td></td></tr>
 <tr><td class="xl-row">15</td><td>Fraction is 12345.6789</td><td class="xl-exp">...</td><td>Fraction</td><td class="xl-num">12345.6789</td><td></td></tr>
 <tr><td class="xl-row">16</td><td>Exponent is 1200000</td><td class="xl-exp">...</td><td>Exponent</td><td class="xl-num">1200000.0</td><td></td></tr>
 <tr><td class="xl-row">17</td><td>Integer is 123456789</td><td class="xl-exp">...</td><td>Integer</td><td class="xl-num">1.23456789E8</td><td></td></tr>
 <tr><td class="xl-row">18</td><td>Percent is 0.1</td><td class="xl-exp">...</td><td>Percent</td><td class="xl-num">0.1</td><td></td></tr>
-<tr><td class="xl-row">19</td><td>Bool is 1</td><td class="xl-exp"><a href="Strings_en_US_19.htm">="Bool is "&amp;C19</a></td><td>true</td><td></td><td class="ref-bad">Excel says: Bool is TRUE</td></tr>
-<tr><td class="xl-row">20</td><td>Bool is 0</td><td class="xl-exp">...</td><td>false</td><td></td><td class="ref-bad">Excel says: Bool is FALSE</td></tr>
-<tr><td class="xl-row">21</td><td>Bool is 1</td><td class="xl-exp"><a href="Strings_en_US_21.htm">="Bool is "&amp;(C21=D21)</a></td><td class="xl-num">1.0</td><td class="xl-num">1.0</td><td></td><td class="ref-bad">Excel says: Bool is TRUE</td></tr>
-<tr><td class="xl-row">22</td><td>Bool is 0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td><td class="ref-bad">Excel says: Bool is FALSE</td></tr>
+<tr><td class="xl-row">19</td><td>Bool is 1</td><td class="xl-exp"><a href="Strings_en_US_19.htm">="Bool is "&amp;[.C19]</a></td><td>true</td><td></td></tr>
+<tr><td class="xl-row">20</td><td>Bool is 0</td><td class="xl-exp">...</td><td>false</td><td></td></tr>
+<tr><td class="xl-row">21</td><td>Bool is 1</td><td class="xl-exp"><a href="Strings_en_US_21.htm">="Bool is "&amp;([.C21]=[.D21])</a></td><td class="xl-num">1.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">22</td><td>Bool is 0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_6">Excel converts date as number too!</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">23</td><td>Date is 38032</td><td class="xl-exp"><a href="Strings_en_US_23.htm">="Date is "&amp;C23</a></td><td class="xl-num">38032.0</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">23</td><td>Date is 38032</td><td class="xl-exp"><a href="Strings_en_US_23.htm">="Date is "&amp;[.C23]</a></td><td class="xl-num">38032.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_7">Plain vs. scientific format with String valued outputs</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">25</td><td>12</td><td class="xl-exp"><a href="Strings_en_US_25.htm">=D25</a></td><td class="xl-num">1.0</td><td class="xl-num">12.0</td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">25</td><td>12</td><td class="xl-exp"><a href="Strings_en_US_25.htm">=[.D25]</a></td><td class="xl-num">1.0</td><td class="xl-num">12.0</td></tr>
 <tr><td class="xl-row">26</td><td>120</td><td class="xl-exp">...</td><td class="xl-num">2.0</td><td class="xl-num">120.0</td></tr>
 <tr><td class="xl-row">27</td><td>1200</td><td class="xl-exp">...</td><td class="xl-num">3.0</td><td class="xl-num">1200.0</td></tr>
 <tr><td class="xl-row">28</td><td>12000</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">12000.0</td></tr>
@@ -116,21 +116,21 @@ pageTracker._trackPageview();
 <tr><td class="xl-row">36</td><td>1200000000000</td><td class="xl-exp">...</td><td class="xl-num">12.0</td><td class="xl-num">1.2E12</td></tr>
 <tr><td class="xl-row">37</td><td>12000000000000</td><td class="xl-exp">...</td><td class="xl-num">13.0</td><td class="xl-num">1.2E13</td></tr>
 <tr><td class="xl-row">38</td><td>120000000000000</td><td class="xl-exp">...</td><td class="xl-num">14.0</td><td class="xl-num">1.2E14</td></tr>
-<tr><td class="xl-row">39</td><td>1200000000000000</td><td class="xl-exp">...</td><td class="xl-num">15.0</td><td class="xl-num">1.2E15</td></tr>
-<tr><td class="xl-row">40</td><td>12000000000000000</td><td class="xl-exp">...</td><td class="xl-num">16.0</td><td class="xl-num">1.2E16</td></tr>
-<tr><td class="xl-row">41</td><td>120000000000000000</td><td class="xl-exp">...</td><td class="xl-num">17.0</td><td class="xl-num">1.2E17</td></tr>
-<tr><td class="xl-row">42</td><td>1200000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.2E18</td></tr>
-<tr><td class="xl-row">43</td><td>12000000000000000000</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.2E19</td></tr>
-<tr><td class="xl-row">44</td><td>1.2E+20</td><td class="xl-exp">...</td><td class="xl-num">20.0</td><td class="xl-num">1.2E20</td></tr>
-<tr><td class="xl-row">45</td><td>1.2E+21</td><td class="xl-exp">...</td><td class="xl-num">21.0</td><td class="xl-num">1.2E21</td></tr>
-<tr><td class="xl-row">46</td><td>12340000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.234E19</td></tr>
-<tr><td class="xl-row">47</td><td>1.234E+20</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.234E20</td></tr>
-<tr><td class="xl-row">48</td><td>-12340000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">-1.234E19</td></tr>
-<tr><td class="xl-row">49</td><td>-1.234E+20</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">-1.234E20</td></tr>
+<tr><td class="xl-row">39</td><td>1200000000000000</td><td class="xl-exp">...</td><td class="xl-num">15.0</td><td class="xl-num">1.2E15</td><td class="ref-bad">Excel says: 1.2E15</td></tr>
+<tr><td class="xl-row">40</td><td>12000000000000000</td><td class="xl-exp">...</td><td class="xl-num">16.0</td><td class="xl-num">1.2E16</td><td class="ref-bad">Excel says: 1.2E16</td></tr>
+<tr><td class="xl-row">41</td><td>120000000000000000</td><td class="xl-exp">...</td><td class="xl-num">17.0</td><td class="xl-num">1.2E17</td><td class="ref-bad">Excel says: 1.2E17</td></tr>
+<tr><td class="xl-row">42</td><td>1200000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.2E18</td><td class="ref-bad">Excel says: 1.2E18</td></tr>
+<tr><td class="xl-row">43</td><td>12000000000000000000</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.2E19</td><td class="ref-bad">Excel says: 1.2E19</td></tr>
+<tr><td class="xl-row">44</td><td>1.2E+20</td><td class="xl-exp">...</td><td class="xl-num">20.0</td><td class="xl-num">1.2E20</td><td class="ref-bad">Excel says: 1.2E20</td></tr>
+<tr><td class="xl-row">45</td><td>1.2E+21</td><td class="xl-exp">...</td><td class="xl-num">21.0</td><td class="xl-num">1.2E21</td><td class="ref-bad">Excel says: 1.2E21</td></tr>
+<tr><td class="xl-row">46</td><td>12340000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.234E19</td><td class="ref-bad">Excel says: 1.234E19</td></tr>
+<tr><td class="xl-row">47</td><td>1.234E+20</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.234E20</td><td class="ref-bad">Excel says: 1.234E20</td></tr>
+<tr><td class="xl-row">48</td><td>-12340000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">-1.234E19</td><td class="ref-bad">Excel says: -1.234E19</td></tr>
+<tr><td class="xl-row">49</td><td>-1.234E+20</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">-1.234E20</td><td class="ref-bad">Excel says: -1.234E20</td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_8">Plain vs. scientific format with &amp;</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">51</td><td>Str 12</td><td class="xl-exp"><a href="Strings_en_US_51.htm">="Str "<em>&amp;</em>D51</a></td><td class="xl-num">1.0</td><td class="xl-num">12.0</td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">51</td><td>Str 12</td><td class="xl-exp"><a href="Strings_en_US_51.htm">="Str "<em>&amp;</em>[.D51]</a></td><td class="xl-num">1.0</td><td class="xl-num">12.0</td></tr>
 <tr><td class="xl-row">52</td><td>Str 120</td><td class="xl-exp">...</td><td class="xl-num">2.0</td><td class="xl-num">120.0</td></tr>
 <tr><td class="xl-row">53</td><td>Str 1200</td><td class="xl-exp">...</td><td class="xl-num">3.0</td><td class="xl-num">1200.0</td></tr>
 <tr><td class="xl-row">54</td><td>Str 12000</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">12000.0</td></tr>
@@ -144,31 +144,31 @@ pageTracker._trackPageview();
 <tr><td class="xl-row">62</td><td>Str 1200000000000</td><td class="xl-exp">...</td><td class="xl-num">12.0</td><td class="xl-num">1.2E12</td></tr>
 <tr><td class="xl-row">63</td><td>Str 12000000000000</td><td class="xl-exp">...</td><td class="xl-num">13.0</td><td class="xl-num">1.2E13</td></tr>
 <tr><td class="xl-row">64</td><td>Str 120000000000000</td><td class="xl-exp">...</td><td class="xl-num">14.0</td><td class="xl-num">1.2E14</td></tr>
-<tr><td class="xl-row">65</td><td>Str 1200000000000000</td><td class="xl-exp">...</td><td class="xl-num">15.0</td><td class="xl-num">1.2E15</td></tr>
-<tr><td class="xl-row">66</td><td>Str 12000000000000000</td><td class="xl-exp">...</td><td class="xl-num">16.0</td><td class="xl-num">1.2E16</td></tr>
-<tr><td class="xl-row">67</td><td>Str 120000000000000000</td><td class="xl-exp">...</td><td class="xl-num">17.0</td><td class="xl-num">1.2E17</td></tr>
-<tr><td class="xl-row">68</td><td>Str 1200000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.2E18</td></tr>
-<tr><td class="xl-row">69</td><td>Str 12000000000000000000</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.2E19</td></tr>
-<tr><td class="xl-row">70</td><td>Str 1.2E+20</td><td class="xl-exp">...</td><td class="xl-num">20.0</td><td class="xl-num">1.2E20</td></tr>
-<tr><td class="xl-row">71</td><td>Str 1.2E+21</td><td class="xl-exp">...</td><td class="xl-num">21.0</td><td class="xl-num">1.2E21</td></tr>
-<tr><td class="xl-row">72</td><td>Str 12340000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.234E19</td></tr>
-<tr><td class="xl-row">73</td><td>Str 1.234E+20</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.234E20</td></tr>
-<tr><td class="xl-row">74</td><td>Str -12340000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">-1.234E19</td></tr>
-<tr><td class="xl-row">75</td><td>Str -1.234E+20</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">-1.234E20</td></tr>
-<tr><td class="xl-row">77</td><td>Zero is 0</td><td class="xl-exp"><a href="Strings_en_US_77.htm">=CONCATENATE(C77," is ",D77)</a></td><td>Zero</td><td class="xl-num">0.0</td><td></td></tr>
+<tr><td class="xl-row">65</td><td>Str 1200000000000000</td><td class="xl-exp">...</td><td class="xl-num">15.0</td><td class="xl-num">1.2E15</td><td class="ref-bad">Excel says: Str 1.2E+015</td></tr>
+<tr><td class="xl-row">66</td><td>Str 12000000000000000</td><td class="xl-exp">...</td><td class="xl-num">16.0</td><td class="xl-num">1.2E16</td><td class="ref-bad">Excel says: Str 1.2E+016</td></tr>
+<tr><td class="xl-row">67</td><td>Str 120000000000000000</td><td class="xl-exp">...</td><td class="xl-num">17.0</td><td class="xl-num">1.2E17</td><td class="ref-bad">Excel says: Str 1.2E+017</td></tr>
+<tr><td class="xl-row">68</td><td>Str 1200000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.2E18</td><td class="ref-bad">Excel says: Str 1.2E+018</td></tr>
+<tr><td class="xl-row">69</td><td>Str 12000000000000000000</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.2E19</td><td class="ref-bad">Excel says: Str 1.2E+019</td></tr>
+<tr><td class="xl-row">70</td><td>Str 1.2E+20</td><td class="xl-exp">...</td><td class="xl-num">20.0</td><td class="xl-num">1.2E20</td><td class="ref-bad">Excel says: Str 1.2E+020</td></tr>
+<tr><td class="xl-row">71</td><td>Str 1.2E+21</td><td class="xl-exp">...</td><td class="xl-num">21.0</td><td class="xl-num">1.2E21</td><td class="ref-bad">Excel says: Str 1.2E+021</td></tr>
+<tr><td class="xl-row">72</td><td>Str 12340000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.234E19</td><td class="ref-bad">Excel says: Str 1.234E+019</td></tr>
+<tr><td class="xl-row">73</td><td>Str 1.234E+20</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.234E20</td><td class="ref-bad">Excel says: Str 1.234E+020</td></tr>
+<tr><td class="xl-row">74</td><td>Str -12340000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">-1.234E19</td><td class="ref-bad">Excel says: Str -1.234E+019</td></tr>
+<tr><td class="xl-row">75</td><td>Str -1.234E+20</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">-1.234E20</td><td class="ref-bad">Excel says: Str -1.234E+020</td></tr>
+<tr><td class="xl-row">77</td><td>Zero is 0</td><td class="xl-exp"><a href="Strings_en_US_77.htm">=CONCATENATE([.C77];" is ";[.D77])</a></td><td>Zero</td><td class="xl-num">0.0</td><td></td></tr>
 <tr><td class="xl-row">78</td><td>Fraction is 12345.6789</td><td class="xl-exp">...</td><td>Fraction</td><td class="xl-num">12345.6789</td><td></td></tr>
 <tr><td class="xl-row">79</td><td>Exponent is 12000000000</td><td class="xl-exp">...</td><td>Exponent</td><td class="xl-num">1.2E10</td><td></td></tr>
 <tr><td class="xl-row">80</td><td>Integer is 123456789</td><td class="xl-exp">...</td><td>Integer</td><td class="xl-num">1.23456789E8</td><td></td></tr>
 <tr><td class="xl-row">81</td><td>Percent is 0.1</td><td class="xl-exp">...</td><td>Percent</td><td class="xl-num">0.1</td><td></td></tr>
-<tr><td class="xl-row">82</td><td>Date is 38032</td><td class="xl-exp"><a href="Strings_en_US_82.htm">=CONCATENATE("Date is ",C82)</a></td><td class="xl-num">38032.0</td><td></td></tr>
-<tr><td class="xl-row">83</td><td>Bool is 1</td><td class="xl-exp"><a href="Strings_en_US_83.htm">=CONCATENATE("Bool is ",C83)</a></td><td>true</td><td></td><td class="ref-bad">Excel says: Bool is TRUE</td></tr>
-<tr><td class="xl-row">84</td><td>Bool is 0</td><td class="xl-exp">...</td><td>false</td><td></td><td class="ref-bad">Excel says: Bool is FALSE</td></tr>
-<tr><td class="xl-row">85</td><td>Bool is 1</td><td class="xl-exp"><a href="Strings_en_US_85.htm">=CONCATENATE("Bool is ",(C85=D85))</a></td><td class="xl-num">1.0</td><td class="xl-num">1.0</td><td></td><td class="ref-bad">Excel says: Bool is TRUE</td></tr>
-<tr><td class="xl-row">86</td><td>Bool is 0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td><td class="ref-bad">Excel says: Bool is FALSE</td></tr>
+<tr><td class="xl-row">82</td><td>Date is 38032</td><td class="xl-exp"><a href="Strings_en_US_82.htm">=CONCATENATE("Date is ";[.C82])</a></td><td class="xl-num">38032.0</td><td></td></tr>
+<tr><td class="xl-row">83</td><td>Bool is 1</td><td class="xl-exp"><a href="Strings_en_US_83.htm">=CONCATENATE("Bool is ";[.C83])</a></td><td>true</td><td></td></tr>
+<tr><td class="xl-row">84</td><td>Bool is 0</td><td class="xl-exp">...</td><td>false</td><td></td></tr>
+<tr><td class="xl-row">85</td><td>Bool is 1</td><td class="xl-exp"><a href="Strings_en_US_85.htm">=CONCATENATE("Bool is ";([.C85]=[.D85]))</a></td><td class="xl-num">1.0</td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">86</td><td>Bool is 0</td><td class="xl-exp">...</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_9">Plain vs. scientific format</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">88</td><td>Str 12</td><td class="xl-exp"><a href="Strings_en_US_88.htm">=CONCATENATE("Str ",D88)</a></td><td class="xl-num">1.0</td><td class="xl-num">12.0</td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">88</td><td>Str 12</td><td class="xl-exp"><a href="Strings_en_US_88.htm">=CONCATENATE("Str ";[.D88])</a></td><td class="xl-num">1.0</td><td class="xl-num">12.0</td></tr>
 <tr><td class="xl-row">89</td><td>Str 120</td><td class="xl-exp">...</td><td class="xl-num">2.0</td><td class="xl-num">120.0</td></tr>
 <tr><td class="xl-row">90</td><td>Str 1200</td><td class="xl-exp">...</td><td class="xl-num">3.0</td><td class="xl-num">1200.0</td></tr>
 <tr><td class="xl-row">91</td><td>Str 12000</td><td class="xl-exp">...</td><td class="xl-num">4.0</td><td class="xl-num">12000.0</td></tr>
@@ -182,57 +182,54 @@ pageTracker._trackPageview();
 <tr><td class="xl-row">99</td><td>Str 1200000000000</td><td class="xl-exp">...</td><td class="xl-num">12.0</td><td class="xl-num">1.2E12</td></tr>
 <tr><td class="xl-row">100</td><td>Str 12000000000000</td><td class="xl-exp">...</td><td class="xl-num">13.0</td><td class="xl-num">1.2E13</td></tr>
 <tr><td class="xl-row">101</td><td>Str 120000000000000</td><td class="xl-exp">...</td><td class="xl-num">14.0</td><td class="xl-num">1.2E14</td></tr>
-<tr><td class="xl-row">102</td><td>Str 1200000000000000</td><td class="xl-exp">...</td><td class="xl-num">15.0</td><td class="xl-num">1.2E15</td></tr>
-<tr><td class="xl-row">103</td><td>Str 12000000000000000</td><td class="xl-exp">...</td><td class="xl-num">16.0</td><td class="xl-num">1.2E16</td></tr>
-<tr><td class="xl-row">104</td><td>Str 120000000000000000</td><td class="xl-exp">...</td><td class="xl-num">17.0</td><td class="xl-num">1.2E17</td></tr>
-<tr><td class="xl-row">105</td><td>Str 1200000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.2E18</td></tr>
-<tr><td class="xl-row">106</td><td>Str 12000000000000000000</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.2E19</td></tr>
-<tr><td class="xl-row">107</td><td>Str 1.2E+20</td><td class="xl-exp">...</td><td class="xl-num">20.0</td><td class="xl-num">1.2E20</td></tr>
-<tr><td class="xl-row">108</td><td>Str 1.2E+21</td><td class="xl-exp">...</td><td class="xl-num">21.0</td><td class="xl-num">1.2E21</td></tr>
+<tr><td class="xl-row">102</td><td>Str 1200000000000000</td><td class="xl-exp">...</td><td class="xl-num">15.0</td><td class="xl-num">1.2E15</td><td class="ref-bad">Excel says: Str 1.2E+015</td></tr>
+<tr><td class="xl-row">103</td><td>Str 12000000000000000</td><td class="xl-exp">...</td><td class="xl-num">16.0</td><td class="xl-num">1.2E16</td><td class="ref-bad">Excel says: Str 1.2E+016</td></tr>
+<tr><td class="xl-row">104</td><td>Str 120000000000000000</td><td class="xl-exp">...</td><td class="xl-num">17.0</td><td class="xl-num">1.2E17</td><td class="ref-bad">Excel says: Str 1.2E+017</td></tr>
+<tr><td class="xl-row">105</td><td>Str 1200000000000000000</td><td class="xl-exp">...</td><td class="xl-num">18.0</td><td class="xl-num">1.2E18</td><td class="ref-bad">Excel says: Str 1.2E+018</td></tr>
+<tr><td class="xl-row">106</td><td>Str 12000000000000000000</td><td class="xl-exp">...</td><td class="xl-num">19.0</td><td class="xl-num">1.2E19</td><td class="ref-bad">Excel says: Str 1.2E+019</td></tr>
+<tr><td class="xl-row">107</td><td>Str 1.2E+20</td><td class="xl-exp">...</td><td class="xl-num">20.0</td><td class="xl-num">1.2E20</td><td class="ref-bad">Excel says: Str 1.2E+020</td></tr>
+<tr><td class="xl-row">108</td><td>Str 1.2E+21</td><td class="xl-exp">...</td><td class="xl-num">21.0</td><td class="xl-num">1.2E21</td><td class="ref-bad">Excel says: Str 1.2E+021</td></tr>
 </tbody></table><p></p>
 
 
 <h5 class="ref"><a name="pagetoc__1_10">Concatenation operator (&amp;)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
-<tr><td class="xl-row">2</td><td>Hello world!</td><td class="xl-exp"><a href="Strings_2.htm">=C2<em>&amp;</em>" "<em>&amp;</em>D2</a></td><td>Hello</td><td>world!</td><td></td></tr>
-<tr><td class="xl-row">3</td><td>StartMiddleEnd</td><td class="xl-exp"><a href="Strings_3.htm">=C3<em>&amp;</em>D3<em>&amp;</em>E3</a></td><td>Start</td><td>Middle</td><td>End</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td>Hello world!</td><td class="xl-exp"><a href="Strings_2.htm">=[.C2]<em>&amp;</em>" "<em>&amp;</em>[.D2]</a></td><td>Hello</td><td>world!</td><td></td></tr>
+<tr><td class="xl-row">3</td><td>StartMiddleEnd</td><td class="xl-exp"><a href="Strings_3.htm">=[.C3]<em>&amp;</em>[.D3]<em>&amp;</em>[.E3]</a></td><td>Start</td><td>Middle</td><td>End</td><td></td></tr>
 <tr><td class="xl-row">4</td><td>StartEnd</td><td class="xl-exp">...</td><td>Start</td><td>' (empty string)</td><td>End</td><td></td></tr>
 <tr><td class="xl-row">5</td><td>MiddleEnd</td><td class="xl-exp">...</td><td>' (empty string)</td><td>Middle</td><td>End</td><td></td></tr>
 <tr><td class="xl-row">6</td><td>StartMiddle</td><td class="xl-exp">...</td><td>Start</td><td>Middle</td><td>' (empty string)</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_11">CONCATENATE</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
-<tr><td class="xl-row">8</td><td>Hello world!</td><td class="xl-exp"><a href="Strings_8.htm">=<em>CONCATENATE</em>(C8," ",D8)</a></td><td>Hello</td><td>world!</td><td></td></tr>
-<tr><td class="xl-row">9</td><td>StartMiddleEnd</td><td class="xl-exp"><a href="Strings_9.htm">=<em>CONCATENATE</em>(C9,D9,E9)</a></td><td>Start</td><td>Middle</td><td>End</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
+<tr><td class="xl-row">8</td><td>Hello world!</td><td class="xl-exp"><a href="Strings_8.htm">=<em>CONCATENATE</em>([.C8];" ";[.D8])</a></td><td>Hello</td><td>world!</td><td></td></tr>
+<tr><td class="xl-row">9</td><td>StartMiddleEnd</td><td class="xl-exp"><a href="Strings_9.htm">=<em>CONCATENATE</em>([.C9];[.D9];[.E9])</a></td><td>Start</td><td>Middle</td><td>End</td><td></td></tr>
 <tr><td class="xl-row">10</td><td>StartEnd</td><td class="xl-exp">...</td><td>Start</td><td>' (empty string)</td><td>End</td><td></td></tr>
 <tr><td class="xl-row">11</td><td>MiddleEnd</td><td class="xl-exp">...</td><td>' (empty string)</td><td>Middle</td><td>End</td><td></td></tr>
 <tr><td class="xl-row">12</td><td>StartMiddle</td><td class="xl-exp">...</td><td>Start</td><td>Middle</td><td>' (empty string)</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_12">CLEAN</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">14</td><td>text</td><td class="xl-exp"><a href="Strings_14.htm">=<em>CLEAN</em>(C14)</a></td><td>text</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">14</td><td>text</td><td class="xl-exp"><a href="Strings_14.htm">=<em>CLEAN</em>([.C14])</a></td><td>text</td><td></td></tr>
 <tr><td class="xl-row">15</td><td>текст</td><td class="xl-exp">...</td><td>текст</td><td></td></tr>
 <tr><td class="xl-row">16</td><td>text text</td><td class="xl-exp">...</td><td>text text</td><td></td></tr>
 <tr><td class="xl-row">17</td><td>texttext</td><td class="xl-exp">...</td><td>text    text</td><td></td></tr>
 <tr><td class="xl-row">18</td><td>texttext</td><td class="xl-exp">...</td><td>text
-text</td><td></td></tr>
+text</td><td><td class="ref-bad">Excel says: text text</td></td></tr>
 <tr><td class="xl-row">19</td><td>text</td><td class="xl-exp">...</td><td>    text
-</td><td></td></tr>
-<tr><td class="xl-row">18</td><td>texttext</td><td class="xl-exp">...</td><td>text
-text</td><td></td></tr>
+</td><td><td class="ref-bad">Excel says: text </td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_13">LEN</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">21</td><td class="xl-num">5.0</td><td class="xl-exp"><a href="Strings_21.htm">=<em>LEN</em>(C21)</a></td><td>Hello</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">21</td><td class="xl-num">5.0</td><td class="xl-exp"><a href="Strings_21.htm">=<em>LEN</em>([.C21])</a></td><td>Hello</td><td></td></tr>
 <tr><td class="xl-row">22</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>world</td><td></td></tr>
-<tr><td class="xl-row">21</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>Hello</td><td></td></tr>
 <tr><td class="xl-row">23</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td>' (empty string)</td><td></td></tr>
 <tr><td class="xl-row">24</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td class="xl-num">12.34</td><td></td></tr>
-<tr><td class="xl-row">25</td><td class="xl-num">4.0</td><td class="xl-exp"><a href="Strings_25.htm">=<em>LEN</em>(C25&amp;D25)</a></td><td>ab</td><td>cd</td><td></td></tr>
+<tr><td class="xl-row">25</td><td class="xl-num">4.0</td><td class="xl-exp"><a href="Strings_25.htm">=<em>LEN</em>([.C25]&amp;[.D25])</a></td><td>ab</td><td>cd</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_14">MID</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
-<tr><td class="xl-row">27</td><td>abc</td><td class="xl-exp"><a href="Strings_27.htm">=<em>MID</em>(C27,D27,E27)</a></td><td>abcdef</td><td class="xl-num">1.0</td><td class="xl-num">3.0</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
+<tr><td class="xl-row">27</td><td>abc</td><td class="xl-exp"><a href="Strings_27.htm">=<em>MID</em>([.C27];[.D27];[.E27])</a></td><td>abcdef</td><td class="xl-num">1.0</td><td class="xl-num">3.0</td><td></td></tr>
 <tr><td class="xl-row">28</td><td>a</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">1.0</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">29</td><td>abcde</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">1.0</td><td class="xl-num">5.0</td><td></td></tr>
 <tr><td class="xl-row">30</td><td>abcdef</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">1.0</td><td class="xl-num">6.0</td><td></td></tr>
@@ -248,38 +245,37 @@ text</td><td></td></tr>
 <tr><td class="xl-row">40</td><td></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">6.0</td><td class="xl-num">0.0</td><td></td></tr>
 <tr><td class="xl-row">41</td><td></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">7.0</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">42</td><td></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">7.0</td><td class="xl-num">0.0</td><td></td></tr>
-<tr><td class="xl-row">41</td><td></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">7.0</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">43</td><td></td><td class="xl-exp">...</td><td>' (empty string)</td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td></td></tr>
-<tr><td class="xl-row">44</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">0.0</td><td class="xl-num">7.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
-<tr><td class="xl-row">45</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">1.0</td><td class="xl-num">-1.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">44</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">0.0</td><td class="xl-num">7.0</td><td><td class="ref-bad">Excel says: Err:504</td></td></tr>
+<tr><td class="xl-row">45</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">1.0</td><td class="xl-num">-1.0</td><td><td class="ref-bad">Excel says: Err:504</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_15">LEFT</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">47</td><td>a</td><td class="xl-exp"><a href="Strings_47.htm">=<em>LEFT</em>(C47)</a></td><td>abcdef</td><td></td></tr>
-<tr><td class="xl-row">48</td><td></td><td class="xl-exp"><a href="Strings_48.htm">=<em>LEFT</em>(C48,D48)</a></td><td>abcdef</td><td class="xl-num">0.0</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">47</td><td>a</td><td class="xl-exp"><a href="Strings_47.htm">=<em>LEFT</em>([.C47])</a></td><td>abcdef</td><td></td></tr>
+<tr><td class="xl-row">48</td><td></td><td class="xl-exp"><a href="Strings_48.htm">=<em>LEFT</em>([.C48];[.D48])</a></td><td>abcdef</td><td class="xl-num">0.0</td><td></td></tr>
 <tr><td class="xl-row">49</td><td>a</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">50</td><td>ab</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">2.0</td><td></td></tr>
 <tr><td class="xl-row">51</td><td>abcde</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">5.0</td><td></td></tr>
 <tr><td class="xl-row">52</td><td>abcdef</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">6.0</td><td></td></tr>
 <tr><td class="xl-row">53</td><td>abcdef</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">7.0</td><td></td></tr>
 <tr><td class="xl-row">54</td><td></td><td class="xl-exp">...</td><td>' (empty string)</td><td class="xl-num">7.0</td><td></td></tr>
-<tr><td class="xl-row">55</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">-1.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">55</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">-1.0</td><td><td class="ref-bad">Excel says: Err:504</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_16">RIGHT</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">57</td><td>f</td><td class="xl-exp"><a href="Strings_57.htm">=<em>RIGHT</em>(C57)</a></td><td>abcdef</td><td></td></tr>
-<tr><td class="xl-row">58</td><td></td><td class="xl-exp"><a href="Strings_58.htm">=<em>RIGHT</em>(C58,D58)</a></td><td>abcdef</td><td class="xl-num">0.0</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">57</td><td>f</td><td class="xl-exp"><a href="Strings_57.htm">=<em>RIGHT</em>([.C57])</a></td><td>abcdef</td><td></td></tr>
+<tr><td class="xl-row">58</td><td></td><td class="xl-exp"><a href="Strings_58.htm">=<em>RIGHT</em>([.C58];[.D58])</a></td><td>abcdef</td><td class="xl-num">0.0</td><td></td></tr>
 <tr><td class="xl-row">59</td><td>f</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">60</td><td>ef</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">2.0</td><td></td></tr>
 <tr><td class="xl-row">61</td><td>bcdef</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">5.0</td><td></td></tr>
 <tr><td class="xl-row">62</td><td>abcdef</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">6.0</td><td></td></tr>
 <tr><td class="xl-row">63</td><td>abcdef</td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">7.0</td><td></td></tr>
 <tr><td class="xl-row">64</td><td></td><td class="xl-exp">...</td><td>' (empty string)</td><td class="xl-num">7.0</td><td></td></tr>
-<tr><td class="xl-row">65</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">-1.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">65</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>abcdef</td><td class="xl-num">-1.0</td><td><td class="ref-bad">Excel says: Err:504</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_17">SUBSTITUTE</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr></thead><tbody>
-<tr><td class="xl-row">67</td><td>Hello World</td><td class="xl-exp"><a href="Strings_67.htm">=<em>SUBSTITUTE</em>(C67,D67,E67)</a></td><td>Hello world</td><td>w</td><td>W</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></td></tr></thead><tbody>
+<tr><td class="xl-row">67</td><td>Hello World</td><td class="xl-exp"><a href="Strings_67.htm">=<em>SUBSTITUTE</em>([.C67];[.D67];[.E67])</a></td><td>Hello world</td><td>w</td><td>W</td><td></td></tr>
 <tr><td class="xl-row">68</td><td>Hello orld</td><td class="xl-exp">...</td><td>Hello world</td><td>w</td><td>' (empty string)</td><td></td></tr>
 <tr><td class="xl-row">69</td><td>Hello world</td><td class="xl-exp">...</td><td>Hello world</td><td>' (empty string)</td><td>Z</td><td></td></tr>
 <tr><td class="xl-row">70</td><td>Hella warld</td><td class="xl-exp">...</td><td>Hello world</td><td>o</td><td>a</td><td></td></tr>
@@ -295,30 +291,30 @@ text</td><td></td></tr>
 <tr><td class="xl-row">80</td><td>bAäÄàÀáÁ</td><td class="xl-exp">...</td><td>aAäÄàÀáÁ</td><td>a</td><td>b</td><td></td></tr>
 <tr><td class="xl-row">81</td><td>Yes!</td><td class="xl-exp">...</td><td>Hello world</td><td>Hello world</td><td>Yes!</td><td></td></tr>
 <tr><td class="xl-row">82</td><td></td><td class="xl-exp">...</td><td>' (empty string)</td><td class="xl-num">3.0</td><td class="xl-num">5.0</td><td></td></tr>
-<tr><td class="xl-row">83</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="Strings_83.htm">=<em>SUBSTITUTE</em>(C83,D83,E83,F83)</a></td><td>Hello world</td><td>l</td><td>_</td><td class="xl-num">0.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">83</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="Strings_83.htm">=<em>SUBSTITUTE</em>([.C83];[.D83];[.E83];[.F83])</a></td><td>Hello world</td><td>l</td><td>_</td><td class="xl-num">0.0</td><td><td class="ref-bad">Excel says: Err:504</td></td></tr>
 <tr><td class="xl-row">84</td><td>He_lo world</td><td class="xl-exp">...</td><td>Hello world</td><td>l</td><td>_</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">85</td><td>Hel_o world</td><td class="xl-exp">...</td><td>Hello world</td><td>l</td><td>_</td><td class="xl-num">2.0</td><td></td></tr>
 <tr><td class="xl-row">86</td><td>Hello wor_d</td><td class="xl-exp">...</td><td>Hello world</td><td>l</td><td>_</td><td class="xl-num">3.0</td><td></td></tr>
 <tr><td class="xl-row">87</td><td>Hello world</td><td class="xl-exp">...</td><td>Hello world</td><td>l</td><td>_</td><td class="xl-num">4.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_18">REPLACE</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr></thead><tbody>
-<tr><td class="xl-row">89</td><td>Ah! Hello world</td><td class="xl-exp"><a href="Strings_89.htm">=<em>REPLACE</em>(C89,D89,E89,F89)</a></td><td>Hello world</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td>Ah! </td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></td></tr></thead><tbody>
+<tr><td class="xl-row">89</td><td>Ah! Hello world</td><td class="xl-exp"><a href="Strings_89.htm">=<em>REPLACE</em>([.C89];[.D89];[.E89];[.F89])</a></td><td>Hello world</td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td>Ah! </td><td><td class="ref-bad">Excel says: Err:502</td></td></tr>
 <tr><td class="xl-row">90</td><td>Schmello world</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">1.0</td><td class="xl-num">1.0</td><td>Schm</td><td></td></tr>
 <tr><td class="xl-row">91</td><td>Hello people</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">7.0</td><td class="xl-num">5.0</td><td>people</td><td></td></tr>
 <tr><td class="xl-row">92</td><td>Hello people</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">7.0</td><td class="xl-num">10.0</td><td>people</td><td></td></tr>
-<tr><td class="xl-row">93</td><td>Hello dear world</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">7.0</td><td class="xl-num">0.0</td><td>dear </td><td></td></tr>
+<tr><td class="xl-row">93</td><td>Hello dear world</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">7.0</td><td class="xl-num">0.0</td><td>dear </td><td><td class="ref-bad">Excel says: Err:502</td></td></tr>
 <tr><td class="xl-row">94</td><td>Hello orld</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">7.0</td><td class="xl-num">1.0</td><td>' (empty string)</td><td></td></tr>
 <tr><td class="xl-row">95</td><td>Hello Vorld</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">7.0</td><td class="xl-num">1.0</td><td>V</td><td></td></tr>
 <tr><td class="xl-row">96</td><td>Hello worldxx</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">50.0</td><td class="xl-num">1.0</td><td>xx</td><td></td></tr>
-<tr><td class="xl-row">97</td><td>Hello worldxx</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">50.0</td><td class="xl-num">0.0</td><td>xx</td><td></td></tr>
+<tr><td class="xl-row">97</td><td>Hello worldxx</td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">50.0</td><td class="xl-num">0.0</td><td>xx</td><td><td class="ref-bad">Excel says: Err:502</td></td></tr>
 <tr><td class="xl-row">98</td><td>new</td><td class="xl-exp">...</td><td>' (empty string)</td><td class="xl-num">1.0</td><td class="xl-num">4.0</td><td>new</td><td></td></tr>
-<tr><td class="xl-row">99</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">0.0</td><td class="xl-num">2.0</td><td>bla</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
-<tr><td class="xl-row">100</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">1.0</td><td class="xl-num">-1.0</td><td>bla</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">99</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">0.0</td><td class="xl-num">2.0</td><td>bla</td><td><td class="ref-bad">Excel says: Err:502</td></td></tr>
+<tr><td class="xl-row">100</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>Hello world</td><td class="xl-num">1.0</td><td class="xl-num">-1.0</td><td>bla</td><td><td class="ref-bad">Excel says: Err:502</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_19">EXACT</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">102</td><td>true</td><td class="xl-exp"><a href="Strings_102.htm">=<em>EXACT</em>(C102,D102)</a></td><td>' (empty string)</td><td>' (empty string)</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">102</td><td>true</td><td class="xl-exp"><a href="Strings_102.htm">=<em>EXACT</em>([.C102];[.D102])</a></td><td>' (empty string)</td><td>' (empty string)</td><td></td></tr>
 <tr><td class="xl-row">103</td><td>false</td><td class="xl-exp">...</td><td>Hello</td><td>hello</td><td></td></tr>
 <tr><td class="xl-row">104</td><td>true</td><td class="xl-exp">...</td><td>Hello</td><td>Hello</td><td></td></tr>
 <tr><td class="xl-row">105</td><td>false</td><td class="xl-exp">...</td><td>Hello</td><td>HellO</td><td></td></tr>
@@ -332,120 +328,115 @@ text</td><td></td></tr>
 <tr><td class="xl-row">113</td><td>true</td><td class="xl-exp">...</td><td class="xl-num">123.0</td><td>123</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_20">FIND</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
-<tr><td class="xl-row">115</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Strings_115.htm">=<em>FIND</em>(C115,D115)</a></td><td>e</td><td>Hello world</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
+<tr><td class="xl-row">115</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Strings_115.htm">=<em>FIND</em>([.C115];[.D115])</a></td><td>e</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">116</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>H</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">117</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>X</td><td>Hello world</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">117</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>X</td><td>Hello world</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">118</td><td class="xl-num">11.0</td><td class="xl-exp">...</td><td>d</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">119</td><td class="xl-num">9.0</td><td class="xl-exp">...</td><td>r</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">120</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td>or</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">121</td><td class="xl-num">10.0</td><td class="xl-exp">...</td><td>ld</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">122</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>Hello world</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">123</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>' (empty string)</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">124</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>' (empty string)</td><td>' (empty string)</td><td></td></tr>
-<tr><td class="xl-row">125</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>x</td><td>' (empty string)</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">123</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>' (empty string)</td><td>Hello world</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">124</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>' (empty string)</td><td>' (empty string)</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">125</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>x</td><td>' (empty string)</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">126</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>a</td><td>àÀáÁaAäÄ</td><td></td></tr>
 <tr><td class="xl-row">127</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td>A</td><td>àÀáÁaAäÄ</td><td></td></tr>
 <tr><td class="xl-row">128</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td>ä</td><td>àÀáÁaAäÄ</td><td></td></tr>
 <tr><td class="xl-row">129</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td>Ä</td><td>àÀáÁaAäÄ</td><td></td></tr>
-<tr><td class="xl-row">130</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Strings_130.htm">=<em>FIND</em>(C130,D130,E130)</a></td><td>l</td><td>Hello world</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">130</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Strings_130.htm">=<em>FIND</em>([.C130];[.D130];[.E130])</a></td><td>l</td><td>Hello world</td><td class="xl-num">2.0</td><td></td></tr>
 <tr><td class="xl-row">131</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">3.0</td><td></td></tr>
 <tr><td class="xl-row">132</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">4.0</td><td></td></tr>
 <tr><td class="xl-row">133</td><td class="xl-num">10.0</td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">5.0</td><td></td></tr>
 <tr><td class="xl-row">134</td><td class="xl-num">10.0</td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">10.0</td><td></td></tr>
-<tr><td class="xl-row">135</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">11.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">135</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">11.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">136</td><td class="xl-num">11.0</td><td class="xl-exp">...</td><td>d</td><td>Hello world</td><td class="xl-num">11.0</td><td></td></tr>
-<tr><td class="xl-row">137</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>d</td><td>Hello world</td><td class="xl-num">12.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">137</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>d</td><td>Hello world</td><td class="xl-num">12.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">138</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>llo</td><td>Hello world</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">139</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>llo</td><td>Hello world</td><td class="xl-num">3.0</td><td></td></tr>
-<tr><td class="xl-row">140</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>llo</td><td>Hello world</td><td class="xl-num">4.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">140</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>llo</td><td>Hello world</td><td class="xl-num">4.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_21">SEARCH</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr></thead><tbody>
-<tr><td class="xl-row">142</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Strings_142.htm">=<em>SEARCH</em>(C142,D142)</a></td><td>e</td><td>Hello world</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
+<tr><td class="xl-row">142</td><td class="xl-num">2.0</td><td class="xl-exp"><a href="Strings_142.htm">=<em>SEARCH</em>([.C142];[.D142])</a></td><td>e</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">143</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>H</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">144</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>X</td><td>Hello world</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">144</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>X</td><td>Hello world</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">145</td><td class="xl-num">11.0</td><td class="xl-exp">...</td><td>d</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">146</td><td class="xl-num">9.0</td><td class="xl-exp">...</td><td>r</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">147</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td>or</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">148</td><td class="xl-num">10.0</td><td class="xl-exp">...</td><td>ld</td><td>Hello world</td><td></td></tr>
 <tr><td class="xl-row">149</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>Hello world</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">150</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>' (empty string)</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">151</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>e*o</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">152</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>o*l</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">153</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td>o?l</td><td>Hello world</td><td></td></tr>
-<tr><td class="xl-row">154</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>o??l</td><td>Hello world</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
-<tr><td class="xl-row">155</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>~**~?*~~.</td><td>Use * or ?, escape with ~.</td><td></td></tr>
-<tr><td class="xl-row">156</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>~**~**~~.</td><td>Use * or ?, escape with ~.</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
-<tr><td class="xl-row">157</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td>~o~r</td><td>Use * or ?, escape with ~.</td><td></td></tr>
+<tr><td class="xl-row">150</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>' (empty string)</td><td>Hello world</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">151</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>e*o</td><td>Hello world</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">152</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>o*l</td><td>Hello world</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">153</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td>o?l</td><td>Hello world</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">154</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>o??l</td><td>Hello world</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">155</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>~**~?*~~.</td><td>Use * or ?, escape with ~.</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">156</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>~**~**~~.</td><td>Use * or ?, escape with ~.</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">157</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td>~o~r</td><td>Use * or ?, escape with ~.</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">158</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td>g ~</td><td>Trailing ~</td><td></td></tr>
-<tr><td class="xl-row">159</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>' (empty string)</td><td>' (empty string)</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
-<tr><td class="xl-row">160</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>x</td><td>' (empty string)</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">159</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>' (empty string)</td><td>' (empty string)</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">160</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>x</td><td>' (empty string)</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">161</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>a</td><td>àÀáÁaAäÄ</td><td></td></tr>
 <tr><td class="xl-row">162</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>A</td><td>àÀáÁaAäÄ</td><td></td></tr>
 <tr><td class="xl-row">163</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td>ä</td><td>àÀáÁaAäÄ</td><td></td></tr>
 <tr><td class="xl-row">164</td><td class="xl-num">7.0</td><td class="xl-exp">...</td><td>Ä</td><td>àÀáÁaAäÄ</td><td></td></tr>
 <tr><td class="xl-row">165</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>в</td><td>аАбБвВгГ</td><td></td></tr>
 <tr><td class="xl-row">166</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td>В</td><td>аАбБвВгГ</td><td></td></tr>
-<tr><td class="xl-row">167</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Strings_167.htm">=<em>SEARCH</em>(C167,D167,E167)</a></td><td>l</td><td>Hello world</td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">167</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Strings_167.htm">=<em>SEARCH</em>([.C167];[.D167];[.E167])</a></td><td>l</td><td>Hello world</td><td class="xl-num">2.0</td><td></td></tr>
 <tr><td class="xl-row">168</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">3.0</td><td></td></tr>
 <tr><td class="xl-row">169</td><td class="xl-num">4.0</td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">4.0</td><td></td></tr>
 <tr><td class="xl-row">170</td><td class="xl-num">10.0</td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">5.0</td><td></td></tr>
 <tr><td class="xl-row">171</td><td class="xl-num">10.0</td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">10.0</td><td></td></tr>
-<tr><td class="xl-row">172</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">11.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">172</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>l</td><td>Hello world</td><td class="xl-num">11.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">173</td><td class="xl-num">11.0</td><td class="xl-exp">...</td><td>d</td><td>Hello world</td><td class="xl-num">11.0</td><td></td></tr>
-<tr><td class="xl-row">174</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>d</td><td>Hello world</td><td class="xl-num">12.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
+<tr><td class="xl-row">174</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>d</td><td>Hello world</td><td class="xl-num">12.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 <tr><td class="xl-row">175</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>llo</td><td>Hello world</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">176</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>llo</td><td>Hello world</td><td class="xl-num">3.0</td><td></td></tr>
-<tr><td class="xl-row">177</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>llo</td><td>Hello world</td><td class="xl-num">4.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
-<tr><td class="xl-row">178</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>e*o</td><td>Hello world</td><td class="xl-num">1.0</td><td></td></tr>
-<tr><td class="xl-row">179</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>e*o</td><td>Hello world</td><td class="xl-num">2.0</td><td></td></tr>
-<tr><td class="xl-row">180</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>e*o</td><td>Hello world</td><td class="xl-num">3.0</td><td></td><td class="ref-bad">Excel says: #VALUE!</td></tr>
-<tr><td class="xl-row">181</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td>e*o</td><td>Hello Hello</td><td class="xl-num">5.0</td><td></td></tr>
+<tr><td class="xl-row">177</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>llo</td><td>Hello world</td><td class="xl-num">4.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">178</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>e*o</td><td>Hello world</td><td class="xl-num">1.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">179</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>e*o</td><td>Hello world</td><td class="xl-num">2.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">180</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>e*o</td><td>Hello world</td><td class="xl-num">3.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
+<tr><td class="xl-row">181</td><td class="xl-num">8.0</td><td class="xl-exp">...</td><td>e*o</td><td>Hello Hello</td><td class="xl-num">5.0</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_22">LOWER</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">183</td><td>hello</td><td class="xl-exp"><a href="Strings_183.htm">=<em>LOWER</em>(C183)</a></td><td>HELLO</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">183</td><td>hello</td><td class="xl-exp"><a href="Strings_183.htm">=<em>LOWER</em>([.C183])</a></td><td>HELLO</td><td></td></tr>
 <tr><td class="xl-row">184</td><td>hello</td><td class="xl-exp">...</td><td>Hello</td><td></td></tr>
 <tr><td class="xl-row">185</td><td>hello</td><td class="xl-exp">...</td><td>hellO</td><td></td></tr>
 <tr><td class="xl-row">186</td><td>ààááaaää</td><td class="xl-exp">...</td><td>àÀáÁaAäÄ</td><td></td></tr>
-<tr><td class="xl-row">185</td><td>hello</td><td class="xl-exp">...</td><td>hellO</td><td></td></tr>
 <tr><td class="xl-row">187</td><td></td><td class="xl-exp">...</td><td>' (empty string)</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_23">UPPER</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">189</td><td>HELLO</td><td class="xl-exp"><a href="Strings_189.htm">=<em>UPPER</em>(C189)</a></td><td>HELLO</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">189</td><td>HELLO</td><td class="xl-exp"><a href="Strings_189.htm">=<em>UPPER</em>([.C189])</a></td><td>HELLO</td><td></td></tr>
 <tr><td class="xl-row">190</td><td>HELLO</td><td class="xl-exp">...</td><td>Hello</td><td></td></tr>
 <tr><td class="xl-row">191</td><td>HELLO</td><td class="xl-exp">...</td><td>hellO</td><td></td></tr>
 <tr><td class="xl-row">192</td><td>ÀÀÁÁAAÄÄ</td><td class="xl-exp">...</td><td>àÀáÁaAäÄ</td><td></td></tr>
-<tr><td class="xl-row">191</td><td>HELLO</td><td class="xl-exp">...</td><td>hellO</td><td></td></tr>
 <tr><td class="xl-row">193</td><td></td><td class="xl-exp">...</td><td>' (empty string)</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_24">PROPER</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">195</td><td>This Is A Title</td><td class="xl-exp"><a href="Strings_195.htm">=<em>PROPER</em>(C195)</a></td><td>this is a TITLE</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">195</td><td>This Is A Title</td><td class="xl-exp"><a href="Strings_195.htm">=<em>PROPER</em>([.C195])</a></td><td>this is a TITLE</td><td></td></tr>
 <tr><td class="xl-row">196</td><td>2-Cent'S Worth</td><td class="xl-exp">...</td><td>2-cent's worth</td><td></td></tr>
 <tr><td class="xl-row">197</td><td>76Budget</td><td class="xl-exp">...</td><td>76BudGet</td><td></td></tr>
 <tr><td class="xl-row">198</td><td>Ààá Áaa Ää</td><td class="xl-exp">...</td><td>àÀá ÁaA äÄ</td><td></td></tr>
 <tr><td class="xl-row">199</td><td>Ааб Бвв Ггд Д</td><td class="xl-exp">...</td><td>АаБ бВв ГгД д</td><td></td></tr>
-<tr><td class="xl-row">198</td><td>Ààá Áaa Ää</td><td class="xl-exp">...</td><td>àÀá ÁaA äÄ</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_25">REPT</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">201</td><td>*abc*abc*abc</td><td class="xl-exp"><a href="Strings_201.htm">=<em>REPT</em>(C201,D201)</a></td><td>*abc</td><td class="xl-num">3.0</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">201</td><td>*abc*abc*abc</td><td class="xl-exp"><a href="Strings_201.htm">=<em>REPT</em>([.C201];[.D201])</a></td><td>*abc</td><td class="xl-num">3.0</td><td></td></tr>
 <tr><td class="xl-row">202</td><td>àÀáÁaAäÄ</td><td class="xl-exp">...</td><td>àÀáÁaAäÄ</td><td class="xl-num">1.0</td><td></td></tr>
 <tr><td class="xl-row">203</td><td></td><td class="xl-exp">...</td><td>abc</td><td class="xl-num">0.0</td><td></td></tr>
-<tr><td class="xl-row">202</td><td>àÀáÁaAäÄ</td><td class="xl-exp">...</td><td>àÀáÁaAäÄ</td><td class="xl-num">1.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_26">TRIM</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td></tr></thead><tbody>
-<tr><td class="xl-row">205</td><td>aaa bb c</td><td class="xl-exp"><a href="Strings_205.htm">=<em>TRIM</em>(C205)</a></td><td>  aaa   bb  c    </td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">205</td><td>aaa bb c</td><td class="xl-exp"><a href="Strings_205.htm">=<em>TRIM</em>([.C205])</a></td><td>  aaa   bb  c    </td><td></td></tr>
 <tr><td class="xl-row">206</td><td>aaa bb c</td><td class="xl-exp">...</td><td>aaa bb c</td><td></td></tr>
-<tr><td class="xl-row">205</td><td>aaa bb c</td><td class="xl-exp">...</td><td>  aaa   bb  c    </td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_27">MATCH (ascending)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr></thead><tbody>
-<tr><td class="xl-row">208</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp"><a href="Strings_208.htm">=<em>MATCH</em>(C208,D208:F208)</a></td><td>A</td><td>B</td><td>D</td><td>F</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></td></tr></thead><tbody>
+<tr><td class="xl-row">208</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp"><a href="Strings_208.htm">=<em>MATCH</em>([.C208];[.D208:.F208])</a></td><td>A</td><td>B</td><td>D</td><td>F</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
 <tr><td class="xl-row">209</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>B</td><td>B</td><td>D</td><td>F</td><td></td></tr>
 <tr><td class="xl-row">210</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>C</td><td>B</td><td>D</td><td>F</td><td></td></tr>
 <tr><td class="xl-row">211</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>D</td><td>B</td><td>D</td><td>F</td><td></td></tr>
@@ -456,70 +447,66 @@ text</td><td></td></tr>
 <tr><td class="xl-row">216</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>ç</td><td>A</td><td>C</td><td>E</td><td></td></tr>
 <tr><td class="xl-row">217</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>CD</td><td>B</td><td>C</td><td>D</td><td></td></tr>
 <tr><td class="xl-row">218</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>BC</td><td>B</td><td>C</td><td>D</td><td></td></tr>
-<tr><td class="xl-row">208</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>A</td><td>B</td><td>D</td><td>F</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_28">MATCH (descending)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr></thead><tbody>
-<tr><td class="xl-row">220</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Strings_220.htm">=<em>MATCH</em>(C220,D220:F220,<em>-1.0</em>)</a></td><td>A</td><td>F</td><td>D</td><td>B</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></td></tr></thead><tbody>
+<tr><td class="xl-row">220</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="Strings_220.htm">=<em>MATCH</em>([.C220];[.D220:.F220];-1)</a></td><td>A</td><td>F</td><td>D</td><td>B</td><td></td></tr>
 <tr><td class="xl-row">221</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>B</td><td>F</td><td>D</td><td>B</td><td></td></tr>
 <tr><td class="xl-row">222</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>C</td><td>F</td><td>D</td><td>B</td><td></td></tr>
 <tr><td class="xl-row">223</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>D</td><td>F</td><td>D</td><td>B</td><td></td></tr>
 <tr><td class="xl-row">224</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>E</td><td>F</td><td>D</td><td>B</td><td></td></tr>
 <tr><td class="xl-row">225</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>F</td><td>F</td><td>D</td><td>B</td><td></td></tr>
-<tr><td class="xl-row">226</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>G</td><td>F</td><td>D</td><td>B</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
+<tr><td class="xl-row">226</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>G</td><td>F</td><td>D</td><td>B</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
 <tr><td class="xl-row">227</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>c</td><td>E</td><td>C</td><td>A</td><td></td></tr>
 <tr><td class="xl-row">228</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>ç</td><td>E</td><td>C</td><td>A</td><td></td></tr>
 <tr><td class="xl-row">229</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>CD</td><td>D</td><td>C</td><td>B</td><td></td></tr>
 <tr><td class="xl-row">230</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>BC</td><td>D</td><td>C</td><td>B</td><td></td></tr>
-<tr><td class="xl-row">220</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>A</td><td>F</td><td>D</td><td>B</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_29">MATCH (equality)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr></thead><tbody>
-<tr><td class="xl-row">232</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp"><a href="Strings_232.htm">=<em>MATCH</em>(C232,D232:F232,<em>0.0</em>)</a></td><td>A</td><td>B</td><td>C</td><td>D</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></td></tr></thead><tbody>
+<tr><td class="xl-row">232</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp"><a href="Strings_232.htm">=<em>MATCH</em>([.C232];[.D232:.F232];0)</a></td><td>A</td><td>B</td><td>C</td><td>D</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
 <tr><td class="xl-row">233</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>B</td><td>B</td><td>C</td><td>D</td><td></td></tr>
 <tr><td class="xl-row">234</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>C</td><td>B</td><td>C</td><td>D</td><td></td></tr>
 <tr><td class="xl-row">235</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>D</td><td>B</td><td>C</td><td>D</td><td></td></tr>
-<tr><td class="xl-row">236</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>E</td><td>B</td><td>C</td><td>D</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
+<tr><td class="xl-row">236</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>E</td><td>B</td><td>C</td><td>D</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
 <tr><td class="xl-row">237</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>c</td><td>B</td><td>C</td><td>D</td><td></td></tr>
 <tr><td class="xl-row">238</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>c</td><td>B</td><td>C</td><td>C</td><td></td></tr>
-<tr><td class="xl-row">239</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>ç</td><td>B</td><td>C</td><td>D</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
+<tr><td class="xl-row">239</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>ç</td><td>B</td><td>C</td><td>D</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
 <tr><td class="xl-row">240</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>ç</td><td>B</td><td>C</td><td>ç</td><td></td></tr>
-<tr><td class="xl-row">241</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>CD</td><td>B</td><td>C</td><td>D</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
-<tr><td class="xl-row">242</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>BC</td><td>B</td><td>C</td><td>D</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
-<tr><td class="xl-row">232</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>A</td><td>B</td><td>C</td><td>D</td><td></td><td class="ref-bad">Excel says: #N/A</td></tr>
-<tr><td class="xl-row">243</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>?wo</td><td>One</td><td>Two</td><td>Three</td><td></td></tr>
-<tr><td class="xl-row">244</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>*o*</td><td>One</td><td>Two</td><td>Three</td><td></td></tr>
-<tr><td class="xl-row">245</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>?hr*</td><td>One</td><td>Two</td><td>Three</td><td></td></tr>
-<tr><td class="xl-row">243</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>?wo</td><td>One</td><td>Two</td><td>Three</td><td></td></tr>
+<tr><td class="xl-row">241</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>CD</td><td>B</td><td>C</td><td>D</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
+<tr><td class="xl-row">242</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp">...</td><td>BC</td><td>B</td><td>C</td><td>D</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
+<tr><td class="xl-row">243</td><td class="xl-num">2.0</td><td class="xl-exp">...</td><td>?wo</td><td>One</td><td>Two</td><td>Three</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
+<tr><td class="xl-row">244</td><td class="xl-num">1.0</td><td class="xl-exp">...</td><td>*o*</td><td>One</td><td>Two</td><td>Three</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
+<tr><td class="xl-row">245</td><td class="xl-num">3.0</td><td class="xl-exp">...</td><td>?hr*</td><td>One</td><td>Two</td><td>Three</td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
 </tbody></table><p></p>
 
 	<h3><a name="pagetoc__2">String Comparisons</a></h3>
 
 
 <h5 class="ref"><a name="pagetoc__2_1">Code page not fully supported</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">2</td><td>true</td><td class="xl-exp"><a href="StringComparisons_2.htm">=C2<em>&lt;</em>D2</a></td><td>a</td><td>à</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td>true</td><td class="xl-exp"><a href="StringComparisons_2.htm">=[.C2]<em>&lt;</em>[.D2]</a></td><td>a</td><td>à</td><td></td></tr>
 <tr><td class="xl-row">3</td><td>true</td><td class="xl-exp">...</td><td>à</td><td>ä</td><td></td></tr>
-<tr><td class="xl-row">4</td><td>false</td><td class="xl-exp">...</td><td>ä</td><td>b</td><td></td><td class="ref-bad">Excel says: true</td></tr>
+<tr><td class="xl-row">4</td><td>false</td><td class="xl-exp">...</td><td>ä</td><td>b</td><td><td class="ref-bad">Excel says: true</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_2">Case insensitive</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">6</td><td>true</td><td class="xl-exp"><a href="StringComparisons_6.htm">=C6&lt;D6</a></td><td>A</td><td>b</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">6</td><td>true</td><td class="xl-exp"><a href="StringComparisons_6.htm">=[.C6]&lt;[.D6]</a></td><td>A</td><td>b</td><td></td></tr>
 <tr><td class="xl-row">7</td><td>true</td><td class="xl-exp">...</td><td>a</td><td>B</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_3">Strings are always greater than numbers</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">9</td><td>false</td><td class="xl-exp"><a href="StringComparisons_9.htm">=C9<em>=</em>D9</a></td><td>10</td><td class="xl-num">10.0</td><td></td></tr>
-<tr><td class="xl-row">10</td><td>false</td><td class="xl-exp"><a href="StringComparisons_10.htm">=C10<em>&lt;</em>D10</a></td><td>10</td><td class="xl-num">10.0</td><td></td></tr>
-<tr><td class="xl-row">11</td><td>true</td><td class="xl-exp"><a href="StringComparisons_11.htm">=C11<em>&gt;</em>D11</a></td><td>10</td><td class="xl-num">10.0</td><td></td></tr>
-<tr><td class="xl-row">12</td><td>false</td><td class="xl-exp"><a href="StringComparisons_12.htm">=C12<em>=</em>D12</a></td><td class="xl-num">10.0</td><td>10</td><td></td></tr>
-<tr><td class="xl-row">13</td><td>true</td><td class="xl-exp"><a href="StringComparisons_13.htm">=C13<em>&lt;</em>D13</a></td><td class="xl-num">10.0</td><td>10</td><td></td></tr>
-<tr><td class="xl-row">14</td><td>false</td><td class="xl-exp"><a href="StringComparisons_14.htm">=C14<em>&gt;</em>D14</a></td><td class="xl-num">10.0</td><td>10</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">9</td><td>false</td><td class="xl-exp"><a href="StringComparisons_9.htm">=[.C9]<em>=</em>[.D9]</a></td><td>10</td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">10</td><td>false</td><td class="xl-exp"><a href="StringComparisons_10.htm">=[.C10]<em>&lt;</em>[.D10]</a></td><td>10</td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">11</td><td>true</td><td class="xl-exp"><a href="StringComparisons_11.htm">=[.C11]<em>&gt;</em>[.D11]</a></td><td>10</td><td class="xl-num">10.0</td><td></td></tr>
+<tr><td class="xl-row">12</td><td>false</td><td class="xl-exp"><a href="StringComparisons_12.htm">=[.C12]<em>=</em>[.D12]</a></td><td class="xl-num">10.0</td><td>10</td><td></td></tr>
+<tr><td class="xl-row">13</td><td>true</td><td class="xl-exp"><a href="StringComparisons_13.htm">=[.C13]<em>&lt;</em>[.D13]</a></td><td class="xl-num">10.0</td><td>10</td><td></td></tr>
+<tr><td class="xl-row">14</td><td>false</td><td class="xl-exp"><a href="StringComparisons_14.htm">=[.C14]<em>&gt;</em>[.D14]</a></td><td class="xl-num">10.0</td><td>10</td><td></td></tr>
 <tr><td class="xl-row">15</td><td>true</td><td class="xl-exp">...</td><td>10</td><td class="xl-num">10.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_4">Equal (=)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">17</td><td>false</td><td class="xl-exp"><a href="StringComparisons_17.htm">=C17<em>=</em>D17</a></td><td>a</td><td>b</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">17</td><td>false</td><td class="xl-exp"><a href="StringComparisons_17.htm">=[.C17]<em>=</em>[.D17]</a></td><td>a</td><td>b</td><td></td></tr>
 <tr><td class="xl-row">18</td><td>false</td><td class="xl-exp">...</td><td>d</td><td>c</td><td></td></tr>
 <tr><td class="xl-row">19</td><td>true</td><td class="xl-exp">...</td><td>e</td><td>e</td><td></td></tr>
 <tr><td class="xl-row">20</td><td>false</td><td class="xl-exp">...</td><td>A</td><td>AA</td><td></td></tr>
@@ -532,8 +519,8 @@ text</td><td></td></tr>
 <tr><td class="xl-row">27</td><td>true</td><td class="xl-exp">...</td><td>A</td><td>a</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_5">Not equal (&lt;&gt;)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">29</td><td>true</td><td class="xl-exp"><a href="StringComparisons_29.htm">=C29<em>&lt;&gt;</em>D29</a></td><td>a</td><td>b</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">29</td><td>true</td><td class="xl-exp"><a href="StringComparisons_29.htm">=[.C29]<em>&lt;&gt;</em>[.D29]</a></td><td>a</td><td>b</td><td></td></tr>
 <tr><td class="xl-row">30</td><td>true</td><td class="xl-exp">...</td><td>d</td><td>c</td><td></td></tr>
 <tr><td class="xl-row">31</td><td>false</td><td class="xl-exp">...</td><td>e</td><td>e</td><td></td></tr>
 <tr><td class="xl-row">32</td><td>true</td><td class="xl-exp">...</td><td>A</td><td>AA</td><td></td></tr>
@@ -546,8 +533,8 @@ text</td><td></td></tr>
 <tr><td class="xl-row">39</td><td>false</td><td class="xl-exp">...</td><td>A</td><td>a</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_6">Greater than (&gt;)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">41</td><td>false</td><td class="xl-exp"><a href="StringComparisons_41.htm">=C41<em>&gt;</em>D41</a></td><td>a</td><td>b</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">41</td><td>false</td><td class="xl-exp"><a href="StringComparisons_41.htm">=[.C41]<em>&gt;</em>[.D41]</a></td><td>a</td><td>b</td><td></td></tr>
 <tr><td class="xl-row">42</td><td>true</td><td class="xl-exp">...</td><td>d</td><td>c</td><td></td></tr>
 <tr><td class="xl-row">43</td><td>false</td><td class="xl-exp">...</td><td>e</td><td>e</td><td></td></tr>
 <tr><td class="xl-row">44</td><td>false</td><td class="xl-exp">...</td><td>A</td><td>AA</td><td></td></tr>
@@ -560,8 +547,8 @@ text</td><td></td></tr>
 <tr><td class="xl-row">51</td><td>false</td><td class="xl-exp">...</td><td>A</td><td>a</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_7">Less than (&lt;)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">53</td><td>true</td><td class="xl-exp"><a href="StringComparisons_53.htm">=C53<em>&lt;</em>D53</a></td><td>a</td><td>b</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">53</td><td>true</td><td class="xl-exp"><a href="StringComparisons_53.htm">=[.C53]<em>&lt;</em>[.D53]</a></td><td>a</td><td>b</td><td></td></tr>
 <tr><td class="xl-row">54</td><td>false</td><td class="xl-exp">...</td><td>d</td><td>c</td><td></td></tr>
 <tr><td class="xl-row">55</td><td>false</td><td class="xl-exp">...</td><td>e</td><td>e</td><td></td></tr>
 <tr><td class="xl-row">56</td><td>true</td><td class="xl-exp">...</td><td>A</td><td>AA</td><td></td></tr>
@@ -574,8 +561,8 @@ text</td><td></td></tr>
 <tr><td class="xl-row">63</td><td>false</td><td class="xl-exp">...</td><td>A</td><td>a</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_8">Greater or equal (&gt;=)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">65</td><td>false</td><td class="xl-exp"><a href="StringComparisons_65.htm">=C65<em>&gt;=</em>D65</a></td><td>a</td><td>b</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">65</td><td>false</td><td class="xl-exp"><a href="StringComparisons_65.htm">=[.C65]<em>&gt;=</em>[.D65]</a></td><td>a</td><td>b</td><td></td></tr>
 <tr><td class="xl-row">66</td><td>true</td><td class="xl-exp">...</td><td>d</td><td>c</td><td></td></tr>
 <tr><td class="xl-row">67</td><td>true</td><td class="xl-exp">...</td><td>e</td><td>e</td><td></td></tr>
 <tr><td class="xl-row">68</td><td>false</td><td class="xl-exp">...</td><td>A</td><td>AA</td><td></td></tr>
@@ -588,8 +575,8 @@ text</td><td></td></tr>
 <tr><td class="xl-row">75</td><td>true</td><td class="xl-exp">...</td><td>A</td><td>a</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_9">Less or equal (&lt;=)</a></h5>
-<table class="xl ref"><thead><tr><td></td><td>A</td><td>B</td><td>C</td><td>D</td></tr></thead><tbody>
-<tr><td class="xl-row">77</td><td>true</td><td class="xl-exp"><a href="StringComparisons_77.htm">=C77<em>&lt;=</em>D77</a></td><td>a</td><td>b</td><td></td></tr>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
+<tr><td class="xl-row">77</td><td>true</td><td class="xl-exp"><a href="StringComparisons_77.htm">=[.C77]<em>&lt;=</em>[.D77]</a></td><td>a</td><td>b</td><td></td></tr>
 <tr><td class="xl-row">78</td><td>false</td><td class="xl-exp">...</td><td>d</td><td>c</td><td></td></tr>
 <tr><td class="xl-row">79</td><td>true</td><td class="xl-exp">...</td><td>e</td><td>e</td><td></td></tr>
 <tr><td class="xl-row">80</td><td>true</td><td class="xl-exp">...</td><td>A</td><td>AA</td><td></td></tr>

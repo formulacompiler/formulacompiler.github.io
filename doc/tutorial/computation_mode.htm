@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Computation Mode - Abacus Formula Compiler for Java</title>
+    <style media="screen" type="text/css">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1112076-2");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support/index.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Tutorial</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Computation Mode</h1>
+
+	<p>Different spreadsheet applications calculate some expressions slightly differently. The computation mode tells <span class="caps">AFC</span> which particular spreadsheet application to emulate.</p>
+
+
+
+	<h2><a name="pagetoc__1">Spreadsheets Loaded from Files</a></h2>
+
+	<p>When you load a spreadsheet from a file, the computation mode is set automatically to match the format of the loaded file. So <code>.xls</code> will turn on Excel compatibility, <code>.ods</code> will turn on OpenOffice Calc compatibility, etc.</p>
+
+
+	<h3><a name="pagetoc__1_1">Example</a></h3>
+
+	<p>Both Excel and OpenOffice handle dates as numbers of days since a particular fixed date. For example, January 23, 2007 is represented as 39105. But <a href="http://support.microsoft.com/kb/214326">Excel incorrectly assumes that the year 1900 is a leap year</a>. OpenOffice does not. That is why January 1, 1900 is represented as 1 in Excel and as 2 in OpenOffice.</p>
+
+
+	<p><span class="caps">AFC</span> converts dates before March 1, 1900 to numbers the same way as the application that created that spreadsheet.</p>
+
+
+	<p>For .xls:</p>
+
+	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>PATH, <span class="j-hl"><span class="j-str">&#34;DateConversion.xls&#34;</span></span> <span class="j-sym">) )</span>;
+builder.setFactoryClass<span class="j-sym">( </span>Factory.<span class="j-key">class </span><span class="j-sym">)</span>;
+builder.createCellNamesFromRowTitles<span class="j-sym">()</span>;
+builder.bindAllByName<span class="j-sym">()</span>;
+Engine engine = builder.compile<span class="j-sym">()</span>;
+Factory factory = <span class="j-sym">(</span>Factory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">() )</span>;</pre>
+
+
+	<pre class="java">assertEquals<span class="j-sym">( </span><span class="j-hl">1.0</span>, output.getNumberFromDate<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl">2.0</span>, output.getNumberFromMilliseconds<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span>date<span class="j-sym">( </span><span class="j-hl">1900, Calendar.JANUARY, <span class="j-num">1</span></span> <span class="j-sym">)</span>, output.getDateFromNumber<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span>date<span class="j-sym">( </span><span class="j-hl">1900, Calendar.JANUARY, <span class="j-num">1</span></span> <span class="j-sym">)</span>.getTime<span class="j-sym">()</span>, output.getMillisecondsFromNumber<span class="j-sym">() )</span>;</pre>
+
+
+	<p>For .ods:</p>
+
+	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>PATH, <span class="j-hl"><span class="j-str">&#34;DateConversion.ods&#34;</span></span> <span class="j-sym">) )</span>;
+builder.setFactoryClass<span class="j-sym">( </span>Factory.<span class="j-key">class </span><span class="j-sym">)</span>;
+builder.createCellNamesFromRowTitles<span class="j-sym">()</span>;
+builder.bindAllByName<span class="j-sym">()</span>;
+Engine engine = builder.compile<span class="j-sym">()</span>;
+Factory factory = <span class="j-sym">(</span>Factory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">() )</span>;</pre>
+
+
+	<pre class="java">assertEquals<span class="j-sym">( </span><span class="j-hl">2.0</span>, output.getNumberFromDate<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl">3.0</span>, output.getNumberFromMilliseconds<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span>date<span class="j-sym">( </span><span class="j-hl">1899, Calendar.DECEMBER, <span class="j-num">31</span></span> <span class="j-sym">)</span>, output.getDateFromNumber<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span>date<span class="j-sym">( </span><span class="j-hl">1899, Calendar.DECEMBER, <span class="j-num">31</span></span> <span class="j-sym">)</span>.getTime<span class="j-sym">()</span>, output.getMillisecondsFromNumber<span class="j-sym">() )</span>;</pre>
+
+
+	<h2><a name="pagetoc__2">Spreadsheets Created by the Spreadsheet Builder</a></h2>
+
+	<p>If an engine was compiled from a spreadsheet <a href="buildsheet.htm">created in memory</a>, then it uses Excel computation mode by default. This mode can be overriden:</p>
+
+	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
+SpreadsheetBuilder b = SpreadsheetCompiler.<span class="j-hl">newSpreadsheetBuilder</span><span class="j-sym">()</span>;
+
+<span class="j-cmt">// Input cells
+</span>b.newCell<span class="j-sym">()</span>;
+b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;Number&#34; </span><span class="j-sym">)</span>;
+SpreadsheetBuilder.CellRef numberCellRef = b.currentCell<span class="j-sym">()</span>;
+b.newCell<span class="j-sym">()</span>;
+b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;Date&#34; </span><span class="j-sym">)</span>;
+SpreadsheetBuilder.CellRef dateCellRef = b.currentCell<span class="j-sym">()</span>;
+b.newCell<span class="j-sym">()</span>;
+b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;DateInMilliseconds&#34; </span><span class="j-sym">)</span>;
+SpreadsheetBuilder.CellRef msCellRef = b.currentCell<span class="j-sym">()</span>;
+
+<span class="j-cmt">// Output cells
+</span>b.newCell<span class="j-sym">( </span>b.ref<span class="j-sym">( </span>dateCellRef <span class="j-sym">) )</span>;
+b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;NumberFromDate&#34; </span><span class="j-sym">)</span>;
+b.newCell<span class="j-sym">( </span>b.ref<span class="j-sym">( </span>msCellRef <span class="j-sym">) )</span>;
+b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;NumberFromMilliseconds&#34; </span><span class="j-sym">)</span>;
+b.newCell<span class="j-sym">( </span>b.ref<span class="j-sym">( </span>numberCellRef <span class="j-sym">) )</span>;
+b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;DateFromNumber&#34; </span><span class="j-sym">)</span>;
+b.newCell<span class="j-sym">( </span>b.ref<span class="j-sym">( </span>numberCellRef <span class="j-sym">) )</span>;
+b.nameCell<span class="j-sym">( </span><span class="j-str">&#34;MillisecondsFromNumber&#34; </span><span class="j-sym">)</span>;
+
+builder.setSpreadsheet<span class="j-sym">( </span>b.getSpreadsheet<span class="j-sym">() )</span>;
+builder.setFactoryClass<span class="j-sym">( </span>Factory.<span class="j-key">class </span><span class="j-sym">)</span>;
+builder.createCellNamesFromRowTitles<span class="j-sym">()</span>;
+builder.bindAllByName<span class="j-sym">()</span>;
+<span class="j-hl">builder.setComputationMode<span class="j-sym">( </span>ComputationMode.OPEN_OFFICE_CALC <span class="j-sym">)</span>;</span>
+Engine engine = builder.compile<span class="j-sym">()</span>;
+Factory factory = <span class="j-sym">(</span>Factory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
+Output output = factory.newInstance<span class="j-sym">( </span><span class="j-key">new </span>Input<span class="j-sym">() )</span>;</pre>
+
+
+	<pre class="java">assertEquals<span class="j-sym">( </span><span class="j-hl">2.0</span>, output.getNumberFromDate<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span><span class="j-hl">3.0</span>, output.getNumberFromMilliseconds<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span>date<span class="j-sym">( </span><span class="j-hl">1899, Calendar.DECEMBER, <span class="j-num">31</span></span> <span class="j-sym">)</span>, output.getDateFromNumber<span class="j-sym">() )</span>;
+assertEquals<span class="j-sym">( </span>date<span class="j-sym">( </span><span class="j-hl">1899, Calendar.DECEMBER, <span class="j-num">31</span></span> <span class="j-sym">)</span>.getTime<span class="j-sym">()</span>, output.getMillisecondsFromNumber<span class="j-sym">() )</span>;</pre>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><span class="selected"><a href="../../doc/tutorial/index.htm">Tutorial</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Computation Mode</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Spreadsheets Loaded from Files</a><ul class="toc toc2"><li><a href="#pagetoc__1_1">Example</a></li></ul></li><li><a href="#pagetoc__2">Spreadsheets Created by the Spreadsheet Builder</a></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/reference/index.htm">Function Reference</a></div>
+<div class="area"><a href="../../doc/javadoc/index.html">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

@@ -4,7 +4,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>Tutorial - Abacus Formula Compiler for Java</title>
-    <style type="text/css" media="screen">
+    <style media="screen" type="text/css">
 		
     </style>
 	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
@@ -31,12 +31,12 @@ pageTracker._trackPageview();
 			<div id="logo_band">
 				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
 			</div>
-			<div id="download_band">
-				<a href="../../download/index.htm">
-					<img src="../../site_img/download_button.gif" />
-				</a>
-			</div>
 			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
 				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
 						
 					<a href="../../index.htm">Home</a> | 
@@ -68,6 +68,8 @@ pageTracker._trackPageview();
 <dt><a href="basics.htm">The Basics</a></dt><dd>Line item pricing revisited: a simple case study that introduces the main concepts of <span class="caps">AFC</span>.</dd>
 
 <dt><a href="numeric_type.htm">Numeric Type</a></dt><dd><span class="caps">AFC</span> normally does all numeric calculations using the <code>double</code> type. This is often not acceptable for financial applications. This topic shows how to make an engine use one of the precise types <code>BigDecimal</code> and scaled <code>long</code> for all numeric computations.</dd>
+
+<dt><a href="computation_mode.htm">Computation Mode</a></dt><dd>Different spreadsheet applications calculate some expressions slightly differently. The computation mode tells <span class="caps">AFC</span> which particular spreadsheet application to emulate.</dd>
 
 <dt><a href="type_conversion.htm">Type Conversions</a></dt><dd>Your input and output interfaces should ideally not be tailored to <span class="caps">AFC</span>. AFC therefore can convert a variety of numeric input and output data types from/to its internal numeric type.</dd>
 
