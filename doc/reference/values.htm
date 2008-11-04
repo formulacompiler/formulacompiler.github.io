@@ -81,11 +81,11 @@ pageTracker._trackPageview();
 
 <h5 class="ref"><a name="pagetoc__1_1">Relative reference</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
-<tr><td class="xl-row">2</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="CellNames_2.htm">=[.C2]</a></td><td class="xl-num">1.0</td><td></td></tr>
+<tr><td class="xl-row">2</td><td class="xl-num">1.0</td><td class="xl-exp"><a href="CellNames_2.htm">=C2</a></td><td class="xl-num">1.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_2">Absolute references</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
-<tr><td class="xl-row">3</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="CellNames_3.htm">=[.<em>$</em>C<em>$</em>3]+[.<em>$</em>C3]+[.C<em>$</em>3]</a></td><td class="xl-num">2.0</td><td></td></tr>
+<tr><td class="xl-row">3</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="CellNames_3.htm">=((<em>$</em>C<em>$</em>3 + <em>$</em>C3) + C<em>$</em>3)</a></td><td class="xl-num">2.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_3">Simple name</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
@@ -93,26 +93,29 @@ pageTracker._trackPageview();
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_4">Two names for same cell</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
-<tr><td class="xl-row">5</td><td class="xl-num">8.0</td><td class="xl-exp"><a href="CellNames_5.htm">=_MY_CELL_+_MY_CELL</a></td><td class="xl-num">4.0</td><td></td></tr>
+<tr><td class="xl-row">5</td><td class="xl-num">8.0</td><td class="xl-exp"><a href="CellNames_5.htm">=(_MY_CELL_ + _MY_CELL)</a></td><td class="xl-num">4.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_5">Unconventional names</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></td></tr></thead><tbody>
 <tr><td class="xl-row">6</td><td class="xl-num">5.0</td><td class="xl-exp"><a href="CellNames_6.htm">=_MY.CELL.1X</a></td><td class="xl-num">5.0</td><td></td></tr>
 <tr><td class="xl-row">7</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="CellNames_7.htm">=MY23.43CELL</a></td><td class="xl-num">6.0</td><td></td></tr>
 <tr><td class="xl-row">8</td><td class="xl-num">7.0</td><td class="xl-exp"><a href="CellNames_8.htm">=_12345</a></td><td class="xl-num">7.0</td><td></td></tr>
-<tr><td class="xl-row">9</td><td class="xl-num">400.0</td><td class="xl-exp"><a href="CellNames_9.htm">=A1B+A1_+A1_1+A_1+A__1</a></td><td class="xl-num">100.0</td><td class="xl-num">90.0</td><td class="xl-num">80.0</td><td class="xl-num">70.0</td><td class="xl-num">60.0</td><td></td></tr>
+<tr><td class="xl-row">9</td><td class="xl-num">400.0</td><td class="xl-exp"><a href="CellNames_9.htm">=((((A1B + A1_) + A1_1) + A_1) + A__1)</a></td><td class="xl-num">100.0</td><td class="xl-num">90.0</td><td class="xl-num">80.0</td><td class="xl-num">70.0</td><td class="xl-num">60.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_6">Range with cell references</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
-<tr><td class="xl-row">11</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="CellNames_11.htm">=SUM([.C11:.E11])</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">11</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="CellNames_11.htm">=SUM( C11:E11 )</a></td><td class="xl-num">1.0</td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_7">Range name</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
-<tr><td class="xl-row">12</td><td class="xl-num">15.0</td><td class="xl-exp"><a href="CellNames_12.htm">=SUM(Range)</a></td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
+<tr><td class="xl-row">12</td><td class="xl-num">15.0</td><td class="xl-exp"><a href="CellNames_12.htm">=SUM( Range )</a></td><td class="xl-num">4.0</td><td class="xl-num">5.0</td><td class="xl-num">6.0</td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__1_8">References to other sheets</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
-<tr><td class="xl-row">14</td><td class="xl-num">30.0</td><td class="xl-exp"><a href="CellNames_14.htm">=[$SecondSheet.B1]+CellOnThirdSheet</a></td><td class="xl-num">10.0</td><td class="xl-num">20.0</td><td></td></tr>
+<tr><td class="xl-row">14</td><td class="xl-num">30.0</td><td class="xl-exp"><a href="CellNames_14.htm">=(SecondSheet!B1 + CellOnThirdSheet)</a></td><td class="xl-num">10.0</td><td class="xl-num">20.0</td><td></td></tr>
+<tr><td class="xl-row">15</td><td class="xl-num">30.0</td><td class="xl-exp"><a href="CellNames_15.htm">='Sheet with spaces'!B1</a></td><td class="xl-num">30.0</td><td></td></tr>
+<tr><td class="xl-row">16</td><td class="xl-num">40.0</td><td class="xl-exp"><a href="CellNames_16.htm">='Sheet-with-hyphens'!B1</a></td><td class="xl-num">40.0</td><td></td></tr>
+<tr><td class="xl-row">17</td><td class="xl-num">50.0</td><td class="xl-exp"><a href="CellNames_17.htm">='Sheet''with''quotes'!B1</a></td><td class="xl-num">50.0</td><td></td></tr>
 </tbody></table><p></p>
 
 	<h2><a name="pagetoc__2">Empty Cells</a></h2>
@@ -123,25 +126,25 @@ pageTracker._trackPageview();
 
 <h5 class="ref"><a name="pagetoc__2_1">Empty cells with +</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
-<tr><td class="xl-row">2</td><td class="xl-num">5.0</td><td class="xl-exp"><a href="EmptyCells_2.htm">=[.C2]<em>+</em>[.D2]</a></td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">2</td><td class="xl-num">5.0</td><td class="xl-exp"><a href="EmptyCells_2.htm">=(C2 <em>+</em> D2)</a></td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
 <tr><td class="xl-row">3</td><td class="xl-num">5.0</td><td class="xl-exp">...</td><td><td class="xl-num">5.0</td></td><td></td></tr>
 <tr><td class="xl-row">4</td><td class="xl-num">6.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td></td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_2">Empty cells with *</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
-<tr><td class="xl-row">6</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="EmptyCells_6.htm">=[.C6]<em>*</em>[.D6]</a></td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">6</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="EmptyCells_6.htm">=(C6 <em>*</em> D6)</a></td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
 <tr><td class="xl-row">7</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td><td class="xl-num">5.0</td></td><td></td></tr>
 <tr><td class="xl-row">8</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td></td><td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_3">Empty cells with PRODUCT return 0!</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
-<tr><td class="xl-row">10</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="EmptyCells_10.htm">=<em>PRODUCT</em>([.C10];[.D10])</a></td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
+<tr><td class="xl-row">10</td><td class="xl-num">6.0</td><td class="xl-exp"><a href="EmptyCells_10.htm">=<em>PRODUCT</em>( C10, D10 )</a></td><td class="xl-num">2.0</td><td class="xl-num">3.0</td><td></td></tr>
 <tr><td class="xl-row">11</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td><td class="xl-num">5.0</td></td><td><td class="ref-bad">Excel says: 5.0</td></td></tr>
 <tr><td class="xl-row">12</td><td class="xl-num">0.0</td><td class="xl-exp">...</td><td class="xl-num">6.0</td><td></td><td><td class="ref-bad">Excel says: 6.0</td></td></tr>
 </tbody></table><p></p>
 <h5 class="ref"><a name="pagetoc__2_4">Empty cells with SUMIF</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
-<tr><td class="xl-row">14</td><td class="xl-num">10.0</td><td class="xl-exp"><a href="EmptyCells_14.htm">=<em>SUMIF</em>([.C14:.E14];"=10")</a></td><td><td class="xl-num">10.0</td></td><td></td><td></td></tr>
+<tr><td class="xl-row">14</td><td class="xl-num">10.0</td><td class="xl-exp"><a href="EmptyCells_14.htm">=<em>SUMIF</em>( C14:E14, "=10" )</a></td><td><td class="xl-num">10.0</td></td><td></td><td></td></tr>
 </tbody></table><p></p>
 
 	<h2><a name="pagetoc__3">Formula Errors</a></h2>
@@ -150,35 +153,48 @@ pageTracker._trackPageview();
 
 
 
-<h5 class="ref"><a name="pagetoc__3_1">Errors</a></h5>
+<h5 class="ref"><a name="pagetoc__3_1">Explicitly entered errors</a></h5>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td></td></tr></thead><tbody>
+<tr><td class="xl-row">2</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp"><a href="ErrorCells_2.htm"><em>#N/A</em></a></td><td><td class="ref-bad">Excel says: #N/A</td></td></tr>
+<tr><td class="xl-row">3</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp"><a href="ErrorCells_3.htm">=<em>NA</em>()</a></td><td><td class="ref-bad">Excel says: #N/A</td></td></tr>
+<tr><td class="xl-row">4</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_4.htm"><em>#NUM!</em></a></td><td><td class="ref-bad">Excel says: #NUM!</td></td></tr>
+<tr><td class="xl-row">5</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_5.htm"><em>#VALUE!</em></a></td><td><td class="ref-bad">Excel says: #VALUE!</td></td></tr>
+<tr><td class="xl-row">6</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_6.htm"><em>#DIV/0!</em></a></td><td><td class="ref-bad">Excel says: #DIV/0!</td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__3_2">Errors as inputs</a></h5>
 <table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td></td></tr></thead><tbody>
-<tr><td class="xl-row">2</td><td>!<acronym title="NotAvailableException">NA</acronym></td><td class="xl-exp"><a href="ErrorCells_2.htm">=NA()</a></td><td><td class="ref-bad">Excel says: Err:32767</td></td></tr>
-<tr><td class="xl-row">3</td><td>!<acronym title="Not A Number (double)">NaN</acronym>/<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_3.htm">=SQRT([.C3])</a></td><td class="xl-num">-1.0</td><td><td class="ref-bad">Excel says: Err:502</td></td></tr>
-<tr><td class="xl-row">4</td><td>!<acronym title="Positive Infinity (double)">+Inf</acronym>/<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_4.htm">=POWER([.C4];[.D4])</a></td><td class="xl-num">0.0</td><td class="xl-num">-2.0</td><td><td class="ref-bad">Excel says: Err:503</td></td></tr>
-<tr><td class="xl-row">5</td><td>!<acronym title="Not A Number (double)">NaN</acronym>/<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_5.htm">=ACOS([.C5])</a></td><td class="xl-num">1.1</td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
-<tr><td class="xl-row">6</td><td>!<acronym title="Positive Infinity (double)">+Inf</acronym>/<acronym title="ArithmeticException">AE</acronym></td><td class="xl-exp"><a href="ErrorCells_6.htm">=[.C6]/[.D6]</a></td><td class="xl-num">1.0</td><td class="xl-num">0.0</td><td><td class="ref-bad">Excel says: Err:532</td></td></tr>
-<tr><td class="xl-row">7</td><td>!<acronym title="Not A Number (double)">NaN</acronym>/<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_7.htm">=SQRT(-1)</a></td><td><td class="ref-bad">Excel says: Err:502</td></td></tr>
-<tr><td class="xl-row">8</td><td>!<acronym title="Positive Infinity (double)">+Inf</acronym>/<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_8.htm">=POWER(0;-2)</a></td><td><td class="ref-bad">Excel says: Err:503</td></td></tr>
-<tr><td class="xl-row">9</td><td>!<acronym title="Not A Number (double)">NaN</acronym>/<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_9.htm">=ACOS(1.1)</a></td><td><td class="ref-bad">Excel says: Err:519</td></td></tr>
-<tr><td class="xl-row">10</td><td>!<acronym title="Positive Infinity (double)">+Inf</acronym>/<acronym title="ArithmeticException">AE</acronym></td><td class="xl-exp"><a href="ErrorCells_10.htm">=1/0</a></td><td><td class="ref-bad">Excel says: Err:532</td></td></tr>
+<tr><td class="xl-row">7</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp"><a href="ErrorCells_7.htm">=(C7 + D7)</a></td><td class="xl-num">1.0</td><td>#NUM!</td><td><td class="ref-bad">Excel says: #NUM!</td></td></tr>
+<tr><td class="xl-row">8</td><td>!<acronym title="FormulaException">FE</acronym></td><td class="xl-exp">...</td><td>#NUM!</td><td class="xl-num">2.0</td><td><td class="ref-bad">Excel says: #NUM!</td></td></tr>
 </tbody></table><p></p>
-<h5 class="ref"><a name="pagetoc__3_2">ISNA()</a></h5>
-<table class="xl ref"><thead><tr><td><td>A</td><td>B</td></td></tr></thead><tbody>
-<tr><td class="xl-row">12</td><td>true</td><td class="xl-exp"><a href="ErrorCells_12.htm">=<em>ISNA</em>(NA())</a></td><td></td></tr>
-<tr><td class="xl-row">13</td><td>false</td><td class="xl-exp"><a href="ErrorCells_13.htm">=<em>ISNA</em>(1)</a></td><td></td></tr>
-<tr><td class="xl-row">14</td><td>false</td><td class="xl-exp"><a href="ErrorCells_14.htm">=<em>ISNA</em>(1/0)</a></td><td></td></tr>
+<h5 class="ref"><a name="pagetoc__3_3">Actual division by zero</a></h5>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">9</td><td>!<acronym title="Positive Infinity (double)">+Inf</acronym>/<acronym title="ArithmeticException">AE</acronym></td><td class="xl-exp"><a href="ErrorCells_9.htm">=(1.0 / C9)</a></td><td class="xl-num">0.0</td><td><td class="ref-bad">Excel says: #DIV/0!</td></td></tr>
 </tbody></table><p></p>
-<h5 class="ref"><a name="pagetoc__3_3">ISERR()</a></h5>
-<table class="xl ref"><thead><tr><td><td>A</td><td>B</td></td></tr></thead><tbody>
-<tr><td class="xl-row">16</td><td>false</td><td class="xl-exp"><a href="ErrorCells_16.htm">=<em>ISERR</em>(NA())</a></td><td></td></tr>
-<tr><td class="xl-row">17</td><td>false</td><td class="xl-exp"><a href="ErrorCells_17.htm">=<em>ISERR</em>(1)</a></td><td></td></tr>
-<tr><td class="xl-row">18</td><td>true</td><td class="xl-exp"><a href="ErrorCells_18.htm">=<em>ISERR</em>(1/0)</a></td><td></td></tr>
+<h5 class="ref"><a name="pagetoc__3_4">ISNA()</a></h5>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">11</td><td>true</td><td class="xl-exp"><a href="ErrorCells_11.htm">=<em>ISNA</em>( C11 )</a></td><td>#N/A</td><td></td></tr>
+<tr><td class="xl-row">12</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">4711.0</td><td></td></tr>
+<tr><td class="xl-row">13</td><td>false</td><td class="xl-exp">...</td><td>#NUM!</td><td></td></tr>
 </tbody></table><p></p>
-<h5 class="ref"><a name="pagetoc__3_4">ISERROR()</a></h5>
-<table class="xl ref"><thead><tr><td><td>A</td><td>B</td></td></tr></thead><tbody>
-<tr><td class="xl-row">20</td><td>true</td><td class="xl-exp"><a href="ErrorCells_20.htm">=<em>ISERROR</em>(NA())</a></td><td></td></tr>
-<tr><td class="xl-row">21</td><td>false</td><td class="xl-exp"><a href="ErrorCells_21.htm">=<em>ISERROR</em>(1)</a></td><td></td></tr>
-<tr><td class="xl-row">22</td><td>true</td><td class="xl-exp"><a href="ErrorCells_22.htm">=<em>ISERROR</em>(1/0)</a></td><td></td></tr>
+<h5 class="ref"><a name="pagetoc__3_5">ISERR()</a></h5>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">15</td><td>false</td><td class="xl-exp"><a href="ErrorCells_15.htm">=<em>ISERR</em>( C15 )</a></td><td>#N/A</td><td></td></tr>
+<tr><td class="xl-row">16</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">4711.0</td><td></td></tr>
+<tr><td class="xl-row">17</td><td>true</td><td class="xl-exp">...</td><td>#NUM!</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__3_6">ISERROR()</a></h5>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">19</td><td>true</td><td class="xl-exp"><a href="ErrorCells_19.htm">=<em>ISERROR</em>( C19 )</a></td><td>#N/A</td><td></td></tr>
+<tr><td class="xl-row">20</td><td>false</td><td class="xl-exp">...</td><td class="xl-num">4711.0</td><td></td></tr>
+<tr><td class="xl-row">21</td><td>true</td><td class="xl-exp">...</td><td>#NUM!</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__3_7">COUNTA() is OK</a></h5>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
+<tr><td class="xl-row">23</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="ErrorCells_23.htm">=<em>COUNTA</em>( C23:E23 )</a></td><td>#N/A</td><td class="xl-num">4711.0</td><td>#NUM</td><td></td></tr>
+</tbody></table><p></p>
+<h5 class="ref"><a name="pagetoc__3_8">COUNT() is currently broken</a></h5>
+<table class="xl ref"><thead><tr><td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></td></tr></thead><tbody>
+<tr><td class="xl-row">24</td><td class="xl-num">3.0</td><td class="xl-exp"><a href="ErrorCells_24.htm">=<em>COUNT</em>( C24:E24 )</a></td><td>#N/A</td><td class="xl-num">4712.0</td><td>#NUM</td><td><td class="ref-bad">Excel says: 1.0</td></td></tr>
 </tbody></table><p></p>
 
 	<h2><a name="pagetoc__4">Numeric Precision</a></h2>
@@ -198,7 +214,7 @@ pageTracker._trackPageview();
 <div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
 <div class="nested">
 <div class="area"><span class="selected">Cells And Values In AFC</span></div>
-<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Cell References</a><ul class="toc toc4"><li><a href="#pagetoc__1_1">Relative reference</a></li><li><a href="#pagetoc__1_2">Absolute references</a></li><li><a href="#pagetoc__1_3">Simple name</a></li><li><a href="#pagetoc__1_4">Two names for same cell</a></li><li><a href="#pagetoc__1_5">Unconventional names</a></li><li><a href="#pagetoc__1_6">Range with cell references</a></li><li><a href="#pagetoc__1_7">Range name</a></li><li><a href="#pagetoc__1_8">References to other sheets</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">Empty Cells</a><ul class="toc toc4"><li><a href="#pagetoc__2_1">Empty cells with +</a></li><li><a href="#pagetoc__2_2">Empty cells with *</a></li><li><a href="#pagetoc__2_3">Empty cells with PRODUCT return 0!</a></li><li><a href="#pagetoc__2_4">Empty cells with SUMIF</a></li></ul></li><li class="withitems"><a href="#pagetoc__3">Formula Errors</a><ul class="toc toc4"><li><a href="#pagetoc__3_1">Errors</a></li><li><a href="#pagetoc__3_2">ISNA()</a></li><li><a href="#pagetoc__3_3">ISERR()</a></li><li><a href="#pagetoc__3_4">ISERROR()</a></li></ul></li><li><a href="#pagetoc__4">Numeric Precision</a></li></ul></div></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li class="withitems"><a href="#pagetoc__1">Cell References</a><ul class="toc toc4"><li><a href="#pagetoc__1_1">Relative reference</a></li><li><a href="#pagetoc__1_2">Absolute references</a></li><li><a href="#pagetoc__1_3">Simple name</a></li><li><a href="#pagetoc__1_4">Two names for same cell</a></li><li><a href="#pagetoc__1_5">Unconventional names</a></li><li><a href="#pagetoc__1_6">Range with cell references</a></li><li><a href="#pagetoc__1_7">Range name</a></li><li><a href="#pagetoc__1_8">References to other sheets</a></li></ul></li><li class="withitems"><a href="#pagetoc__2">Empty Cells</a><ul class="toc toc4"><li><a href="#pagetoc__2_1">Empty cells with +</a></li><li><a href="#pagetoc__2_2">Empty cells with *</a></li><li><a href="#pagetoc__2_3">Empty cells with PRODUCT return 0!</a></li><li><a href="#pagetoc__2_4">Empty cells with SUMIF</a></li></ul></li><li class="withitems"><a href="#pagetoc__3">Formula Errors</a><ul class="toc toc4"><li><a href="#pagetoc__3_1">Explicitly entered errors</a></li><li><a href="#pagetoc__3_2">Errors as inputs</a></li><li><a href="#pagetoc__3_3">Actual division by zero</a></li><li><a href="#pagetoc__3_4">ISNA()</a></li><li><a href="#pagetoc__3_5">ISERR()</a></li><li><a href="#pagetoc__3_6">ISERROR()</a></li><li><a href="#pagetoc__3_7">COUNTA() is OK</a></li><li><a href="#pagetoc__3_8">COUNT() is currently broken</a></li></ul></li><li><a href="#pagetoc__4">Numeric Precision</a></li></ul></div></div>
 </div>
 <div class="area"><a href="../../doc/javadoc/index.html">API Reference</a></div>
 <div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>

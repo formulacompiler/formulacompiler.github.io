@@ -3,7 +3,7 @@
 
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<title>Decompiled Code For SQRT(-1) - Abacus Formula Compiler for Java</title>
+	<title>Decompiled Code For (C7 + D7) - Abacus Formula Compiler for Java</title>
     <style media="screen" type="text/css">
 		
     </style>
@@ -55,19 +55,18 @@ pageTracker._trackPageview();
 
 			<div class="content" id="content">
 
-<h1>Decompiled Code For <code>SQRT(-1)</code></h1>
+<h1>Decompiled Code For <code>(C7 + D7)</code></h1>
 
 	<p>The expression</p>
 
 
-<pre><code>=SQRT(-1)</code></pre>
+<pre><code>=(C7 + D7)</code></pre>
 	<p>is compiled to the following class(es):</p>
 
 
 <pre class="java"><span class="j-key">package </span>org.formulacompiler.gen;
 <span class="j-key">import </span>org.formulacompiler.runtime.Computation;
 <span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
-<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeDouble_v2;
 <span class="j-key">import </span>org.formulacompiler.tests.reference.base.Inputs;
 <span class="j-key">import </span>org.formulacompiler.tests.reference.base.Outputs;
 
@@ -82,11 +81,19 @@ pageTracker._trackPageview();
     <span class="j-sym">}
 
     </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
-        </span><span class="j-key">return </span>RuntimeDouble_v2.fun_SQRT<span class="j-sym">(</span>-<span class="j-num">1.0</span><span class="j-sym">)</span>;
+        </span><span class="j-key">return </span>get$1<span class="j-sym">() </span>+ get$2<span class="j-sym">()</span>;
     <span class="j-sym">}
 
     </span><span class="j-key">public final </span><span class="j-typ">double </span>dbl<span class="j-sym">() {
         </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">0</span><span class="j-sym">)</span>;
+    <span class="j-sym">}
+
+    </span><span class="j-key">final </span><span class="j-typ">double </span>get$2<span class="j-sym">() {
+        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">1</span><span class="j-sym">)</span>;
     <span class="j-sym">}
 }</span></pre>
 
@@ -102,7 +109,7 @@ pageTracker._trackPageview();
 <div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
 <div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
 <div class="nested">
-<div class="area"><span class="selected">Decompiled Code For SQRT(-1)</span></div>
+<div class="area"><span class="selected">Decompiled Code For (C7 + D7)</span></div>
 </div>
 <div class="area"><a href="../../doc/javadoc/index.html">API Reference</a></div>
 <div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>

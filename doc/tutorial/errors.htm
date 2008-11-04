@@ -96,12 +96,12 @@ pageTracker._trackPageview();
 	<tbody>
 		<tr>
 			<td class="xl-row">1</td>
-			<td class="xl-num">859865<br/><span class="xl-exp">=1.0+INFO(B1)</span><br/><span class="xl-name">(Info)</span></td>
+			<td>#N/A<br/><span class="xl-exp">=1.0+INFO(B1)</span><br/><span class="xl-name">(Info)</span></td>
 			<td>memused</td>
 		</tr>
 		<tr>
 			<td class="xl-row">2</td>
-			<td class="xl-num">1719730<br/><span class="xl-exp">=A1*2.0</span><br/><span class="xl-name">(ReferencesInfo)</span></td>
+			<td>#N/A<br/><span class="xl-exp">=A1*2.0</span><br/><span class="xl-name">(ReferencesInfo)</span></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -111,8 +111,8 @@ pageTracker._trackPageview();
 		</tr>
 		<tr>
 			<td class="xl-row">4</td>
-			<td class="xl-num">2<br/><span class="xl-exp">=LEN(LENB(B4))</span><br/><span class="xl-name">(Unsupported)</span></td>
-			<td>hello world</td>
+			<td>Text<br/><span class="xl-exp">=ASC(B4)</span><br/><span class="xl-name">(Unsupported)</span></td>
+			<td>Text</td>
 		</tr>
 	</tbody>
 </table>
@@ -129,12 +129,17 @@ pageTracker._trackPageview();
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedExpression e</span><span class="j-sym">) {
   </span><span class="j-key">if </span><span class="j-sym">(</span>getSpreadsheetExtension<span class="j-sym">()</span>.equals<span class="j-sym">( </span><span class="j-str">&#34;.xls&#34; </span><span class="j-sym">)) {
     </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
-        </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;</span></span>;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34;</span></span>;
+    assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+  </span><span class="j-key">else if </span><span class="j-sym">(</span>getSpreadsheetExtension<span class="j-sym">()</span>.equals<span class="j-sym">( </span><span class="j-str">&#34;.xlsx&#34; </span><span class="j-sym">)) {
+    </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34;</span></span>;
     assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
   <span class="j-sym">}
   </span><span class="j-key">else </span><span class="j-sym">{
     </span>String err = <span class="j-hl"><span class="j-str">&#34;Unsupported function INFO encountered in expression 1+INFO( &lt;&lt;? [.B1]); error location indicated by &lt;&lt;?.&#34;
-        </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;</span></span>;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34;</span></span>;
     assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
   <span class="j-sym">}
 }</span></pre>
@@ -153,14 +158,20 @@ pageTracker._trackPageview();
 </span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
   </span><span class="j-key">if </span><span class="j-sym">(</span>getSpreadsheetExtension<span class="j-sym">()</span>.equals<span class="j-sym">( </span><span class="j-str">&#34;.xls&#34; </span><span class="j-sym">)) {
     </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1.0+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
-        </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
-        </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34;
+        </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell Sheet1!A2.&#34;</span></span>;
+    assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
+  <span class="j-sym">}
+  </span><span class="j-key">else if </span><span class="j-sym">(</span>getSpreadsheetExtension<span class="j-sym">()</span>.equals<span class="j-sym">( </span><span class="j-str">&#34;.xlsx&#34; </span><span class="j-sym">)) {
+    </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1+INFO( &lt;&lt;? B1); error location indicated by &lt;&lt;?.&#34;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34;
+        </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell Sheet1!A2.&#34;</span></span>;
     assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
   <span class="j-sym">}
   </span><span class="j-key">else </span><span class="j-sym">{
     </span>String err = <span class="j-str">&#34;Unsupported function INFO encountered in expression 1+INFO( &lt;&lt;? [.B1]); error location indicated by &lt;&lt;?.&#34;
-        </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
-        </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
+        </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34;
+        </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell Sheet1!A2.&#34;</span></span>;
     assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
   <span class="j-sym">}
 }</span></pre>
@@ -183,10 +194,10 @@ MyComputation computation = factory.newComputation<span class="j-sym">( </span><
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
-  </span>String err = <span class="j-hl"><span class="j-str">&#34;Function LENB is not supported for double engines.&#34;</span></span>
-      + <span class="j-hl"><span class="j-str">&#34;\nIn expression LEN(  &gt;&gt; LENB( B4 ) &lt;&lt;  ); error location indicated by &gt;&gt;..&lt;&lt;.&#34;</span></span>
-      + <span class="j-str">&#34;\nCell containing expression is A4.&#34;
-      </span>+ <span class="j-str">&#34;\nReferenced by cell A4.&#34;</span>;
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Function ASC is not supported for double engines.&#34;</span></span>
+      + <span class="j-hl"><span class="j-str">&#34;\nIn expression  &gt;&gt; ASC( Sheet1!B4 ) &lt;&lt; ; error location indicated by &gt;&gt;..&lt;&lt;.&#34;</span></span>
+      + <span class="j-str">&#34;\nCell containing expression is Sheet1!A4.&#34;
+      </span>+ <span class="j-str">&#34;\nReferenced by cell Sheet1!A4.&#34;</span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -251,8 +262,8 @@ MyComputation computation = factory.newComputation<span class="j-sym">( </span><
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedExpression e</span><span class="j-sym">) {
   </span>String err = <span class="j-hl"><span class="j-str">&#34;The last argument to MATCH, the match type, must be constant, but is MyInputs.value().&#34;
-      </span>+ <span class="j-str">&#34;\nIn expression (1.0 + MATCH( B1, C1:E1,  &gt;&gt; F1 &lt;&lt;  )); error location indicated by &gt;&gt;..&lt;&lt;.&#34;
-      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34; </span>+ <span class="j-str">&#34;\nReferenced by cell A1.&#34;</span></span>;
+      </span>+ <span class="j-str">&#34;\nIn expression (1.0 + MATCH( Sheet1!B1, Sheet1!C1:E1,  &gt;&gt; Sheet1!F1 &lt;&lt;  )); error location indicated by &gt;&gt;..&lt;&lt;.&#34;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34; </span>+ <span class="j-str">&#34;\nReferenced by cell Sheet1!A1.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -267,8 +278,8 @@ bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;Typ
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span>CompilerException.UnsupportedExpression e<span class="j-sym">) {
   </span>String err = <span class="j-str">&#34;The last argument to MATCH, the match type, must be constant, but is MyInputs.value().&#34;
-      </span>+ <span class="j-str">&#34;\nIn expression (1.0 + MATCH( B1, C1:E1,  &gt;&gt; F1 &lt;&lt;  )); error location indicated by &gt;&gt;..&lt;&lt;.&#34;
-      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34; </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell A2.&#34;</span></span>;
+      </span>+ <span class="j-str">&#34;\nIn expression (1.0 + MATCH( Sheet1!B1, Sheet1!C1:E1,  &gt;&gt; Sheet1!F1 &lt;&lt;  )); error location indicated by &gt;&gt;..&lt;&lt;.&#34;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34; </span>+ <span class="j-hl"><span class="j-str">&#34;\nReferenced by cell Sheet1!A2.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -330,8 +341,8 @@ bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;str
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedDataType e</span><span class="j-sym">) {
   </span>String err = <span class="j-hl"><span class="j-str">&#34;Cannot convert from a string to a int.&#34;
       </span>+ <span class="j-str">&#34;\nCaused by return type of input 'public abstract int org.formulacompiler.tutorials.ErrorUnsupportedConversionToOutput$MyComputation.result()'.&#34;
-      </span>+ <span class="j-str">&#34;\nCell containing expression is A1.&#34;
-      </span>+ <span class="j-str">&#34;\nReferenced by cell A1.&#34;</span></span>;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!A1.&#34;
+      </span>+ <span class="j-str">&#34;\nReferenced by cell Sheet1!A1.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -363,7 +374,7 @@ bindInputNamed<span class="j-sym">( </span>builder, <span class="j-str">&#34;num
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">CompilerException.UnsupportedDataType e</span><span class="j-sym">) {
   </span>String err = <span class="j-hl"><span class="j-str">&#34;Cannot convert from a java.lang.String to a double.&#34;
       </span>+ <span class="j-str">&#34;\nCaused by return type of input 'public java.lang.String org.formulacompiler.tutorials.ErrorUnsupportedConversionFromInput$MyInputs.value()'.&#34;
-      </span>+ <span class="j-str">&#34;\nCell containing expression is B2.&#34; </span>+ <span class="j-str">&#34;\nReferenced by cell B2.&#34;</span></span>;
+      </span>+ <span class="j-str">&#34;\nCell containing expression is Sheet1!B2.&#34; </span>+ <span class="j-str">&#34;\nReferenced by cell Sheet1!B2.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -514,8 +525,8 @@ assertEquals<span class="j-sym">( </span><span class="j-num">4 </span>+ <span cl
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
-  </span>String err = <span class="j-hl"><span class="j-str">&#34;C2 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
-      </span>+ <span class="j-str">&#34;Referenced by cell B10.&#34;</span></span>;
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Sheet1!C2 does not fully cover the height of its parent section Sheet1!B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell Sheet1!B10.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -530,8 +541,8 @@ assertEquals<span class="j-sym">( </span><span class="j-num">4 </span>+ <span cl
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
-  </span>String err = <span class="j-hl"><span class="j-str">&#34;C2:C3 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
-      </span>+ <span class="j-str">&#34;Referenced by cell B11.&#34;</span></span>;
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Sheet1!C2:C3 does not fully cover the height of its parent section Sheet1!B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell Sheet1!B11.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -542,8 +553,8 @@ assertEquals<span class="j-sym">( </span><span class="j-num">4 </span>+ <span cl
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
-  </span>String err = <span class="j-hl"><span class="j-str">&#34;C3:C4 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
-      </span>+ <span class="j-str">&#34;Referenced by cell B12.&#34;</span></span>;
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Sheet1!C3:C4 does not fully cover the height of its parent section Sheet1!B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell Sheet1!B12.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -554,8 +565,8 @@ assertEquals<span class="j-sym">( </span><span class="j-num">4 </span>+ <span cl
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
-  </span>String err = <span class="j-hl"><span class="j-str">&#34;C3 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
-      </span>+ <span class="j-str">&#34;Referenced by cell B13.&#34;</span></span>;
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Sheet1!C3 does not fully cover the height of its parent section Sheet1!B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell Sheet1!B13.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
@@ -570,8 +581,8 @@ assertEquals<span class="j-sym">( </span><span class="j-num">4 </span>+ <span cl
   fail<span class="j-sym">()</span>;
 <span class="j-sym">}
 </span><span class="j-key">catch </span><span class="j-sym">(</span><span class="j-hl">SpreadsheetException.SectionExtentNotCovered e</span><span class="j-sym">) {
-  </span>String err = <span class="j-hl"><span class="j-str">&#34;C3 does not fully cover the height of its parent section B2:C4 (which iterates section()).\n&#34;
-      </span>+ <span class="j-str">&#34;Referenced by cell B14.&#34;</span></span>;
+  </span>String err = <span class="j-hl"><span class="j-str">&#34;Sheet1!C3 does not fully cover the height of its parent section Sheet1!B2:C4 (which iterates section()).\n&#34;
+      </span>+ <span class="j-str">&#34;Referenced by cell Sheet1!B14.&#34;</span></span>;
   assertEquals<span class="j-sym">( </span>err, e.getMessage<span class="j-sym">() )</span>;
 <span class="j-sym">}</span></pre>
 
