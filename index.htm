@@ -3,7 +3,7 @@
 
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<title>Abacus Formula Compiler for Java</title>
+	<title>Integrate Calculations Defined In Spreadsheets Into Java Apps - Abacus Formula Compiler for Java</title>
     <style media="screen" type="text/css">
 		
     </style>
@@ -55,42 +55,80 @@ pageTracker._trackPageview();
 
 			<div class="content" id="content">
 
-<div class="blurb">
-	<p><strong>Your users want to customize formulas. They know Excel or OpenOffice.</strong></p>
+<h1>Integrate Calculations Defined In Spreadsheets Into Java Apps</h1>
+
+	<p><em>Let your users model the calculation of key values in spreadsheets, but integrate the computations natively into your Java applications. Users get familiar and versatile modelling. You get little effort, high performance, no deployment hassles, and <span class="caps">GPL</span> or commercial licensing.</em></p>
 
 
-<pre class="java"><span class="j-cmt">// Compile price finding factory and strategy implementation from spreadsheet:
-</span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>PATH, <span class="j-hl"><span class="j-str">&#34;CustomPriceFormula.xls&#34;</span></span> <span class="j-sym">) )</span>;
-builder.setFactoryClass<span class="j-sym">( </span>PriceFinderFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
-builder.bindAllByName<span class="j-sym">()</span>;
-Engine engine = builder.<span class="j-hl">compile</span><span class="j-sym">()</span>;
-PriceFinderFactory factory = <span class="j-sym">(</span>PriceFinderFactory<span class="j-sym">) </span>engine.getComputationFactory<span class="j-sym">()</span>;
-
-<span class="j-cmt">// Use it to compute a line item price:
-</span>LineItem item = getCurrentLineItem<span class="j-sym">()</span>;
-PriceFinder priceFinder = factory.<span class="j-hl">newInstance</span><span class="j-sym">( </span>item <span class="j-sym">)</span>;
-BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-sym">()</span>;</pre>
-	<p><strong>Compile parametrized spreadsheets directly to bytecode.</strong><ul>
-	<li>No need to have Excel, OpenOffice, or a <span class="caps">JDK</span> installed.</li>
-	<li>Native speed, thread safe execution.</li>
-	<li>Bind directly to your computation strategy interfaces.</li>
-	<li>Using double, or BigDecimal for financial applications.</li>
-	<li>Available under the <span class="caps">GPL</span> and commercially (<a href="download/license.htm">details</a>).</li>
-</ul>
-</p>
+	<p><strong>Calculation of certain key values often varies</strong> from user to user, and over time. For example prices and shipping rates in order entry, asset valuations in portfolio management, or insurance premiums in sales force apps.</p>
 
 
+
+<div style="float: right; margin-left: 2em; margin-bottom: 2ex">
+<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td>Customer Rebate</td>
+			<td class="xl-num">3%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td>Article Rebate</td>
+			<td class="xl-num">6%</td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td>Customer Category</td>
+			<td class="xl-num">5</td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td>Rebate</td>
+			<td class="xl-num">6%<br/><span class="xl-exp">=IF(B3=1.0,SUM(B1:B2),MAX(B1:B2))</span></td>
+		</tr>
+	</tbody>
+</table>
+
+(Only the best category gets combined rebates.)
 </div>
-	<h1>Abacus Formula Compiler for Java</h1>
 
-	<p><a href="download/index.htm">Download</a> it now!</p>
-
-
-	<p><a href="quick.htm">Quick start</a> your first compiled spreadsheet. Has you up and running in just a few minutes.</p>
+	<p>Don&#8217;t add endless configuration options to your code for this. <strong>Use the power and familiarity of spreadsheets</strong> instead. Users model their calculations in <a href="http://office.microsoft.com/">Microsoft Excel</a> or <a href="http://www.openoffice.org/">OpenOffice Calc</a>.</p>
 
 
-	<p><a href="doc/index.htm">Learn more</a> about the goals, the design, the <span class="caps">API</span>, and the supported functions.</p>
+	<p>Using <span class="caps">AFC</span> your application <strong>compiles</strong> the spreadsheet files into Java <strong>classes that compute output values</strong>, then uses them with actual input values within its business logic.</p>
+
+
+
+<div style="float: none">
+<img title="Overview" src="flow.png" alt="Overview" />
+</div>
+
+	<p>The classes are <strong>plain, thread-safe, and high-performance</strong> so you can recompute the valuations of thousands of assets or the wages of thousands of employees. And for <strong>financial applications</strong> you can compile for <strong><code>BigDecimal</code></strong> instead of <code>double</code>.</p>
+
+
+	<p><span class="caps">AFC</span> does not need Excel, OpenOffice, or a <span class="caps">JDK</span> to be installed, so you can <strong>deploy on any platform</strong> supported by Java. It is <a href="download/index.htm">available</a> under the <strong>GPL and a commercial license</strong> (<a href="download/license.htm">details</a>).</p>
+
+
+<div style="clear: both"></div>
+	<h3>What now?</h3>
+<ul>
+	<li><a href="download/index.htm">Download</a> Abacus Formula Compiler for Java.</li>
+	<li><a href="quick.htm">Try a full example</a> with our quick start guide.</li>
+	<li><a href="doc/index.htm">Learn more</a> about the goals, the design, the <span class="caps">API</span>, and the supported functions.</li>
+</ul>
 
 			</div>
 			<div class="chrome" id="inner_bottom_chrome">
@@ -101,13 +139,13 @@ BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-
 		<div id="news">
 			<h2>News</h2>
 
+<h3><a href="download/releasenotes.htm">Release 1.3</a></h3>
+<p>adds logging of intermediate cell values.
+<br /><span class="when">July 24, 2009</span></p>
+
 <h3><a href="download/releasenotes.htm">Release 1.2</a></h3>
 <p>adds support for Microsoft Office Open XML (MS Excel 2007) spreadsheets.
 <br /><span class="when">November 4, 2008</span></p>
-
-<h3><a href="download/releasenotes.htm">Release 1.1</a></h3>
-<p>adds better support for OpenOffice Calc spreadsheets.
-<br /><span class="when">July 4, 2008</span></p>
 
 
 		</div>
@@ -119,7 +157,7 @@ BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-
 		</div>
 		<div class="chrome" id="left_bottom_chrome">
 			<div id="copyright">
-				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+				Copyright &copy; 2005-2009 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
 			</div>
 		</div>
 	

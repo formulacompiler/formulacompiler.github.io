@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-Computation.Config (Abacus Formula Compiler API (Version 1.2.0))
+Computation.Config (Abacus Formula Compiler API (Version 1.3.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.runtime.Computation.Config class">
@@ -13,7 +13,7 @@ Computation.Config (Abacus Formula Compiler API (Version 1.2.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="Computation.Config (Abacus Formula Compiler API (Version 1.2.0))";
+    parent.document.title="Computation.Config (Abacus Formula Compiler API (Version 1.3.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -132,6 +132,14 @@ Provides configuration information for an execution environment for computations
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event">CellComputationListener</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/Computation.Config.html#cellComputationListener">cellComputationListener</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This listener is invoked when a cell value is computed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -315,6 +323,19 @@ public <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/nio/charset/Charset.h
 <DL>
 <DD>Charset, which is used in CHAR and CODE functions. If left <code>null</code>, the default
  charset for the locale will be used.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="cellComputationListener"><!-- --></A><H3>
+cellComputationListener</H3>
+<PRE>
+public <A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event">CellComputationListener</A> <B>cellComputationListener</B></PRE>
+<DL>
+<DD>This listener is invoked when a cell value is computed.
+ The engine should be compiled with debug support.
 <P>
 <DL>
 </DL>

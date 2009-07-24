@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-EngineBuilder (Abacus Formula Compiler API (Version 1.2.0))
+EngineBuilder (Abacus Formula Compiler API (Version 1.3.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.spreadsheet.EngineBuilder interface">
@@ -13,7 +13,7 @@ EngineBuilder (Abacus Formula Compiler API (Version 1.2.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="EngineBuilder (Abacus Formula Compiler API (Version 1.2.0))";
+    parent.document.title="EngineBuilder (Abacus Formula Compiler API (Version 1.3.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -61,7 +61,7 @@ pageTracker._trackPageview();
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.Factory.html" title="interface in org.formulacompiler.spreadsheet"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?org/formulacompiler/spreadsheet/EngineBuilder.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -248,11 +248,28 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#getComputationListenerEnabled()">getComputationListenerEnabled</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Controls whether AFC should compile the computation with support for
+ <A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/formulacompiler/runtime/ComputationMode.html" title="enum in org.formulacompiler.runtime">ComputationMode</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#getComputationMode()">getComputationMode</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the computation mode to be used for compiled engines.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet">ConstantExpressionOptimizationListener</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#getConstantExpressionOptimizationListener()">getConstantExpressionOptimizationListener</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a listener that receives notifications about events during compilation process, if any.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -373,10 +390,27 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setComputationListenerEnabled(boolean)">setComputationListenerEnabled</A></B>(boolean&nbsp;_enabled)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Controls whether AFC should compile the computation with support for
+ <A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setComputationMode(org.formulacompiler.runtime.ComputationMode)">setComputationMode</A></B>(<A HREF="../../../org/formulacompiler/runtime/ComputationMode.html" title="enum in org.formulacompiler.runtime">ComputationMode</A>&nbsp;_computationMode)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tells AFC to calculate expressions as for example Excel or OpenOffice does.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setConstantExpressionOptimizationListener(org.formulacompiler.spreadsheet.ConstantExpressionOptimizationListener)">setConstantExpressionOptimizationListener</A></B>(<A HREF="../../../org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet">ConstantExpressionOptimizationListener</A>&nbsp;_listener)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets a listener that receives notifications about events during compilation process.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1081,6 +1115,66 @@ void <B>setCompileToReadableCode</B>(boolean&nbsp;_value)</PRE>
 </DL>
 <HR>
 
+<A NAME="getComputationListenerEnabled()"><!-- --></A><H3>
+getComputationListenerEnabled</H3>
+<PRE>
+boolean <B>getComputationListenerEnabled</B>()</PRE>
+<DL>
+<DD>Controls whether AFC should compile the computation with support for
+ <A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD><code>true</code> if <A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A> will be supported.
+         The default is <code>false</code>.<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>, 
+<A HREF="../../../org/formulacompiler/runtime/Computation.Config.html#cellComputationListener"><CODE>Computation.Config.cellComputationListener</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setComputationListenerEnabled(boolean)"><!-- --></A><H3>
+setComputationListenerEnabled</H3>
+<PRE>
+void <B>setComputationListenerEnabled</B>(boolean&nbsp;_enabled)</PRE>
+<DL>
+<DD>Controls whether AFC should compile the computation with support for
+ <A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>_enabled</CODE> - if <code>true</code> then <A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>
+                 will be supported. The default is <code>false</code>.<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>, 
+<A HREF="../../../org/formulacompiler/runtime/Computation.Config.html#cellComputationListener"><CODE>Computation.Config.cellComputationListener</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getConstantExpressionOptimizationListener()"><!-- --></A><H3>
+getConstantExpressionOptimizationListener</H3>
+<PRE>
+<A HREF="../../../org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet">ConstantExpressionOptimizationListener</A> <B>getConstantExpressionOptimizationListener</B>()</PRE>
+<DL>
+<DD>Returns a listener that receives notifications about events during compilation process, if any.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>compilation events listewner.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setConstantExpressionOptimizationListener(org.formulacompiler.spreadsheet.ConstantExpressionOptimizationListener)"><!-- --></A><H3>
+setConstantExpressionOptimizationListener</H3>
+<PRE>
+void <B>setConstantExpressionOptimizationListener</B>(<A HREF="../../../org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet">ConstantExpressionOptimizationListener</A>&nbsp;_listener)</PRE>
+<DL>
+<DD>Sets a listener that receives notifications about events during compilation process.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>_listener</CODE> - compilation events listewner.</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="compile()"><!-- --></A><H3>
 compile</H3>
 <PRE>
@@ -1141,7 +1235,7 @@ compile</H3>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.Factory.html" title="interface in org.formulacompiler.spreadsheet"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?org/formulacompiler/spreadsheet/EngineBuilder.html" target="_top"><B>FRAMES</B></A>  &nbsp;

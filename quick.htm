@@ -70,7 +70,15 @@ pageTracker._trackPageview();
 
 	<h2><a name="pagetoc__1">The Problem</a></h2>
 
-	<p>We will flesh out the blurb from the home page:</p>
+	<p>This is a fictional example about finding the total price for a line item with</p>
+
+<ul>
+	<li>a base article price,</li>
+	<li>a count of items, and</li>
+	<li>the customer category (for automatic rebates).</li>
+</ul>
+
+	<p>We will flesh out the following bit of code:</p>
 
 	<pre class="java"><span class="j-cmt">// Compile price finding factory and strategy implementation from spreadsheet:
 </span>EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
@@ -85,14 +93,6 @@ PriceFinderFactory factory = <span class="j-sym">(</span>PriceFinderFactory<span
 PriceFinder priceFinder = factory.<span class="j-hl">newInstance</span><span class="j-sym">( </span>item <span class="j-sym">)</span>;
 BigDecimal price = priceFinder.<span class="j-hl">getPrice</span><span class="j-sym">()</span>;</pre>
 
-
-	<p>This is a fictional example about finding the total price for a line item with</p>
-
-<ul>
-	<li>a base article price, </li>
-	<li>a count of items, and</li>
-	<li>the customer category (for automatic rebates).</li>
-</ul>
 
 	<h2><a name="pagetoc__2">The Spreadsheet</a></h2>
 
@@ -547,7 +547,7 @@ System.out.println<span class="j-sym">( </span><span class="j-str">&#34;The resu
 		</div>
 		<div class="chrome" id="left_bottom_chrome">
 			<div id="copyright">
-				Copyright &copy; 2005-2008 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+				Copyright &copy; 2005-2009 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
 			</div>
 		</div>
 	

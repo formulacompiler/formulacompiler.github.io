@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-Index (Abacus Formula Compiler API (Version 1.2.0))
+Index (Abacus Formula Compiler API (Version 1.3.0))
 </TITLE>
 
 
@@ -12,7 +12,7 @@ Index (Abacus Formula Compiler API (Version 1.2.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="Index (Abacus Formula Compiler API (Version 1.2.0))";
+    parent.document.title="Index (Abacus Formula Compiler API (Version 1.3.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -169,7 +169,16 @@ Constructor for class org.formulacompiler.decompiler.<A HREF="./org/formulacompi
 <DT><A HREF="./org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler"><B>CallFrame</B></A> - Interface in <A HREF="./org/formulacompiler/compiler/package-summary.html">org.formulacompiler.compiler</A><DD>Represents a call to a method including the argument values for all of the method's parameters.<DT><A HREF="./org/formulacompiler/compiler/CallFrame.Factory.html" title="interface in org.formulacompiler.compiler"><B>CallFrame.Factory</B></A> - Interface in <A HREF="./org/formulacompiler/compiler/package-summary.html">org.formulacompiler.compiler</A><DD>Constructs instances of <A HREF="./org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler"><CODE>CallFrame</CODE></A>.<DT><A HREF="./org/formulacompiler/runtime/New.html#caseInsensitiveMap()"><B>caseInsensitiveMap()</B></A> - 
 Static method in class org.formulacompiler.runtime.<A HREF="./org/formulacompiler/runtime/New.html" title="class in org.formulacompiler.runtime">New</A>
 <DD>&nbsp;
-<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.html#cellNamesLeftUnbound()"><B>cellNamesLeftUnbound()</B></A> - 
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/CellAddress.html" title="interface in org.formulacompiler.runtime.spreadsheet"><B>CellAddress</B></A> - Interface in <A HREF="./org/formulacompiler/runtime/spreadsheet/package-summary.html">org.formulacompiler.runtime.spreadsheet</A><DD>This interface provides information about location of a cell in a spreadsheet.<DT><A HREF="./org/formulacompiler/runtime/event/CellComputationListener.html#cellCalculated(org.formulacompiler.runtime.event.CellComputationEvent)"><B>cellCalculated(CellComputationEvent)</B></A> - 
+Method in interface org.formulacompiler.runtime.event.<A HREF="./org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event">CellComputationListener</A>
+<DD>Is invoked after a cell value has been computed.
+<DT><A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html" title="class in org.formulacompiler.runtime.event"><B>CellComputationEvent</B></A> - Class in <A HREF="./org/formulacompiler/runtime/event/package-summary.html">org.formulacompiler.runtime.event</A><DD>This event is emitted after a cell has been computed.<DT><A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html#CellComputationEvent(java.lang.Object, java.lang.Object, boolean, boolean)"><B>CellComputationEvent(Object, Object, boolean, boolean)</B></A> - 
+Constructor for class org.formulacompiler.runtime.event.<A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html" title="class in org.formulacompiler.runtime.event">CellComputationEvent</A>
+<DD>Creates a new event.
+<DT><A HREF="./org/formulacompiler/runtime/Computation.Config.html#cellComputationListener"><B>cellComputationListener</B></A> - 
+Variable in class org.formulacompiler.runtime.<A HREF="./org/formulacompiler/runtime/Computation.Config.html" title="class in org.formulacompiler.runtime">Computation.Config</A>
+<DD>This listener is invoked when a cell value is computed.
+<DT><A HREF="./org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><B>CellComputationListener</B></A> - Interface in <A HREF="./org/formulacompiler/runtime/event/package-summary.html">org.formulacompiler.runtime.event</A><DD>Allows to receive notifications about computation events.<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/CellInfo.html" title="interface in org.formulacompiler.runtime.spreadsheet"><B>CellInfo</B></A> - Interface in <A HREF="./org/formulacompiler/runtime/spreadsheet/package-summary.html">org.formulacompiler.runtime.spreadsheet</A><DD>Information about a cell.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.html#cellNamesLeftUnbound()"><B>cellNamesLeftUnbound()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetByNameBinder</A>
 <DD>Returns the cell name definition this by-name binder has not bound to an input or output
  method.
@@ -314,9 +323,18 @@ Constructor for exception org.formulacompiler.runtime.<A HREF="./org/formulacomp
 <DT><A HREF="./org/formulacompiler/runtime/ComputationException.html#ComputationException(java.lang.Throwable)"><B>ComputationException(Throwable)</B></A> - 
 Constructor for exception org.formulacompiler.runtime.<A HREF="./org/formulacompiler/runtime/ComputationException.html" title="class in org.formulacompiler.runtime">ComputationException</A>
 <DD>&nbsp;
-<DT><A HREF="./org/formulacompiler/runtime/ComputationFactory.html" title="interface in org.formulacompiler.runtime"><B>ComputationFactory</B></A> - Interface in <A HREF="./org/formulacompiler/runtime/package-summary.html">org.formulacompiler.runtime</A><DD>Interface which is implemented by all computation factories generated by AFC.<DT><A HREF="./org/formulacompiler/runtime/ComputationMode.html" title="enum in org.formulacompiler.runtime"><B>ComputationMode</B></A> - Enum in <A HREF="./org/formulacompiler/runtime/package-summary.html">org.formulacompiler.runtime</A><DD>This enumeration is used to tell the compiler which spreadsheet application behavior to adhere to.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html#computationMode"><B>computationMode</B></A> - 
+<DT><A HREF="./org/formulacompiler/runtime/ComputationFactory.html" title="interface in org.formulacompiler.runtime"><B>ComputationFactory</B></A> - Interface in <A HREF="./org/formulacompiler/runtime/package-summary.html">org.formulacompiler.runtime</A><DD>Interface which is implemented by all computation factories generated by AFC.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html#computationListenerEnabled"><B>computationListenerEnabled</B></A> - 
+Variable in class org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetToEngineCompiler.Config</A>
+<DD>Allows logging intermediate cell values.
+<DT><A HREF="./org/formulacompiler/runtime/ComputationMode.html" title="enum in org.formulacompiler.runtime"><B>ComputationMode</B></A> - Enum in <A HREF="./org/formulacompiler/runtime/package-summary.html">org.formulacompiler.runtime</A><DD>This enumeration is used to tell the compiler which spreadsheet application behavior to adhere to.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html#computationMode"><B>computationMode</B></A> - 
 Variable in class org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetToEngineCompiler.Config</A>
 <DD>Tells AFC to calculate expressions as for example Excel or OpenOffice does.
+<DT><A HREF="./org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html#constantCellCalculated(org.formulacompiler.runtime.spreadsheet.SpreadsheetCellComputationEvent)"><B>constantCellCalculated(SpreadsheetCellComputationEvent)</B></A> - 
+Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet">ConstantExpressionOptimizationListener</A>
+<DD>Is invoked when the compiler replaced an expression which always evaluates to constant by its value.
+<DT><A HREF="./org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet"><B>ConstantExpressionOptimizationListener</B></A> - Interface in <A HREF="./org/formulacompiler/spreadsheet/package-summary.html">org.formulacompiler.spreadsheet</A><DD>Allows to receive notifications about events during compilation process.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html#constantExpressionOptimizationListener"><B>constantExpressionOptimizationListener</B></A> - 
+Variable in class org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetToEngineCompiler.Config</A>
+<DD>Allows to receive notifications about events during compilation process.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Range.html#contains(org.formulacompiler.spreadsheet.Spreadsheet.Range)"><B>contains(Spreadsheet.Range)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>
 <DD>Tests whether the other range is completely contained within this one.
@@ -508,6 +526,9 @@ Method in interface org.formulacompiler.compiler.<A HREF="./org/formulacompiler/
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBinder.html#getBinding()"><B>getBinding()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBinder.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBinder</A>
 <DD>Finalizes and returns the binding built by this class.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/RangeAddress.html#getBottomRight()"><B>getBottomRight()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/RangeAddress.html" title="interface in org.formulacompiler.runtime.spreadsheet">RangeAddress</A>
+<DD>Returns the bottom right corner of the range (on the rightmost sheet of the range).
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Range.html#getBottomRight()"><B>getBottomRight()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>
 <DD>Returns the bottom right corner of the range (on the rightmost sheet of the range).
@@ -524,9 +545,18 @@ Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompil
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.html#getCellA1(java.lang.String)"><B>getCellA1(String)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A>
 <DD>Get a cell by its A1-style name.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/CellInfo.html#getCellAddress()"><B>getCellAddress()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/CellInfo.html" title="interface in org.formulacompiler.runtime.spreadsheet">CellInfo</A>
+<DD>Returns cell index.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html#getCellInfo()"><B>getCellInfo()</B></A> - 
+Method in class org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html" title="class in org.formulacompiler.runtime.spreadsheet">SpreadsheetCellComputationEvent</A>
+<DD>Returns information about the cell.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Row.html#getCells()"><B>getCells()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Row.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Row</A>
 <DD>Returns the cells defined in the row.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/CellAddress.html#getColumnIndex()"><B>getColumnIndex()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/CellAddress.html" title="interface in org.formulacompiler.runtime.spreadsheet">CellAddress</A>
+<DD>Returns cell's column.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Cell.html#getColumnIndex()"><B>getColumnIndex()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A>
 <DD>Returns the cell index (0 based) within the row.
@@ -545,9 +575,16 @@ Method in interface org.formulacompiler.runtime.<A HREF="./org/formulacompiler/r
 Method in interface org.formulacompiler.runtime.<A HREF="./org/formulacompiler/runtime/Engine.html" title="interface in org.formulacompiler.runtime">Engine</A>
 <DD>Returns a factory with explicit computation environment configuration for computations
  implemented by this engine.
+<DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#getComputationListenerEnabled()"><B>getComputationListenerEnabled()</B></A> - 
+Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
+<DD>Controls whether AFC should compile the computation with support for
+ <A HREF="./org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>.
 <DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#getComputationMode()"><B>getComputationMode()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
 <DD>Returns the computation mode to be used for compiled engines.
+<DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#getConstantExpressionOptimizationListener()"><B>getConstantExpressionOptimizationListener()</B></A> - 
+Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
+<DD>Returns a listener that receives notifications about events during compilation process, if any.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Cell.html#getConstantValue()"><B>getConstantValue()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A>
 <DD>Returns the constant value of the cell, as defined in the spreadsheet.
@@ -574,6 +611,9 @@ Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompil
 <DT><A HREF="./org/formulacompiler/compiler/CallFrame.html#getHead()"><B>getHead()</B></A> - 
 Method in interface org.formulacompiler.compiler.<A HREF="./org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A>
 <DD>The first call in the chain of calls.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SectionInfo.html#getIndex()"><B>getIndex()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/SectionInfo.html" title="interface in org.formulacompiler.runtime.spreadsheet">SectionInfo</A>
+<DD>Returns row or column index.
 <DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#getInputClass()"><B>getInputClass()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
 <DD>Returns the application-specific type defining the methods which input cells can call.
@@ -611,6 +651,12 @@ Method in enum org.formulacompiler.compiler.<A HREF="./org/formulacompiler/compi
 <DT><A HREF="./org/formulacompiler/compiler/Operator.html#getName()"><B>getName()</B></A> - 
 Method in enum org.formulacompiler.compiler.<A HREF="./org/formulacompiler/compiler/Operator.html" title="enum in org.formulacompiler.compiler">Operator</A>
 <DD>&nbsp;
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/CellInfo.html#getName()"><B>getName()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/CellInfo.html" title="interface in org.formulacompiler.runtime.spreadsheet">CellInfo</A>
+<DD>Returns cell defined name, if any.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SectionInfo.html#getName()"><B>getName()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/SectionInfo.html" title="interface in org.formulacompiler.runtime.spreadsheet">SectionInfo</A>
+<DD>Returns range defined name, if any.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Sheet.html#getName()"><B>getName()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Sheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Sheet</A>
 <DD>Returns the name.
@@ -651,6 +697,9 @@ Method in interface org.formulacompiler.compiler.<A HREF="./org/formulacompiler/
 <DT><A HREF="./org/formulacompiler/runtime/FormulaCompilerException.html#getPureMessage()"><B>getPureMessage()</B></A> - 
 Method in exception org.formulacompiler.runtime.<A HREF="./org/formulacompiler/runtime/FormulaCompilerException.html" title="class in org.formulacompiler.runtime">FormulaCompilerException</A>
 <DD>Returns the pure, unchanged message.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SectionInfo.html#getRange()"><B>getRange()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/SectionInfo.html" title="interface in org.formulacompiler.runtime.spreadsheet">SectionInfo</A>
+<DD>Returns range.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.html#getRange(java.lang.String)"><B>getRange(String)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A>
 <DD>Get a range by its name.
@@ -670,18 +719,27 @@ Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompil
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Cell.html#getRow()"><B>getRow()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A>
 <DD>Returns the row this cell is part of.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/CellAddress.html#getRowIndex()"><B>getRowIndex()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/CellAddress.html" title="interface in org.formulacompiler.runtime.spreadsheet">CellAddress</A>
+<DD>Returns cell's row.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Row.html#getRowIndex()"><B>getRowIndex()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Row.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Row</A>
 <DD>Returns the row index (0 based) within the sheet.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Sheet.html#getRows()"><B>getRows()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Sheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Sheet</A>
 <DD>Returns the rows defined in the worksheet.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html#getSectionInfo()"><B>getSectionInfo()</B></A> - 
+Method in class org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html" title="class in org.formulacompiler.runtime.spreadsheet">SpreadsheetCellComputationEvent</A>
+<DD>Returns information about the section.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Row.html#getSheet()"><B>getSheet()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Row.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Row</A>
 <DD>Returns the sheet this row is part of.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Sheet.html#getSheetIndex()"><B>getSheetIndex()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Sheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Sheet</A>
 <DD>Returns the sheet index (0 based) within the spreadsheet.
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/CellAddress.html#getSheetName()"><B>getSheetName()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/CellAddress.html" title="interface in org.formulacompiler.runtime.spreadsheet">CellAddress</A>
+<DD>Returns cell's sheet name.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.html#getSheets()"><B>getSheets()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A>
 <DD>Returns the worksheets defined in the spreadsheet.
@@ -709,9 +767,15 @@ Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompil
 <DT><A HREF="./org/formulacompiler/compiler/Operator.html#getSymbol()"><B>getSymbol()</B></A> - 
 Method in enum org.formulacompiler.compiler.<A HREF="./org/formulacompiler/compiler/Operator.html" title="enum in org.formulacompiler.compiler">Operator</A>
 <DD>&nbsp;
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/RangeAddress.html#getTopLeft()"><B>getTopLeft()</B></A> - 
+Method in interface org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/RangeAddress.html" title="interface in org.formulacompiler.runtime.spreadsheet">RangeAddress</A>
+<DD>Returns the top left corner of the range (on the leftmost sheet of the range).
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Range.html#getTopLeft()"><B>getTopLeft()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>
 <DD>Returns the top left corner of the range (on the leftmost sheet of the range).
+<DT><A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html#getValue()"><B>getValue()</B></A> - 
+Method in class org.formulacompiler.runtime.event.<A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html" title="class in org.formulacompiler.runtime.event">CellComputationEvent</A>
+<DD>Returns the computed cell value.
 <DT><A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Cell.html#getValue()"><B>getValue()</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A>
 <DD>Returns the value of the cell, as saved in the spreadsheet.
@@ -744,9 +808,15 @@ Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompil
 <DT><A HREF="./org/formulacompiler/compiler/Operator.html#inverse()"><B>inverse()</B></A> - 
 Method in enum org.formulacompiler.compiler.<A HREF="./org/formulacompiler/compiler/Operator.html" title="enum in org.formulacompiler.compiler">Operator</A>
 <DD>&nbsp;
+<DT><A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html#isInput()"><B>isInput()</B></A> - 
+Method in class org.formulacompiler.runtime.event.<A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html" title="class in org.formulacompiler.runtime.event">CellComputationEvent</A>
+<DD>Reports if a cell is bound to an input method.
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBinder.html#isInputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell)"><B>isInputCell(Spreadsheet.Cell)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBinder.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBinder</A>
 <DD>Checks if a given cell already is bound to an input method.
+<DT><A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html#isOutput()"><B>isOutput()</B></A> - 
+Method in class org.formulacompiler.runtime.event.<A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html" title="class in org.formulacompiler.runtime.event">CellComputationEvent</A>
+<DD>Reports if a cell is bound to an output method.
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBinder.html#isOutputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell)"><B>isOutputCell(Spreadsheet.Cell)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBinder.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBinder</A>
 <DD>Checks if a given cell already is bound to an output method.
@@ -970,7 +1040,7 @@ Static variable in class org.formulacompiler.runtime.<A HREF="./org/formulacompi
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBuilder.html#op(org.formulacompiler.compiler.Operator, org.formulacompiler.spreadsheet.SpreadsheetBuilder.ExprNode...)"><B>op(Operator, SpreadsheetBuilder.ExprNode...)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBuilder.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBuilder</A>
 <DD>Returns an expression tree node which applies an operator to the values of its argument nodes.
-<DT><A HREF="./org/formulacompiler/compiler/Operator.html" title="enum in org.formulacompiler.compiler"><B>Operator</B></A> - Enum in <A HREF="./org/formulacompiler/compiler/package-summary.html">org.formulacompiler.compiler</A><DD>Lists all the expression operators supported by AFC.<DT><A HREF="./org/formulacompiler/compiler/package-summary.html"><B>org.formulacompiler.compiler</B></A> - package org.formulacompiler.compiler<DD>Contains the public compile-time API of AFC's core functional model compiler.<DT><A HREF="./org/formulacompiler/decompiler/package-summary.html"><B>org.formulacompiler.decompiler</B></A> - package org.formulacompiler.decompiler<DD>Contains the public bytecode decompiler API of AFC.<DT><A HREF="./org/formulacompiler/runtime/package-summary.html"><B>org.formulacompiler.runtime</B></A> - package org.formulacompiler.runtime<DD>Contains the public run-time API of AFC.<DT><A HREF="./org/formulacompiler/spreadsheet/package-summary.html"><B>org.formulacompiler.spreadsheet</B></A> - package org.formulacompiler.spreadsheet<DD>Contains the public compile-time API of AFC's spreadsheet compiler, which extends the core functional
+<DT><A HREF="./org/formulacompiler/compiler/Operator.html" title="enum in org.formulacompiler.compiler"><B>Operator</B></A> - Enum in <A HREF="./org/formulacompiler/compiler/package-summary.html">org.formulacompiler.compiler</A><DD>Lists all the expression operators supported by AFC.<DT><A HREF="./org/formulacompiler/compiler/package-summary.html"><B>org.formulacompiler.compiler</B></A> - package org.formulacompiler.compiler<DD>Contains the public compile-time API of AFC's core functional model compiler.<DT><A HREF="./org/formulacompiler/decompiler/package-summary.html"><B>org.formulacompiler.decompiler</B></A> - package org.formulacompiler.decompiler<DD>Contains the public bytecode decompiler API of AFC.<DT><A HREF="./org/formulacompiler/runtime/package-summary.html"><B>org.formulacompiler.runtime</B></A> - package org.formulacompiler.runtime<DD>Contains the public run-time API of AFC.<DT><A HREF="./org/formulacompiler/runtime/event/package-summary.html"><B>org.formulacompiler.runtime.event</B></A> - package org.formulacompiler.runtime.event<DD>Contains interfaces and classes for dealing with events.<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/package-summary.html"><B>org.formulacompiler.runtime.spreadsheet</B></A> - package org.formulacompiler.runtime.spreadsheet<DD>Contains spreadsheet information needed at run-time.<DT><A HREF="./org/formulacompiler/spreadsheet/package-summary.html"><B>org.formulacompiler.spreadsheet</B></A> - package org.formulacompiler.spreadsheet<DD>Contains the public compile-time API of AFC's spreadsheet compiler, which extends the core functional
                         model compiler.<DT><A HREF="./org/formulacompiler/spreadsheet/Orientation.html" title="enum in org.formulacompiler.spreadsheet"><B>Orientation</B></A> - Enum in <A HREF="./org/formulacompiler/spreadsheet/package-summary.html">org.formulacompiler.spreadsheet</A><DD>Lists the two possible options for the variable extend of a section.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBinder.Config.html#outputClass"><B>outputClass</B></A> - 
 Variable in class org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBinder.Config.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetBinder.Config</A>
 <DD>The class of the output type whose methods you want to bind to output elements; must not be
@@ -1000,7 +1070,7 @@ Variable in class org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBuilder.html#range(org.formulacompiler.spreadsheet.SpreadsheetBuilder.CellRef, org.formulacompiler.spreadsheet.SpreadsheetBuilder.CellRef)"><B>range(SpreadsheetBuilder.CellRef, SpreadsheetBuilder.CellRef)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBuilder.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBuilder</A>
 <DD>Returns a range defined by two diagonally opposed corner cells.
-<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBuilder.html#ref(org.formulacompiler.spreadsheet.SpreadsheetBuilder.CellRef)"><B>ref(SpreadsheetBuilder.CellRef)</B></A> - 
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/RangeAddress.html" title="interface in org.formulacompiler.runtime.spreadsheet"><B>RangeAddress</B></A> - Interface in <A HREF="./org/formulacompiler/runtime/spreadsheet/package-summary.html">org.formulacompiler.runtime.spreadsheet</A><DD>This interface provides information about location of a range in a spreadsheet.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBuilder.html#ref(org.formulacompiler.spreadsheet.SpreadsheetBuilder.CellRef)"><B>ref(SpreadsheetBuilder.CellRef)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBuilder.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBuilder</A>
 <DD>Returns an expression tree node which evaluates to the value of another cell, defined earlier.
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetBuilder.html#ref(org.formulacompiler.spreadsheet.SpreadsheetBuilder.RangeRef)"><B>ref(SpreadsheetBuilder.RangeRef)</B></A> - 
@@ -1057,7 +1127,7 @@ Method in interface org.formulacompiler.compiler.<A HREF="./org/formulacompiler/
 <DT><A HREF="./org/formulacompiler/runtime/ScaledLongSupport.html#scale(long, int)"><B>scale(long, int)</B></A> - 
 Static method in class org.formulacompiler.runtime.<A HREF="./org/formulacompiler/runtime/ScaledLongSupport.html" title="class in org.formulacompiler.runtime">ScaledLongSupport</A>
 <DD>Returns a scaled version of an unscaled long value.
-<DT><A HREF="./org/formulacompiler/runtime/ScaledLong.html" title="annotation in org.formulacompiler.runtime"><B>ScaledLong</B></A> - Annotation Type in <A HREF="./org/formulacompiler/runtime/package-summary.html">org.formulacompiler.runtime</A><DD>Indicates to AFC that a <code>long</code> value is scaled.<DT><A HREF="./org/formulacompiler/runtime/ScaledLongSupport.html" title="class in org.formulacompiler.runtime"><B>ScaledLongSupport</B></A> - Class in <A HREF="./org/formulacompiler/runtime/package-summary.html">org.formulacompiler.runtime</A><DD>Support class for handling scaled longs.<DT><A HREF="./org/formulacompiler/runtime/New.html#set()"><B>set()</B></A> - 
+<DT><A HREF="./org/formulacompiler/runtime/ScaledLong.html" title="annotation in org.formulacompiler.runtime"><B>ScaledLong</B></A> - Annotation Type in <A HREF="./org/formulacompiler/runtime/package-summary.html">org.formulacompiler.runtime</A><DD>Indicates to AFC that a <code>long</code> value is scaled.<DT><A HREF="./org/formulacompiler/runtime/ScaledLongSupport.html" title="class in org.formulacompiler.runtime"><B>ScaledLongSupport</B></A> - Class in <A HREF="./org/formulacompiler/runtime/package-summary.html">org.formulacompiler.runtime</A><DD>Support class for handling scaled longs.<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SectionInfo.html" title="interface in org.formulacompiler.runtime.spreadsheet"><B>SectionInfo</B></A> - Interface in <A HREF="./org/formulacompiler/runtime/spreadsheet/package-summary.html">org.formulacompiler.runtime.spreadsheet</A><DD>Information about a section.<DT><A HREF="./org/formulacompiler/runtime/New.html#set()"><B>set()</B></A> - 
 Static method in class org.formulacompiler.runtime.<A HREF="./org/formulacompiler/runtime/New.html" title="class in org.formulacompiler.runtime">New</A>
 <DD>&nbsp;
 <DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#setCompileTimeConfig(org.formulacompiler.runtime.Computation.Config)"><B>setCompileTimeConfig(Computation.Config)</B></A> - 
@@ -1067,9 +1137,16 @@ Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompil
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
 <DD>Controls whether AFC should attempt to compile more readable code (when decompiled), possibly
  at the expense of engine size and performance.
+<DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#setComputationListenerEnabled(boolean)"><B>setComputationListenerEnabled(boolean)</B></A> - 
+Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
+<DD>Controls whether AFC should compile the computation with support for
+ <A HREF="./org/formulacompiler/runtime/event/CellComputationListener.html" title="interface in org.formulacompiler.runtime.event"><CODE>CellComputationListener</CODE></A>.
 <DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#setComputationMode(org.formulacompiler.runtime.ComputationMode)"><B>setComputationMode(ComputationMode)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
 <DD>Tells AFC to calculate expressions as for example Excel or OpenOffice does.
+<DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#setConstantExpressionOptimizationListener(org.formulacompiler.spreadsheet.ConstantExpressionOptimizationListener)"><B>setConstantExpressionOptimizationListener(ConstantExpressionOptimizationListener)</B></A> - 
+Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
+<DD>Sets a listener that receives notifications about events during compilation process.
 <DT><A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html#setFactoryClass(java.lang.Class)"><B>setFactoryClass(Class)</B></A> - 
 Method in interface org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/EngineBuilder.html" title="interface in org.formulacompiler.spreadsheet">EngineBuilder</A>
 <DD>Sets either an application-specific class from which to descend the generated computation
@@ -1140,7 +1217,10 @@ Constructor for class org.formulacompiler.spreadsheet.<A HREF="./org/formulacomp
 Constructor for class org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.Config.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetByNameBinder.Config</A>
 <DD>&nbsp;
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.Factory.html" title="interface in org.formulacompiler.spreadsheet"><B>SpreadsheetByNameBinder.Factory</B></A> - Interface in <A HREF="./org/formulacompiler/spreadsheet/package-summary.html">org.formulacompiler.spreadsheet</A><DD>Factory interface for
- <A HREF="./org/formulacompiler/runtime/ImplementationLocator.html#getInstance(java.lang.Class)"><CODE>ImplementationLocator.getInstance(Class)</CODE></A>.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetCompiler.html" title="class in org.formulacompiler.spreadsheet"><B>SpreadsheetCompiler</B></A> - Class in <A HREF="./org/formulacompiler/spreadsheet/package-summary.html">org.formulacompiler.spreadsheet</A><DD>Static class defining factory methods for the various elements of AFC.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetCompiler.html#SpreadsheetCompiler()"><B>SpreadsheetCompiler()</B></A> - 
+ <A HREF="./org/formulacompiler/runtime/ImplementationLocator.html#getInstance(java.lang.Class)"><CODE>ImplementationLocator.getInstance(Class)</CODE></A>.<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html" title="class in org.formulacompiler.runtime.spreadsheet"><B>SpreadsheetCellComputationEvent</B></A> - Class in <A HREF="./org/formulacompiler/runtime/spreadsheet/package-summary.html">org.formulacompiler.runtime.spreadsheet</A><DD>This event is emitted after a cell has been computed.<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html#SpreadsheetCellComputationEvent(org.formulacompiler.runtime.spreadsheet.CellInfo, org.formulacompiler.runtime.spreadsheet.SectionInfo, java.lang.Object, boolean, boolean)"><B>SpreadsheetCellComputationEvent(CellInfo, SectionInfo, Object, boolean, boolean)</B></A> - 
+Constructor for class org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html" title="class in org.formulacompiler.runtime.spreadsheet">SpreadsheetCellComputationEvent</A>
+<DD>Creates a new event.
+<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetCompiler.html" title="class in org.formulacompiler.spreadsheet"><B>SpreadsheetCompiler</B></A> - Class in <A HREF="./org/formulacompiler/spreadsheet/package-summary.html">org.formulacompiler.spreadsheet</A><DD>Static class defining factory methods for the various elements of AFC.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetCompiler.html#SpreadsheetCompiler()"><B>SpreadsheetCompiler()</B></A> - 
 Constructor for class org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetCompiler.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetCompiler</A>
 <DD>&nbsp;
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet"><B>SpreadsheetException</B></A> - Exception in <A HREF="./org/formulacompiler/spreadsheet/package-summary.html">org.formulacompiler.spreadsheet</A><DD>Base class for all spreadsheet-related errors thrown by AFC.<DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetException.html#SpreadsheetException(java.lang.String)"><B>SpreadsheetException(String)</B></A> - 
@@ -1239,6 +1319,12 @@ Method in interface org.formulacompiler.compiler.<A HREF="./org/formulacompiler/
 <DD>Describes this object in a string meant for human consumption.
 <DT><A HREF="./org/formulacompiler/runtime/Computation.Config.html#toString()"><B>toString()</B></A> - 
 Method in class org.formulacompiler.runtime.<A HREF="./org/formulacompiler/runtime/Computation.Config.html" title="class in org.formulacompiler.runtime">Computation.Config</A>
+<DD>&nbsp;
+<DT><A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html#toString()"><B>toString()</B></A> - 
+Method in class org.formulacompiler.runtime.event.<A HREF="./org/formulacompiler/runtime/event/CellComputationEvent.html" title="class in org.formulacompiler.runtime.event">CellComputationEvent</A>
+<DD>&nbsp;
+<DT><A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html#toString()"><B>toString()</B></A> - 
+Method in class org.formulacompiler.runtime.spreadsheet.<A HREF="./org/formulacompiler/runtime/spreadsheet/SpreadsheetCellComputationEvent.html" title="class in org.formulacompiler.runtime.spreadsheet">SpreadsheetCellComputationEvent</A>
 <DD>&nbsp;
 <DT><A HREF="./org/formulacompiler/spreadsheet/SpreadsheetSaver.Config.html#typeExtension"><B>typeExtension</B></A> - 
 Variable in class org.formulacompiler.spreadsheet.<A HREF="./org/formulacompiler/spreadsheet/SpreadsheetSaver.Config.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetSaver.Config</A>

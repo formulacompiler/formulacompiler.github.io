@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<title>Matrix Functions In AFC - Abacus Formula Compiler for Java</title>
+    <style media="screen" type="text/css">
+		
+    </style>
+	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1112076-2");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+</head>
+
+<body>
+	<div id="outer">
+		<div id="left_background">
+		</div>
+		<div id="top_background">
+		</div>
+		
+		<div class="chrome" id="top_chrome">
+			<div id="logo_band">
+				<img src="../../site_img/header_bar.gif" alt="AFC - Abacus Formula Compiler for Java" />
+			</div>
+			<div id="area_band">
+				<div id="download_band">
+					<a href="../../download/index.htm">
+						<img src="../../site_img/download_button.png" />
+					</a>
+				</div>
+				<table height="100%"><tr height="100%"><td style="vertical-align:middle">
+						
+					<a href="../../index.htm">Home</a> | 
+						
+					<a href="../../quick.htm">Quick Start</a> | <span class="selected"><a href="../../doc/index.htm">Documentation</a></span> | <a href="../../download/index.htm">Download</a> | <a href="../../support/index.htm">Support</a> | <a href="../../contribute/index.htm">Contribute</a>
+				</td></tr></table>
+			</div>
+		</div>
+
+		<div id="inner">
+			<div class="chrome" id="inner_top_chrome">
+				<div id="crumbs_band">
+					<a href="../../index.htm">Home</a> &gt; <a href="../index.htm">Documentation</a> &gt; <a href="index.htm">Reference</a> &gt; 
+				</div>
+			</div>
+
+			<div class="content" id="content">
+
+<h1>Matrix Functions In <span class="caps">AFC</span></h1>
+
+
+	<h3><a name="pagetoc__1">Test Sheet</a></h3>
+
+	<p>The following test cases reference this sheet:</p>
+
+	<table class="xl">
+	<thead>
+		<tr>
+			<td/>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="xl-row">1</td>
+			<td><b>1x1</b></td>
+			<td class="xl-num">5<br/><span class="xl-name">(M1x1)</span></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">2</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">3</td>
+			<td><b>2x2</b></td>
+			<td class="xl-num xl-r1">2</td>
+			<td class="xl-num xl-r1">9</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">4</td>
+			<td></td>
+			<td class="xl-num xl-r1">3</td>
+			<td class="xl-num xl-r1">6</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">5</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td class="xl-row">6</td>
+			<td><b>3x3</b></td>
+			<td class="xl-num xl-r2">4</td>
+			<td class="xl-num xl-r2">-3</td>
+			<td class="xl-num xl-r2">6</td>
+		</tr>
+		<tr>
+			<td class="xl-row">7</td>
+			<td></td>
+			<td class="xl-num xl-r2">2</td>
+			<td class="xl-num xl-r2">5</td>
+			<td class="xl-num xl-r2">-1</td>
+		</tr>
+		<tr>
+			<td class="xl-row">8</td>
+			<td></td>
+			<td class="xl-num xl-r2">7</td>
+			<td class="xl-num xl-r2">3</td>
+			<td class="xl-num xl-r2">9</td>
+		</tr>
+	</tbody>
+</table>
+<br/><span class="xl-r1">B3:C4</span> <span class="xl-name">(M2x2)</span><br/><span class="xl-r2">B6:D8</span> <span class="xl-name">(M3x3)</span>
+
+
+	<h3><a name="pagetoc__2">Matrix Functions</a></h3>
+
+	<p>The supported matrix functions are shown by example below:</p>
+
+
+
+<h5 class="ref"><a name="pagetoc__2_1">MDETERM</a></h5>
+<table class="xl ref"><thead><tr><td><td>B</td><td>C</td></td></tr></thead><tbody>
+<tr><td class="xl-row">11</td><td class="xl-num">5.0</td><td class="xl-exp"><a href="Matrices_11.htm">=<em>MDETERM</em>( B1 )</a></td><td></td></tr>
+<tr><td class="xl-row">12</td><td class="xl-num">-15.0</td><td class="xl-exp"><a href="Matrices_12.htm">=<em>MDETERM</em>( B3:C4 )</a></td><td></td></tr>
+<tr><td class="xl-row">13</td><td class="xl-num">93.0</td><td class="xl-exp"><a href="Matrices_13.htm">=<em>MDETERM</em>( B6:D8 )</a></td><td></td></tr>
+</tbody></table><p></p>
+
+			</div>
+			<div class="chrome" id="inner_bottom_chrome">
+			</div>
+		</div>
+		
+		
+		
+		<div class="chrome" id="left_top_chrome">
+			<div id="area_toc"><div class="area"><a href="../../doc/design.htm">Design Overview</a></div>
+<div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
+<div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
+<div class="nested">
+<div class="area"><span class="selected">Matrix Functions In AFC</span></div>
+<div id="page_toc"><div class="toc"><ul class="toc toc1"><li><a href="#pagetoc__1">Test Sheet</a></li><li class="withitems"><a href="#pagetoc__2">Matrix Functions</a><ul class="toc toc4"><li><a href="#pagetoc__2_1">MDETERM</a></li></ul></li></ul></div></div>
+</div>
+<div class="area"><a href="../../doc/javadoc/index.html">API Reference</a></div>
+<div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>
+<div class="area"><a href="../../doc/impl/index.htm">Implementation Details</a></div>
+<div class="area"><a href="../../doc/limitations.htm">Limitations</a></div></div>
+		</div>
+		</div>
+		<div class="chrome" id="left_bottom_chrome">
+			<div id="copyright">
+				Copyright &copy; 2005-2009 by <a href="http://www.abacus.ch/">Abacus Research AG</a>.  All rights reserved.
+			</div>
+		</div>
+	
+</body>
+</html>

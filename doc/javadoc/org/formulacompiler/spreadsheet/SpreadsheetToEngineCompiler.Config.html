@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-SpreadsheetToEngineCompiler.Config (Abacus Formula Compiler API (Version 1.2.0))
+SpreadsheetToEngineCompiler.Config (Abacus Formula Compiler API (Version 1.3.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.spreadsheet.SpreadsheetToEngineCompiler.Config class">
@@ -13,7 +13,7 @@ SpreadsheetToEngineCompiler.Config (Abacus Formula Compiler API (Version 1.2.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="SpreadsheetToEngineCompiler.Config (Abacus Formula Compiler API (Version 1.2.0))";
+    parent.document.title="SpreadsheetToEngineCompiler.Config (Abacus Formula Compiler API (Version 1.3.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -149,11 +149,27 @@ Configuration data for new instances of
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html#computationListenerEnabled">computationListenerEnabled</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Allows logging intermediate cell values.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/formulacompiler/runtime/ComputationMode.html" title="enum in org.formulacompiler.runtime">ComputationMode</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html#computationMode">computationMode</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tells AFC to calculate expressions as for example Excel or OpenOffice does.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet">ConstantExpressionOptimizationListener</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.Config.html#constantExpressionOptimizationListener">constantExpressionOptimizationListener</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Allows to receive notifications about events during compilation process.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -356,6 +372,30 @@ public boolean <B>compileToReadableCode</B></PRE>
 <DL>
 <DD>Controls whether AFC should attempt to compile more readable code (when decompiled),
  possibly at the expense of engine size and performance.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="computationListenerEnabled"><!-- --></A><H3>
+computationListenerEnabled</H3>
+<PRE>
+public boolean <B>computationListenerEnabled</B></PRE>
+<DL>
+<DD>Allows logging intermediate cell values.
+<P>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="constantExpressionOptimizationListener"><!-- --></A><H3>
+constantExpressionOptimizationListener</H3>
+<PRE>
+public <A HREF="../../../org/formulacompiler/spreadsheet/ConstantExpressionOptimizationListener.html" title="interface in org.formulacompiler.spreadsheet">ConstantExpressionOptimizationListener</A> <B>constantExpressionOptimizationListener</B></PRE>
+<DL>
+<DD>Allows to receive notifications about events during compilation process.
 <P>
 <DL>
 </DL>

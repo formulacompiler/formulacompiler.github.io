@@ -1,4 +1,6 @@
 org.formulacompiler.compiler
 org.formulacompiler.decompiler
 org.formulacompiler.runtime
+org.formulacompiler.runtime.event
+org.formulacompiler.runtime.spreadsheet
 org.formulacompiler.spreadsheet
