@@ -7,7 +7,7 @@
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -138,7 +138,7 @@ assertEquals<span class="j-sym">( </span><span class="j-hl">5</span>, input.getN
 	<p>Let&#8217;s now turn on explicit, full caching:</p>
 
 	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-builder.loadSpreadsheet<span class="j-sym">( </span>getPath<span class="j-sym">() )</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>getFile<span class="j-sym">() )</span>;
 builder.setInputClass<span class="j-sym">( </span>Input.<span class="j-key">class </span><span class="j-sym">)</span>;
 builder.setOutputClass<span class="j-sym">( </span>Output.<span class="j-key">class </span><span class="j-sym">)</span>;
 builder.setNumericType<span class="j-sym">( </span>unboundedBigDecimal <span class="j-sym">)</span>;

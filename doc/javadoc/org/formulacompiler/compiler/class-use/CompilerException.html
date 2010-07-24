@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-Uses of Class org.formulacompiler.compiler.CompilerException (Abacus Formula Compiler API (Version 1.3.0))
+Uses of Class org.formulacompiler.compiler.CompilerException (Abacus Formula Compiler API (Version 1.4.0))
 </TITLE>
 
 
@@ -12,7 +12,7 @@ Uses of Class org.formulacompiler.compiler.CompilerException (Abacus Formula Com
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="Uses of Class org.formulacompiler.compiler.CompilerException (Abacus Formula Compiler API (Version 1.3.0))";
+    parent.document.title="Uses of Class org.formulacompiler.compiler.CompilerException (Abacus Formula Compiler API (Version 1.4.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -127,6 +127,15 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You specified a factory or output class with no suitable constructor for AFC to call.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/formulacompiler/compiler/CompilerException.DataTypeError.html" title="class in org.formulacompiler.compiler">CompilerException.DataTypeError</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You attempted to combine incompatible types in an expression; or you attempted to use
+ an expression which type cannot be determined.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -348,8 +357,8 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>EngineBuilder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/EngineBuilder.html#bindAllByName(java.lang.String, java.lang.String)">bindAllByName</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_inputPrefix,
-              <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_outputPrefix)</CODE>
+<TD><CODE><B>EngineBuilder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/EngineBuilder.html#bindAllByName(java.lang.String, java.lang.String)">bindAllByName</A></B>(java.lang.String&nbsp;_inputPrefix,
+              java.lang.String&nbsp;_outputPrefix)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uses reflection to bind all named cells in the spreadsheet to corresponding methods on the
@@ -368,7 +377,7 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>SpreadsheetByNameBinder.CellBinder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.CellBinder.html#bindAllMethodsToPrefixedNamedCells(java.lang.String)">bindAllMethodsToPrefixedNamedCells</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_prefix)</CODE>
+<TD><CODE><B>SpreadsheetByNameBinder.CellBinder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.CellBinder.html#bindAllMethodsToPrefixedNamedCells(java.lang.String)">bindAllMethodsToPrefixedNamedCells</A></B>(java.lang.String&nbsp;_prefix)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Binds all abstract methods to cells of the corresponding name.</TD>
@@ -385,7 +394,7 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>SpreadsheetByNameBinder.CellBinder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.CellBinder.html#bindAllPrefixedNamedCellsToMethods(java.lang.String)">bindAllPrefixedNamedCellsToMethods</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_prefix)</CODE>
+<TD><CODE><B>SpreadsheetByNameBinder.CellBinder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.CellBinder.html#bindAllPrefixedNamedCellsToMethods(java.lang.String)">bindAllPrefixedNamedCellsToMethods</A></B>(java.lang.String&nbsp;_prefix)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Binds all still unbound named cells with a given name prefix to methods of the
@@ -394,18 +403,18 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../org/formulacompiler/compiler/SaveableEngine.html" title="interface in org.formulacompiler.compiler">SaveableEngine</A></CODE></FONT></TD>
-<TD><CODE><B>EngineBuilder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/EngineBuilder.html#compile()">compile</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Compiles an executable computation engine from the inputs to this builder.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../org/formulacompiler/compiler/SaveableEngine.html" title="interface in org.formulacompiler.compiler">SaveableEngine</A></CODE></FONT></TD>
 <TD><CODE><B>SpreadsheetToEngineCompiler.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetToEngineCompiler.html#compile()">compile</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Compiles the engine.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../org/formulacompiler/compiler/SaveableEngine.html" title="interface in org.formulacompiler.compiler">SaveableEngine</A></CODE></FONT></TD>
+<TD><CODE><B>EngineBuilder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/EngineBuilder.html#compile()">compile</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Compiles an executable computation engine from the inputs to this builder.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -423,8 +432,8 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <CODE>static&nbsp;<A HREF="../../../../org/formulacompiler/compiler/SaveableEngine.html" title="interface in org.formulacompiler.compiler">SaveableEngine</A></CODE></FONT></TD>
 <TD><CODE><B>SpreadsheetCompiler.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetCompiler.html#compileEngine(org.formulacompiler.spreadsheet.SpreadsheetBinding, org.formulacompiler.compiler.NumericType, java.lang.Class, java.lang.reflect.Method, boolean)">compileEngine</A></B>(<A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinding.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBinding</A>&nbsp;_binding,
               <A HREF="../../../../org/formulacompiler/compiler/NumericType.html" title="interface in org.formulacompiler.compiler">NumericType</A>&nbsp;_numericType,
-              <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_factoryClass,
-              <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_factoryMethod,
+              java.lang.Class&nbsp;_factoryClass,
+              java.lang.reflect.Method&nbsp;_factoryMethod,
               boolean&nbsp;_fullCaching)</CODE>
 
 <BR>
@@ -446,8 +455,8 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>SpreadsheetBinder.Section.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineInputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, java.lang.reflect.Method, java.lang.Object...)">defineInputCell</A></B>(<A HREF="../../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A>&nbsp;_cell,
-                <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_methodToCall,
-                <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A>...&nbsp;_args)</CODE>
+                java.lang.reflect.Method&nbsp;_methodToCall,
+                java.lang.Object...&nbsp;_args)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like <A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineInputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, org.formulacompiler.compiler.CallFrame)"><CODE>SpreadsheetBinder.Section.defineInputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, CallFrame)</CODE></A>,
@@ -457,7 +466,7 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>SpreadsheetBinder.Section.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineInputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, java.lang.String)">defineInputCell</A></B>(<A HREF="../../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A>&nbsp;_cell,
-                <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_nameOfMethodToCall)</CODE>
+                java.lang.String&nbsp;_nameOfMethodToCall)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like <A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineInputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, org.formulacompiler.compiler.CallFrame)"><CODE>SpreadsheetBinder.Section.defineInputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, CallFrame)</CODE></A>,
@@ -478,8 +487,8 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>SpreadsheetBinder.Section.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineOutputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, java.lang.reflect.Method, java.lang.Object...)">defineOutputCell</A></B>(<A HREF="../../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A>&nbsp;_cell,
-                 <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_methodToImplement,
-                 <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A>...&nbsp;_args)</CODE>
+                 java.lang.reflect.Method&nbsp;_methodToImplement,
+                 java.lang.Object...&nbsp;_args)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like <A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineOutputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, org.formulacompiler.compiler.CallFrame)"><CODE>SpreadsheetBinder.Section.defineOutputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, CallFrame)</CODE></A>,
@@ -489,7 +498,7 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>SpreadsheetBinder.Section.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineOutputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, java.lang.String)">defineOutputCell</A></B>(<A HREF="../../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A>&nbsp;_cell,
-                 <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_nameOfMethodToImplement)</CODE>
+                 java.lang.String&nbsp;_nameOfMethodToImplement)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like <A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineOutputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, org.formulacompiler.compiler.CallFrame)"><CODE>SpreadsheetBinder.Section.defineOutputCell(org.formulacompiler.spreadsheet.Spreadsheet.Cell, CallFrame)</CODE></A>,
@@ -502,9 +511,9 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TD><CODE><B>SpreadsheetBinder.Section.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineRepeatingSection(org.formulacompiler.spreadsheet.Spreadsheet.Range, org.formulacompiler.spreadsheet.Orientation, org.formulacompiler.compiler.CallFrame, java.lang.Class, org.formulacompiler.compiler.CallFrame, java.lang.Class)">defineRepeatingSection</A></B>(<A HREF="../../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&nbsp;_range,
                        <A HREF="../../../../org/formulacompiler/spreadsheet/Orientation.html" title="enum in org.formulacompiler.spreadsheet">Orientation</A>&nbsp;_orientation,
                        <A HREF="../../../../org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A>&nbsp;_inputCallChainReturningIterable,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_inputClass,
+                       java.lang.Class&nbsp;_inputClass,
                        <A HREF="../../../../org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A>&nbsp;_outputCallReturningIterableToImplement,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_outputClass)</CODE>
+                       java.lang.Class&nbsp;_outputClass)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Defines a range in the spreadsheet as a section of similar, repeating rows (or columns).</TD>
@@ -514,10 +523,10 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <CODE>&nbsp;<A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBinder.Section</A></CODE></FONT></TD>
 <TD><CODE><B>SpreadsheetBinder.Section.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineRepeatingSection(org.formulacompiler.spreadsheet.Spreadsheet.Range, org.formulacompiler.spreadsheet.Orientation, java.lang.reflect.Method, java.lang.Class, java.lang.reflect.Method, java.lang.Class)">defineRepeatingSection</A></B>(<A HREF="../../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&nbsp;_range,
                        <A HREF="../../../../org/formulacompiler/spreadsheet/Orientation.html" title="enum in org.formulacompiler.spreadsheet">Orientation</A>&nbsp;_orientation,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_inputMethodReturningIterable,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_inputClass,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_outputMethodReturningIterableToImplement,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_outputClass)</CODE>
+                       java.lang.reflect.Method&nbsp;_inputMethodReturningIterable,
+                       java.lang.Class&nbsp;_inputClass,
+                       java.lang.reflect.Method&nbsp;_outputMethodReturningIterableToImplement,
+                       java.lang.Class&nbsp;_outputClass)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like
@@ -529,10 +538,10 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <CODE>&nbsp;<A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html" title="interface in org.formulacompiler.spreadsheet">SpreadsheetBinder.Section</A></CODE></FONT></TD>
 <TD><CODE><B>SpreadsheetBinder.Section.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetBinder.Section.html#defineRepeatingSection(org.formulacompiler.spreadsheet.Spreadsheet.Range, org.formulacompiler.spreadsheet.Orientation, java.lang.String, java.lang.Class, java.lang.String, java.lang.Class)">defineRepeatingSection</A></B>(<A HREF="../../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&nbsp;_range,
                        <A HREF="../../../../org/formulacompiler/spreadsheet/Orientation.html" title="enum in org.formulacompiler.spreadsheet">Orientation</A>&nbsp;_orientation,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_nameOfInputMethodReturningIterable,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_inputClass,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_nameOfOutputMethodReturningIterableToImplement,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_outputClass)</CODE>
+                       java.lang.String&nbsp;_nameOfInputMethodReturningIterable,
+                       java.lang.Class&nbsp;_inputClass,
+                       java.lang.String&nbsp;_nameOfOutputMethodReturningIterableToImplement,
+                       java.lang.Class&nbsp;_outputClass)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like
@@ -550,8 +559,8 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>EngineBuilder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/EngineBuilder.html#failIfByNameBindingLeftNamedCellsUnbound(java.lang.String, java.lang.String)">failIfByNameBindingLeftNamedCellsUnbound</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_inputPrefix,
-                                         <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_outputPrefix)</CODE>
+<TD><CODE><B>EngineBuilder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/EngineBuilder.html#failIfByNameBindingLeftNamedCellsUnbound(java.lang.String, java.lang.String)">failIfByNameBindingLeftNamedCellsUnbound</A></B>(java.lang.String&nbsp;_inputPrefix,
+                                         java.lang.String&nbsp;_outputPrefix)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Raises an exception if there are named cells with one of the given prefixes that were not
@@ -560,7 +569,7 @@ Uses of <A HREF="../../../../org/formulacompiler/compiler/CompilerException.html
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>SpreadsheetByNameBinder.CellBinder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.CellBinder.html#failIfCellNamesAreStillUnbound(java.lang.String)">failIfCellNamesAreStillUnbound</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_prefix)</CODE>
+<TD><CODE><B>SpreadsheetByNameBinder.CellBinder.</B><B><A HREF="../../../../org/formulacompiler/spreadsheet/SpreadsheetByNameBinder.CellBinder.html#failIfCellNamesAreStillUnbound(java.lang.String)">failIfCellNamesAreStillUnbound</A></B>(java.lang.String&nbsp;_prefix)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Raises an exception if there are named cells with the given prefix that were not bound to

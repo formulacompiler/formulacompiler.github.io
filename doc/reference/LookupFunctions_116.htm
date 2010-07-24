@@ -3,11 +3,11 @@
 
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<title>Decompiled Code For VLOOKUP( C116, D$114:F$116, 3.0 ) - Abacus Formula Compiler for Java</title>
+	<title>Decompiled Code For HLOOKUP( C116, D$114:G$116, 3.0, false ) - Abacus Formula Compiler for Java</title>
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" /><link href="refstyle.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -55,12 +55,12 @@ pageTracker._trackPageview();
 
 			<div class="content" id="content">
 
-<h1>Decompiled Code For <code>VLOOKUP( C116, D$114:F$116, 3.0 )</code></h1>
+<h1>Decompiled Code For <code>HLOOKUP( C116, D$114:G$116, 3.0, false )</code></h1>
 
 	<p>The expression</p>
 
 
-<pre><code>=VLOOKUP( C116, D$114:F$116, 3.0 )</code></pre>
+<pre><code>=HLOOKUP( C116, D$114:G$116, 3.0, false )</code></pre>
 	<p>is compiled to the following class(es):</p>
 
 
@@ -68,7 +68,7 @@ pageTracker._trackPageview();
 <span class="j-key">import </span>org.formulacompiler.runtime.Computation;
 <span class="j-key">import </span>org.formulacompiler.runtime.FormulaException;
 <span class="j-key">import </span>org.formulacompiler.runtime.internal.Environment;
-<span class="j-key">import </span>org.formulacompiler.runtime.internal.RuntimeDouble_v2;
+<span class="j-key">import </span>org.formulacompiler.runtime.internal.Runtime_v2;
 <span class="j-key">import </span>org.formulacompiler.tests.reference.base.Inputs;
 <span class="j-key">import </span>org.formulacompiler.tests.reference.base.Outputs;
 
@@ -76,44 +76,45 @@ pageTracker._trackPageview();
 <span class="j-sym">{
     </span><span class="j-key">private final </span>Inputs $inputs;
     <span class="j-key">final </span>Environment $environment;
-    <span class="j-key">private </span><span class="j-typ">double</span><span class="j-sym">[] </span>$constarr$0;
+    <span class="j-key">private </span>String<span class="j-sym">[] </span>$constarr$0;
 
     $Root<span class="j-sym">(</span>Inputs inputs, Environment environment<span class="j-sym">) {
         </span>$environment = environment;
         $inputs = inputs;
     <span class="j-sym">}
 
-    </span><span class="j-key">final </span><span class="j-typ">double </span>get$0<span class="j-sym">() {
-        </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>RuntimeDouble_v2.fun_MATCH_Ascending<span class="j-sym">(</span>get$1<span class="j-sym">()</span>,
-                                                           $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
+    </span><span class="j-key">final </span>String get$0<span class="j-sym">() {
+        </span><span class="j-key">return </span>$idx$0<span class="j-sym">(</span>Runtime_v2.fun_MATCH_Exact<span class="j-sym">(</span>get$1<span class="j-sym">()</span>, $constarr$0<span class="j-sym">()) </span>- <span class="j-num">1</span><span class="j-sym">)</span>;
     <span class="j-sym">}
 
-    </span><span class="j-key">public final </span><span class="j-typ">double </span>dbl<span class="j-sym">() {
+    </span><span class="j-key">public final </span>String str<span class="j-sym">() {
         </span><span class="j-key">return </span>get$0<span class="j-sym">()</span>;
     <span class="j-sym">}
 
-    </span><span class="j-key">final </span><span class="j-typ">double</span><span class="j-sym">[] </span>$constarr$0<span class="j-sym">() {
+    </span><span class="j-key">final </span>String<span class="j-sym">[] </span>$constarr$0<span class="j-sym">() {
         </span><span class="j-key">if </span><span class="j-sym">(</span>$constarr$0 == <span class="j-key">null</span><span class="j-sym">)
-            </span>$constarr$0 = <span class="j-key">new </span><span class="j-typ">double</span><span class="j-sym">[] { </span><span class="j-num">10.0</span>, <span class="j-num">20.0</span>, <span class="j-num">30.0 </span><span class="j-sym">}</span>;
+            </span>$constarr$0 = <span class="j-key">new </span>String<span class="j-sym">[] { </span><span class="j-str">&#34;one&#34;</span>, <span class="j-str">&#34;two&#34;</span>, <span class="j-str">&#34;three&#34;</span>, <span class="j-str">&#34;four&#34; </span><span class="j-sym">}</span>;
         <span class="j-key">return </span>$constarr$0;
     <span class="j-sym">}
 
-    </span><span class="j-key">final </span><span class="j-typ">double </span>$idx$0<span class="j-sym">(</span><span class="j-typ">int </span>i<span class="j-sym">) {
+    </span><span class="j-key">final </span>String $idx$0<span class="j-sym">(</span><span class="j-typ">int </span>i<span class="j-sym">) {
         </span><span class="j-key">switch </span><span class="j-sym">(</span>i<span class="j-sym">) {
         </span><span class="j-key">case </span><span class="j-num">0</span>:
-            <span class="j-key">return </span><span class="j-num">21.0</span>;
+            <span class="j-key">return </span><span class="j-str">&#34;eins&#34;</span>;
         <span class="j-key">case </span><span class="j-num">1</span>:
-            <span class="j-key">return </span><span class="j-num">22.0</span>;
+            <span class="j-key">return </span><span class="j-str">&#34;zwei&#34;</span>;
         <span class="j-key">case </span><span class="j-num">2</span>:
-            <span class="j-key">return </span><span class="j-num">23.0</span>;
+            <span class="j-key">return </span><span class="j-str">&#34;drei&#34;</span>;
+        <span class="j-key">case </span><span class="j-num">3</span>:
+            <span class="j-key">return </span><span class="j-str">&#34;vier&#34;</span>;
         <span class="j-key">default</span>:
             <span class="j-key">throw new </span>FormulaException
                       <span class="j-sym">(</span><span class="j-str">&#34;#VALUE/REF! because index is out of range in INDEX&#34;</span><span class="j-sym">)</span>;
         <span class="j-sym">}
     }
 
-    </span><span class="j-key">final </span><span class="j-typ">double </span>get$1<span class="j-sym">() {
-        </span><span class="j-key">return </span>$inputs.dbl<span class="j-sym">(</span><span class="j-num">0</span><span class="j-sym">)</span>;
+    </span><span class="j-key">final </span>String get$1<span class="j-sym">() {
+        </span><span class="j-key">return </span>Runtime_v2.stringFromString<span class="j-sym">(</span>$inputs.str<span class="j-sym">(</span><span class="j-num">0</span><span class="j-sym">))</span>;
     <span class="j-sym">}
 }</span></pre>
 
@@ -129,7 +130,7 @@ pageTracker._trackPageview();
 <div class="area"><a href="../../doc/tutorial/index.htm">Tutorial</a></div>
 <div class="area"><span class="selected"><a href="../../doc/reference/index.htm">Function Reference</a></span></div>
 <div class="nested">
-<div class="area"><span class="selected">Decompiled Code For VLOOKUP( C116, D$114:F$116, 3.0 )</span></div>
+<div class="area"><span class="selected">Decompiled Code For HLOOKUP( C116, D$114:G$116, 3.0, false )</span></div>
 </div>
 <div class="area"><a href="../../doc/javadoc/index.html">API Reference</a></div>
 <div class="area"><a href="../../doc/examples/index.htm">Sample Applications</a></div>

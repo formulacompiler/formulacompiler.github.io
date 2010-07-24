@@ -7,7 +7,7 @@
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -79,7 +79,7 @@ pageTracker._trackPageview();
 	<p>Since <code>double</code> is the default, you can simply use the default engine builder, without specifying the type. If you want to give the type explicitly, use:</p>
 
 	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span>file <span class="j-sym">)</span>;
 builder.setFactoryClass<span class="j-sym">( </span>Factory.<span class="j-key">class </span><span class="j-sym">)</span>;
 <span class="j-hl">builder.setNumericType<span class="j-sym">( </span>SpreadsheetCompiler.DOUBLE <span class="j-sym">)</span>;</span>
 builder.bindAllByName<span class="j-sym">()</span>;

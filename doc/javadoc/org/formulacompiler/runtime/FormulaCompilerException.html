@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-FormulaCompilerException (Abacus Formula Compiler API (Version 1.3.0))
+FormulaCompilerException (Abacus Formula Compiler API (Version 1.4.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.runtime.FormulaCompilerException class">
@@ -13,7 +13,7 @@ FormulaCompilerException (Abacus Formula Compiler API (Version 1.3.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="FormulaCompilerException (Abacus Formula Compiler API (Version 1.3.0))";
+    parent.document.title="FormulaCompilerException (Abacus Formula Compiler API (Version 1.4.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -98,24 +98,24 @@ org.formulacompiler.runtime</FONT>
 <BR>
 Class FormulaCompilerException</H2>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html" title="class or interface in java.lang">java.lang.Throwable</A>
-      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Exception.html" title="class or interface in java.lang">java.lang.Exception</A>
+java.lang.Object
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by ">java.lang.Throwable
+      <IMG SRC="../../../resources/inherit.gif" ALT="extended by ">java.lang.Exception
           <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>org.formulacompiler.runtime.FormulaCompilerException</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/Serializable.html" title="class or interface in java.io">Serializable</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD>java.io.Serializable</DD>
 </DL>
 <DL>
 <DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../org/formulacompiler/compiler/CompilerException.html" title="class in org.formulacompiler.compiler">CompilerException</A>, <A HREF="../../../org/formulacompiler/runtime/EngineException.html" title="class in org.formulacompiler.runtime">EngineException</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <B>FormulaCompilerException</B><DT>extends <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Exception.html" title="class or interface in java.lang">Exception</A></DL>
+<DT><PRE>public class <B>FormulaCompilerException</B><DT>extends java.lang.Exception</DL>
 </PRE>
 
 <P>
-Base class for all exceptions thrown by AFC. Augments the basic <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Exception.html" title="class or interface in java.lang"><CODE>Exception</CODE></A> class with
+Base class for all exceptions thrown by AFC. Augments the basic <CODE>Exception</CODE> class with
  support for message context information. The idea is that handlers further up the chain can add
  context information to the existing exception, then rethrow it. This makes the exception mutable,
  but avoids having to wrap it repeatedly for no other reason that to provide a bit of source
@@ -146,20 +146,20 @@ Base class for all exceptions thrown by AFC. Augments the basic <A HREF="http://
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#FormulaCompilerException(java.lang.String)">FormulaCompilerException</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_message)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#FormulaCompilerException(java.lang.String)">FormulaCompilerException</A></B>(java.lang.String&nbsp;_message)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#FormulaCompilerException(java.lang.String, java.lang.Throwable)">FormulaCompilerException</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_message,
-                         <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html" title="class or interface in java.lang">Throwable</A>&nbsp;_cause)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#FormulaCompilerException(java.lang.String, java.lang.Throwable)">FormulaCompilerException</A></B>(java.lang.String&nbsp;_message,
+                         java.lang.Throwable&nbsp;_cause)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#FormulaCompilerException(java.lang.Throwable)">FormulaCompilerException</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html" title="class or interface in java.lang">Throwable</A>&nbsp;_cause)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#FormulaCompilerException(java.lang.Throwable)">FormulaCompilerException</A></B>(java.lang.Throwable&nbsp;_cause)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -177,14 +177,14 @@ Base class for all exceptions thrown by AFC. Augments the basic <A HREF="http://
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#addMessageContext(java.lang.String)">addMessageContext</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_messageContext)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#addMessageContext(java.lang.String)">addMessageContext</A></B>(java.lang.String&nbsp;_messageContext)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Appends to the current message context.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#getMessage()">getMessage</A></B>()</CODE>
 
 <BR>
@@ -192,7 +192,7 @@ Base class for all exceptions thrown by AFC. Augments the basic <A HREF="http://
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#getMessageContext()">getMessageContext</A></B>()</CODE>
 
 <BR>
@@ -200,7 +200,7 @@ Base class for all exceptions thrown by AFC. Augments the basic <A HREF="http://
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#getPureMessage()">getPureMessage</A></B>()</CODE>
 
 <BR>
@@ -209,7 +209,7 @@ Base class for all exceptions thrown by AFC. Augments the basic <A HREF="http://
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#setMessageContext(java.lang.String)">setMessageContext</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_messageContext)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#setMessageContext(java.lang.String)">setMessageContext</A></B>(java.lang.String&nbsp;_messageContext)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the current message context.</TD>
@@ -218,19 +218,19 @@ Base class for all exceptions thrown by AFC. Augments the basic <A HREF="http://
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Throwable"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html" title="class or interface in java.lang">Throwable</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class java.lang.Throwable</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#fillInStackTrace()" title="class or interface in java.lang">fillInStackTrace</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#getCause()" title="class or interface in java.lang">getCause</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#getLocalizedMessage()" title="class or interface in java.lang">getLocalizedMessage</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#getStackTrace()" title="class or interface in java.lang">getStackTrace</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#initCause(java.lang.Throwable)" title="class or interface in java.lang">initCause</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#printStackTrace()" title="class or interface in java.lang">printStackTrace</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#printStackTrace(java.io.PrintStream)" title="class or interface in java.lang">printStackTrace</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#printStackTrace(java.io.PrintWriter)" title="class or interface in java.lang">printStackTrace</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#setStackTrace(java.lang.StackTraceElement[])" title="class or interface in java.lang">setStackTrace</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#toString()" title="class or interface in java.lang">toString</A></CODE></TD>
+<TD><CODE>fillInStackTrace, getCause, getLocalizedMessage, getStackTrace, initCause, printStackTrace, printStackTrace, printStackTrace, setStackTrace, toString</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class java.lang.Object</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+<TD><CODE>equals, getClass, hashCode, notify, notifyAll, wait, wait, wait</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -257,8 +257,8 @@ public <B>FormulaCompilerException</B>()</PRE>
 <A NAME="FormulaCompilerException(java.lang.String, java.lang.Throwable)"><!-- --></A><H3>
 FormulaCompilerException</H3>
 <PRE>
-public <B>FormulaCompilerException</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_message,
-                                <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html" title="class or interface in java.lang">Throwable</A>&nbsp;_cause)</PRE>
+public <B>FormulaCompilerException</B>(java.lang.String&nbsp;_message,
+                                java.lang.Throwable&nbsp;_cause)</PRE>
 <DL>
 </DL>
 <HR>
@@ -266,7 +266,7 @@ public <B>FormulaCompilerException</B>(<A HREF="http://java.sun.com/j2se/1.5/doc
 <A NAME="FormulaCompilerException(java.lang.String)"><!-- --></A><H3>
 FormulaCompilerException</H3>
 <PRE>
-public <B>FormulaCompilerException</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_message)</PRE>
+public <B>FormulaCompilerException</B>(java.lang.String&nbsp;_message)</PRE>
 <DL>
 </DL>
 <HR>
@@ -274,7 +274,7 @@ public <B>FormulaCompilerException</B>(<A HREF="http://java.sun.com/j2se/1.5/doc
 <A NAME="FormulaCompilerException(java.lang.Throwable)"><!-- --></A><H3>
 FormulaCompilerException</H3>
 <PRE>
-public <B>FormulaCompilerException</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html" title="class or interface in java.lang">Throwable</A>&nbsp;_cause)</PRE>
+public <B>FormulaCompilerException</B>(java.lang.Throwable&nbsp;_cause)</PRE>
 <DL>
 </DL>
 
@@ -291,12 +291,12 @@ public <B>FormulaCompilerException</B>(<A HREF="http://java.sun.com/j2se/1.5/doc
 <A NAME="getMessage()"><!-- --></A><H3>
 getMessage</H3>
 <PRE>
-public <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A> <B>getMessage</B>()</PRE>
+public java.lang.String <B>getMessage</B>()</PRE>
 <DL>
 <DD>Override that appends the current message context to the message.
 <P>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html#getMessage()" title="class or interface in java.lang">getMessage</A></CODE> in class <CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Throwable.html" title="class or interface in java.lang">Throwable</A></CODE></DL>
+<DT><B>Overrides:</B><DD><CODE>getMessage</CODE> in class <CODE>java.lang.Throwable</CODE></DL>
 </DD>
 <DD><DL>
 
@@ -309,7 +309,7 @@ public <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" tit
 <A NAME="getPureMessage()"><!-- --></A><H3>
 getPureMessage</H3>
 <PRE>
-public <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A> <B>getPureMessage</B>()</PRE>
+public java.lang.String <B>getPureMessage</B>()</PRE>
 <DL>
 <DD>Returns the pure, unchanged message.
 <P>
@@ -322,7 +322,7 @@ public <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" tit
 <A NAME="getMessageContext()"><!-- --></A><H3>
 getMessageContext</H3>
 <PRE>
-public <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A> <B>getMessageContext</B>()</PRE>
+public java.lang.String <B>getMessageContext</B>()</PRE>
 <DL>
 <DD>Returns the current message context. It is automatically appended to the normal
  <A HREF="../../../org/formulacompiler/runtime/FormulaCompilerException.html#getMessage()"><CODE>getMessage()</CODE></A>.
@@ -336,7 +336,7 @@ public <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" tit
 <A NAME="setMessageContext(java.lang.String)"><!-- --></A><H3>
 setMessageContext</H3>
 <PRE>
-public void <B>setMessageContext</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_messageContext)</PRE>
+public void <B>setMessageContext</B>(java.lang.String&nbsp;_messageContext)</PRE>
 <DL>
 <DD>Sets the current message context.
 <P>
@@ -349,7 +349,7 @@ public void <B>setMessageContext</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/
 <A NAME="addMessageContext(java.lang.String)"><!-- --></A><H3>
 addMessageContext</H3>
 <PRE>
-public void <B>addMessageContext</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_messageContext)</PRE>
+public void <B>addMessageContext</B>(java.lang.String&nbsp;_messageContext)</PRE>
 <DL>
 <DD>Appends to the current message context.
 <P>

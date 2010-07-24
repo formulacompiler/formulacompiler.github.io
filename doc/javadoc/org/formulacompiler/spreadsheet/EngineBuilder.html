@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-EngineBuilder (Abacus Formula Compiler API (Version 1.3.0))
+EngineBuilder (Abacus Formula Compiler API (Version 1.4.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.spreadsheet.EngineBuilder interface">
@@ -13,7 +13,7 @@ EngineBuilder (Abacus Formula Compiler API (Version 1.3.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="EngineBuilder (Abacus Formula Compiler API (Version 1.3.0))";
+    parent.document.title="EngineBuilder (Abacus Formula Compiler API (Version 1.4.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -104,10 +104,10 @@ Interface EngineBuilder</H2>
 
 <P>
 Simplified interface to AFC's spreadsheet compiler functionality for the most typical use-cases.
- Typical example: <pre class="java"><span class="j-key">private </span>RebateComputationFactory compileFactoryFromSpreadsheet<span class="j-sym">( </span>String _sheetName <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+ Typical example: <pre class="java"><span class="j-key">private </span>RebateComputationFactory compileFactoryFromSpreadsheet<span class="j-sym">( </span>File _sheetFile <span class="j-sym">) </span><span class="j-key">throws </span>Exception
 <span class="j-sym">{
   </span>EngineBuilder builder = <span class="j-hl">SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span></span>;
-  builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span>_sheetName <span class="j-sym">)</span>;
+  builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span>_sheetFile <span class="j-sym">)</span>;
   builder.<span class="j-hl">setFactoryClass</span><span class="j-sym">( </span>RebateComputationFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
   builder.<span class="j-hl">bindAllByName</span><span class="j-sym">()</span>;
   builder.<span class="j-hl">failIfByNameBindingLeftNamedCellsUnbound</span><span class="j-sym">()</span>;
@@ -177,8 +177,8 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#bindAllByName(java.lang.String, java.lang.String)">bindAllByName</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_inputPrefix,
-              <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_outputPrefix)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#bindAllByName(java.lang.String, java.lang.String)">bindAllByName</A></B>(java.lang.String&nbsp;_inputPrefix,
+              java.lang.String&nbsp;_outputPrefix)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uses reflection to bind all named cells in the spreadsheet to corresponding methods on the
@@ -212,8 +212,8 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#failIfByNameBindingLeftNamedCellsUnbound(java.lang.String, java.lang.String)">failIfByNameBindingLeftNamedCellsUnbound</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_inputPrefix,
-                                         <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_outputPrefix)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#failIfByNameBindingLeftNamedCellsUnbound(java.lang.String, java.lang.String)">failIfByNameBindingLeftNamedCellsUnbound</A></B>(java.lang.String&nbsp;_inputPrefix,
+                                         java.lang.String&nbsp;_outputPrefix)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Raises an exception if there are named cells with one of the given prefixes that were not
@@ -273,7 +273,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.Class</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#getFactoryClass()">getFactoryClass</A></B>()</CODE>
 
 <BR>
@@ -281,7 +281,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.reflect.Method</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#getFactoryMethod()">getFactoryMethod</A></B>()</CODE>
 
 <BR>
@@ -298,7 +298,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.Class</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#getInputClass()">getInputClass</A></B>()</CODE>
 
 <BR>
@@ -314,7 +314,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.Class</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#getOutputClass()">getOutputClass</A></B>()</CODE>
 
 <BR>
@@ -322,7 +322,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/ClassLoader.html" title="class or interface in java.lang">ClassLoader</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.ClassLoader</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#getParentClassLoaderForEngine()">getParentClassLoaderForEngine</A></B>()</CODE>
 
 <BR>
@@ -348,15 +348,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#loadSpreadsheet(java.io.File)">loadSpreadsheet</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/File.html" title="class or interface in java.io">File</A>&nbsp;_file)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads the input spreadsheet from a file.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#loadSpreadsheet(java.lang.String)">loadSpreadsheet</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_fileName)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#loadSpreadsheet(java.io.File)">loadSpreadsheet</A></B>(java.io.File&nbsp;_file)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads the input spreadsheet from a file.</TD>
@@ -364,8 +356,8 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#newCallFrame(java.lang.reflect.Method, java.lang.Object...)">newCallFrame</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_method,
-             <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A>...&nbsp;_args)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#newCallFrame(java.lang.reflect.Method, java.lang.Object...)">newCallFrame</A></B>(java.lang.reflect.Method&nbsp;_method,
+             java.lang.Object...&nbsp;_args)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Constructs a call, possibly the initial call in a chain of calls.</TD>
@@ -415,7 +407,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setFactoryClass(java.lang.Class)">setFactoryClass</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_class)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setFactoryClass(java.lang.Class)">setFactoryClass</A></B>(java.lang.Class&nbsp;_class)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets either an application-specific class from which to descend the generated computation
@@ -424,7 +416,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setFactoryMethod(java.lang.reflect.Method)">setFactoryMethod</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_factoryMethod)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setFactoryMethod(java.lang.reflect.Method)">setFactoryMethod</A></B>(java.lang.reflect.Method&nbsp;_factoryMethod)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the application-specific method of the given factory type,
@@ -443,7 +435,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setInputClass(java.lang.Class)">setInputClass</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_inputClass)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setInputClass(java.lang.Class)">setInputClass</A></B>(java.lang.Class&nbsp;_inputClass)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the application-specific type defining the methods which input cells can call.</TD>
@@ -468,7 +460,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setOutputClass(java.lang.Class)">setOutputClass</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_outputClass)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setOutputClass(java.lang.Class)">setOutputClass</A></B>(java.lang.Class&nbsp;_outputClass)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the application-specific type defining the methods output cells can implement.</TD>
@@ -476,7 +468,7 @@ Simplified interface to AFC's spreadsheet compiler functionality for the most ty
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setParentClassLoaderForEngine(java.lang.ClassLoader)">setParentClassLoaderForEngine</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/ClassLoader.html" title="class or interface in java.lang">ClassLoader</A>&nbsp;_value)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setParentClassLoaderForEngine(java.lang.ClassLoader)">setParentClassLoaderForEngine</A></B>(java.lang.ClassLoader&nbsp;_value)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the parent class loader to be used for the compiled engine (which is itself a class
@@ -594,9 +586,9 @@ void <B>setSpreadsheet</B>(<A HREF="../../../org/formulacompiler/spreadsheet/Spr
 <A NAME="loadSpreadsheet(java.io.File)"><!-- --></A><H3>
 loadSpreadsheet</H3>
 <PRE>
-void <B>loadSpreadsheet</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/File.html" title="class or interface in java.io">File</A>&nbsp;_file)
-                     throws <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/FileNotFoundException.html" title="class or interface in java.io">FileNotFoundException</A>,
-                            <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A>,
+void <B>loadSpreadsheet</B>(java.io.File&nbsp;_file)
+                     throws java.io.FileNotFoundException,
+                            java.io.IOException,
                             <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></PRE>
 <DL>
 <DD>Loads the input spreadsheet from a file.
@@ -604,29 +596,8 @@ void <B>loadSpreadsheet</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>_file</CODE> - is the spreadsheet file to load.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/FileNotFoundException.html" title="class or interface in java.io">FileNotFoundException</A></CODE>
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A></CODE>
-<DD><CODE><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setSpreadsheet(org.formulacompiler.spreadsheet.Spreadsheet)"><CODE>setSpreadsheet(Spreadsheet)</CODE></A>, 
-<A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setLoadAllCellValues(boolean)"><CODE>setLoadAllCellValues(boolean)</CODE></A></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="loadSpreadsheet(java.lang.String)"><!-- --></A><H3>
-loadSpreadsheet</H3>
-<PRE>
-void <B>loadSpreadsheet</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_fileName)
-                     throws <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/FileNotFoundException.html" title="class or interface in java.io">FileNotFoundException</A>,
-                            <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A>,
-                            <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></PRE>
-<DL>
-<DD>Loads the input spreadsheet from a file.
-<P>
-<DD><DL>
-<DT><B>Parameters:</B><DD><CODE>_fileName</CODE> - is the name of the spreadsheet file to load.
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/FileNotFoundException.html" title="class or interface in java.io">FileNotFoundException</A></CODE>
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A></CODE>
+<DD><CODE>java.io.FileNotFoundException</CODE>
+<DD><CODE>java.io.IOException</CODE>
 <DD><CODE><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setSpreadsheet(org.formulacompiler.spreadsheet.Spreadsheet)"><CODE>setSpreadsheet(Spreadsheet)</CODE></A>, 
 <A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setLoadAllCellValues(boolean)"><CODE>setLoadAllCellValues(boolean)</CODE></A></DL>
 </DD>
@@ -642,8 +613,7 @@ void <B>setLoadAllCellValues</B>(boolean&nbsp;_value)</PRE>
  for computed cells. The default is <code>false</code>.
 <P>
 <DD><DL>
-<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#loadSpreadsheet(java.io.File)"><CODE>loadSpreadsheet(File)</CODE></A>, 
-<A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#loadSpreadsheet(java.lang.String)"><CODE>loadSpreadsheet(String)</CODE></A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#loadSpreadsheet(java.io.File)"><CODE>loadSpreadsheet(File)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -651,7 +621,7 @@ void <B>setLoadAllCellValues</B>(boolean&nbsp;_value)</PRE>
 <A NAME="getInputClass()"><!-- --></A><H3>
 getInputClass</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A> <B>getInputClass</B>()</PRE>
+java.lang.Class <B>getInputClass</B>()</PRE>
 <DL>
 <DD>Returns the application-specific type defining the methods which input cells can call.
 <P>
@@ -664,7 +634,7 @@ getInputClass</H3>
 <A NAME="setInputClass(java.lang.Class)"><!-- --></A><H3>
 setInputClass</H3>
 <PRE>
-void <B>setInputClass</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_inputClass)</PRE>
+void <B>setInputClass</B>(java.lang.Class&nbsp;_inputClass)</PRE>
 <DL>
 <DD>Sets the application-specific type defining the methods which input cells can call. Must be
  <code>public</code>. Can only be left <code>null</code> if a factory type is provided (see
@@ -684,7 +654,7 @@ void <B>setInputClass</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/la
 <A NAME="getOutputClass()"><!-- --></A><H3>
 getOutputClass</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A> <B>getOutputClass</B>()</PRE>
+java.lang.Class <B>getOutputClass</B>()</PRE>
 <DL>
 <DD>Returns the application-specific type defining the methods which output cells can implement.
 <P>
@@ -697,7 +667,7 @@ getOutputClass</H3>
 <A NAME="setOutputClass(java.lang.Class)"><!-- --></A><H3>
 setOutputClass</H3>
 <PRE>
-void <B>setOutputClass</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_outputClass)</PRE>
+void <B>setOutputClass</B>(java.lang.Class&nbsp;_outputClass)</PRE>
 <DL>
 <DD>Sets the application-specific type defining the methods output cells can implement. If a
  class, then the generated computation extends this class. If an interface, then the generated
@@ -719,7 +689,7 @@ void <B>setOutputClass</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/l
 <A NAME="getFactoryClass()"><!-- --></A><H3>
 getFactoryClass</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A> <B>getFactoryClass</B>()</PRE>
+java.lang.Class <B>getFactoryClass</B>()</PRE>
 <DL>
 <DD>Returns the application-specific type to be used for the generated factory.
 <P>
@@ -732,7 +702,7 @@ getFactoryClass</H3>
 <A NAME="setFactoryClass(java.lang.Class)"><!-- --></A><H3>
 setFactoryClass</H3>
 <PRE>
-void <B>setFactoryClass</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A>&nbsp;_class)</PRE>
+void <B>setFactoryClass</B>(java.lang.Class&nbsp;_class)</PRE>
 <DL>
 <DD>Sets either an application-specific class from which to descend the generated computation
  factory, or an application-specific interface which the generated factory should implement.
@@ -757,7 +727,7 @@ void <B>setFactoryClass</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/
 <A NAME="getFactoryMethod()"><!-- --></A><H3>
 getFactoryMethod</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A> <B>getFactoryMethod</B>()</PRE>
+java.lang.reflect.Method <B>getFactoryMethod</B>()</PRE>
 <DL>
 <DD>Returns the application-specific factory method.
 <P>
@@ -770,7 +740,7 @@ getFactoryMethod</H3>
 <A NAME="setFactoryMethod(java.lang.reflect.Method)"><!-- --></A><H3>
 setFactoryMethod</H3>
 <PRE>
-void <B>setFactoryMethod</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_factoryMethod)</PRE>
+void <B>setFactoryMethod</B>(java.lang.reflect.Method&nbsp;_factoryMethod)</PRE>
 <DL>
 <DD>Sets the application-specific method of the given factory type,
  <A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setFactoryClass(java.lang.Class)"><CODE>setFactoryClass(Class)</CODE></A>, which AFC should implement to return new computation
@@ -880,8 +850,8 @@ getRootBinder</H3>
 <A NAME="newCallFrame(java.lang.reflect.Method, java.lang.Object...)"><!-- --></A><H3>
 newCallFrame</H3>
 <PRE>
-<A HREF="../../../org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A> <B>newCallFrame</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_method,
-                       <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A>...&nbsp;_args)</PRE>
+<A HREF="../../../org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A> <B>newCallFrame</B>(java.lang.reflect.Method&nbsp;_method,
+                       java.lang.Object...&nbsp;_args)</PRE>
 <DL>
 <DD>Constructs a call, possibly the initial call in a chain of calls.
 <P>
@@ -953,8 +923,8 @@ bn.inputs<span class="j-sym">()</span>.bindAllNamedCellsToMethods<span class="j-
 <A NAME="bindAllByName(java.lang.String, java.lang.String)"><!-- --></A><H3>
 bindAllByName</H3>
 <PRE>
-void <B>bindAllByName</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_inputPrefix,
-                   <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_outputPrefix)
+void <B>bindAllByName</B>(java.lang.String&nbsp;_inputPrefix,
+                   java.lang.String&nbsp;_outputPrefix)
                    throws <A HREF="../../../org/formulacompiler/compiler/CompilerException.html" title="class in org.formulacompiler.compiler">CompilerException</A></PRE>
 <DL>
 <DD>Uses reflection to bind all named cells in the spreadsheet to corresponding methods on the
@@ -1003,8 +973,8 @@ void <B>failIfByNameBindingLeftNamedCellsUnbound</B>()
 <A NAME="failIfByNameBindingLeftNamedCellsUnbound(java.lang.String, java.lang.String)"><!-- --></A><H3>
 failIfByNameBindingLeftNamedCellsUnbound</H3>
 <PRE>
-void <B>failIfByNameBindingLeftNamedCellsUnbound</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_inputPrefix,
-                                              <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_outputPrefix)
+void <B>failIfByNameBindingLeftNamedCellsUnbound</B>(java.lang.String&nbsp;_inputPrefix,
+                                              java.lang.String&nbsp;_outputPrefix)
                                               throws <A HREF="../../../org/formulacompiler/compiler/CompilerException.html" title="class in org.formulacompiler.compiler">CompilerException</A></PRE>
 <DL>
 <DD>Raises an exception if there are named cells with one of the given prefixes that were not
@@ -1023,13 +993,13 @@ void <B>failIfByNameBindingLeftNamedCellsUnbound</B>(<A HREF="http://java.sun.co
 <A NAME="getParentClassLoaderForEngine()"><!-- --></A><H3>
 getParentClassLoaderForEngine</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/ClassLoader.html" title="class or interface in java.lang">ClassLoader</A> <B>getParentClassLoaderForEngine</B>()</PRE>
+java.lang.ClassLoader <B>getParentClassLoaderForEngine</B>()</PRE>
 <DL>
 <DD>Returns the parent class loader used for the compiled engine (which is itself class loader).
 <P>
 <DD><DL>
 
-<DT><B>Returns:</B><DD><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/ClassLoader.html#getSystemClassLoader()" title="class or interface in java.lang"><CODE>ClassLoader.getSystemClassLoader()</CODE></A> if the value was never modified, or else
+<DT><B>Returns:</B><DD><CODE>ClassLoader.getSystemClassLoader()</CODE> if the value was never modified, or else
          the value you have last set.<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#setParentClassLoaderForEngine(java.lang.ClassLoader)"><CODE>setParentClassLoaderForEngine(ClassLoader)</CODE></A>, 
 <A HREF="../../../org/formulacompiler/spreadsheet/EngineBuilder.html#compile()"><CODE>compile()</CODE></A></DL>
 </DD>
@@ -1039,7 +1009,7 @@ getParentClassLoaderForEngine</H3>
 <A NAME="setParentClassLoaderForEngine(java.lang.ClassLoader)"><!-- --></A><H3>
 setParentClassLoaderForEngine</H3>
 <PRE>
-void <B>setParentClassLoaderForEngine</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/ClassLoader.html" title="class or interface in java.lang">ClassLoader</A>&nbsp;_value)</PRE>
+void <B>setParentClassLoaderForEngine</B>(java.lang.ClassLoader&nbsp;_value)</PRE>
 <DL>
 <DD>Sets the parent class loader to be used for the compiled engine (which is itself a class
  loader).

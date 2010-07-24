@@ -7,7 +7,7 @@
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -57,7 +57,7 @@ pageTracker._trackPageview();
 
 <h1>The Basics</h1>
 
-	<p><acronym title="Abacus Formula Compiler">AFC</acronym> makes it possible to use computations defined in spreadsheet files within Java applications. <span class="caps">AFC</span> reads the spreadsheet files and compiles Java-based formula evaluation engines from them. Such an engine computes output values given a set of input values. For example, compute the value of the cell <em>B3</em> given the values of the cells <em>B1</em> and <em>B2</em> as inputs. The original spreadsheet files can be created, for example, in <a href="http://office.microsoft.com/">Microsoft Excel</a> or <a href="http://www.openoffice.org/">OpenOffice Calc</a>.</p>
+	<p><acronym title="Abacus Formula Compiler">AFC</acronym> makes it possible to use computations defined in spreadsheet files within Java applications. <span class="caps">AFC</span> reads the spreadsheet files and compiles Java-based formula evaluation engines from them. Such an engine computes output values given a set of input values. For example, compute the value of the cell <em>B4</em> given the values of the cells <em>B1</em> and <em>B2</em> as inputs. The original spreadsheet files can be created, for example, in <a href="http://office.microsoft.com/">Microsoft Excel</a> or <a href="http://www.openoffice.org/">OpenOffice Calc</a>.</p>
 
 
 
@@ -327,10 +327,10 @@ bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getBoth&#34;</spa
 
 	<p>Since we follow <span class="caps">AFC</span>&#8217;s conventions, the final setup of <span class="caps">AFC</span>&#8217;s spreadsheet compiler becomes very simple:</p>
 
-	<pre class="java"><span class="j-key">private </span>RebateComputationFactory compileFactoryFromSpreadsheet<span class="j-sym">( </span>String _sheetName <span class="j-sym">) </span><span class="j-key">throws </span>Exception
+	<pre class="java"><span class="j-key">private </span>RebateComputationFactory compileFactoryFromSpreadsheet<span class="j-sym">( </span>File _sheetFile <span class="j-sym">) </span><span class="j-key">throws </span>Exception
 <span class="j-sym">{
   </span>EngineBuilder builder = <span class="j-hl">SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span></span>;
-  builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span>_sheetName <span class="j-sym">)</span>;
+  builder.<span class="j-hl">loadSpreadsheet</span><span class="j-sym">( </span>_sheetFile <span class="j-sym">)</span>;
   builder.<span class="j-hl">setFactoryClass</span><span class="j-sym">( </span>RebateComputationFactory.<span class="j-key">class </span><span class="j-sym">)</span>;
   builder.<span class="j-hl">bindAllByName</span><span class="j-sym">()</span>;
   builder.<span class="j-hl">failIfByNameBindingLeftNamedCellsUnbound</span><span class="j-sym">()</span>;
@@ -345,7 +345,7 @@ bindsTo<span class="j-sym">( </span><span class="j-str">&#34;P_getBoth&#34;</spa
 	<pre class="java"><span class="j-key">public </span><span class="j-typ">void </span>testAFC<span class="j-sym">() </span><span class="j-key">throws </span>Exception
 <span class="j-sym">{
   </span>LineItem item = <span class="j-key">new </span>StrategyLineItem<span class="j-sym">()</span>;
-  <span class="j-hl">RebateComputation.factory = compileFactoryFromSpreadsheet<span class="j-sym">( </span>getCustomSheetFileName<span class="j-sym">() )</span>;</span>
+  <span class="j-hl">RebateComputation.factory = compileFactoryFromSpreadsheet<span class="j-sym">( </span>getCustomSheetFile<span class="j-sym">() )</span>;</span>
   <span class="j-typ">double </span>rebate = item.computeRebate<span class="j-sym">()</span>;
   assertEquals<span class="j-sym">( </span><span class="j-num">0.15</span>, rebate, <span class="j-num">0.00001 </span><span class="j-sym">)</span>;
 <span class="j-sym">}</span></pre>

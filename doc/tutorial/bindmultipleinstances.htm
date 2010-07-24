@@ -7,7 +7,7 @@
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -66,7 +66,7 @@ pageTracker._trackPageview();
 
 	<h2><a name="pagetoc__1">Inputs</a></h2>
 
-	<p>Let&#8217;s assume you have <em>n</em> separate customer categories. You want to bind all cells named after the pattern <em>CC_DISCOUNT</em><n>_ to the discount percentage associated with the customer category <em><n></n></em>. Here&#8217;s how you go about it.</n></p>
+	<p>Let&#8217;s assume you have <em>n</em> separate customer categories. You want to bind all cells named after the pattern <em>CC_DISCOUNT</em><n>_ to the discount percentage associated with the customer category </n><em><n /></em>. Here&#8217;s how you go about it.</p>
 
 
 	<p>Let&#8217;s assume the following customer interface:</p>
@@ -150,7 +150,7 @@ valueGetter = CustomerCategory.<span class="j-key">class</span>.getMethod<span c
 }</span></pre>
 
 
-	<p>I agree. Unfortunately, <span class="caps">AFC</span> does not directly support it (again a consequence of keeping the black box magic in <span class="caps">AFC</span> at a minimum). You are, however, free to put such a fa�ade on top of the original interface:</p>
+	<p>I agree. Unfortunately, <span class="caps">AFC</span> does not directly support it (again a consequence of keeping the black box magic in <span class="caps">AFC</span> at a minimum). You are, however, free to put such a facade on top of the original interface:</p>
 
 	<pre class="java"><span class="j-key">public static class </span>OutputFacade
 <span class="j-sym">{
@@ -195,7 +195,7 @@ valueGetter = CustomerCategory.<span class="j-key">class</span>.getMethod<span c
 }</span></pre>
 
 
-	<p>You might for example need to do this if you have to feed the sheet&#8217;s output to some other system that expects its input in the above form. The fa�ade would then have to implement the other system&#8217;s input interfaces, of course.</p>
+	<p>You might for example need to do this if you have to feed the sheet&#8217;s output to some other system that expects its input in the above form. The facade would then have to implement the other system&#8217;s input interfaces, of course.</p>
 
 			</div>
 			<div class="chrome" id="inner_bottom_chrome">

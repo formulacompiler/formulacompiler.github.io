@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-SpreadsheetSaver (Abacus Formula Compiler API (Version 1.3.0))
+SpreadsheetSaver (Abacus Formula Compiler API (Version 1.4.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.spreadsheet.SpreadsheetSaver interface">
@@ -13,7 +13,7 @@ SpreadsheetSaver (Abacus Formula Compiler API (Version 1.3.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="SpreadsheetSaver (Abacus Formula Compiler API (Version 1.3.0))";
+    parent.document.title="SpreadsheetSaver (Abacus Formula Compiler API (Version 1.4.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -182,7 +182,7 @@ This interface allows you to save a spreadsheet representation. Used of save spr
 save</H3>
 <PRE>
 void <B>save</B>()
-          throws <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A>,
+          throws java.io.IOException,
                  <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></PRE>
 <DL>
 <DD>Saves the configured model to the output stream.
@@ -190,7 +190,7 @@ void <B>save</B>()
 <DD><DL>
 
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A></CODE>
+<DD><CODE>java.io.IOException</CODE>
 <DD><CODE><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></CODE></DL>
 </DD>
 </DL>

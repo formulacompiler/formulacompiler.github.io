@@ -7,7 +7,7 @@
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -223,7 +223,7 @@ rewrite sum( xs* ) = apply sum to list xs</code></pre>
 			sxy = sxy + xi * yi
 		with count n into
 			(sxy - sx*sy/n) / n
-		when empty err( "#DIV/0! because list doesn't contain numbers in COVAR" )                                 
+		when empty err( "#DIV/0! because list doesn't contain numbers in COVAR" ) ::NUMERIC
 		end
 	to vectors {xs, ys}</code></pre>
 

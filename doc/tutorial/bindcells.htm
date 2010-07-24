@@ -7,7 +7,7 @@
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -81,7 +81,7 @@ pageTracker._trackPageview();
 	<p>You have to provide this type to the engine builder:</p>
 
 	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>path <span class="j-sym">) )</span>;
 <span class="j-hl">builder.setInputClass<span class="j-sym">( </span>Input.<span class="j-key">class </span><span class="j-sym">)</span>;</span>
 builder.setOutputClass<span class="j-sym">( </span>Output.<span class="j-key">class </span><span class="j-sym">)</span>;</pre>
 
@@ -154,7 +154,7 @@ binder.defineInputCell<span class="j-sym">( </span>cell, builder.newCallFrame<sp
 	<p>Like the input type, you also provide to the engine builder prior to using it:</p>
 
 	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>path <span class="j-sym">) )</span>;
 builder.setInputClass<span class="j-sym">( </span>Input.<span class="j-key">class </span><span class="j-sym">)</span>;
 <span class="j-hl">builder.setOutputClass<span class="j-sym">( </span>Output.<span class="j-key">class </span><span class="j-sym">)</span>;</span></pre>
 
@@ -211,7 +211,7 @@ binder.defineOutputCell<span class="j-sym">( </span>cell, <span class="j-str">&#
 	<p><span class="caps">AFC</span> supports this. Simply override the output class in the <code>EngineBuilder</code> so it does not get inferred from the factory method. Like this:</p>
 
 	<pre class="java">EngineBuilder builder = SpreadsheetCompiler.newEngineBuilder<span class="j-sym">()</span>;
-builder.loadSpreadsheet<span class="j-sym">( </span>path <span class="j-sym">)</span>;
+builder.loadSpreadsheet<span class="j-sym">( </span><span class="j-key">new </span>File<span class="j-sym">( </span>path <span class="j-sym">) )</span>;
 <span class="j-hl">builder.setFactoryClass<span class="j-sym">( </span>Factory.<span class="j-key">class </span><span class="j-sym">)</span>;</span>
 <span class="j-hl">builder.setOutputClass<span class="j-sym">( </span>OutputWithDefault.<span class="j-key">class </span><span class="j-sym">)</span>;</span></pre>
 

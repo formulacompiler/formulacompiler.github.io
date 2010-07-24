@@ -7,7 +7,7 @@
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -67,7 +67,8 @@ pageTracker._trackPageview();
 
 	<pre class="java">builder.<span class="j-hl">setParentClassLoaderForEngine</span><span class="j-sym">( </span>myClassLoader <span class="j-sym">)</span>;
 SaveableEngine compiledEngine = builder.compile<span class="j-sym">()</span>;
-assertSame<span class="j-sym">( </span>myClassLoader, <span class="j-sym">((</span>ClassLoader<span class="j-sym">) </span>compiledEngine<span class="j-sym">)</span>.getParent<span class="j-sym">() )</span>;</pre>
+ComputationFactory compiledFactory = compiledEngine.getComputationFactory<span class="j-sym">()</span>;
+assertSame<span class="j-sym">( </span>myClassLoader, compiledFactory.getClass<span class="j-sym">()</span>.getClassLoader<span class="j-sym">()</span>.getParent<span class="j-sym">() )</span>;</pre>
 
 
 	<p>To set it for loading engines, you have to allocate a special configuration object for the engine loader. The code looks like this:</p>
@@ -75,15 +76,8 @@ assertSame<span class="j-sym">( </span>myClassLoader, <span class="j-sym">((</sp
 	<pre class="java">EngineLoader.Config cfg = <span class="j-key">new </span>EngineLoader.Config<span class="j-sym">()</span>;
 cfg.<span class="j-hl">parentClassLoader</span> = myClassLoader;
 Engine loadedEngine = FormulaRuntime.loadEngine<span class="j-sym">( </span>cfg, <span class="j-key">new </span>ByteArrayInputStream<span class="j-sym">( </span>bytes <span class="j-sym">) )</span>;
-assertSame<span class="j-sym">( </span>myClassLoader, <span class="j-sym">((</span>ClassLoader<span class="j-sym">) </span>loadedEngine<span class="j-sym">)</span>.getParent<span class="j-sym">() )</span>;</pre>
-
-
-	<h5>Warning</h5>
-
-	<p>Please note that the cast from <span class="caps">AFC</span>&#8217;s <code>Engine</code> to <code>ClassLoader</code> is an implementation detail that you must <strong>not rely on</strong>. It is shown here only to let you see the <em>current effect</em> of setting the custom parent class loader.</p>
-
-
-	<p>In particular, <span class="caps">AFC</span> only guarantees that if you set the custom parent class loader, then it will be used as the parent class loader for any of class loader <span class="caps">AFC</span> might instantiate internally for an engine.</p>
+ComputationFactory loadedFactory = loadedEngine.getComputationFactory<span class="j-sym">()</span>;
+assertSame<span class="j-sym">( </span>myClassLoader, loadedFactory.getClass<span class="j-sym">()</span>.getClassLoader<span class="j-sym">()</span>.getParent<span class="j-sym">() )</span>;</pre>
 
 			</div>
 			<div class="chrome" id="inner_bottom_chrome">

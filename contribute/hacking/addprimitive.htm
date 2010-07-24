@@ -7,7 +7,7 @@
     <style media="screen" type="text/css">
 		
     </style>
-	<link href="../../style_screen.css" rel="stylesheet" type="text/css" media="screen" /><link href="../../style_print.css" rel="stylesheet" type="text/css" media="print" />
+	<link href="../../style_screen.css" rel="stylesheet" media="screen" type="text/css" /><link href="../../style_print.css" rel="stylesheet" media="print" type="text/css" />
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -527,7 +527,10 @@ Referenced by cell B2.
       <span class="j-cmt">// ...
       </span><span class="j-key">return </span>DataType.STRING;
 
-    <span class="j-key">default</span>:
+    <span class="j-key">case </span>ERROR:
+      <span class="j-key">return null</span>; <span class="j-cmt">// must be provided by surrounding context, like a CASE statement
+
+    </span><span class="j-key">default</span>:
       <span class="j-key">return </span>DataType.NUMERIC;
   <span class="j-sym">}
 }</span></pre>

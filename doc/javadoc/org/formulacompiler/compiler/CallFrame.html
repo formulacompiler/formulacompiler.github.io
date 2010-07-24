@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-CallFrame (Abacus Formula Compiler API (Version 1.3.0))
+CallFrame (Abacus Formula Compiler API (Version 1.4.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.compiler.CallFrame interface">
@@ -13,7 +13,7 @@ CallFrame (Abacus Formula Compiler API (Version 1.3.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="CallFrame (Abacus Formula Compiler API (Version 1.3.0))";
+    parent.document.title="CallFrame (Abacus Formula Compiler API (Version 1.4.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -150,15 +150,15 @@ Represents a call to a method including the argument values for all of the metho
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/compiler/CallFrame.html#chain(java.lang.reflect.Method, java.lang.Object...)">chain</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_method,
-      <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A>...&nbsp;_args)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/compiler/CallFrame.html#chain(java.lang.reflect.Method, java.lang.Object...)">chain</A></B>(java.lang.reflect.Method&nbsp;_method,
+      java.lang.Object...&nbsp;_args)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Constructs a chained call.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A>[]</CODE></FONT></TD>
+<CODE>&nbsp;java.lang.Object[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/compiler/CallFrame.html#getArgs()">getArgs</A></B>()</CODE>
 
 <BR>
@@ -183,7 +183,7 @@ Represents a call to a method including the argument values for all of the metho
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.reflect.Method</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/compiler/CallFrame.html#getMethod()">getMethod</A></B>()</CODE>
 
 <BR>
@@ -199,7 +199,7 @@ Represents a call to a method including the argument values for all of the metho
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A></CODE></FONT></TD>
+<CODE>&nbsp;java.lang.Class</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/compiler/CallFrame.html#getReturnType()">getReturnType</A></B>()</CODE>
 
 <BR>
@@ -231,8 +231,8 @@ Represents a call to a method including the argument values for all of the metho
 <A NAME="chain(java.lang.reflect.Method, java.lang.Object...)"><!-- --></A><H3>
 chain</H3>
 <PRE>
-<A HREF="../../../org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A> <B>chain</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A>&nbsp;_method,
-                <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A>...&nbsp;_args)</PRE>
+<A HREF="../../../org/formulacompiler/compiler/CallFrame.html" title="interface in org.formulacompiler.compiler">CallFrame</A> <B>chain</B>(java.lang.reflect.Method&nbsp;_method,
+                java.lang.Object...&nbsp;_args)</PRE>
 <DL>
 <DD>Constructs a chained call.
 <P>
@@ -250,7 +250,7 @@ chain</H3>
 <A NAME="getMethod()"><!-- --></A><H3>
 getMethod</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect">Method</A> <B>getMethod</B>()</PRE>
+java.lang.reflect.Method <B>getMethod</B>()</PRE>
 <DL>
 <DD>The method to call.
 <P>
@@ -267,7 +267,7 @@ getMethod</H3>
 <A NAME="getArgs()"><!-- --></A><H3>
 getArgs</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Object.html" title="class or interface in java.lang">Object</A>[] <B>getArgs</B>()</PRE>
+java.lang.Object[] <B>getArgs</B>()</PRE>
 <DL>
 <DD>The list of argument values for the method's parameters.
 <P>
@@ -284,7 +284,7 @@ getArgs</H3>
 <A NAME="getReturnType()"><!-- --></A><H3>
 getReturnType</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/Class.html" title="class or interface in java.lang">Class</A> <B>getReturnType</B>()</PRE>
+java.lang.Class <B>getReturnType</B>()</PRE>
 <DL>
 <DD>The return type of the final call in the chain.
 <P>

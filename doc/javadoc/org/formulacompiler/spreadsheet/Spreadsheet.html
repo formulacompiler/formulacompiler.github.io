@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-Spreadsheet (Abacus Formula Compiler API (Version 1.3.0))
+Spreadsheet (Abacus Formula Compiler API (Version 1.4.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.spreadsheet.Spreadsheet interface">
@@ -13,7 +13,7 @@ Spreadsheet (Abacus Formula Compiler API (Version 1.3.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="Spreadsheet (Abacus Formula Compiler API (Version 1.3.0))";
+    parent.document.title="Spreadsheet (Abacus Formula Compiler API (Version 1.4.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -187,7 +187,7 @@ Represents a spreadsheet model in memory. It can be constructed from different s
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#defineAdditionalRangeName(java.lang.String, org.formulacompiler.spreadsheet.Spreadsheet.Range)">defineAdditionalRangeName</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_name,
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#defineAdditionalRangeName(java.lang.String, org.formulacompiler.spreadsheet.Spreadsheet.Range)">defineAdditionalRangeName</A></B>(java.lang.String&nbsp;_name,
                           <A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&nbsp;_ref)</CODE>
 
 <BR>
@@ -206,7 +206,7 @@ Represents a spreadsheet model in memory. It can be constructed from different s
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getCell(java.lang.String)">getCell</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_rangeName)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getCell(java.lang.String)">getCell</A></B>(java.lang.String&nbsp;_rangeName)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get a cell by its range name.</TD>
@@ -214,7 +214,7 @@ Represents a spreadsheet model in memory. It can be constructed from different s
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getCellA1(java.lang.String)">getCellA1</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_a1Name)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getCellA1(java.lang.String)">getCellA1</A></B>(java.lang.String&nbsp;_a1Name)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get a cell by its A1-style name.</TD>
@@ -222,14 +222,14 @@ Represents a spreadsheet model in memory. It can be constructed from different s
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getRange(java.lang.String)">getRange</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_rangeName)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getRange(java.lang.String)">getRange</A></B>(java.lang.String&nbsp;_rangeName)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get a range by its name.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/util/Map.html" title="class or interface in java.util">Map</A>&lt;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>,<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&gt;</CODE></FONT></TD>
+<CODE>&nbsp;java.util.Map&lt;java.lang.String,<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getRangeNames()">getRangeNames</A></B>()</CODE>
 
 <BR>
@@ -289,9 +289,9 @@ getCell</H3>
 <A NAME="getCell(java.lang.String)"><!-- --></A><H3>
 getCell</H3>
 <PRE>
-<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A> <B>getCell</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_rangeName)
+<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A> <B>getCell</B>(java.lang.String&nbsp;_rangeName)
                          throws <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.NameNotFound.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException.NameNotFound</A>,
-                                <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/IllegalArgumentException.html" title="class or interface in java.lang">IllegalArgumentException</A></PRE>
+                                java.lang.IllegalArgumentException</PRE>
 <DL>
 <DD>Get a cell by its range name.
 <P>
@@ -305,7 +305,7 @@ getCell</H3>
          actual bounds of the spreadsheet. In this case, it denotes an empty cell.
 <DT><B>Throws:</B>
 <DD><CODE><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.NameNotFound.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException.NameNotFound</A></CODE> - if the name is not defined in the spreadsheet.
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/IllegalArgumentException.html" title="class or interface in java.lang">IllegalArgumentException</A></CODE> - if the name identifies a range instead of a single cell.<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getRange(java.lang.String)"><CODE>getRange(String)</CODE></A></DL>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the name identifies a range instead of a single cell.<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getRange(java.lang.String)"><CODE>getRange(String)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -313,7 +313,7 @@ getCell</H3>
 <A NAME="getCellA1(java.lang.String)"><!-- --></A><H3>
 getCellA1</H3>
 <PRE>
-<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A> <B>getCellA1</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_a1Name)
+<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Cell.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Cell</A> <B>getCellA1</B>(java.lang.String&nbsp;_a1Name)
                            throws <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.NameNotFound.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException.NameNotFound</A></PRE>
 <DL>
 <DD>Get a cell by its A1-style name. Sheet references are not supported.
@@ -335,9 +335,9 @@ getCellA1</H3>
 <A NAME="getRange(java.lang.String)"><!-- --></A><H3>
 getRange</H3>
 <PRE>
-<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A> <B>getRange</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_rangeName)
+<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A> <B>getRange</B>(java.lang.String&nbsp;_rangeName)
                            throws <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.NameNotFound.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException.NameNotFound</A>,
-                                  <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/IllegalArgumentException.html" title="class or interface in java.lang">IllegalArgumentException</A></PRE>
+                                  java.lang.IllegalArgumentException</PRE>
 <DL>
 <DD>Get a range by its name.
 <P>
@@ -350,7 +350,7 @@ getRange</H3>
 <DT><B>Returns:</B><DD>The requested range. Might be a single cell.
 <DT><B>Throws:</B>
 <DD><CODE><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.NameNotFound.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException.NameNotFound</A></CODE> - if the name is not defined in the spreadsheet.
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/IllegalArgumentException.html" title="class or interface in java.lang">IllegalArgumentException</A></CODE> - if the name identifies a range instead of a single cell.<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getRangeNames()"><CODE>getRangeNames()</CODE></A>, 
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the name identifies a range instead of a single cell.<DT><B>See Also:</B><DD><A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getRangeNames()"><CODE>getRangeNames()</CODE></A>, 
 <A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html#getCell(java.lang.String)"><CODE>getCell(String)</CODE></A></DL>
 </DD>
 </DL>
@@ -359,7 +359,7 @@ getRange</H3>
 <A NAME="getRangeNames()"><!-- --></A><H3>
 getRangeNames</H3>
 <PRE>
-<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/util/Map.html" title="class or interface in java.util">Map</A>&lt;<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>,<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&gt; <B>getRangeNames</B>()</PRE>
+java.util.Map&lt;java.lang.String,<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&gt; <B>getRangeNames</B>()</PRE>
 <DL>
 <DD>Get all the range (and cell) names defined for this spreadsheet. The key of the map is the
  range's specific name defined in the spreadsheet (Items, Employees, etc.). The value of the
@@ -384,9 +384,9 @@ getRangeNames</H3>
 <A NAME="defineAdditionalRangeName(java.lang.String, org.formulacompiler.spreadsheet.Spreadsheet.Range)"><!-- --></A><H3>
 defineAdditionalRangeName</H3>
 <PRE>
-void <B>defineAdditionalRangeName</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_name,
+void <B>defineAdditionalRangeName</B>(java.lang.String&nbsp;_name,
                                <A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.Range.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet.Range</A>&nbsp;_ref)
-                               throws <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/IllegalArgumentException.html" title="class or interface in java.lang">IllegalArgumentException</A></PRE>
+                               throws java.lang.IllegalArgumentException</PRE>
 <DL>
 <DD>Defines an additional range name to be returned by <code>getRangeNames</code> et al. Such
  additional names are never used internally to resolve formula references and do not affect the
@@ -404,7 +404,7 @@ void <B>defineAdditionalRangeName</B>(<A HREF="http://java.sun.com/j2se/1.5/docs
            underlying spreadsheet model (as loaded from a file or constructed by a builder).
            Range names are case-insensitive.<DD><CODE>_ref</CODE> - is the range or single cell to be named.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/IllegalArgumentException.html" title="class or interface in java.lang">IllegalArgumentException</A></CODE> - if either argument is <code>null</code>, or if the name collides
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if either argument is <code>null</code>, or if the name collides
             with a model-defined name.</DL>
 </DD>
 </DL>

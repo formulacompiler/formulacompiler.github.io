@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-Milliseconds (Abacus Formula Compiler API (Version 1.3.0))
+Milliseconds (Abacus Formula Compiler API (Version 1.4.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.runtime.Milliseconds class">
@@ -13,7 +13,7 @@ Milliseconds (Abacus Formula Compiler API (Version 1.3.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="Milliseconds (Abacus Formula Compiler API (Version 1.3.0))";
+    parent.document.title="Milliseconds (Abacus Formula Compiler API (Version 1.4.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -99,13 +99,13 @@ org.formulacompiler.runtime</FONT>
 Annotation Type Milliseconds</H2>
 <HR>
 <DL>
-<DT><PRE><FONT SIZE="-1"><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/annotation/Retention.html" title="class or interface in java.lang.annotation">@Retention</A>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/annotation/Retention.html#value()" title="class or interface in java.lang.annotation">value</A>=<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/annotation/RetentionPolicy.html#RUNTIME" title="class or interface in java.lang.annotation">RUNTIME</A>)
+<DT><PRE><FONT SIZE="-1">@Retention(value=RUNTIME)
 </FONT>public @interface <B>Milliseconds</B></DL>
 </PRE>
 
 <P>
 Indicates to AFC that a <code>long</code> value is actually a number of milliseconds for an Excel
- time-of-day or time duration cell. You should never use <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/util/Date.html" title="class or interface in java.util"><CODE>Date</CODE></A> for pure time
+ time-of-day or time duration cell. You should never use <CODE>Date</CODE> for pure time
  cells.
  
  <p>

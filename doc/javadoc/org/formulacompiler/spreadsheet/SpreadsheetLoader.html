@@ -3,7 +3,7 @@
 <HTML>
 <HEAD>
 <TITLE>
-SpreadsheetLoader (Abacus Formula Compiler API (Version 1.3.0))
+SpreadsheetLoader (Abacus Formula Compiler API (Version 1.4.0))
 </TITLE>
 
 <META NAME="keywords" CONTENT="org.formulacompiler.spreadsheet.SpreadsheetLoader interface">
@@ -13,7 +13,7 @@ SpreadsheetLoader (Abacus Formula Compiler API (Version 1.3.0))
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="SpreadsheetLoader (Abacus Formula Compiler API (Version 1.3.0))";
+    parent.document.title="SpreadsheetLoader (Abacus Formula Compiler API (Version 1.4.0))";
 }
 </SCRIPT>
 <NOSCRIPT>
@@ -154,8 +154,8 @@ Allows loading of spreadsheets from external sources (like Excel files).
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetLoader.html#loadFrom(java.lang.String, java.io.InputStream)">loadFrom</A></B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_originalFileName,
-         <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/InputStream.html" title="class or interface in java.io">InputStream</A>&nbsp;_stream)</CODE>
+<TD><CODE><B><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetLoader.html#loadFrom(java.lang.String, java.io.InputStream)">loadFrom</A></B>(java.lang.String&nbsp;_originalFileName,
+         java.io.InputStream&nbsp;_stream)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads a spreadsheet stream into an AFC spreadsheet model.</TD>
@@ -177,9 +177,9 @@ Allows loading of spreadsheets from external sources (like Excel files).
 <A NAME="loadFrom(java.lang.String, java.io.InputStream)"><!-- --></A><H3>
 loadFrom</H3>
 <PRE>
-<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A> <B>loadFrom</B>(<A HREF="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html" title="class or interface in java.lang">String</A>&nbsp;_originalFileName,
-                     <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/InputStream.html" title="class or interface in java.io">InputStream</A>&nbsp;_stream)
-                     throws <A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A>,
+<A HREF="../../../org/formulacompiler/spreadsheet/Spreadsheet.html" title="interface in org.formulacompiler.spreadsheet">Spreadsheet</A> <B>loadFrom</B>(java.lang.String&nbsp;_originalFileName,
+                     java.io.InputStream&nbsp;_stream)
+                     throws java.io.IOException,
                             <A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></PRE>
 <DL>
 <DD>Loads a spreadsheet stream into an AFC spreadsheet model. The loader to use is determined by
@@ -191,7 +191,7 @@ loadFrom</H3>
            example Test.xls or Test.xml).
 <DT><B>Returns:</B><DD>The spreadsheet model loaded from the file.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://java.sun.com/j2se/1.5/docs/api/java/io/IOException.html" title="class or interface in java.io">IOException</A></CODE> - when there is any proplem accessing the file. May also throw runtime
+<DD><CODE>java.io.IOException</CODE> - when there is any proplem accessing the file. May also throw runtime
             exceptions when there are problems in file.
 <DD><CODE><A HREF="../../../org/formulacompiler/spreadsheet/SpreadsheetException.html" title="class in org.formulacompiler.spreadsheet">SpreadsheetException</A></CODE></DL>
 </DD>
